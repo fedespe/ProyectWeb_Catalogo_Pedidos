@@ -1,0 +1,39 @@
+USE master;
+GO
+DROP DATABASE BienvenidosUY;
+GO
+
+CREATE DATABASE BienvenidosUY;
+GO
+USE ProyectoWeb_Catalogo_Pedidos;
+GO
+DROP DATABASE ProyectoWeb_Catalogo_Pedidos;
+GO
+
+CREATE DATABASE ProyectoWeb_Catalogo_Pedidos;
+GO
+USE ProyectoWeb_Catalogo_Pedidos;
+GO
+
+CREATE TABLE IMAGEN
+(
+	Id	int  NOT NULL IDENTITY(1,1),
+	Ruta nvarchar(100) NOT NULL,
+
+	CONSTRAINT PK_IMG PRIMARY KEY(Id)
+);
+GO
+
+CREATE TABLE CATEGORIA
+(
+	Id	int  NOT NULL IDENTITY(1,1),
+	Nombre nvarchar(50) NOT NULL,
+	IdImagen int NOT NULL,
+	
+
+	CONSTRAINT PK_CATEGORIA PRIMARY KEY(Id),
+	CONSTRAINT FK_IdImagen_CATEGORIA FOREIGN KEY (IdImagen) REFERENCES IMAGEN (Id)	
+);
+GO
+
+--CATEGORIA PRODUCTOS TIENE ID CATEGORIA ID PRODUCTO

@@ -42,7 +42,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="24" x="244" y="288" measuredWidth="176" measuredHeight="225">
@@ -57,7 +57,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="25" x="448" y="288" measuredWidth="176" measuredHeight="225">
@@ -72,7 +72,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="26" x="648" y="288" measuredWidth="176" measuredHeight="225">
@@ -87,7 +87,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="27" x="40" y="533" measuredWidth="176" measuredHeight="225">
@@ -102,7 +102,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="28" x="243" y="533" measuredWidth="176" measuredHeight="225">
@@ -117,7 +117,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="29" x="447" y="533" measuredWidth="176" measuredHeight="225">
@@ -132,7 +132,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="30" x="647" y="533" measuredWidth="176" measuredHeight="225">
@@ -147,7 +147,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="31" x="39" y="781" measuredWidth="176" measuredHeight="225">
@@ -162,7 +162,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="32" x="242" y="781" measuredWidth="176" measuredHeight="225">
@@ -177,7 +177,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="33" x="446" y="781" measuredWidth="176" measuredHeight="225">
@@ -192,7 +192,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="34" x="646" y="781" measuredWidth="176" measuredHeight="225">
@@ -207,7 +207,7 @@
       <widgets ref="17" x="7" y="187" width="137" height="22" text="Descripción...">
         <font size="11px"/>
       </widgets>
-      <widgets ref="12" width="162" height="139"/>
+      <widgets ref="12" width="162" height="139" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="35" x="46" y="184" measuredWidth="208" measuredHeight="56">

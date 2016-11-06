@@ -43,7 +43,7 @@
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgetChanges xsi:type="o:Delete" ref="15"/>
       <widgets ref="11" width="514" height="351"/>
-      <widgets ref="12" width="502" height="337"/>
+      <widgets ref="12" width="502" height="337" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="17" x="46" y="136" measuredWidth="180" measuredHeight="56">
@@ -60,7 +60,7 @@
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgetChanges xsi:type="o:Delete" ref="15"/>
       <widgets ref="11" width="133" height="94"/>
-      <widgets ref="12" width="121" height="80"/>
+      <widgets ref="12" width="121" height="80" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="19" x="194" y="578" measuredWidth="133" measuredHeight="94">
@@ -71,7 +71,7 @@
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgetChanges xsi:type="o:Delete" ref="15"/>
       <widgets ref="11" width="133" height="94"/>
-      <widgets ref="12" width="121" height="80"/>
+      <widgets ref="12" width="121" height="80" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="20" x="334" y="579" measuredWidth="133" measuredHeight="94">
@@ -82,7 +82,7 @@
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgetChanges xsi:type="o:Delete" ref="15"/>
       <widgets ref="11" width="133" height="94"/>
-      <widgets ref="12" width="121" height="80"/>
+      <widgets ref="12" width="121" height="80" noText="true"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="24" x="574" y="273" measuredWidth="284" measuredHeight="143">

@@ -74,7 +74,7 @@
   <widgets xsi:type="model:Master" id="55" x="46" y="466" width="434" measuredWidth="434" measuredHeight="167">
     <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Forms.screen#Text%20Area"/>
     <overrides>
-      <widgets ref="16" width="434" height="167" text="Descripcion..."/>
+      <widgets ref="16" width="434" height="167" text="Descripción..."/>
     </overrides>
   </widgets>
   <hRuler/>

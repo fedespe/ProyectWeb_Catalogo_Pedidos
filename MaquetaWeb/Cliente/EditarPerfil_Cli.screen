@@ -44,7 +44,7 @@
   <widgets xsi:type="model:Master" id="54" x="47" y="562" measuredWidth="433" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Forms.screen#Text%20Input"/>
     <overrides>
-      <widgets ref="1" width="433" text="Telefono"/>
+      <widgets ref="1" width="433" text="Teléfono"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="56" x="11" y="56" width="857" measuredWidth="857" measuredHeight="50">
@@ -80,7 +80,7 @@
   <widgets xsi:type="model:Master" id="58" x="46" y="616" measuredWidth="431" measuredHeight="73">
     <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Area"/>
     <overrides>
-      <widgets ref="16" width="431" height="73" text="Direccion"/>
+      <widgets ref="16" width="431" height="73" text="Dirección"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="62" x="51" y="728" measuredWidth="135" measuredHeight="28">

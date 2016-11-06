@@ -18,7 +18,7 @@
       <widgetChanges xsi:type="o:Delete" ref="19"/>
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgets ref="11" width="366" height="281"/>
-      <widgets ref="12" width="354"/>
+      <widgets ref="12" width="354" noText="true"/>
       <widgets ref="15" text="Categoría 1"/>
     </overrides>
   </widgets>
@@ -48,8 +48,8 @@
       <widgetChanges xsi:type="o:Delete" ref="19"/>
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgets ref="11" width="366" height="281"/>
-      <widgets ref="12" width="354"/>
-      <widgets ref="15" text="Categoría 1"/>
+      <widgets ref="12" width="354" noText="true"/>
+      <widgets ref="15" text="Categoría 2"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="21" x="40" y="632" measuredWidth="366" measuredHeight="281">
@@ -59,8 +59,8 @@
       <widgetChanges xsi:type="o:Delete" ref="19"/>
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgets ref="11" width="366" height="281"/>
-      <widgets ref="12" width="354"/>
-      <widgets ref="15" text="Categoría 1"/>
+      <widgets ref="12" width="354" noText="true"/>
+      <widgets ref="15" text="Categoría 3"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="22" x="483" y="632" measuredWidth="366" measuredHeight="281">
@@ -70,8 +70,8 @@
       <widgetChanges xsi:type="o:Delete" ref="19"/>
       <widgetChanges xsi:type="o:Delete" ref="17"/>
       <widgets ref="11" width="366" height="281"/>
-      <widgets ref="12" width="354"/>
-      <widgets ref="15" text="Categoría 1"/>
+      <widgets ref="12" width="354" noText="true"/>
+      <widgets ref="15" text="Categoría 4"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="23" x="46" y="184" measuredWidth="174" measuredHeight="56">

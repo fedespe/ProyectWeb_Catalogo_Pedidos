@@ -12,6 +12,8 @@ namespace Logica.LogicaNegocio
         public string NombreUsuario { get; set; }
         public string Password { get; set; }
         public Rol Rol { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
 
         public Usuario(string nombreUsuario, string password,Rol rol) {
             this.NombreUsuario = nombreUsuario;

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Browser" id="15" x="1" y="1" width="880" height="856" text="Browser&#xA;http://..." measuredWidth="880" measuredHeight="856">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="16" x="11" y="53" height="794" measuredWidth="869" measuredHeight="794">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Content.screen#Panel%20with%20Footer"/>
+    <overrides>
+      <widgets ref="62" width="869" height="794"/>
+      <widgets ref="64" width="841" height="731" noText="true"/>
+      <widgets ref="63" y="759" text="Footer: Datos de la empresa"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="6" x="11" y="56" width="857" measuredWidth="857" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Navigation.screen#Navbar"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="24"/>
+      <widgetChanges xsi:type="o:Delete" ref="28"/>
+      <widgets ref="20" width="857"/>
+      <widgets ref="19" text="Destacados, Catálogo, Nosotros ,Contacto">
+        <items ref="@items.0" text="Destacados"/>
+        <items ref="@items.1" text="Catálogo"/>
+        <items ref="@items.2" text="Nosotros "/>
+        <itemChanges xsi:type="o:Insert" newIndex="3">
+          <object xsi:type="model:Item" text="Contacto"/>
+        </itemChanges>
+      </widgets>
+      <widgets ref="21" text="Logo"/>
+      <widgets ref="25" x="563" y="5" text="Gestión,Pedidos,Registro">
+        <items ref="@items.0" text="Gestión"/>
+        <items ref="@items.1" text="Pedidos"/>
+        <itemChanges xsi:type="o:Insert" newIndex="2">
+          <object xsi:type="model:Item" text="Registro"/>
+        </itemChanges>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="35" x="46" y="137" measuredWidth="297" measuredHeight="56">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Typography.screen#h1.%20Heading"/>
+    <overrides>
+      <widgets ref="1" text="Gestión Productos"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="37" x="46" y="208" width="821" measuredWidth="821" measuredHeight="485">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Content.screen#Table"/>
+    <overrides>
+      <widgets ref="51" width="821" text="Img,Codigo,Nombre Producto,Habilitado,Habilitar/Inhabilitar,Editar,Eliminar&#xA;,1234,Prod 1, Si, , &#xA;,1234,Prod 2,Si , ,&#xA;,1234,Prod 3,No , ,&#xA;,1234,Prod 4,Si , ,&#xA;,1234,Prod 5,No, ,&#xA;,1234,Prod 6,Si , ,&#xA;,1234,Prod 7,Si , ,&#xA;,1234,Prod 8,No , ,&#xA;,1234,Prod 9,Si , ,&#xA;,1234,Prod 10,Si , ,&#xA;,1234,Prod 11,Si , ,&#xA;,1234,Prod 12,Si , ,"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="38" x="49" y="247" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="39" x="49" y="285" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="40" x="49" y="322" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="50" x="64" y="728" measuredWidth="185" measuredHeight="34">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Button%20Success"/>
+    <overrides>
+      <widgets ref="37" text="Agregar Nuevo Producto"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="51" x="700" y="250" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="52" x="700" y="288" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="53" x="700" y="325" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="54" x="528" y="250" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="55" x="528" y="288" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="56" x="528" y="325" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="57" x="49" y="359" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="58" x="49" y="397" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="59" x="49" y="434" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="60" x="49" y="470" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="61" x="49" y="508" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="62" x="49" y="545" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="63" x="49" y="582" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="64" x="49" y="620" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="65" x="49" y="657" measuredWidth="35" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Image%20Rounded"/>
+    <overrides>
+      <widgets ref="1" width="35" height="33" noText="true"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="66" x="700" y="362" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="67" x="700" y="400" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="68" x="700" y="437" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="69" x="700" y="473" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="70" x="700" y="511" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="71" x="700" y="548" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="72" x="700" y="585" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="73" x="700" y="623" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="74" x="700" y="660" measuredWidth="42" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Editar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="75" x="528" y="362" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="76" x="528" y="400" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="77" x="528" y="437" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="78" x="528" y="473" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="79" x="528" y="511" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="80" x="528" y="548" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="81" x="528" y="585" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="82" x="528" y="623" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="83" x="528" y="660" measuredWidth="59" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Cambiar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="85" x="776" y="250" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="86" x="776" y="288" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="87" x="776" y="325" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="88" x="776" y="362" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="89" x="776" y="400" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="90" x="776" y="437" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="91" x="776" y="473" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="92" x="776" y="511" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="93" x="776" y="548" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="94" x="776" y="585" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="95" x="776" y="623" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="96" x="776" y="660" measuredWidth="57" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Buttons.screen#Link%20Large"/>
+    <overrides>
+      <widgets ref="53" text="Eliminar">
+        <font size="15px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="14px"/>
+</model:Screen>

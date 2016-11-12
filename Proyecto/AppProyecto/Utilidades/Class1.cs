@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.LogicaNegocio
+namespace Utilidades
 {
-    public class Rol:IEntity
+    public class Class1
     {
-        public int Id { get; set; }
     }
 }

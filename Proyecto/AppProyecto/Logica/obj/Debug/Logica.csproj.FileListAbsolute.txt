@@ -1,0 +1,5 @@
+C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Logica\bin\Debug\Logica.dll
+C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Logica\bin\Debug\Logica.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Logica\obj\Debug\Logica.csprojResolveAssemblyReference.cache
+C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Logica\obj\Debug\Logica.dll
+C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Logica\obj\Debug\Logica.pdb

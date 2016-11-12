@@ -6,22 +6,17 @@ using System.Threading.Tasks;
 
 namespace Logica.LogicaNegocio
 {
-    public class Pedido:IEntity
+    public class Pedido : IEntity
     {
         public int Id { get; set; }
-        public Usuario Cliente { get; set; }//quien lo realiza
-        public Usuario Administrador { get; set; }//quien lo gestiona
-        public List<ProductoCantidad> ProductosPedidos { get; set; }
-        public string Comentario { get; set; }
-        public DateTime FechaPedido { get; set; }
         public DateTime FechaRealizado { get; set; }
-        public Estado Estado { get; set; }
-
-        public Pedido(Usuario cliente, string comentario, DateTime fecha) {
-            this.Cliente = cliente;
-            this.ProductosPedidos = new List<ProductoCantidad>();
-            this.Comentario = comentario;
-            this.FechaPedido = fecha;
-        }
+        public DateTime FechaEntregaSolicitada { get; set; }
+        public double PrecioTotal { get; set; }
+        public double DescuentoCliente { get; set; }
+        public double Iva { get; set; }
+        public Usuario Cliente { get; set; }
+        public List<ArticuloCantidad> ProductosPedidos { get; set; }
+        public string Comentario { get; set; }
+        public EstadoPedido Estado { get; set; }
     }
 }

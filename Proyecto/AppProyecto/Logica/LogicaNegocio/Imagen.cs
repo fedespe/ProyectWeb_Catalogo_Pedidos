@@ -8,6 +8,6 @@ namespace Logica.LogicaNegocio
 {
     public class Imagen
     {
-        public string ruta { get; set; }
+        public string Foto { get; set; }
     }
 }

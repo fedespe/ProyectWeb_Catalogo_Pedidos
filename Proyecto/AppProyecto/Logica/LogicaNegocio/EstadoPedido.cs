@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Logica.LogicaNegocio
 {
-    public class Estado:IEntity
+    public class EstadoPedido : IEntity
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-
-        public Estado(string nombre) {
-            this.Nombre = nombre;
-        }
+        public List<Pedido> Pedidos { get; set; }
     }
 }

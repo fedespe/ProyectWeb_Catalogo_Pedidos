@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace Logica.LogicaNegocio
 {
-    public class Categoria : IEntity
+    public class Articulo : IEntity
     {
         public int Id { get; set; }
-        public string Foto { get; set; }
+        public string Codigo { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public List<Articulo> Articulos { get; set; }
+        public double Precio { get; set; }
+        public int Stock { get; set; }
+        public bool Destacado { get; set; }
+        public List<Imagen> Fotos { get; set; }
+        public List<Categoria> Categorias { get; set; }
         public List<Filtro> Filtros { get; set; }
     }
 }

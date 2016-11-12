@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace Logica.LogicaNegocio
 {
-    public class Cliente : Rol
+    public class Cliente : Usuario
     {
-        public string Direccion { get; set; }
-        //el descuento va a depender del tipo de cliente que sea
+        public string NombreFantasia { get; set; }
+        public string Rut { get; set; }
+        public string RazonSocial { get; set; }
         public double Descuento { get; set; }
-        public Cliente(string direccion,double descuento):base(){
-            this.Direccion = direccion;
-            this.Descuento = descuento;
-        }
+        public string DiasDePago { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
+        public string NombreDeContacto { get; set; }
+        public string TelefonoDeContacto { get; set; }
+        public string Foto { get; set; }
+        public List<Pedido> Pedidos { get; set; }
     }
 }

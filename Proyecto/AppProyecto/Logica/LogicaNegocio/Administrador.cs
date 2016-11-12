@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica.LogicaNegocio
 {
-    public class Administrador : Rol
+    public class Administrador : Usuario
     {
 
     }

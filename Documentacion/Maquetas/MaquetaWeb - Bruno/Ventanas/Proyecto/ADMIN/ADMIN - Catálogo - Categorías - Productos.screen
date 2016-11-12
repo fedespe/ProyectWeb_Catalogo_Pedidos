@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Browser" id="12" x="-8" y="-23" width="1242" height="1160" text="Browser&#xA;Administrador - Productos" measuredWidth="1242" measuredHeight="1160">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="35" x="8" y="1086" measuredWidth="1224" measuredHeight="48">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Content.screen#Well%20Large"/>
+    <overrides>
+      <widgets ref="46" x="15" y="12" width="1193" height="24" text="Footer: Datos de la empresa"/>
+      <widgets ref="45" width="1224" height="48"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="36" x="8" y="46" measuredWidth="1224" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Navigation.screen#Navbar"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Insert" newIndex="6">
+        <object xsi:type="model:ButtonBar" id="50" x="930" y="4" height="46" text="Gestión, Pedidos\nSin Confirmar (4), Salir" layoutParams="anchor-left|anchor-middle" background="#ccc" skin="../assets/Bootstrap/_pills.svg">
+          <font size="14px"/>
+          <items text="Gestión"/>
+          <items text="Pedidos\nSin Confirmar (4)"/>
+          <items text="Salir"/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Delete" ref="25"/>
+      <widgetChanges xsi:type="o:Delete" ref="24"/>
+      <widgetChanges xsi:type="o:Delete" ref="28"/>
+      <widgets ref="20" width="1224"/>
+      <widgets ref="19" text="Destacados, Catálogo de Productos, Contacto, Nosotros">
+        <attributes key="selection" value="-1"/>
+        <items ref="@items.0" text="Destacados"/>
+        <items ref="@items.1" text="Catálogo de Productos"/>
+        <items ref="@items.2" text="Contacto"/>
+        <itemChanges xsi:type="o:Insert" newIndex="3">
+          <object xsi:type="model:Item" text="Nosotros"/>
+        </itemChanges>
+      </widgets>
+      <widgets ref="21" text="Logo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Note" id="49" x="17" y="968" width="217" height="112" text="Permite ver los productos de la categoría ya seleccionada, y aplicar diferentes filtros.&#xD;&#xA;Los productos se verán ordenados por precio." measuredWidth="217" measuredHeight="112">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="52" x="23" y="184" measuredWidth="206" measuredHeight="564">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Button%20Group%20Vertical"/>
+    <overrides>
+      <widgets ref="17" width="206" text="Pedidos{desc}&#xA;Listar Sin Confirmar&#xA;Listar Todos&#xA;Nuevo&#xA;ABM Productos{desc}&#xA;Listar&#xA;Nuevo&#xA;ABM Clientes{desc}&#xA;Listar&#xA;Nuevo&#xA;ABM Categorías{desc}&#xA;Listar&#xA;Nueva&#xA;ABM Filtros{desc}&#xA;Listar&#xA;Nuevo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="54" x="246" y="132" measuredWidth="416" measuredHeight="56">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h1.%20Heading"/>
+    <overrides>
+      <widgets ref="1" text="Productos de la Categoría"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="55" x="70" y="135" measuredWidth="111" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h2.%20Heading"/>
+    <overrides>
+      <widgets ref="5" text="Gestión"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="92" x="878" y="195" measuredWidth="300" measuredHeight="438">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgets ref="12" text="Foto Producto"/>
+      <widgets ref="15" width="277" text="Nombre Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" text="Descripción, Precio y demás datos del Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="19" x="16" y="373" width="108" height="48" text="Ver"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="96" x="18" y="837" measuredWidth="92" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="92" text="Desde">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="97" x="133" y="837" measuredWidth="92" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="92" text="Hasta">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="98" x="18" y="757" measuredWidth="207" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h2.%20Heading"/>
+    <overrides>
+      <widgets ref="5" width="207" text="Filtros">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="99" x="101" y="806" measuredWidth="49" measuredHeight="29">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h5.%20Heading"/>
+    <overrides>
+      <widgets ref="14" text="Precio">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="100" x="18" y="900" measuredWidth="46" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Checkbox"/>
+    <overrides>
+      <widgets ref="18" text="Oro"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="101" x="18" y="933" measuredWidth="54" measuredHeight="28">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Checkbox"/>
+    <overrides>
+      <widgets ref="18" text="Plata"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="105" x="246" y="196" measuredWidth="300" measuredHeight="438">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgets ref="12" text="Foto Producto"/>
+      <widgets ref="15" width="277" text="Nombre Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" text="Descripción, Precio y demás datos del Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="19" x="16" y="373" width="108" height="48" text="Ver"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="107" x="563" y="196" measuredWidth="300" measuredHeight="438">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgets ref="12" text="Foto Producto"/>
+      <widgets ref="15" width="277" text="Nombre Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" text="Descripción, Precio y demás datos del Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="19" x="16" y="373" width="108" height="48" text="Ver"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="109" x="878" y="642" measuredWidth="300" measuredHeight="438">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgets ref="12" text="Foto Producto"/>
+      <widgets ref="15" width="277" text="Nombre Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" text="Descripción, Precio y demás datos del Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="19" x="16" y="373" width="108" height="48" text="Ver"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="111" x="246" y="643" measuredWidth="300" measuredHeight="438">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgets ref="12" text="Foto Producto"/>
+      <widgets ref="15" width="277" text="Nombre Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" text="Descripción, Precio y demás datos del Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="19" x="16" y="373" width="108" height="48" text="Ver"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="113" x="563" y="643" measuredWidth="300" measuredHeight="438">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgets ref="12" text="Foto Producto"/>
+      <widgets ref="15" width="277" text="Nombre Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" text="Descripción, Precio y demás datos del Producto">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="19" x="16" y="373" width="108" height="48" text="Ver"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="115" x="464" y="567" measuredWidth="75" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Link"/>
+    <overrides>
+      <widgets ref="44" text="Agregar al\nCarrito {assets/gl-shopping-cart}">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="116" x="781" y="568" measuredWidth="75" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Link"/>
+    <overrides>
+      <widgets ref="44" text="Agregar al\nCarrito {assets/gl-shopping-cart}">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="117" x="1096" y="568" measuredWidth="75" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Link"/>
+    <overrides>
+      <widgets ref="44" text="Agregar al\nCarrito {assets/gl-shopping-cart}">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="118" x="464" y="1013" measuredWidth="75" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Link"/>
+    <overrides>
+      <widgets ref="44" text="Agregar al\nCarrito {assets/gl-shopping-cart}">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="119" x="781" y="1013" measuredWidth="75" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Link"/>
+    <overrides>
+      <widgets ref="44" text="Agregar al\nCarrito {assets/gl-shopping-cart}">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="120" x="1096" y="1015" measuredWidth="75" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Link"/>
+    <overrides>
+      <widgets ref="44" text="Agregar al\nCarrito {assets/gl-shopping-cart}">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="122" x="1008" y="120" measuredWidth="170" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="170" text="Cod. Producto {find}">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Link" id="123" x="928" y="168" text="Ordenar por precio (Menor a Mayor)" measuredWidth="245" measuredHeight="28">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="14px"/>
+</model:Screen>

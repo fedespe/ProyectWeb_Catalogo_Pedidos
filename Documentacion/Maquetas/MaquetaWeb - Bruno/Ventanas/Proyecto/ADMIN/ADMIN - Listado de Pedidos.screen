@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Browser" id="12" x="-8" y="-16" width="1256" height="1160" text="Browser&#xA;Administrador - Pedidos" measuredWidth="1256" measuredHeight="1160">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="35" x="8" y="1086" measuredWidth="1224" measuredHeight="48">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Content.screen#Well%20Large"/>
+    <overrides>
+      <widgets ref="46" x="15" y="12" width="1193" height="24" text="Footer: Datos de la empresa"/>
+      <widgets ref="45" width="1224" height="48"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="36" x="8" y="46" measuredWidth="1224" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Navigation.screen#Navbar"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Insert" newIndex="6">
+        <object xsi:type="model:ButtonBar" id="50" x="930" y="4" height="46" text="Gestión, Pedidos\nSin Confirmar (4), Salir" layoutParams="anchor-left|anchor-middle" background="#ccc" skin="../assets/Bootstrap/_pills.svg">
+          <font size="14px"/>
+          <items text="Gestión"/>
+          <items text="Pedidos\nSin Confirmar (4)"/>
+          <items text="Salir"/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Delete" ref="25"/>
+      <widgetChanges xsi:type="o:Delete" ref="24"/>
+      <widgetChanges xsi:type="o:Delete" ref="28"/>
+      <widgets ref="20" width="1224"/>
+      <widgets ref="19" text="Destacados, Catálogo de Productos, Contacto, Nosotros">
+        <attributes key="selection" value="-1"/>
+        <items ref="@items.0" text="Destacados"/>
+        <items ref="@items.1" text="Catálogo de Productos"/>
+        <items ref="@items.2" text="Contacto"/>
+        <itemChanges xsi:type="o:Insert" newIndex="3">
+          <object xsi:type="model:Item" text="Nosotros"/>
+        </itemChanges>
+      </widgets>
+      <widgets ref="21" text="Logo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Note" id="49" x="704" y="992" width="528" height="80" text="Esta es la página que verá el administrador donde se muestran todos los pedidos con su correspondiente estado, permitiendo acceder a los detalles de cada uno, así como ordenarlos o filtrarlos de diferentes formas." measuredWidth="528" measuredHeight="80">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="52" x="23" y="184" measuredWidth="206" measuredHeight="564">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Button%20Group%20Vertical"/>
+    <overrides>
+      <widgets ref="17" width="206" text="Pedidos{desc}&#xA;Listar Sin Confirmar&#xA;Listar Todos&#xA;Nuevo&#xA;ABM Productos{desc}&#xA;Listar&#xA;Nuevo&#xA;ABM Clientes{desc}&#xA;Listar&#xA;Nuevo&#xA;ABM Categorías{desc}&#xA;Listar&#xA;Nueva&#xA;ABM Filtros{desc}&#xA;Listar&#xA;Nuevo">
+        <attributes key="selection" value="2"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="53" x="240" y="248" measuredWidth="992" measuredHeight="311">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Content.screen#Table"/>
+    <overrides>
+      <widgets ref="51" width="992" text="(align:center).#, (align:center).Nombre\nUsuario,(align:center).Fecha de\nPedido v,(align:center)(w:30). Estado, (align:center).Monto Total, (align:center).Acciones&#xA;1,[Usuario Uno],15/01/2000,Nuevo,$5.000,[Detalles]&#xA;2,[Usuario Dos],10/01/2000,Nuevo,$3.500,[Detalles]&#xA;3,[Usuario Tres],05/01/2000,Nuevo,$15.000,[Detalles]&#xA;4,[Usuario Cuatro],01/01/2000,Modificado por Cliente,$5.000,[Detalles]&#xA;5,[Usuario Uno],01/01/2000,Modificado por Administrador,$5.000,[Detalles]&#xA;6,[Usuario Tres],15/12/1999,Cancelado,$15.000,[Detalles]&#xA;7,[Usuario Tres],01/12/1999,Confirmado,$15.000,[Detalles]">
+        <attributes key="border" value="true"/>
+        <attributes key="horizontalLines" value="false"/>
+        <attributes key="verticalLines" value="true"/>
+        <font underline="false"/>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Tres"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Tres"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Uno"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Cuatro"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Tres"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Dos"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Detalles"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert">
+          <object xsi:type="model:Item" text="Usuario Uno"/>
+        </itemChanges>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="54" x="240" y="184" measuredWidth="304" measuredHeight="56">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h1.%20Heading"/>
+    <overrides>
+      <widgets ref="1" text="Listado de Pedidos"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="55" x="70" y="135" measuredWidth="111" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h2.%20Heading"/>
+    <overrides>
+      <widgets ref="5" text="Gestión"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="66" x="23" y="815" measuredWidth="91" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="91" text="Desde">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="67" x="137" y="815" measuredWidth="92" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="92" text="Hasta">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="68" x="22" y="744" measuredWidth="207" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h2.%20Heading"/>
+    <overrides>
+      <widgets ref="5" width="207" text="Filtros">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="69" x="105" y="784" measuredWidth="46" measuredHeight="29">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h5.%20Heading"/>
+    <overrides>
+      <widgets ref="14" text="Fecha">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="70" x="22" y="887" measuredWidth="89" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="89" text="Desde">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="71" x="134" y="887" measuredWidth="92" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="92" text="Hasta">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="72" x="82" y="856" measuredWidth="85" measuredHeight="29">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Typography.screen#h5.%20Heading"/>
+    <overrides>
+      <widgets ref="14" text="Precio Total">
+        <font size="16px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="73" x="22" y="939" measuredWidth="205" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="205" text="Cliente">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="74" x="25" y="994" measuredWidth="206" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Forms.screen#Select"/>
+    <overrides>
+      <widgets ref="24" width="206" text="Estado"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="75" x="91" y="1048" measuredWidth="69" measuredHeight="34">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Bootstrap/Buttons.screen#Button"/>
+    <overrides>
+      <widgets ref="21" text="Filtrar">
+        <attributes key="style" value="round"/>
+        <attributes key="background" value="#cfe2f3"/>
+        <font size="19px" bold="false"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="14px"/>
+</model:Screen>

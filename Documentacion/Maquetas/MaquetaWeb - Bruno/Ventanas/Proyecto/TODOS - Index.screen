@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Browser" id="12" x="-8" y="-16" width="1256" height="1160" text="Browser&#xA;Pagina Principal" measuredWidth="1256" measuredHeight="1160">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Note" id="31" x="24" y="136" width="224" height="168" text="Esta página la verá cualquier persona al entrar, sin importar que no esté logueado (Sería la página principal)&#xD;&#xA;&#xD;&#xA;Se llega tanto desde el Logo como desde el boton &quot;Destacados&quot;del menú" measuredWidth="224" measuredHeight="168">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="33" x="288" y="119" measuredWidth="676" measuredHeight="372">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Navigation.screen#Carousel"/>
+    <overrides>
+      <widgets ref="59" width="676" height="372"/>
+      <widgets ref="60" height="372"/>
+      <widgets ref="61" height="372"/>
+      <widgets ref="62" y="170"/>
+      <widgets ref="63" x="576" height="372"/>
+      <widgets ref="64" height="372"/>
+      <widgets ref="65" y="170"/>
+      <widgets ref="66" y="253" width="676" text="Imagen"/>
+      <widgets ref="67" y="294" width="676" text="Texto para la Imagen"/>
+      <widgets ref="68" x="302" y="320"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="35" x="8" y="1086" measuredWidth="1224" measuredHeight="48">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Content.screen#Well%20Large"/>
+    <overrides>
+      <widgets ref="46" x="15" y="12" width="1193" height="24" text="Footer: Datos de la empresa"/>
+      <widgets ref="45" width="1224" height="48"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="36" x="8" y="46" measuredWidth="1224" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Navigation.screen#Navbar"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="25"/>
+      <widgetChanges xsi:type="o:Delete" ref="28"/>
+      <widgets ref="19" text="Destacados, Catálogo de Productos, Contacto, Nosotros">
+        <items ref="@items.0" text="Destacados"/>
+        <items ref="@items.1" text="Catálogo de Productos"/>
+        <items ref="@items.2" text="Contacto"/>
+        <itemChanges xsi:type="o:Insert" newIndex="3">
+          <object xsi:type="model:Item" text="Nosotros"/>
+        </itemChanges>
+      </widgets>
+      <widgets ref="24" x="1141" y="10" text="Ingresar">
+        <attributes key="style" value="round"/>
+        <attributes key="background" value="#9fc5e8"/>
+      </widgets>
+      <widgets ref="21" text="Logo"/>
+      <widgets ref="20" width="1224"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="37" x="832" y="53" measuredWidth="153" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="153" text="Usuario">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="38" x="992" y="52" measuredWidth="153" measuredHeight="40">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Forms.screen#Text%20Input"/>
+    <overrides>
+      <widgets ref="1" width="153" text="Contraseña">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="39" x="288" y="583" measuredWidth="208" measuredHeight="232">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgetChanges xsi:type="o:Delete" ref="19"/>
+      <widgets ref="15" x="10" y="152" width="188" text="Nombre Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" x="10" y="191" width="188" height="25" text="Descripción Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="11" width="208" height="232"/>
+      <widgets ref="12" x="8" y="8" width="192" height="139" text="Imagen Artículo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="43" x="522" y="582" measuredWidth="208" measuredHeight="232">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgetChanges xsi:type="o:Delete" ref="19"/>
+      <widgets ref="15" x="10" y="152" width="188" text="Nombre Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" x="10" y="191" width="188" height="25" text="Descripción Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="11" width="208" height="232"/>
+      <widgets ref="12" x="8" y="8" width="192" height="139" text="Imagen Artículo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="44" x="756" y="584" measuredWidth="208" measuredHeight="232">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgetChanges xsi:type="o:Delete" ref="19"/>
+      <widgets ref="15" x="10" y="152" width="188" text="Nombre Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" x="10" y="191" width="188" height="25" text="Descripción Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="11" width="208" height="232"/>
+      <widgets ref="12" x="8" y="8" width="192" height="139" text="Imagen Artículo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="45" x="288" y="841" measuredWidth="208" measuredHeight="232">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgetChanges xsi:type="o:Delete" ref="19"/>
+      <widgets ref="15" x="10" y="152" width="188" text="Nombre Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" x="10" y="191" width="188" height="25" text="Descripción Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="11" width="208" height="232"/>
+      <widgets ref="12" x="8" y="8" width="192" height="139" text="Imagen Artículo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="46" x="522" y="840" measuredWidth="208" measuredHeight="232">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgetChanges xsi:type="o:Delete" ref="19"/>
+      <widgets ref="15" x="10" y="152" width="188" text="Nombre Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" x="10" y="191" width="188" height="25" text="Descripción Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="11" width="208" height="232"/>
+      <widgets ref="12" x="8" y="8" width="192" height="139" text="Imagen Artículo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="47" x="756" y="842" measuredWidth="208" measuredHeight="232">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Media.screen#Thumbnail%20Content"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="21"/>
+      <widgetChanges xsi:type="o:Delete" ref="19"/>
+      <widgets ref="15" x="10" y="152" width="188" text="Nombre Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="17" x="10" y="191" width="188" height="25" text="Descripción Artículo">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+      <widgets ref="11" width="208" height="232"/>
+      <widgets ref="12" x="8" y="8" width="192" height="139" text="Imagen Artículo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="48" x="288" y="520" measuredWidth="676" measuredHeight="56">
+    <screen xsi:type="model:WidgetGroup" href="assets/Bootstrap/Typography.screen#h1.%20Heading"/>
+    <overrides>
+      <widgets ref="1" width="676" text="Artículos Destacados">
+        <attributes key="textAlignment" value="Center"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="14px"/>
+</model:Screen>

@@ -1,0 +1,28 @@
+﻿@model ET.Administrador
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>@(Model.Id > 0 ? Model.NombreUsuario : "Nuevo usuario")</h2>
+
+
+@using (Html.BeginForm("Guardar", "Administrador", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-group">
+        <label for="nombre">Nombre</label><br />
+        @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre" })
+    </div>
+
+    if (Model.Id == 0)
+    {
+        <div class="form-group">
+            <label for="pass">Password</label><br />
+            @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password" })
+        </div>      
+    }
+
+    <button type="submit" class="btn btn-default">Enviar</button>
+}
+

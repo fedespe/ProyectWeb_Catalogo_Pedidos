@@ -1,5 +1,0 @@
-C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Utilidades\bin\Debug\Utilidades.dll
-C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Utilidades\bin\Debug\Utilidades.pdb
-C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Utilidades\obj\Debug\Utilidades.csprojResolveAssemblyReference.cache
-C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Utilidades\obj\Debug\Utilidades.dll
-C:\Users\usuario\Documents\GitHub\Proyecto - Catalogo Pedidos\Proyecto\AppProyecto\Utilidades\obj\Debug\Utilidades.pdb

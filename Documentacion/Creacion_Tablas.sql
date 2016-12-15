@@ -27,7 +27,7 @@ CREATE TABLE CLIENTE
 	Usuario NVARCHAR(20) NOT NULL,
 	Contrasenia NVARCHAR(MAX) NOT NULL,
 	NombreFantasia NVARCHAR(100),
-	Rut INT,
+	Rut NVARCHAR(50),
 	RazonSocial NVARCHAR(100),
 	Descuento NUMERIC(5,2) NOT NULL,
 	DiasDePago NVARCHAR(50),

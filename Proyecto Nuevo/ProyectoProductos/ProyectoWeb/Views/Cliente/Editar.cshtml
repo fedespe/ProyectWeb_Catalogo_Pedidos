@@ -1,0 +1,78 @@
+﻿@model ET.Cliente
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>@(Model.Id > 0 ? Model.NombreUsuario : "Nuevo Usuario")</h2>
+
+
+@using (Html.BeginForm("Guardar", "Cliente", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-group">
+        <label for="nombreUsuario">Nombre Usuario</label><br />
+        @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+    </div>
+
+    if (Model.Id == 0)
+    {
+        <div class="form-group">
+            <label for="pass">Password</label><br />
+            @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password" })
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="nombreFantasia">Nombre Fantasía</label><br />
+        @Html.TextBoxFor(x => x.NombreFantasia, new { @id = "nombreFantasia", @class = "form-control", @placeholder = "Nombre Fantasía" })
+    </div>
+
+    <div class="form-group">
+        <label for="rut">Rut</label><br />
+        @Html.TextBoxFor(x => x.Rut, new { @id = "rut", @class = "form-control", @placeholder = "Rut" })
+    </div>
+
+    <div class="form-group">
+        <label for="razSoc">Razón Social</label><br />
+        @Html.TextBoxFor(x => x.RazonSocial, new { @id = "razSoc", @class = "form-control", @placeholder = "Razón Social" })
+    </div>
+
+    <div class="form-group">
+        <label for="descuento">% Descuento</label><br />
+        @Html.TextBoxFor(x => x.Descuento, new { @id = "descuento", @class = "form-control", @placeholder = "% Descuento" })
+    </div>
+
+    <div class="form-group">
+        <label for="diasPago">Dias de Pago</label><br />
+        @Html.TextBoxFor(x => x.DiasDePago, new { @id = "diasPago", @class = "form-control", @placeholder = "Dias de Pago" })
+    </div>
+
+    <div class="form-group">
+        <label for="dir">Dirección</label><br />
+        @Html.TextBoxFor(x => x.Direccion, new { @id = "dir", @class = "form-control", @placeholder = "Dirección" })
+    </div>
+
+    <div class="form-group">
+        <label for="tel">Teléfono</label><br />
+        @Html.TextBoxFor(x => x.Telefono, new { @id = "tel", @class = "form-control", @placeholder = "Teléfono" })
+    </div>
+
+    <div class="form-group">
+        <label for="nombreContacto">Nombre Contacto</label><br />
+        @Html.TextBoxFor(x => x.NombreDeContacto, new { @id = "nombreContacto", @class = "form-control", @placeholder = "Nombre de Contacto" })
+    </div>
+
+    <div class="form-group">
+        <label for="telContacto">Teléfono Contacto</label><br />
+        @Html.TextBoxFor(x => x.TelefonoDeContacto, new { @id = "telContacto", @class = "form-control", @placeholder = "Teléfono de Contacto" })
+    </div>
+
+    <div class="form-group">
+        <label for="foto">Foto</label><br />
+        @Html.TextBoxFor(x => x.Foto, new { @id = "foto", @class = "form-control", @placeholder = "Foto" })
+    </div>
+
+    <button type="submit" class="btn btn-default">Guardar</button>
+}
+

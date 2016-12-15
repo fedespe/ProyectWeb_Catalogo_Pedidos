@@ -7,3 +7,12 @@ C:\Users\Usuario\Desktop\ProyectoProductos\BL\bin\Debug\ET.pdb
 C:\Users\Usuario\Desktop\ProyectoProductos\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
 C:\Users\Usuario\Desktop\ProyectoProductos\BL\obj\Debug\BL.dll
 C:\Users\Usuario\Desktop\ProyectoProductos\BL\obj\Debug\BL.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\BL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\BL.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\DAL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\ET.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\DAL.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\ET.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.pdb

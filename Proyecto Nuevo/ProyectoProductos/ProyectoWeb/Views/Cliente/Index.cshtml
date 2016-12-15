@@ -1,0 +1,48 @@
+﻿@model List<ET.Cliente>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Clientes</h2>
+
+<table style="width:500px" class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:left;">Nombre Usuario</th>
+            <th style="text-align:left;">Nombre Fanasia</th>
+            <th style="text-align:left;">Rut</th>
+            <th style="text-align:left;">Razón Social</th>
+            <th style="text-align:left;">% Descuento</th>
+            <th style="text-align:left;">Días de Pago</th>
+            <th style="text-align:left;">Dirección</th>
+            <th style="text-align:left;">Teléfono</th>
+            <th style="text-align:left;">Nombre de Contacto</th>
+            <th style="text-align:left;">Teléfono de Contacto</th>
+            <th style="text-align:left;">Imagen</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.NombreUsuario</td>
+                <td>@c.NombreFantasia</td>
+                <td>@c.Rut</td>
+                <td>@c.RazonSocial</td>
+                <td>@c.Descuento</td>
+                <td>@c.DiasDePago</td>
+                <td>@c.Direccion</td>
+                <td>@c.Telefono</td>
+                <td>@c.NombreDeContacto</td>
+                <td>@c.TelefonoDeContacto</td>
+                <td>@c.Foto</td>
+                <td style="width:200px;">
+                    <a title="Editar" href="~/Cliente/Editar/@c.Id">Editar</a>
+                    |
+                    <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Cliente/Eliminar/@c.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

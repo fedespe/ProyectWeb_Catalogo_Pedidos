@@ -8,14 +8,14 @@ using System.Web.Mvc;
 
 namespace ProyectoWeb.Controllers
 {
-    public class AdministradorController : Controller
+    public class ClienteController : Controller
     {
-        private AdministradorBL administradorBL = new AdministradorBL();
+        private ClienteBL clienteBL = new ClienteBL();
 
         public ActionResult Index()
         {
             try {
-                return View(administradorBL.obtenerTodos());
+                return View(clienteBL.obtenerTodos());
             }
             catch (ProyectoException ex)
             {
@@ -27,7 +27,7 @@ namespace ProyectoWeb.Controllers
         public ActionResult Editar(int id = 0)
         {
             try {
-                return View(id == 0 ? new Administrador() : administradorBL.obtener(id));
+                return View(id == 0 ? new Cliente() : clienteBL.obtener(id));
             }
             catch (ProyectoException ex)
             {
@@ -36,16 +36,16 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        public ActionResult Guardar(Administrador admin)
+        public ActionResult Guardar(Cliente cli)
         {
             try {
                 bool r = true;
-                if (admin.Id > 0)
+                if (cli.Id > 0)
                 {
-                    r = administradorBL.actualizar(admin);
+                    r = clienteBL.actualizar(cli);
                 }
                 else {
-                    administradorBL.registrar(admin);
+                    clienteBL.registrar(cli);
                 }
                 if (!r)
                 {
@@ -56,7 +56,7 @@ namespace ProyectoWeb.Controllers
 
                 return Redirect("~/");
             }
-            catch (ProyectoException ex)
+            catch(ProyectoException ex)
             {
                 ViewBag.Mensaje = ex.Message;
                 return View("~/Views/Shared/_Mensajes.cshtml");
@@ -66,7 +66,7 @@ namespace ProyectoWeb.Controllers
         public ActionResult Eliminar(int id)
         {
             try {
-                var r = administradorBL.eliminar(id);
+                var r = clienteBL.eliminar(id);
 
                 if (!r)
                 {

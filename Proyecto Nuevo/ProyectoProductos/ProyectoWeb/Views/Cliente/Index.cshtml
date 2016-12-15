@@ -8,6 +8,7 @@
 <table style="width:500px" class="table table-striped">
     <thead>
         <tr>
+            <th style="text-align:left;">Imagen</th>
             <th style="text-align:left;">Nombre Usuario</th>
             <th style="text-align:left;">Nombre Fanasia</th>
             <th style="text-align:left;">Rut</th>
@@ -18,7 +19,6 @@
             <th style="text-align:left;">Teléfono</th>
             <th style="text-align:left;">Nombre de Contacto</th>
             <th style="text-align:left;">Teléfono de Contacto</th>
-            <th style="text-align:left;">Imagen</th>
         </tr>
     </thead>
 
@@ -26,6 +26,9 @@
         @foreach (var c in Model)
         {
             <tr>
+                <td>
+                    <img src=@("data:image/gif;base64," + c.Foto) height="150" width="150" />
+                </td>
                 <td>@c.NombreUsuario</td>
                 <td>@c.NombreFantasia</td>
                 <td>@c.Rut</td>
@@ -36,7 +39,6 @@
                 <td>@c.Telefono</td>
                 <td>@c.NombreDeContacto</td>
                 <td>@c.TelefonoDeContacto</td>
-                <td>@c.Foto</td>
                 <td style="width:200px;">
                     <a title="Editar" href="~/Cliente/Editar/@c.Id">Editar</a>
                     |

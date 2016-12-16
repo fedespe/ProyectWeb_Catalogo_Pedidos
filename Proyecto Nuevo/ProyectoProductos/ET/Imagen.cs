@@ -8,6 +8,7 @@ namespace ET
 {
     public class Imagen
     {
-        public string Foto { get; set; }
+        public int Id { get; set; }
+        public string Img { get; set; }
     }
 }

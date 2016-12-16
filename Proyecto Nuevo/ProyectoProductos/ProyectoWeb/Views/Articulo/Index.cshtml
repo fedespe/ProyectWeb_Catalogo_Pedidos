@@ -1,0 +1,46 @@
+﻿@model List<ET.Articulo>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Articulos</h2>
+
+<table style="width:500px" class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:left;">Codigo</th>
+            <th style="text-align:left;">Nombre</th>
+            <th style="text-align:left;">Descripción</th>
+            <th style="text-align:left;">Precio</th>
+            <th style="text-align:left;">Stock</th>
+            <th style="text-align:left;">Disponible</th>
+            <th style="text-align:left;">Destacado</th>            
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Codigo</td>
+                <td>@c.Nombre</td>
+                <td>@c.Descripcion</td>
+                <td>@c.Precio</td>
+                <td>@c.Stock</td>
+                <td>@c.Disponible</td>
+                <td>@c.Destacado</td>
+                <td style="width:200px;">
+                    <a title="Editar" href="~/Articulo/Editar/@c.Id">Editar</a>
+                    |
+                    <a title="Inhabilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Inhabilitar/@c.Id">Inhabilitar</a>
+                    |
+                    <a title="Habilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Habilitar/@c.Id">Habilitar</a>
+                    |
+                    <a title="Destacar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Destacar/@c.Id">Destacar</a>
+                    |
+                    <a title="QuitarDestacado" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/QuitarDestacado/@c.Id">Quitar destacado</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

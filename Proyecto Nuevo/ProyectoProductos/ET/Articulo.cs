@@ -15,7 +15,8 @@ namespace ET
         public double Precio { get; set; }
         public int Stock { get; set; }
         public bool Destacado { get; set; }
-        public List<Imagen> Fotos { get; set; }
+        public bool Disponible { get; set; }
+        public List<Imagen> Imagenes { get; set; }
         public List<Categoria> Categorias { get; set; }
         public List<Filtro> Filtros { get; set; }
     }

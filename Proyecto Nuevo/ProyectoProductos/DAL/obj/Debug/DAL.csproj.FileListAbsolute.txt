@@ -12,3 +12,10 @@ C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\Proye
 C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.dll
 C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.pdb
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.dll
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.pdb
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.dll
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.pdb
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.dll
+C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.pdb

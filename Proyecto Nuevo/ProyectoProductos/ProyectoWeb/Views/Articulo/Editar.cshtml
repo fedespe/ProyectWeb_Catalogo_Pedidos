@@ -1,0 +1,98 @@
+﻿@model ET.Articulo
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>@(Model.Id > 0 ? Model.Nombre : "Nuevo Articulo")</h2>
+
+
+@using (Html.BeginForm("Guardar", "Articulo", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    if (Model.Id != 0)
+    {
+        foreach (var i in Model.Imagenes)
+        {
+            <img src=@("data:image/gif;base64," + i.Img) height="150" width="150" />
+        }        
+    }
+    else
+    {
+        <div class="form-group">
+            <label for="foto">Foto</label><br />
+            <input id="foto" type="file" />
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="Codigo">Codigo</label><br />
+        @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
+    </div>
+
+    <div class="form-group">
+        <label for="Nombre">Nombre</label><br />
+        @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre" })
+    </div>
+
+    <div class="form-group">
+        <label for="descripcion">Descripción</label><br />
+        @Html.TextBoxFor(x => x.Descripcion, new { @id = "descripcion", @class = "form-control", @placeholder = "Descripción" })
+    </div>
+
+    <div class="form-group">
+        <label for="precio">Precio</label><br />
+        @Html.TextBoxFor(x => x.Precio, new { @id = "precio", @class = "form-control", @placeholder = "Precio" })
+    </div>
+
+    <div class="form-group">
+        <label for="stock">Stock</label><br />
+        @Html.TextBoxFor(x => x.Stock, new { @id = "stock", @class = "form-control", @placeholder = "Stock" })
+    </div>
+
+    <div class="form-group">
+        <label for="disponible">Disponible</label><br />
+        @Html.TextBoxFor(x => x.Disponible, new { @id = "disponible", @class = "form-control", @placeholder = "Dsiponible" })
+    </div>
+
+    <div class="form-group">
+        <label for="destacado">Destacado</label><br />
+        @Html.TextBoxFor(x => x.Destacado, new { @id = "destacado", @class = "form-control", @placeholder = "Destacado" })
+    </div>
+    if (Model.Id != 0)
+    {
+        foreach (var f in Model.Filtros)
+        {
+            <div class="form-group">
+                <label>@f.Nombre</label><br />
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="form-group">
+            <label>Seleccione Filtros</label><br />
+        </div>
+    }
+    if (Model.Id != 0)
+    {
+        foreach (var c in Model.Categorias)
+        {
+            <div class="form-group">
+                <label>@c.Nombre</label><br />
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="form-group">
+            <label>Seleccione Categoria</label><br />
+        </div>
+    }
+
+
+    <button type="submit" class="btn btn-default">Guardar</button>
+}
+

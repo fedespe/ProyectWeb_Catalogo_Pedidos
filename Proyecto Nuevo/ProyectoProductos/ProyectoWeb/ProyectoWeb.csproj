@@ -246,6 +246,7 @@
     <Content Include="Views\Articulo\Editar.cshtml" />
     <Content Include="Views\Cliente\ListaClientes.cshtml" />
     <Content Include="Views\Cliente\Crear.cshtml" />
+    <Content Include="Views\Cliente\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

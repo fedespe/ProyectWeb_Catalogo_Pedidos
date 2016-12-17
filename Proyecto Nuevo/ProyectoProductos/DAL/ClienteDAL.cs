@@ -258,7 +258,7 @@ namespace DAL
                         }
                     }
 
-                    cmd = new SqlCommand("DELETE FROM Cliente WHERE id = @id", con);
+                    cmd.CommandText =@"DELETE FROM Cliente WHERE id = @id";
                     
                     return cmd.ExecuteNonQuery() == 1;
                 }

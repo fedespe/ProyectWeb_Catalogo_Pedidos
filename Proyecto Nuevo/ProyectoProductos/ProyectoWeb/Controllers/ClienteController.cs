@@ -45,21 +45,30 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult Crear(ClienteViewModel cliVM)
         {
-            try
+            if (ModelState.IsValid)
             {
-                //Le coloco el nombre con cual voy a guardar el archivo  
-                //Para no guardar el archivo por si da problemas al ingresar los datos     
-                cliVM.colocarRuta();
-                clienteBL.registrar(cliVM.cliente);
-                //Guardo archivo
-                cliVM.mapear();
-                return Redirect("~/");
+                try
+                {
+                    //Falta encriptar password
+                    //Le coloco el nombre con cual voy a guardar el archivo  
+                    //Para no guardar el archivo por si da problemas al ingresar los datos     
+                    cliVM.colocarRuta();
+                    clienteBL.registrar(cliVM.cliente);
+                    //Guardo archivo
+                    cliVM.guardarArchivo();
+                    return Redirect("~/");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
-            {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+            else {
+                return View(cliVM);
             }
+
+            
         }
 
         //GET: Cliente/Editar
@@ -71,6 +80,8 @@ namespace ProyectoWeb.Controllers
                 {
                     ClienteViewModel cliVM = new ClienteViewModel();
                     cliVM.cliente = clienteBL.obtener(id);
+                    cliVM.ImgAnterior = cliVM.cliente.Foto;//Es para manejo de archivo a la hora de guardar
+                    cliVM.cliente.Password = "validacion";//Es colo para validar el modelo
                     return View(cliVM);
                 }
                 else {
@@ -88,22 +99,57 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult Editar(ClienteViewModel cliVM)
         {
-            try
+            if (ModelState.IsValid)
             {
-                //Le coloco el nombre con cual voy a guardar el archivo  
-                //Para no guardar el archivo por si da problemas al ingresar los datos     
-                cliVM.colocarRuta();
-                bool r = true;
+                try
+                {
+                    //Le coloco el nombre con cual voy a guardar el archivo  
+                    //Para no guardar el archivo por si da problemas al ingresar los datos     
+                    cliVM.colocarRuta();
+                    bool r = true;
 
-                r = clienteBL.actualizar(cliVM.cliente);
+                    r = clienteBL.actualizar(cliVM.cliente);
 
-                if (!r)
+                    if (!r)
+                    {
+                        // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
+                        ViewBag.Mensaje = "Ocurrio un error inesperado";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                    cliVM.guardarArchivo();
+                    return Redirect("~/");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else {
+                return View(cliVM);
+            }
+        }
+
+        
+
+        public ActionResult Eliminar(int id)
+        {
+            try {
+                //para poder borrar la imagen
+                ClienteViewModel cliVM = new ClienteViewModel();
+                cliVM.cliente = clienteBL.obtener(id);
+
+                bool r = clienteBL.eliminar(id);
+
+                if (r) {
+                    cliVM.eliminarArchivo();
+                }else
                 {
                     // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
                     ViewBag.Mensaje = "Ocurrio un error inesperado";
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
-                cliVM.mapear();
+
                 return Redirect("~/");
             }
             catch (ProyectoException ex)
@@ -113,21 +159,36 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        
-
-        public ActionResult Eliminar(int id)
+        //GET: Cliente/LogIn
+        public ActionResult Login()
         {
-            try {
-                var r = clienteBL.eliminar(id);
+            try
+            {
+                return View(new Cliente());
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
 
-                if (!r)
+        //POST: Usuario/LogIn
+        [HttpPost]
+        public ActionResult Login(Cliente cliente)
+        {
+            try
+            {
+                //Falta codificacion de password
+                Cliente cli= clienteBL.login(cliente.NombreUsuario,cliente.Password);
+                if (cli != null)
                 {
-                    // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
-                    ViewBag.Mensaje = "Ocurrio un error inesperado";
-                    return View("~/Views/Shared/_Mensajes.cshtml");
+                        Session["UsuarioId"] = cli.Id;
+                        Session["UsuarioNombre"] = cli.NombreUsuario;
+                        return RedirectToAction("Index", "Home");
                 }
 
-                return Redirect("~/");
+                return RedirectToAction("Login", "Cliente");
             }
             catch (ProyectoException ex)
             {

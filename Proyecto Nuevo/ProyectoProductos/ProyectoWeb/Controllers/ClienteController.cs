@@ -1,5 +1,6 @@
 ﻿using BL;
 using ET;
+using ProyectoWeb.ViewModel.ClienteViewModel;
 using ProyectoWeb.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace ProyectoWeb.Controllers
         {
             try
             {
-                return View(new ClienteViewModel());
+                return View(new CrearViewModel());
             }
             catch (ProyectoException ex)
             {
@@ -43,7 +44,7 @@ namespace ProyectoWeb.Controllers
         }
         //POST: Cliente/Crear
         [HttpPost]
-        public ActionResult Crear(ClienteViewModel cliVM)
+        public ActionResult Crear(CrearViewModel crearVM)
         {
             if (ModelState.IsValid)
             {
@@ -52,10 +53,10 @@ namespace ProyectoWeb.Controllers
                     //Falta encriptar password
                     //Le coloco el nombre con cual voy a guardar el archivo  
                     //Para no guardar el archivo por si da problemas al ingresar los datos     
-                    cliVM.colocarRuta();
-                    clienteBL.registrar(cliVM.cliente);
+                    crearVM.completarCliente();
+                    clienteBL.registrar(crearVM.cliente);
                     //Guardo archivo
-                    cliVM.guardarArchivo();
+                    crearVM.guardarArchivo();
                     return Redirect("~/");
                 }
                 catch (ProyectoException ex)
@@ -65,7 +66,7 @@ namespace ProyectoWeb.Controllers
                 }
             }
             else {
-                return View(cliVM);
+                return View(crearVM);
             }
 
             
@@ -78,11 +79,11 @@ namespace ProyectoWeb.Controllers
             {
                 if (id != 0)
                 {
-                    ClienteViewModel cliVM = new ClienteViewModel();
-                    cliVM.cliente = clienteBL.obtener(id);
-                    cliVM.ImgAnterior = cliVM.cliente.Foto;//Es para manejo de archivo a la hora de guardar
-                    cliVM.cliente.Password = "validacion";//Es colo para validar el modelo
-                    return View(cliVM);
+                    EditarViewModel editVM = new EditarViewModel();
+                    editVM.cliente = clienteBL.obtener(id);
+                    editVM.completarEditarVM();//Es para manejo de archivo a la hora de guardar
+                    //editVM.cliente.Password = "validacion";//Es colo para validar el modelo
+                    return View(editVM);
                 }
                 else {
                     return RedirectToAction("Crear", "Cliente");
@@ -97,7 +98,7 @@ namespace ProyectoWeb.Controllers
 
         //POST: Cliente/Editar
         [HttpPost]
-        public ActionResult Editar(ClienteViewModel cliVM)
+        public ActionResult Editar(EditarViewModel editVM)
         {
             if (ModelState.IsValid)
             {
@@ -105,10 +106,10 @@ namespace ProyectoWeb.Controllers
                 {
                     //Le coloco el nombre con cual voy a guardar el archivo  
                     //Para no guardar el archivo por si da problemas al ingresar los datos     
-                    cliVM.colocarRuta();
+                    editVM.completarCliente();
                     bool r = true;
 
-                    r = clienteBL.actualizar(cliVM.cliente);
+                    r = clienteBL.actualizar(editVM.cliente);
 
                     if (!r)
                     {
@@ -116,7 +117,7 @@ namespace ProyectoWeb.Controllers
                         ViewBag.Mensaje = "Ocurrio un error inesperado";
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
-                    cliVM.guardarArchivo();
+                    editVM.guardarArchivo();
                     return Redirect("~/");
                 }
                 catch (ProyectoException ex)
@@ -126,7 +127,7 @@ namespace ProyectoWeb.Controllers
                 }
             }
             else {
-                return View(cliVM);
+                return View(editVM);
             }
         }
 
@@ -136,13 +137,13 @@ namespace ProyectoWeb.Controllers
         {
             try {
                 //para poder borrar la imagen
-                ClienteViewModel cliVM = new ClienteViewModel();
-                cliVM.cliente = clienteBL.obtener(id);
+                EditarViewModel editVM = new EditarViewModel();
+                editVM.cliente = clienteBL.obtener(id);
 
                 bool r = clienteBL.eliminar(id);
 
                 if (r) {
-                    cliVM.eliminarArchivo();
+                    editVM.eliminarArchivo();
                 }else
                 {
                     // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL

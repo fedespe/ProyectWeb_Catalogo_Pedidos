@@ -13,13 +13,13 @@ namespace ET
     {
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "Nombre Usuario")]
+        //[Required]
+        //[Display(Name = "Nombre Usuario")]
         public string NombreUsuario { get; set; }
 
-        [Required]
-        [Display(Name = "Password")]
-        [DataType(DataType.Password)]
+        //[Required]
+        //[Display(Name = "Password")]
+        //[DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

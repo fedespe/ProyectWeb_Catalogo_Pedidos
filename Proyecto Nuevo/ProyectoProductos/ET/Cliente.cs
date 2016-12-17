@@ -9,38 +9,38 @@ namespace ET
 {
     public class Cliente : Usuario
     {
-        [Required]
-        [Display(Name = "Nombre Fantasía")]
+        //[Required]
+        //[Display(Name = "Nombre Fantasía")]
         public string NombreFantasia { get; set; }
 
-        [Required]
-        [Display(Name = "Rut")]
+        //[Required]
+        //[Display(Name = "Rut")]
         public string Rut { get; set; }
 
-        [Required]
-        [Display(Name = "Razón Social")]
+        //[Required]
+        //[Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }
 
-        [Required]
-        [Display(Name = "Descuento")]
-        [Range(0, double.MaxValue)]
+        //[Required]
+        //[Display(Name = "Descuento")]
+        //[Range(0, double.MaxValue)]
         public double Descuento { get; set; }
 
-        [Display(Name = "Días de pago")]
+        //[Display(Name = "Días de pago")]
         public string DiasDePago { get; set; }
 
-        [Display(Name = "Dirección")]
-        [DataType(DataType.MultilineText)]
+        //[Display(Name = "Dirección")]
+        //[DataType(DataType.MultilineText)]
         public string Direccion { get; set; }
 
-        [Display(Name = "Teléfono")]
-        [DataType(DataType.PhoneNumber)]
+        //[Display(Name = "Teléfono")]
+        //[DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
 
-        [Display(Name = "Nombre de Contacto")]
+        //[Display(Name = "Nombre de Contacto")]
         public string NombreDeContacto { get; set; }
 
-        [Display(Name = "Teléfono de Contacto")]
+        //[Display(Name = "Teléfono de Contacto")]
         public string TelefonoDeContacto { get; set; }
 
         public string Foto { get; set; }

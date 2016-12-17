@@ -1,20 +1,18 @@
 ﻿@model ProyectoWeb.ViewModel.ClienteViewModel
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "Crear";
 }
 
-<h2>@(Model.cliente.NombreUsuario)</h2>
-
-
-@using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<h2>Nuevo Usuario</h2>
+@using (Html.BeginForm("Crear", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(x => x.cliente.Id)
 
     <div class="form-group">
         <label>Foto</label><br />
-        <img src=@("/Imagenes/Clientes/" + Model.cliente.Foto) height="150" width="150" />
+        <img src=@("/Imagenes/Clientes/NuevoMuestra.jpg") height="150" width="150" />
     </div>
-   
+
     <div class="editor-label">
         @Html.LabelFor(model => model.Archivo)
     </div>
@@ -27,6 +25,12 @@
         <label for="nombreUsuario">Nombre Usuario</label><br />
         @Html.TextBoxFor(x => x.cliente.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
     </div>
+
+    <div class="form-group">
+        <label for="pass">Password</label><br />
+        @Html.TextBoxFor(x => x.cliente.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password" })
+    </div>
+    
 
     <div class="form-group">
         <label for="nombreFantasia">Nombre Fantasía</label><br />
@@ -75,7 +79,4 @@
 
     <button type="submit" class="btn btn-default">Guardar</button>
 }
-
-
-
 

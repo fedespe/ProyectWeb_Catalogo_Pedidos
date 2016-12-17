@@ -10,12 +10,13 @@
 {
     @Html.HiddenFor(x => x.Id)
 
+
     if (Model.Id != 0)
     {
         foreach (var i in Model.Imagenes)
         {
             <img src=@("data:image/gif;base64," + i.Img) height="150" width="150" />
-        }        
+        }
     }
     else
     {

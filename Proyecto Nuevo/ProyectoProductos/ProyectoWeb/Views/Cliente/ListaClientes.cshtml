@@ -1,9 +1,11 @@
 ﻿@model List<ET.Cliente>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ListaClientes";
 }
 
-<h2>Clientes</h2>
+<h2>ListaUsuarios</h2>
+
+<a title="Crear" href="~/Cliente/Crear/">Crear Nuevo</a>
 
 <table style="width:500px" class="table table-striped">
     <thead>
@@ -27,7 +29,8 @@
         {
             <tr>
                 <td>
-                    <img src=@("data:image/gif;base64," + c.Foto) height="150" width="150" />
+                    @*<img src=@("data:image/gif;base64," + c.Foto) height="150" width="150" />*@
+                    <img src=@("/Imagenes/Clientes/" + c.Foto) height="150" width="150" />
                 </td>
                 <td>@c.NombreUsuario</td>
                 <td>@c.NombreFantasia</td>
@@ -48,3 +51,5 @@
         }
     </tbody>
 </table>
+
+

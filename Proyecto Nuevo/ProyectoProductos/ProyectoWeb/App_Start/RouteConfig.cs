@@ -17,7 +17,7 @@ namespace ProyectoWeb
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 //defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-                defaults: new { controller = "Articulo", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Cliente", action = "ListaClientes", id = UrlParameter.Optional }
             );
         }
     }

@@ -93,7 +93,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand(@"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.Id AND IdArticulo =@id", con);
+                    SqlCommand cmd = new SqlCommand(@"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.IdFiltro AND IdArticulo =@id", con);
                     cmd.Parameters.AddWithValue("@id", idArticulo);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -128,7 +128,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand(@"SELECT c.* FROM ARTICULO_CATEGORIA ac, CATEGORIA c WHERE c.Id=ac.Id AND IdArticulo =@id", con);
+                    SqlCommand cmd = new SqlCommand(@"SELECT c.* FROM ARTICULO_CATEGORIA ac, CATEGORIA c WHERE c.Id=ac.IdCategoria AND IdArticulo =@id", con);
                     cmd.Parameters.AddWithValue("@id", idArticulo);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -205,7 +205,7 @@ namespace DAL
                     }
                     //AGREGO FILTROS
                     cmd.Parameters.Clear();
-                    cmd.CommandText = @"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.Id AND IdArticulo =@id";
+                    cmd.CommandText = @"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.IdFiltro AND IdArticulo =@id";
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -222,7 +222,7 @@ namespace DAL
                     }
                     //AGREGO CATEGORIAS
                     cmd.Parameters.Clear();
-                    cmd.CommandText = @"SELECT c.* FROM ARTICULO_CATEGORIA ac, CATEGORIA c WHERE c.Id=ac.Id AND IdArticulo =@id";
+                    cmd.CommandText = @"SELECT c.* FROM ARTICULO_CATEGORIA ac, CATEGORIA c WHERE c.Id=ac.IdCategoria AND IdArticulo =@id";
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -279,7 +279,7 @@ namespace DAL
                     if (res) {
                         //ACTUALIZO IMAGENES 
                         cmd.Parameters.Clear();
-                        cmd.CommandText = @"Delete FROM Imagen WHERE id = @id";
+                        cmd.CommandText = @"Delete FROM Imagen WHERE IdArticulo = @id";
                         cmd.Parameters.AddWithValue("@id", articulo.Id);
                         cmd.ExecuteNonQuery();
                         foreach (Imagen i in articulo.Imagenes) {
@@ -296,7 +296,7 @@ namespace DAL
                         //ACTUALIZO FILTROS
                         if (res) {
                             cmd.Parameters.Clear();
-                            cmd.CommandText = @"Delete FROM Filtro_Articulo WHERE id = @id";
+                            cmd.CommandText = @"Delete FROM Filtro_Articulo WHERE IdArticulo = @id";
                             cmd.Parameters.AddWithValue("@id", articulo.Id);
                             cmd.ExecuteNonQuery();
                             foreach (Filtro f in articulo.Filtros)
@@ -316,7 +316,7 @@ namespace DAL
                         if (res)
                         {
                             cmd.Parameters.Clear();
-                            cmd.CommandText = @"Delete FROM Articulo_Categoria WHERE id = @id";
+                            cmd.CommandText = @"Delete FROM Articulo_Categoria WHERE IdArticulo = @id";
                             cmd.Parameters.AddWithValue("@id", articulo.Id);
                             cmd.ExecuteNonQuery();
                             foreach (Categoria c in articulo.Categorias)

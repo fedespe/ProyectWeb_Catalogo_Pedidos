@@ -15,105 +15,90 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        <label>Foto</label><br />
+        <label>Imagen</label><br />
         <img src=@("/Imagenes/Clientes/NuevoMuestra.jpg") height="150" width="150" />
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(model => model.Archivo)   
-        <div>
-            @Html.TextBoxFor(x => x.Archivo, new { type = "file" })
-            @*<input type="file" name="Archivo" id="Archivo" />*@
-            @Html.ValidationMessageFor(x => x.Archivo, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.Archivo, new { type = "file" })
+        @Html.ValidationMessageFor(x => x.Archivo, "", new { @class = "text-danger" })
+    </div>*@
+    <div>
+        @*<label class="btn btn-primary btn-file">
+            Seleccione una imágen <input type="file" name="Archivo" id="Archivo" style="display: none;">
+        </label>*@
+        <label class="btn btn-primary" for="Archivo">
+            <input type="file" style="display:none;" name="Archivo" id="Archivo" onchange="$('#upload-file-info').html($(this).val());">
+            Seleccione una imágen
+        </label>
+        <span class='label label-info' id="upload-file-info"></span>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
-            @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+        @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Password, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
-            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
+        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.NombreFantasia, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.NombreFantasia, new { @id = "nombreFantasia", @class = "form-control", @placeholder = "Nombre Fantasía" })
-            @Html.ValidationMessageFor(x => x.NombreFantasia, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.NombreFantasia, new { @id = "nombreFantasia", @class = "form-control", @placeholder = "Nombre Fantasía" })
+        @Html.ValidationMessageFor(x => x.NombreFantasia, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Rut, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.Rut, new { @id = "rut", @class = "form-control", @placeholder = "Rut" })
-            @Html.ValidationMessageFor(x => x.Rut, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.Rut, new { @id = "rut", @class = "form-control", @placeholder = "Rut" })
+        @Html.ValidationMessageFor(x => x.Rut, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.RazonSocial, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.RazonSocial, new { @id = "razSoc", @class = "form-control", @placeholder = "Razón Social" })
-            @Html.ValidationMessageFor(x => x.RazonSocial, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.RazonSocial, new { @id = "razSoc", @class = "form-control", @placeholder = "Razón Social" })
+        @Html.ValidationMessageFor(x => x.RazonSocial, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Descuento, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.Descuento, new { @id = "descuento", @class = "form-control", @placeholder = "% Descuento" })
-            @Html.ValidationMessageFor(x => x.Descuento, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.Descuento, new { @id = "descuento", @class = "form-control", @placeholder = "% Descuento" })
+        @Html.ValidationMessageFor(x => x.Descuento, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.DiasDePago, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.DiasDePago, new { @id = "diasPago", @class = "form-control", @placeholder = "Dias de Pago" })
-            @Html.ValidationMessageFor(x => x.DiasDePago, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.DiasDePago, new { @id = "diasPago", @class = "form-control", @placeholder = "Dias de Pago" })
+        @Html.ValidationMessageFor(x => x.DiasDePago, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Direccion, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.Direccion, new { @id = "dir", @class = "form-control", @placeholder = "Dirección" })
-            @Html.ValidationMessageFor(x => x.Direccion, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.Direccion, new { @id = "dir", @class = "form-control", @placeholder = "Dirección" })
+        @Html.ValidationMessageFor(x => x.Direccion, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Telefono, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.Telefono, new { @id = "tel", @class = "form-control", @placeholder = "Teléfono" })
-            @Html.ValidationMessageFor(x => x.Telefono, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.Telefono, new { @id = "tel", @class = "form-control", @placeholder = "Teléfono" })
+        @Html.ValidationMessageFor(x => x.Telefono, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.NombreDeContacto, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.NombreDeContacto, new { @id = "nombreContacto", @class = "form-control", @placeholder = "Nombre de Contacto" })
-            @Html.ValidationMessageFor(x => x.NombreDeContacto, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.NombreDeContacto, new { @id = "nombreContacto", @class = "form-control", @placeholder = "Nombre de Contacto" })
+        @Html.ValidationMessageFor(x => x.NombreDeContacto, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.TelefonoDeContacto, htmlAttributes: new { @class = "control-label" })
-        <div>
-            @Html.TextBoxFor(x => x.TelefonoDeContacto, new { @id = "telContacto", @class = "form-control", @placeholder = "Teléfono de Contacto" })
-            @Html.ValidationMessageFor(x => x.TelefonoDeContacto, "", new { @class = "text-danger" })
-        </div>
+        @Html.TextBoxFor(x => x.TelefonoDeContacto, new { @id = "telContacto", @class = "form-control", @placeholder = "Teléfono de Contacto" })
+        @Html.ValidationMessageFor(x => x.TelefonoDeContacto, "", new { @class = "text-danger" })
     </div>
 
     <button type="submit" class="btn btn-default">Guardar</button>

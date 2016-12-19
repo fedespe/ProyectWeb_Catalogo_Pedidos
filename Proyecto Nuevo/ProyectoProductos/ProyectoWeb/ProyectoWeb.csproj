@@ -183,6 +183,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\ClienteViewModel\CrearViewModel.cs" />
     <Compile Include="ViewModel\ClienteViewModel\EditarViewModel.cs" />
+    <Compile Include="ViewModel\ClienteViewModel\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

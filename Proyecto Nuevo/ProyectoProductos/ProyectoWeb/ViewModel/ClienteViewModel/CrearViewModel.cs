@@ -91,7 +91,7 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
             }
             else {
                 //Asiganar imagen                   
-                File.Copy(System.IO.Path.Combine(ruta, "NuevoMuestra.jpg"), System.IO.Path.Combine(ruta, this.cliente.Foto));                
+                File.Copy(System.IO.Path.Combine(ruta, "SinImagen.jpg"), System.IO.Path.Combine(ruta, this.cliente.Foto));                
             }
         }
     }

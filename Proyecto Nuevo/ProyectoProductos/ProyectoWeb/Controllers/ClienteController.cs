@@ -165,7 +165,7 @@ namespace ProyectoWeb.Controllers
         {
             try
             {
-                return View(new Cliente());
+                return View(new LoginViewModel());
             }
             catch (ProyectoException ex)
             {
@@ -174,22 +174,22 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        //POST: Usuario/LogIn
+        //POST: Cliente/LogIn
         [HttpPost]
-        public ActionResult Login(Cliente cliente)
+        public ActionResult Login(LoginViewModel loginVM)
         {
             try
             {
                 //Falta codificacion de password
-                Cliente cli= clienteBL.login(cliente.NombreUsuario,cliente.Password);
+                Cliente cli= clienteBL.login(loginVM.NombreUsuario,loginVM.Password);
                 if (cli != null)
                 {
                         Session["UsuarioId"] = cli.Id;
                         Session["UsuarioNombre"] = cli.NombreUsuario;
                         return RedirectToAction("Index", "Home");
                 }
-
-                return RedirectToAction("Login", "Cliente");
+                loginVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
+                return View(loginVM);
             }
             catch (ProyectoException ex)
             {
@@ -197,74 +197,6 @@ namespace ProyectoWeb.Controllers
                 return View("~/Views/Shared/_Mensajes.cshtml");
             }
         }
-
-
-        //public ActionResult Index()
-        //{
-        //    try
-        //    {
-        //        return View(clienteBL.obtenerTodos());
-        //    }
-        //    catch (ProyectoException ex)
-        //    {
-        //        ViewBag.Mensaje = ex.Message;
-        //        return View("~/Views/Shared/_Mensajes.cshtml");
-        //    }
-        //}
-        //GET: Cliente/Crear
-        //public ActionResult Editar(int id = 0)
-        //{
-        //    try
-        //    {
-        //        if (id != 0)
-        //        {
-        //            ClienteViewModel cliVM = new ClienteViewModel();
-        //            cliVM.cliente = clienteBL.obtener(id);
-        //            return View(cliVM);
-        //        }
-        //        else {
-        //            return RedirectToAction("Crear", "Cliente");
-        //        }
-        //    }
-        //    catch (ProyectoException ex)
-        //    {
-        //        ViewBag.Mensaje = ex.Message;
-        //        return View("~/Views/Shared/_Mensajes.cshtml");
-        //    }
-        //}
-        //POST: Cliente/Guardar
-        //Se utiliza para la creacion como para la edicion
-        //public ActionResult Guardar(ClienteViewModel cliVM)
-        //{
-        //    try
-        //    {
-        //        //Le coloco el nombre con cual voy a guardar el archivo  
-        //        //Para no guardar el archivo por si da problemas al ingresar los datos     
-        //        cliVM.colocarRuta();
-        //        bool r = true;
-        //        if (cliVM.cliente.Id > 0)
-        //        {
-        //            r = clienteBL.actualizar(cliVM.cliente);
-        //        }
-        //        else {
-        //            clienteBL.registrar(cliVM.cliente);
-        //        }
-        //        if (!r)
-        //        {
-        //            // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
-        //            ViewBag.Mensaje = "Ocurrio un error inesperado";
-        //            return View("~/Views/Shared/_Mensajes.cshtml");
-        //        }
-        //        cliVM.mapear();
-        //        return Redirect("~/");
-        //    }
-        //    catch (ProyectoException ex)
-        //    {
-        //        ViewBag.Mensaje = ex.Message;
-        //        return View("~/Views/Shared/_Mensajes.cshtml");
-        //    }
-        //}
-
 
     }
 }

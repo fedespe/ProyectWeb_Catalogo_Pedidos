@@ -25,3 +25,12 @@ C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nue
 C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
 C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.dll
 C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.pdb
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\BL.dll
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\BL.pdb
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\DAL.dll
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\ET.dll
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\DAL.pdb
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\bin\Debug\ET.pdb
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.dll
+C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\BL\obj\Debug\BL.pdb

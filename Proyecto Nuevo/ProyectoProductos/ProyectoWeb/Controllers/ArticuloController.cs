@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BL;
 using ET;
+using ProyectoWeb.ViewModel.ArticuloViewModel;
 
 namespace ProyectoWeb.Controllers
 {
@@ -12,7 +13,7 @@ namespace ProyectoWeb.Controllers
     {
         private ArticuloBL articuloBL = new ArticuloBL();
 
-        public ActionResult Index()
+        public ActionResult ListaArticulos()
         {
             try
             {
@@ -24,6 +25,58 @@ namespace ProyectoWeb.Controllers
                 return View("~/Views/Shared/_Mensajes.cshtml");
             }
         }
+
+        //GET: Articulo/Crear
+        public ActionResult Crear()
+        {
+            try
+            {
+                return View(new CrearViewModel());
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+        //POST: Articulo/Crear
+        [HttpPost]
+        public ActionResult Crear(CrearViewModel crearVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //Le coloco los nombres con cual voy a guardar los archivo  
+                    //Para no guardar el archivo por si da problemas al ingresar los datos     
+                    crearVM.completarArticulo();
+                    articuloBL.registrar(crearVM.Articulo);
+                    //Guardo archivo
+                    crearVM.guardarArchivo();
+                    return Redirect("~/");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else {
+                return View(crearVM);
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
 
         public ActionResult Editar(int id = 0)
         {
@@ -104,7 +157,7 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
 
-                return Redirect("~/");
+                return RedirectToAction("ListaArticulos");
             }
             catch (ProyectoException ex)
             {
@@ -125,7 +178,7 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
 
-                return Redirect("~/");
+                return RedirectToAction("ListaArticulos");
             }
             catch (ProyectoException ex)
             {
@@ -147,7 +200,7 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
 
-                return Redirect("~/");
+                return RedirectToAction("ListaArticulos");
             }
             catch (ProyectoException ex)
             {
@@ -169,7 +222,7 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
 
-                return Redirect("~/");
+                return RedirectToAction("ListaArticulos");
             }
             catch (ProyectoException ex)
             {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAL;
+using ET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,11 @@ namespace BL
 {
     public class FiltroBL
     {
+        private FiltroDAL filtroDAL = new FiltroDAL();
+
+        public List<Filtro> obtenerTodos()
+        {
+            return filtroDAL.obtenerTodos();
+        }
     }
 }

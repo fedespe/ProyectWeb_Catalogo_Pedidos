@@ -198,5 +198,45 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //GET: Cliente/CambiarPass
+        public ActionResult CambiarPass()
+        {
+            try
+            {
+                return View(new CambiarPassViewModel());
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+
+        //POST: Cliente/CambiarPass
+        [HttpPost]
+        public ActionResult CambiarPass(CambiarPassViewModel cambiarPassVM)
+        {
+            try
+            {
+                if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion)) {
+                    Cliente cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
+                    if (cli!=null)
+                    {
+                        cli.Password = cambiarPassVM.PasswordNuevo;
+                        clienteBL.actualizarPassword(cli);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    
+                }
+                cambiarPassVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
+                return View(cambiarPassVM);
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+
     }
 }

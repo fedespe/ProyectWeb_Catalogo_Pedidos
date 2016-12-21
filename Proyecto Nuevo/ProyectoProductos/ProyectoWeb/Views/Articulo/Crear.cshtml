@@ -1,0 +1,116 @@
+﻿@model ProyectoWeb.ViewModel.ArticuloViewModel.CrearViewModel
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>Nuevo Articulo</h2>
+
+@using (Html.BeginForm("Crear", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    //Seguridad
+    @Html.AntiForgeryToken()
+
+    //Lista de errores
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label>Imagen</label><br />
+        <img src=@("/Imagenes/Articulos/NuevoMuestra.jpg") height="150" width="150" />
+    </div>
+
+    @*<div>
+        <label class="btn btn-primary" for="Archivos">
+            <input type="file" style="display:none;" multiple name="Archivos" id="Archivos" onchange="$('#upload-file-info').html($(this).val());">
+            Seleccione una imágen
+        </label>
+        <span class='label label-info' id="upload-file-info"></span>
+    </div>*@
+
+    @*<input type="file" name="files" id="files" multiple>*@
+    @*<script type="text/javascript">
+        var archivos;
+        document.getElementById('files').onchange = function () {
+                @Model.Archivos.Add();
+            }
+    </script>*@
+
+    <input type="file" name="Archivo1" id="Archivo1">
+    <input type="file" name="Archivo2" id="Archivo2">
+    <input type="file" name="Archivo3" id="Archivo3">
+    <input type="file" name="Archivo4" id="Archivo4">
+    <input type="file" name="Archivo5" id="Archivo5">
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
+        @Html.ValidationMessageFor(x => x.Codigo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre", type = "password" })
+        @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Descripcion, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Descripcion, new { @id = "descripcion", @class = "form-control", @placeholder = "Descripción" })
+        @Html.ValidationMessageFor(x => x.Descripcion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Precio, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Precio, new { @id = "precio", @class = "form-control", @placeholder = "Precio" })
+        @Html.ValidationMessageFor(x => x.Precio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Stock, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Stock, new { @id = "stock", @class = "form-control", @placeholder = "Stock" })
+        @Html.ValidationMessageFor(x => x.Stock, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Destacado, htmlAttributes: new { @class = "control-label" })
+        @Html.CheckBoxFor(x => x.Destacado, new { @id = "destacado"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Disponible, htmlAttributes: new { @class = "control-label" })
+        @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
+    </div>
+    <div>
+        <select name="IdCategoria">
+            @foreach (var c in Model.Categorias)
+            {
+                <option @(c.Id == Model.IdCategoria ? "selected" : "") value="@c.Id">@c.Nombre</option>
+            }
+        </select>
+    </div>
+    <div>
+        <select name="IdFiltro">
+            @foreach (var f in Model.Filtros)
+            {               
+                <option @(f.Id == Model.idFiltro ? "selected" : "") value="@f.Id">@f.Nombre</option>
+            }
+        </select>
+    </div>
+    <div>
+        <div>
+            @foreach (var f in Model.Filtros)
+            {
+                @f.Nombre;
+                <input class="filtros" type="checkbox" id="@f.Nombre" name="@f.Nombre">
+            }
+        </div>
+        @*<script>
+            var i = 0;
+            $('.filtros')
+            document.getElementById('files').onchange = function () {
+                    @Model.Archivos.Add();
+                }
+        </script>*@
+    </div>
+
+    <button type="submit" class="btn btn-default">Guardar</button>
+}

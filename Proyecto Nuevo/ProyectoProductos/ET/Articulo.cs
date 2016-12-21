@@ -19,5 +19,11 @@ namespace ET
         public List<Imagen> Imagenes { get; set; }
         public List<Categoria> Categorias { get; set; }
         public List<Filtro> Filtros { get; set; }
+
+        public Articulo() {
+            Imagenes = new List<Imagen>();
+            Categorias = new List<Categoria>();
+            Filtros = new List<Filtro>();
+        }
     }
 }

@@ -1,95 +1,73 @@
-﻿@model ET.Articulo
+﻿@model ProyectoWeb.ViewModel.ArticuloViewModel.EditarViewModel
 @{
     ViewBag.Title = "Editar";
 }
+<h2>Editar Articulo</h2>
 
-<h2>@(Model.Id > 0 ? Model.Nombre : "Nuevo Articulo")</h2>
-
-
-@using (Html.BeginForm("Guardar", "Articulo", FormMethod.Post))
+@using (Html.BeginForm("Editar", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(x => x.Id)
+    //Seguridad
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Articulo.Id)
 
+    //Lista de errores
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    if (Model.Id != 0)
+    foreach (var i in Model.Articulo.Imagenes)
     {
-        foreach (var i in Model.Imagenes)
-        {
-            <img src=@("data:image/gif;base64," + i.Img) height="150" width="150" />
-        }
-    }
-    else
-    {
-        <div class="form-group">
-            <label for="foto">Foto</label><br />
-            <input id="foto" type="file" />
-        </div>
+        <img src=@("/Imagenes/Articulos/" + i.Img) height="150" width="150" />
     }
 
     <div class="form-group">
-        <label for="Codigo">Codigo</label><br />
+        @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
+        @Html.ValidationMessageFor(x => x.Codigo, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label for="Nombre">Nombre</label><br />
+        @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre" })
+        @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label for="descripcion">Descripción</label><br />
+        @Html.LabelFor(x => x.Descripcion, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Descripcion, new { @id = "descripcion", @class = "form-control", @placeholder = "Descripción" })
+        @Html.ValidationMessageFor(x => x.Descripcion, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label for="precio">Precio</label><br />
+        @Html.LabelFor(x => x.Precio, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Precio, new { @id = "precio", @class = "form-control", @placeholder = "Precio" })
+        @Html.ValidationMessageFor(x => x.Precio, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label for="stock">Stock</label><br />
+        @Html.LabelFor(x => x.Stock, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Stock, new { @id = "stock", @class = "form-control", @placeholder = "Stock" })
+        @Html.ValidationMessageFor(x => x.Stock, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label for="disponible">Disponible</label><br />
-        @Html.TextBoxFor(x => x.Disponible, new { @id = "disponible", @class = "form-control", @placeholder = "Dsiponible" })
+        @Html.LabelFor(x => x.Destacado, htmlAttributes: new { @class = "control-label" })
+        @Html.CheckBoxFor(x => x.Destacado, new { @id = "destacado" })
     </div>
 
     <div class="form-group">
-        <label for="destacado">Destacado</label><br />
-        @Html.TextBoxFor(x => x.Destacado, new { @id = "destacado", @class = "form-control", @placeholder = "Destacado" })
+        @Html.LabelFor(x => x.Disponible, htmlAttributes: new { @class = "control-label" })
+        @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
     </div>
-    if (Model.Id != 0)
-    {
-        foreach (var f in Model.Filtros)
-        {
-            <div class="form-group">
-                <label>@f.Nombre</label><br />
-            </div>
-        }
 
-    }
-    else
+    foreach (var f in Model.Articulo.Filtros)
     {
         <div class="form-group">
-            <label>Seleccione Filtros</label><br />
+            <label>@f.Nombre</label><br />
         </div>
     }
-    if (Model.Id != 0)
-    {
-        foreach (var c in Model.Categorias)
-        {
-            <div class="form-group">
-                <label>@c.Nombre</label><br />
-            </div>
-        }
-
-    }
-    else
+    foreach (var c in Model.Articulo.Categorias)
     {
         <div class="form-group">
-            <label>Seleccione Categoria</label><br />
+            <label>@c.Nombre</label><br />
         </div>
     }
 

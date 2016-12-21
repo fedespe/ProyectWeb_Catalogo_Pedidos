@@ -1,0 +1,14 @@
+CLIENTE
+*email en cliente
+*encriptar password en cliente
+CATEGORIA
+*como eliminamos la categoria
+FILTRO
+*los filtros no llevan color, sino que el color es un filtro distinto
+ARTICULO
+*ver si la transaccion esta andando bien (creo q no)
+*agregar una imagen en chico para cada articulo
+*gestion de imagenes
+*gestion de categorias
+*gestion de filtros
+*editar no va funcionar hasta que este solucionado el crear, hay que solucionar imagenes, categorias, filtros

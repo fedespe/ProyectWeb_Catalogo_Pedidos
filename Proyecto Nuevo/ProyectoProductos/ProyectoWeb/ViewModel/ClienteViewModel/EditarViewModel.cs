@@ -70,7 +70,7 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
             Descuento = cliente.Descuento;
             DiasDePago = cliente.DiasDePago;
             Direccion = cliente.Direccion;
-            NombreUsuario = cliente.Foto;
+            //NombreUsuario = cliente.Foto;
             NombreDeContacto = cliente.NombreDeContacto;
             NombreFantasia = cliente.NombreFantasia;
             NombreUsuario = cliente.NombreUsuario;

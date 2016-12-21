@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -182,6 +183,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\ArticuloViewModel\CrearViewModel.cs" />
+    <Compile Include="ViewModel\ArticuloViewModel\EditarViewModel.cs" />
+    <Compile Include="ViewModel\CategoriaViewModel\CrearViewModel.cs" />
+    <Compile Include="ViewModel\CategoriaViewModel\EditarViewModel.cs" />
     <Compile Include="ViewModel\ClienteViewModel\CambiarPassViewModel.cs" />
     <Compile Include="ViewModel\ClienteViewModel\CrearViewModel.cs" />
     <Compile Include="ViewModel\ClienteViewModel\EditarViewModel.cs" />
@@ -253,6 +257,9 @@
     <Content Include="Views\Cliente\CambiarPass.cshtml" />
     <Content Include="Views\Articulo\ListaArticulos.cshtml" />
     <Content Include="Views\Articulo\Crear.cshtml" />
+    <Content Include="Views\Categoria\ListaCategorias.cshtml" />
+    <Content Include="Views\Categoria\Crear.cshtml" />
+    <Content Include="Views\Categoria\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

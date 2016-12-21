@@ -16,5 +16,11 @@ namespace BL
         {
             return filtroDAL.obtenerTodos();
         }
+
+        public Filtro obtener(int id)
+        {
+            return filtroDAL.obtener(id);
+        }
+         
     }
 }

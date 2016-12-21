@@ -57,7 +57,7 @@ namespace ProyectoWeb.Controllers
                     clienteBL.registrar(crearVM.cliente);
                     //Guardo archivo
                     crearVM.guardarArchivo();
-                    return Redirect("~/");
+                    return RedirectToAction("ListaClientes");
                 }
                 catch (ProyectoException ex)
                 {
@@ -118,7 +118,7 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                     editVM.guardarArchivo();
-                    return Redirect("~/");
+                    return RedirectToAction("ListaClientes");
                 }
                 catch (ProyectoException ex)
                 {
@@ -151,7 +151,7 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
 
-                return Redirect("~/");
+                return RedirectToAction("ListaClientes");
             }
             catch (ProyectoException ex)
             {

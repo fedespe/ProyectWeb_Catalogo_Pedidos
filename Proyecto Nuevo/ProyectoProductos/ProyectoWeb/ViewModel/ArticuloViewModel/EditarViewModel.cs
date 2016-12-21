@@ -1,23 +1,21 @@
-﻿using System;
+﻿using BL;
+using ET;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Web;
-using ET;
-using BL;
-using System.IO;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using System.Collections;
 
 namespace ProyectoWeb.ViewModel.ArticuloViewModel
 {
-    public class CrearViewModel
+    public class EditarViewModel
     {
-        private CategoriaBL categorialBL= new CategoriaBL();
+        private CategoriaBL categorialBL = new CategoriaBL();
         private FiltroBL filtroBL = new FiltroBL();
 
-        public Articulo Articulo { get; set; }
-        
+        public ET.Articulo Articulo { get; set; }
+
         [Required]
         [Display(Name = "Codigo")]
         public string Codigo { get; set; }
@@ -45,7 +43,6 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         [Display(Name = "Disponible")]
         public bool Disponible { get; set; }
 
-
         //**********************************************************************
         //Para mirar
         //**********************************************************************
@@ -59,86 +56,45 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public List<HttpPostedFileBase> Archivos { get; set; }
         public List<Categoria> Categorias { get; set; }
         public List<Filtro> Filtros { get; set; }
+        public List<Imagen> Imagenes { get; set; }
 
         public int IdCategoria { get; set; }
         public int idFiltro { get; set; }
         //**********************************************************************
         //**********************************************************************
 
-        public CrearViewModel()
+
+        public EditarViewModel()
         {
             Articulo = new Articulo();
-            Archivos = new List<HttpPostedFileBase>();
             Categorias = categorialBL.obtenerTodos();
             Filtros = filtroBL.obtenerTodos();
+        }
+        public void completarEditarVM()
+        {
+            Codigo = Articulo.Codigo;
+            Nombre = Articulo.Nombre;
+            Descripcion = Articulo.Descripcion;
+            Precio = Articulo.Precio;
+            Stock = Articulo.Stock;
+            Destacado = Articulo.Destacado;
+            Disponible = Articulo.Disponible;
+            Filtros = Articulo.Filtros;
+            Categorias = Articulo.Categorias;
+            Imagenes = Articulo.Imagenes;
         }
 
         public void completarArticulo()
         {
             Articulo.Codigo = Codigo;
-            Articulo.Descripcion = Descripcion;
-            Articulo.Destacado = Destacado;
-            Articulo.Disponible = Disponible;
             Articulo.Nombre = Nombre;
+            Articulo.Descripcion = Descripcion;
             Articulo.Precio = Precio;
             Articulo.Stock = Stock;
-            cargarImagenes();
-            cargarFiltros();
-            cargarCategorias();
+            Articulo.Destacado = Destacado;
+            Articulo.Disponible = Disponible;
         }
-
-        private void cargarCategorias()
-        {
-            Categoria c = new Categoria
-            {
-                Id = 1,
-            };
-            Categoria c2 = new Categoria
-            {
-                Id = 2,
-            };
-            Articulo.Categorias.Add(c);
-            Articulo.Categorias.Add(c2);
-        }
-
-        private void cargarFiltros()
-        {
-            Filtro f = new Filtro
-            {
-                Id = 1,               
-            };
-            Filtro f2 = new Filtro
-            {
-                Id = 2,
-            };
-            Articulo.Filtros.Add(f);
-            Articulo.Filtros.Add(f2);
-        }
-
-        private void cargarImagenes()
-        {
-            //if (Archivo1 != null)
-            //    Archivos.Add(Archivo1);
-            //if (Archivo2 != null)
-            //    Archivos.Add(Archivo2);
-            //if (Archivo3 != null)
-            //    Archivos.Add(Archivo3);
-            //if (Archivo4 != null)
-            //    Archivos.Add(Archivo4);
-            //if (Archivo5 != null)
-            //    Archivos.Add(Archivo5);
-            Imagen i = new Imagen
-            {
-                Img = "ART1_IMG2.jpg"
-            };
-            Imagen i2 = new Imagen
-            {
-                Img = "ART1_IMG1.jpg"
-            };
-            Articulo.Imagenes.Add(i);
-            Articulo.Imagenes.Add(i2);
-        }
-
+        
         public void guardarArchivo()
         {
             //string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Clientes/");
@@ -149,12 +105,27 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
             //        System.IO.Directory.CreateDirectory(ruta);
             //    //Guardo el nuevo archivo
             //    Archivo.SaveAs(System.IO.Path.Combine(ruta, this.Articulo.Foto));
+            //    //Cambia el nombre y cambia la imagen, elimino la imagen anterior
+            //    if (ImgAnterior != null && !ImgAnterior.Equals("") && !ImgAnterior.Equals(Articulo.Foto))
+            //    {
+            //        //Elimino la imagen anterior
+            //        File.Delete(System.IO.Path.Combine(ruta, this.ImgAnterior));
+            //    }
             //}
             //else {
-            //    //Asiganar imagen                   
-            //    File.Copy(System.IO.Path.Combine(ruta, "SinImagen.jpg"), System.IO.Path.Combine(ruta, this.Articulo.Foto));
+            //    //Cambia el nombre de usuario y no imagen, actualizo el nombre de la imagen
+            //    if (ImgAnterior != null)
+            //    {
+            //        //Cambiar nombre de imagen
+            //        File.Move(System.IO.Path.Combine(ruta, ImgAnterior), System.IO.Path.Combine(ruta, this.Articulo.NombreUsuario.ToUpper().Replace(" ", "") + ".jpg"));
+            //    }
             //}
         }
-    }
 
+        public void eliminarArchivo()
+        {
+            //string rutaAnterior = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Clientes/");
+            //File.Delete(System.IO.Path.Combine(rutaAnterior, this.Articulo.Foto));
+        }
+    }
 }

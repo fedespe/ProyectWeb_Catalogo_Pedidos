@@ -55,13 +55,12 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public HttpPostedFileBase Archivo4 { get; set; }
         public HttpPostedFileBase Archivo5 { get; set; }
 
-        //ver si es una lista de archivos!
         public List<HttpPostedFileBase> Archivos { get; set; }
         public List<Categoria> Categorias { get; set; }
         public List<Filtro> Filtros { get; set; }
 
-        public int IdCategoria { get; set; }
-        public int idFiltro { get; set; }
+        public String CadenaCategorias { get; set; }
+        public String CadenaFiltros { get; set; }
         //**********************************************************************
         //**********************************************************************
 
@@ -89,72 +88,92 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 
         private void cargarCategorias()
         {
-            Categoria c = new Categoria
+            if (CadenaCategorias != null)
             {
-                Id = 1,
-            };
-            Categoria c2 = new Categoria
-            {
-                Id = 2,
-            };
-            Articulo.Categorias.Add(c);
-            Articulo.Categorias.Add(c2);
+                CadenaCategorias = CadenaCategorias.Trim();
+                Char c1 = ' ';
+                Char c2 = ';';
+                String[] substrings = CadenaCategorias.Split(c1);
+                for (int i = 0; i < substrings.Length; i++)
+                {
+                    String[] substrings2 = substrings[i].Split(c2);
+                    Categoria c = new Categoria { Id = Convert.ToInt32(substrings2[0]) };
+                    if (substrings2[1] == "true")
+                    {
+                        Articulo.Categorias.Remove(c);
+                        Articulo.Categorias.Add(c);
+                    }
+                    else {
+                        Articulo.Categorias.Remove(c);
+                    }
+                }
+            }
         }
 
         private void cargarFiltros()
         {
-            Filtro f = new Filtro
+            if (CadenaFiltros != null)
             {
-                Id = 1,               
-            };
-            Filtro f2 = new Filtro
-            {
-                Id = 2,
-            };
-            Articulo.Filtros.Add(f);
-            Articulo.Filtros.Add(f2);
+                CadenaFiltros = CadenaFiltros.Trim();
+                Char c1 = ' ';
+                Char c2 = ';';
+                String[] substrings = CadenaFiltros.Split(c1);
+                for (int i = 0; i < substrings.Length; i++)
+                {
+                    String[] substrings2 = substrings[i].Split(c2);
+                    Filtro f = new Filtro { Id = Convert.ToInt32(substrings2[0]) };
+                    if (substrings2[1] == "true")
+                    {
+                        Articulo.Filtros.Remove(f);
+                        Articulo.Filtros.Add(f);
+                    }
+                    else {
+                        Articulo.Filtros.Remove(f);
+                    }
+                }
+            }
         }
 
         private void cargarImagenes()
         {
-            //if (Archivo1 != null)
-            //    Archivos.Add(Archivo1);
-            //if (Archivo2 != null)
-            //    Archivos.Add(Archivo2);
-            //if (Archivo3 != null)
-            //    Archivos.Add(Archivo3);
-            //if (Archivo4 != null)
-            //    Archivos.Add(Archivo4);
-            //if (Archivo5 != null)
-            //    Archivos.Add(Archivo5);
-            Imagen i = new Imagen
-            {
-                Img = "ART1_IMG2.jpg"
-            };
-            Imagen i2 = new Imagen
-            {
-                Img = "ART1_IMG1.jpg"
-            };
-            Articulo.Imagenes.Add(i);
-            Articulo.Imagenes.Add(i2);
+            if (Archivo1 != null)
+                Archivos.Add(Archivo1);
+            if (Archivo2 != null)
+                Archivos.Add(Archivo2);
+            if (Archivo3 != null)
+                Archivos.Add(Archivo3);
+            if (Archivo4 != null)
+                Archivos.Add(Archivo4);
+            if (Archivo5 != null)
+                Archivos.Add(Archivo5);
         }
 
         public void guardarArchivo()
         {
-            //string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Clientes/");
-            //if (Archivo != null)
-            //{
-            //    //Si no existe directorio se crea             
-            //    if (!System.IO.Directory.Exists(ruta))
-            //        System.IO.Directory.CreateDirectory(ruta);
-            //    //Guardo el nuevo archivo
-            //    Archivo.SaveAs(System.IO.Path.Combine(ruta, this.Articulo.Foto));
-            //}
-            //else {
-            //    //Asiganar imagen                   
-            //    File.Copy(System.IO.Path.Combine(ruta, "SinImagen.jpg"), System.IO.Path.Combine(ruta, this.Articulo.Foto));
-            //}
+            String nombreImg = Articulo.Codigo.ToUpper().Replace(" ", "") ;
+            string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/"+nombreImg);
+            int i = 1;
+            //Si no existe directorio se crea             
+            if (!System.IO.Directory.Exists(ruta))
+                System.IO.Directory.CreateDirectory(ruta);
+
+            if (Archivos.Count>0)
+            {                
+                foreach (HttpPostedFileBase a in Archivos)
+                {                   
+                    if (a != null)
+                    {                   
+                        //Guardo el nuevo archivo
+                        a.SaveAs(System.IO.Path.Combine(ruta, nombreImg + "IMG" + i + ".jpg"));
+                        i++;
+                    }
+                }          
+            }
+            else {
+                //Asiganar imagen                   
+                File.Copy(System.IO.Path.Combine(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/"), "SinImagen.jpg"), System.IO.Path.Combine(ruta, nombreImg + "IMG" + i + ".jpg"));
+            }
+
         }
     }
-
 }

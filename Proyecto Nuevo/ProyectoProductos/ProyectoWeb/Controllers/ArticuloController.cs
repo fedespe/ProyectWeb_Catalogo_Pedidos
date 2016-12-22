@@ -218,8 +218,6 @@ namespace ProyectoWeb.Controllers
 
 
 
-
-
         //public ActionResult Editar(int id = 0)
         //{
         //    try

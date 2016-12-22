@@ -13,32 +13,54 @@
     //Lista de errores
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <label>Imagen</label><br />
-        <img src=@("/Imagenes/Articulos/NuevoMuestra.jpg") height="150" width="150" />
-    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        function mostrarImagen(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#btnArchivo1').html('<input type="file" style="display:none;" name="Archivo1" id="Archivo1"><img src="' + e.target.result + '" height="50" width="50" />');
+                }
+                reader.readAsDataURL(input.files[0]);
+            } 
+        }
+        $(document).on("change", "#Archivo1", function (event) {
+            mostrarImagen(this);            
+        });        
+        //function quitarImagen(input) {
+        //    if (input = "") {
+        //        $('#btnArchivo1').html('<input type="file" style="display:none;" name="Archivo1" id="Archivo1">Seleccione una imágen');
+        //    }
+        //}
+    </script>
 
-    @*<div>
-        <label class="btn btn-primary" for="Archivos">
-            <input type="file" style="display:none;" multiple name="Archivos" id="Archivos" onchange="$('#upload-file-info').html($(this).val());">
-            Seleccione una imágen
-        </label>
-        <span class='label label-info' id="upload-file-info"></span>
-    </div>*@
+    <label class="btn btn-default" for="Archivo1" id="btnArchivo1">
+        <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$('#upload-file-info1').html($(this).val());">
+        Seleccione una imágen
+    </label>
+    <span class='label label-info' id="upload-file-info1"></span>
+    <label class="btn btn-default" for="Archivo2" id="btnArchivo2">
+        <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$('#upload-file-info2').html($(this).val());">
+        Seleccione una imágen
+    </label>
+    <span class='label label-info' id="upload-file-info2"></span>
+    <label class="btn btn-default" for="Archivo3" id="btnArchivo3">
+        <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$('#upload-file-info3').html($(this).val());">
+        Seleccione una imágen
+    </label>
+    <span class='label label-info' id="upload-file-info3"></span>
+    <label class="btn btn-default" for="Archivo4" id="btnArchivo4">
+        <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$('#upload-file-info4').html($(this).val());">
+        Seleccione una imágen
+    </label>
+    <span class='label label-info' id="upload-file-info4"></span>
+    <label class="btn btn-default" for="Archivo5" id="btnArchivo5">
+        <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$('#upload-file-info5').html($(this).val());">
+        Seleccione una imágen
+    </label>
+    <span class='label label-info' id="upload-file-info5"></span>
 
-    @*<input type="file" name="files" id="files" multiple>*@
-    @*<script type="text/javascript">
-        var archivos;
-        document.getElementById('files').onchange = function () {
-                @Model.Archivos.Add();
-            }
-    </script>*@
 
-    <input type="file" name="Archivo1" id="Archivo1">
-    <input type="file" name="Archivo2" id="Archivo2">
-    <input type="file" name="Archivo3" id="Archivo3">
-    <input type="file" name="Archivo4" id="Archivo4">
-    <input type="file" name="Archivo5" id="Archivo5">
 
     <div class="form-group">
         @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
@@ -81,21 +103,24 @@
     </div>
 
     <div>
-        <select name="IdCategoria">
+        <div>
             @foreach (var c in Model.Categorias)
             {
-                <option @(c.Id == Model.IdCategoria ? "selected" : "") value="@c.Id">@c.Nombre</option>
+                @c.Nombre;
+                <input class="categorias" type="checkbox" id="@c.Id" name="@c.Nombre">
             }
-        </select>
+        </div>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script>
+            $(document).on("click", ".categorias", function (event) {
+                //alert(event.target.id + " " + event.target.checked);
+                var anterior = $('#CadenaCategorias').val();
+                $('#CadenaCategorias').val(anterior + event.target.id + ";" + event.target.checked + " ");
+            });
+        </script>
+        <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
     </div>
-    <div>
-        <select name="IdFiltro">
-            @foreach (var f in Model.Filtros)
-            {               
-                <option @(f.Id == Model.idFiltro ? "selected" : "") value="@f.Id">@f.Nombre</option>
-            }
-        </select>
-    </div>
+
     <div>
         <div>
             @foreach (var f in Model.Filtros)
@@ -107,9 +132,12 @@
         <script src="~/Scripts/jquery-1.10.2.min.js"></script>
         <script>
             $(document).on("click", ".filtros", function (event) {
-                alert(event.target.id + " " + event.target.checked);
+                //alert(event.target.id + " " + event.target.checked);
+                var anterior = $('#CadenaFiltros').val();
+                $('#CadenaFiltros').val(anterior + event.target.id + ";" + event.target.checked + " ");
             });
         </script>
+        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
     </div>
 
     <button type="submit" class="btn btn-default">Guardar</button>

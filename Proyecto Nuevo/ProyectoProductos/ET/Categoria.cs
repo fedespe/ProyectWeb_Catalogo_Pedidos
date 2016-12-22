@@ -16,5 +16,11 @@ namespace ET
         public string Descripcion { get; set; }
         public List<Articulo> Articulos { get; set; }
         public List<Filtro> Filtros { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            Categoria c = (Categoria)obj;
+            return c.Id == this.Id;
+        }
     }
 }

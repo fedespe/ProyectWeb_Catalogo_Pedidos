@@ -59,6 +59,9 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         [Display(Name = "Teléfono de Contacto")]
         public string TelefonoDeContacto { get; set; }
 
+        [Display(Name = "Email de Contacto")]
+        public string EmailContacto { get; set; }
+
 
         public EditarViewModel()
         {
@@ -78,6 +81,7 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
             Rut = cliente.Rut;
             Telefono = cliente.Telefono;
             TelefonoDeContacto = cliente.TelefonoDeContacto;
+            EmailContacto = cliente.EmailDeContacto;
         }
 
         public void completarCliente()
@@ -94,6 +98,7 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
             cliente.Rut = Rut;
             cliente.Telefono = Telefono;
             cliente.TelefonoDeContacto = TelefonoDeContacto;
+            cliente.EmailDeContacto = EmailContacto;
         }
 
         public void guardarArchivo()

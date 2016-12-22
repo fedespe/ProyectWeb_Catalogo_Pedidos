@@ -42,6 +42,7 @@ namespace ProyectoWeb.Controllers
                 return View("~/Views/Shared/_Mensajes.cshtml");
             }
         }
+
         //POST: Cliente/Crear
         [HttpPost]
         public ActionResult Crear(CrearViewModel crearVM)
@@ -50,7 +51,6 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    //Falta encriptar password
                     //Le coloco el nombre con cual voy a guardar el archivo  
                     //Para no guardar el archivo por si da problemas al ingresar los datos     
                     crearVM.completarCliente();
@@ -152,44 +152,6 @@ namespace ProyectoWeb.Controllers
                 }
 
                 return RedirectToAction("ListaClientes");
-            }
-            catch (ProyectoException ex)
-            {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
-            }
-        }
-
-        //GET: Cliente/LogIn
-        public ActionResult Login()
-        {
-            try
-            {
-                return View(new LoginViewModel());
-            }
-            catch (ProyectoException ex)
-            {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
-            }
-        }
-
-        //POST: Cliente/LogIn
-        [HttpPost]
-        public ActionResult Login(LoginViewModel loginVM)
-        {
-            try
-            {
-                //Falta codificacion de password
-                Cliente cli= clienteBL.login(loginVM.NombreUsuario,loginVM.Password);
-                if (cli != null)
-                {
-                        Session["UsuarioId"] = cli.Id;
-                        Session["UsuarioNombre"] = cli.NombreUsuario;
-                        return RedirectToAction("Index", "Home");
-                }
-                loginVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
-                return View(loginVM);
             }
             catch (ProyectoException ex)
             {

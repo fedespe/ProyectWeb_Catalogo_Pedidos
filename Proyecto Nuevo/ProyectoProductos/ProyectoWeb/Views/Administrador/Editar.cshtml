@@ -1,28 +1,30 @@
-﻿@model ET.Administrador
+﻿@model ProyectoWeb.ViewModel.AdministradorViewModel.EditarViewModel
 @{
     ViewBag.Title = "Editar";
 }
 
-<h2>@(Model.Id > 0 ? Model.NombreUsuario : "Nuevo Administrador")</h2>
+<h2>@(Model.administrador.NombreUsuario)</h2>
 
 
-@using (Html.BeginForm("Guardar", "Administrador", FormMethod.Post))
+@using (Html.BeginForm("Editar", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(x => x.Id)
+    //Seguridad
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x => x.administrador.Id)
+
+    //Lista de errores
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        <label for="nombre">Nombre</label><br />
-        @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre" })
+        @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+        @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
     </div>
-
-    if (Model.Id == 0)
-    {
-        <div class="form-group">
-            <label for="pass">Password</label><br />
-            @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password" })
-        </div>      
-    }
 
     <button type="submit" class="btn btn-default">Guardar</button>
 }
+
+
+
 

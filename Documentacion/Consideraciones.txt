@@ -1,6 +1,7 @@
-CLIENTE
-*email en cliente
-*encriptar password en cliente
+PEDIDO
+Quedé por la mitad del método de SinConfirmar... Y me falta hacer todo el POST del mismo...
+Si queres, metele a lo que tenes pensado que mañana le meto a esto para ver si lo termino
+Obviamente, el botón que mostraría todos los pedidos sin confirmar, aún no está andando (pero sí muestra la cantidad correcta de pedidos sin confirmar)...
 CATEGORIA
 *como eliminamos la categoria
 FILTRO

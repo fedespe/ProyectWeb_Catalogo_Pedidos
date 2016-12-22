@@ -1,11 +1,11 @@
-﻿@model ProyectoWeb.ViewModel.ClienteViewModel.CambiarPassViewModel
+﻿@model ProyectoWeb.ViewModel.AdministradorViewModel.CambiarPassViewModel
 @{
     ViewBag.Title = "CambiarPass";
 }
 
 <h2>Cambiar Contraseña</h2>
 
-@using (Html.BeginForm("CambiarPass", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CambiarPass", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -21,7 +21,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.PasswordActual, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(model => model.PasswordActual, new { @id = "pass", @class = "form-control", @placeholder = "Contraseña Actaul", type = "password" })
-        @Html.ValidationMessageFor(model => model.PasswordActual, "", new { @class = "text-danger" })        
+        @Html.ValidationMessageFor(model => model.PasswordActual, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">

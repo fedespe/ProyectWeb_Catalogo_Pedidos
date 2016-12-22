@@ -55,7 +55,7 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("SELECT * FROM administrador WHERE usuario = @usu AND contrasenia=@pass", con);
                     cmd.Parameters.AddWithValue("@usu", nombre);
-                    cmd.Parameters.AddWithValue("@pass", pass);
+                    cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(pass));
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -141,7 +141,7 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("UPDATE Administrador SET Contrasenia = @pass WHERE id = @id", con);
 
-                    cmd.Parameters.AddWithValue("@pass", admin.Password);
+                    cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(admin.Password));
                     cmd.Parameters.AddWithValue("@id", admin.Id);
 
                     return cmd.ExecuteNonQuery() == 1;
@@ -166,7 +166,7 @@ namespace DAL
                     SqlCommand cmd = new SqlCommand("INSERT INTO Administrador(Usuario, Contrasenia) VALUES (@usu, @pass)", con);
 
                     cmd.Parameters.AddWithValue("@usu", admin.NombreUsuario);
-                    cmd.Parameters.AddWithValue("@pass", admin.Password);
+                    cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(admin.Password));
 
                     cmd.ExecuteNonQuery();
                 }

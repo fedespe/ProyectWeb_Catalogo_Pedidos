@@ -43,6 +43,9 @@ namespace ET
         //[Display(Name = "Teléfono de Contacto")]
         public string TelefonoDeContacto { get; set; }
 
+        //[RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Correo no válido")]
+        public string EmailDeContacto { get; set; }
+
         public string Foto { get; set; }
 
         public List<Pedido> Pedidos { get; set; }

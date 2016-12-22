@@ -100,6 +100,12 @@
         @Html.ValidationMessageFor(x => x.TelefonoDeContacto, "", new { @class = "text-danger" })
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(x => x.EmailContacto, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.EmailContacto, new { @id = "emailContacto", @class = "form-control", @placeholder = "Email de Contacto" })
+        @Html.ValidationMessageFor(x => x.EmailContacto, "", new { @class = "text-danger" })
+    </div>
+
     <button type="submit" class="btn btn-default">Guardar</button>
 }
 

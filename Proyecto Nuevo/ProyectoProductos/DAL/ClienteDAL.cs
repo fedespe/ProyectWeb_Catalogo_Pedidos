@@ -39,6 +39,7 @@ namespace DAL
                                 Telefono = dr["Telefono"].ToString(),
                                 NombreDeContacto = dr["NombreContacto"].ToString(),
                                 TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
+                                EmailDeContacto = dr["EmailContacto"].ToString(),
                                 Foto = dr["Imagen"].ToString()
                             };
                             clientes.Add(cli);
@@ -65,7 +66,7 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente WHERE usuario = @usu AND contrasenia=@pass", con);
                     cmd.Parameters.AddWithValue("@usu", nombre);
-                    cmd.Parameters.AddWithValue("@pass", pass);
+                    cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(pass));
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -85,6 +86,7 @@ namespace DAL
                                 Telefono = dr["Telefono"].ToString(),
                                 NombreDeContacto = dr["NombreContacto"].ToString(),
                                 TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
+                                EmailDeContacto = dr["EmailContacto"].ToString(),
                                 Foto = dr["Imagen"].ToString()
                             };
                         }
@@ -129,6 +131,7 @@ namespace DAL
                                 Telefono = dr["Telefono"].ToString(),
                                 NombreDeContacto = dr["NombreContacto"].ToString(),
                                 TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
+                                EmailDeContacto = dr["EmailContacto"].ToString(),
                                 Foto = dr["Imagen"].ToString()
                             };
                         }
@@ -154,7 +157,7 @@ namespace DAL
                     SqlCommand cmd = new SqlCommand(@"UPDATE Cliente SET
                         Usuario = @usu, NombreFantasia = @nomFan, Rut = @rut, RazonSocial = @razSoc, Descuento = @desc,
                         DiasDePago = @diasPago, Direccion = @dir, Telefono = @tel, NombreContacto = @nomCon,
-                        TelefonoContacto = @telCon, Imagen = @foto
+                        TelefonoContacto = @telCon, EmailContacto = @emailCon, Imagen = @foto
                         WHERE id = @id", con);
 
                     cmd.Parameters.AddWithValue("@usu", cli.NombreUsuario);
@@ -168,6 +171,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@tel", cli.Telefono);
                     cmd.Parameters.AddWithValue("@nomCon", cli.NombreDeContacto);
                     cmd.Parameters.AddWithValue("@telCon", cli.TelefonoDeContacto);
+                    cmd.Parameters.AddWithValue("@emailCon", cli.EmailDeContacto);
                     cmd.Parameters.AddWithValue("@foto", cli.Foto);
 
                     return cmd.ExecuteNonQuery() == 1;
@@ -189,7 +193,7 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("UPDATE Cliente SET Contrasenia = @pass WHERE id = @id", con);
 
-                    cmd.Parameters.AddWithValue("@pass", cli.Password);
+                    cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(cli.Password));
                     cmd.Parameters.AddWithValue("@id", cli.Id);
 
                     return cmd.ExecuteNonQuery() == 1;
@@ -212,12 +216,11 @@ namespace DAL
                     con.Open();
 
                     SqlCommand cmd = new SqlCommand(@"INSERT INTO Cliente VALUES(
-                        @usu, @pass, @nomFan, @rut, @razSoc, @desc, @diasPago, @dir, @tel, @nomCon, @telCon, @foto)"
+                        @usu, @pass, @nomFan, @rut, @razSoc, @desc, @diasPago, @dir, @tel, @nomCon, @telCon, @emailCon, @foto)"
                         , con);
 
                     cmd.Parameters.AddWithValue("@usu", cli.NombreUsuario);
-                    cmd.Parameters.AddWithValue("@pass", cli.Password);
-                    cmd.Parameters.AddWithValue("@id", cli.Id);
+                    cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(cli.Password));
                     cmd.Parameters.AddWithValue("@nomFan", cli.NombreFantasia);
                     cmd.Parameters.AddWithValue("@rut", cli.Rut);
                     cmd.Parameters.AddWithValue("@razSoc", cli.RazonSocial);
@@ -227,6 +230,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@tel", cli.Telefono);
                     cmd.Parameters.AddWithValue("@nomCon", cli.NombreDeContacto);
                     cmd.Parameters.AddWithValue("@telCon", cli.TelefonoDeContacto);
+                    cmd.Parameters.AddWithValue("@emailCon", cli.EmailDeContacto);
                     cmd.Parameters.AddWithValue("@foto", cli.Foto);
 
                     cmd.ExecuteNonQuery();

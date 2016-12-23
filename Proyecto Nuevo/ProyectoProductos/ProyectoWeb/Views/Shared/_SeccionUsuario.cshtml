@@ -12,7 +12,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Sin Confirmar (" + Session["PedidosSinConfirmar"].ToString() + ")", "SinConfirmar", "Pedido")
+                @Html.ActionLink("Sin Confirmar (" + Session["PedidosSinConfirmar"].ToString() + ")", "SinConfirmar", "Pedido", new { Id = Convert.ToInt32(Session["btnSinConfirmar"]) }, null)
             </li>
         </ul>
     }

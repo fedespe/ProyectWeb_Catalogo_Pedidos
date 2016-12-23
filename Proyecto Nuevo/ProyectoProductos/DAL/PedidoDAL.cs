@@ -129,28 +129,31 @@ namespace DAL
 
             if(pedidos.Count > 1)
             {
-                pedido.ProductosPedidos = new List<ArticuloCantidad>();
+                pedido = pedidos[0];
 
-                foreach (Pedido p in pedidos)
+                for (int i =1 ; i<pedidos.Count ; i++)
                 {
-                    pedido.ProductosPedidos.Add(p.ProductosPedidos[0]);
+                    pedido.ProductosPedidos.Add(pedidos[i].ProductosPedidos[0]);
                 }
             }
-            else
+            else if(pedidos.Count ==1)
             {
                 pedido = pedidos[0];
             }
 
             double precioTot = 0;
 
-            foreach (ArticuloCantidad acp in pedido.ProductosPedidos)
+            if(pedido != null)
             {
-                precioTot += acp.Cantidad * acp.PrecioUnitario;
+                foreach (ArticuloCantidad acp in pedido.ProductosPedidos)
+                {
+                    precioTot += acp.Cantidad * acp.PrecioUnitario;
+                }
+
+                precioTot -= precioTot * pedido.DescuentoCliente / 100;
+
+                pedido.PrecioTotal = precioTot;
             }
-
-            precioTot -= precioTot * pedido.DescuentoCliente / 100;
-
-            pedido.PrecioTotal = precioTot;
 
             return pedido;
         }

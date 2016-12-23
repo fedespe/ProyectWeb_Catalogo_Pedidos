@@ -1,0 +1,79 @@
+﻿@model ET.Pedido
+@{
+    ViewBag.Title = "DetallesPedido";
+}
+
+<h2>Detalles del Pedido</h2>
+
+@Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x => x.Iva)
+
+<div class="form-group">
+    @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(x => x.FechaRealizado, new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
+    @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(x => x.FechaEntregaSolicitada, new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
+    @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total" })
+    @*@Html.ValidationMessageFor(x => x.PrecioTotal, "", new { @class = "text-danger" })*@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.DescuentoCliente, htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente" })
+    @*@Html.ValidationMessageFor(x => x.DescuentoCliente, "", new { @class = "text-danger" })*@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
+    @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
+    @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.Estado.Nombre, htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado" })
+    @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.Cliente.NombreFantasia, htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente" })
+    @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Codigo Articulo</th>
+            <th>Nombre Articulo</th>
+            <th>Cantidad</th>
+            <th>$ Unitario</th>
+            <th>$ Total Linea</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var pp in Model.ProductosPedidos)
+        {
+            <tr>
+                <td>@pp.Articulo.Codigo</td>
+                <td>@pp.Articulo.Nombre</td>
+                <td>@pp.Cantidad</td>
+                <td>@pp.PrecioUnitario</td>
+                <td>Poner Total</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

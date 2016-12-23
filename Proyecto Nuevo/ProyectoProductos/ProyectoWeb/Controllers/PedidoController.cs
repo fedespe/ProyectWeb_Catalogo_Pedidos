@@ -41,44 +41,45 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        //GET: Cliente/Editar
-        //public ActionResult Editar(int id = 0)
-        //{
-        //    if (Session["TipoUsuario"].ToString() == "Administrador" || (Session["TipoUsuario"].ToString() == "Cliente") && (Convert.ToInt32(Session["IdUsuario"]) == id))
-        //    {
-        //        try
-        //        {
-        //            if (id != 0)
-        //            {
-        //                EditarViewModel editVM = new EditarViewModel();
-        //                editVM.cliente = clienteBL.obtener(id);
-        //                editVM.completarEditarVM();//Es para manejo de archivo a la hora de guardar
-        //                                           //editVM.cliente.Password = "validacion";//Es colo para validar el modelo
-        //                return View(editVM);
-        //            }
-        //            else {
-        //                return RedirectToAction("Crear", "Cliente");
-        //            }
-        //        }
-        //        catch (ProyectoException ex)
-        //        {
-        //            ViewBag.Mensaje = ex.Message;
-        //            return View("~/Views/Shared/_Mensajes.cshtml");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        catch (ProyectoException ex)
-        //        {
-        //            ViewBag.Mensaje = ex.Message;
-        //            return View("~/Views/Shared/_Mensajes.cshtml");
-        //        }
-        //    }
-        //}
+        //GET: Pedido/Detalles
+        public ActionResult Detalles(int id = 0)
+        {
+            if (Session["TipoUsuario"] != null)
+            {
+                try
+                {
+                    if (id != 0)
+                    {
+                        Pedido ped = pedidoBL.obtener(id);
+
+                        if(Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && (Session["NombreUsuario"].ToString().Equals(ped.Cliente.NombreUsuario))))
+                            return View(ped);
+                        else
+                            return RedirectToAction("Index", "Home");
+                    }
+                    else {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+        }
 
         public ActionResult Confirmar(int id)
         {

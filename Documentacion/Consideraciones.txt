@@ -11,7 +11,4 @@ FILTRO
 ARTICULO
 *ver si la transaccion esta andando bien (creo q no)
 *agregar una imagen en chico para cada articulo
-*gestion de imagenes
-*gestion de categorias
-*gestion de filtros
-*editar no va funcionar hasta que este solucionado el crear, hay que solucionar imagenes, categorias, filtros
+*Falta en editar eliminar las imagenes si se quiere, y colocar los filtros y categorias que ya tenia el articulo

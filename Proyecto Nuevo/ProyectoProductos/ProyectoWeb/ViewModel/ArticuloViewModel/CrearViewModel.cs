@@ -146,12 +146,18 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
                 Archivos.Add(Archivo4);
             if (Archivo5 != null)
                 Archivos.Add(Archivo5);
+
+            String nombreImg = Articulo.Codigo.ToUpper().Replace(" ", "") + "_IMG";
+            for (int i = 1; i <= Archivos.Count; i++) {
+                Articulo.Imagenes.Add(new Imagen() { Img= nombreImg + i + ".jpg" });
+            }
         }
 
         public void guardarArchivo()
         {
             String nombreImg = Articulo.Codigo.ToUpper().Replace(" ", "") ;
-            string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/"+nombreImg);
+            //string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/"+nombreImg);
+            string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/");
             int i = 1;
             //Si no existe directorio se crea             
             if (!System.IO.Directory.Exists(ruta))
@@ -164,14 +170,14 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
                     if (a != null)
                     {                   
                         //Guardo el nuevo archivo
-                        a.SaveAs(System.IO.Path.Combine(ruta, nombreImg + "IMG" + i + ".jpg"));
+                        a.SaveAs(System.IO.Path.Combine(ruta, nombreImg + "_IMG" + i + ".jpg"));
                         i++;
                     }
                 }          
             }
             else {
                 //Asiganar imagen                   
-                File.Copy(System.IO.Path.Combine(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/"), "SinImagen.jpg"), System.IO.Path.Combine(ruta, nombreImg + "IMG" + i + ".jpg"));
+                File.Copy(System.IO.Path.Combine(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/"), "SinImagen.jpg"), System.IO.Path.Combine(ruta, nombreImg + "_IMG" + i + ".jpg"));
             }
 
         }

@@ -9,14 +9,49 @@
     //Seguridad
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Articulo.Id)
+    @Html.HiddenFor(x => x.Img1Anterior)
+    @Html.HiddenFor(x => x.Img2Anterior)
+    @Html.HiddenFor(x => x.Img3Anterior)
+    @Html.HiddenFor(x => x.Img4Anterior)
+    @Html.HiddenFor(x => x.Img5Anterior)
 
     //Lista de errores
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+    var contador = 1;
     foreach (var i in Model.Articulo.Imagenes)
     {
-        <img src=@("/Imagenes/Articulos/" + i.Img) height="150" width="150" />
+        var s = "Archivo" + contador;
+        var s1 = "ImgArchivo" + contador; /*+Model.Articulo.Codigo + "/"*/
+        <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" height="150" width="150" />
+        contador++;
     }
+    for (var i = Model.Articulo.Imagenes.Count+1; i <= 5; i++)
+    {
+        var s = "Archivo" + @i;
+        var s1 = "ImgArchivo" + @i;
+        <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" height="150" width="150" />
+    }
+
+
+        <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
+        <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this)).html($(this).val());">
+        <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this)).html($(this).val());">
+        <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this)).html($(this).val());">
+        <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this)).html($(this).val());">
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script>
+            function mostrarImagen(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var s = "#Img" + input.id;
+                        $(s).attr("src", e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
@@ -56,22 +91,79 @@
     <div class="form-group">
         @Html.LabelFor(x => x.Disponible, htmlAttributes: new { @class = "control-label" })
         @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
-    </div>
+    </div>  
 
-    foreach (var f in Model.Articulo.Filtros)
-    {
-        <div class="form-group">
-            <label>@f.Nombre</label><br />
-        </div>
-    }
+    <hr>
     foreach (var c in Model.Articulo.Categorias)
     {
-        <div class="form-group">
-            <label>@c.Nombre</label><br />
-        </div>
+
+            <label>@c.Nombre</label>
     }
+    <hr>
+    foreach (var f in Model.Articulo.Filtros)
+    {
+            <label>@f.Nombre</label>
+    }
+    <hr>
+    <div>
+        <div>
+            @foreach (var c in Model.Categorias)
+            {
+                @*if (Model.Articulo.Categorias.Contains(c))
+                {
+                    @c.Nombre;
+                    <input class="categorias" type="checkbox" id="@c.Id" name="@c.Nombre" checked>
+                }
+                else {*@
+                    @c.Nombre;
+                    <input class="categorias" type="checkbox" id="@c.Id" name="@c.Nombre">
+                @*}*@
 
+            }
+        </div>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script>
+            $(document).on("click", ".categorias", function (event) {
+                var anterior = $('#CadenaCategorias').val();
+                $('#CadenaCategorias').val(anterior + event.target.id + ";" + event.target.checked + " ");
+            });
+        </script>
+        <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
+    </div>
 
+    <br>
+    
+    <div>
+        <div>
+            @foreach (var f in Model.Filtros)
+            {
+                @*if (Model.Articulo.Filtros.Contains(f))
+                {
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="@f.Id" name="@f.Nombre" checked>
+                    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+                    <script>
+                        var anterior = $('#CadenaFiltros').val();
+                        $('#CadenaFiltros').val(anterior + @f.Id + ";true ");
+                    </script>
+                }
+                else {*@
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="@f.Id" name="@f.Nombre">
+                @*}*@
+            }
+        </div>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script>
+            $(document).on("click", ".filtros", function (event) {
+                var anterior = $('#CadenaFiltros').val();
+                $('#CadenaFiltros').val(anterior + event.target.id + ";" + event.target.checked + " ");
+            });
+        </script>
+        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+    </div>
+    <br>
+    
     <button type="submit" class="btn btn-default">Guardar</button>
 }
 

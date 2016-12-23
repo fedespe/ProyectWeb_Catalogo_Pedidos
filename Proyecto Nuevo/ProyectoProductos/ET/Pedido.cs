@@ -14,7 +14,7 @@ namespace ET
         public double PrecioTotal { get; set; }
         public double DescuentoCliente { get; set; }
         public double Iva { get; set; }
-        public Usuario Cliente { get; set; }
+        public Cliente Cliente { get; set; }
         public List<ArticuloCantidad> ProductosPedidos { get; set; }
         public string Comentario { get; set; }
         public EstadoPedido Estado { get; set; }

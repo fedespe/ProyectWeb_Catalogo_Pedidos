@@ -1,7 +1,9 @@
+Le metí al control de perimsos para acceder a los diferentes ActionResult
+Los que están hechos son todos los de ClienteController y AdministradorController
+
+
 PEDIDO
-Quedé por la mitad del método de SinConfirmar... Y me falta hacer todo el POST del mismo...
-Si queres, metele a lo que tenes pensado que mañana le meto a esto para ver si lo termino
-Obviamente, el botón que mostraría todos los pedidos sin confirmar, aún no está andando (pero sí muestra la cantidad correcta de pedidos sin confirmar)...
+Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le método para mostrar los pedidos sin confirmar... Los muestro bien, pero cada vez que cambio de pedido, no me quedo con la primer línea de artículos... Se dónde está el error, pero no se me ocurre como solucionarlo... Ya cambié el método de mil formas... Seguro es fácil y me quemé la cabeza ya. Ahora sigo con otra cosa, pero lo subo antes para no perder lo hecho.
 CATEGORIA
 *como eliminamos la categoria
 FILTRO

@@ -17,29 +17,58 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/ListaClientes
         public ActionResult ListaClientes()
         {
-            //Hay que controlar que solo puede acceder el admin
-            try
+            if(Session["TipoUsuario"].ToString() == "Administrador")
             {
-                return View(clienteBL.obtenerTodos());
+                try
+                {
+                    return View(clienteBL.obtenerTodos());
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 
         //GET: Cliente/Crear
         public ActionResult Crear()
         {
-            try
+            if(Session["TipoUsuario"].ToString() == "Administrador")
             {
-                return View(new CrearViewModel());
+                try
+                {
+                    return View(new CrearViewModel());
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 
@@ -75,24 +104,39 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/Editar
         public ActionResult Editar(int id = 0)
         {
-            try
+            if(Session["TipoUsuario"].ToString() == "Administrador" || (Session["TipoUsuario"].ToString() == "Cliente") && (Convert.ToInt32(Session["IdUsuario"]) == id))
             {
-                if (id != 0)
+                try
                 {
-                    EditarViewModel editVM = new EditarViewModel();
-                    editVM.cliente = clienteBL.obtener(id);
-                    editVM.completarEditarVM();//Es para manejo de archivo a la hora de guardar
-                    //editVM.cliente.Password = "validacion";//Es colo para validar el modelo
-                    return View(editVM);
+                    if (id != 0)
+                    {
+                        EditarViewModel editVM = new EditarViewModel();
+                        editVM.cliente = clienteBL.obtener(id);
+                        editVM.completarEditarVM();//Es para manejo de archivo a la hora de guardar
+                                                   //editVM.cliente.Password = "validacion";//Es colo para validar el modelo
+                        return View(editVM);
+                    }
+                    else {
+                        return RedirectToAction("Crear", "Cliente");
+                    }
                 }
-                else {
-                    return RedirectToAction("Crear", "Cliente");
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 
@@ -131,46 +175,79 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        
-
         public ActionResult Eliminar(int id)
         {
-            try {
-                //para poder borrar la imagen
-                EditarViewModel editVM = new EditarViewModel();
-                editVM.cliente = clienteBL.obtener(id);
-
-                bool r = clienteBL.eliminar(id);
-
-                if (r) {
-                    editVM.eliminarArchivo();
-                }else
+            if(Session["TipoUsuario"].ToString() == "Administrador")
+            {
+                try
                 {
-                    // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
-                    ViewBag.Mensaje = "Ocurrio un error inesperado";
+                    //para poder borrar la imagen
+                    EditarViewModel editVM = new EditarViewModel();
+                    editVM.cliente = clienteBL.obtener(id);
+
+                    bool r = clienteBL.eliminar(id);
+
+                    if (r)
+                    {
+                        editVM.eliminarArchivo();
+                    }
+                    else
+                    {
+                        // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
+                        ViewBag.Mensaje = "Ocurrio un error inesperado";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+
+                    return RedirectToAction("ListaClientes");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
-
-                return RedirectToAction("ListaClientes");
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 
         //GET: Cliente/CambiarPass
-        public ActionResult CambiarPass()
+        public ActionResult CambiarPass(int id = 0)
         {
-            try
-            {
-                return View(new CambiarPassViewModel());
+            if (Session["TipoUsuario"].ToString() == "Cliente" && Convert.ToInt32(Session["IdUsuario"]) == id){
+                try
+                {
+                    CambiarPassViewModel cambiarPassVM = new CambiarPassViewModel();
+                    cambiarPassVM.NombreUsuario = Session["NombreUsuario"].ToString();
+
+                    return View(cambiarPassVM);
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 
@@ -178,25 +255,41 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult CambiarPass(CambiarPassViewModel cambiarPassVM)
         {
-            try
+            if (Session["TipoUsuario"].ToString() == "Cliente" && Session["NombreUsuario"].ToString() == cambiarPassVM.NombreUsuario)
             {
-                if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion)) {
-                    Cliente cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
-                    if (cli!=null)
+                try
+                {
+                    if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion))
                     {
-                        cli.Password = cambiarPassVM.PasswordNuevo;
-                        clienteBL.actualizarPassword(cli);
-                        return RedirectToAction("Index", "Home");
+                        Cliente cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
+                        if (cli != null)
+                        {
+                            cli.Password = cambiarPassVM.PasswordNuevo;
+                            clienteBL.actualizarPassword(cli);
+                            return RedirectToAction("Index", "Home");
+                        }
+
                     }
-                    
+                    cambiarPassVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
+                    return View(cambiarPassVM);
                 }
-                cambiarPassVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
-                return View(cambiarPassVM);
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 

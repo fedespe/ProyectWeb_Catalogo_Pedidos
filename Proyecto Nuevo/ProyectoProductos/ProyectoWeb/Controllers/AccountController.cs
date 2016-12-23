@@ -20,16 +20,32 @@ namespace ProyectoWeb.Controllers
         //GET: Account/Login
         public ActionResult Login()
         {
-            try
+            if (Session["TipoUsuario"] == null)
             {
-                return View(new LoginViewModel());
+                try
+                {
+                    return View(new LoginViewModel());
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
+
 
         //POST: Account/Login
         [HttpPost]

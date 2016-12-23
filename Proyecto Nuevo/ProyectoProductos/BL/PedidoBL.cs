@@ -45,5 +45,10 @@ namespace BL
         {
             return pedidoDAL.obtenerSinConfirmar();
         }
+
+        public void confirmar(int id)
+        {
+            pedidoDAL.confirmar(id);
+        }
     }
 }

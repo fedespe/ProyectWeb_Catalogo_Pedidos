@@ -268,12 +268,12 @@
     <Content Include="Views\Administrador\CambiarPass.cshtml" />
     <Content Include="Views\Administrador\Crear.cshtml" />
     <Content Include="Views\Shared\_SeccionUsuario.cshtml" />
+    <Content Include="Views\Pedido\SinConfirmar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Imagenes\Articulos\" />
     <Folder Include="Imagenes\Clientes\" />
-    <Folder Include="Views\Pedido\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

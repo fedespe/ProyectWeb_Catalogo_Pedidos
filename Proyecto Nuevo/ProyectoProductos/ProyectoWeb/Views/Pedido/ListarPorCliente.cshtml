@@ -1,14 +1,13 @@
 ﻿@model List<ET.Pedido>
 @{
-    ViewBag.Title = "PedidosSinConfirmar";
+    ViewBag.Title = "PedidosPorCliente";
 }
 
-<h2>Pedidos Sin Confirmar</h2>
+<h2>Pedidos de @Model[0].Cliente.NombreFantasia</h2>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Cliente</th>
             <th>F. Pedido</th>
             <th>Estado</th>
             <th>Monto Total</th>
@@ -19,14 +18,11 @@
         @foreach (var p in Model)
         {
             <tr>
-                <td>@p.Cliente.NombreFantasia</td>
                 <td>@p.FechaRealizado</td>
                 <td>@p.Estado.Nombre</td>
                 <td>@p.PrecioTotal</td>
                 <td>
                     <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
-                    |
-                    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
                 </td>
             </tr>
         }

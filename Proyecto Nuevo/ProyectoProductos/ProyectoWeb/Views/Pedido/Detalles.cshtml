@@ -53,6 +53,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Imagen</th>
             <th>Codigo Articulo</th>
             <th>Nombre Articulo</th>
             <th>Cantidad</th>
@@ -64,12 +65,17 @@
     <tbody>
         @foreach (var pp in Model.ProductosPedidos)
         {
+            double precioTotal = pp.Cantidad * pp.PrecioUnitario;
+
             <tr>
+                <td> 
+                    <img src=@("/Imagenes/Articulos/" + "ART1_IMG1.jpg"@* pp.Articulo.Imagenes[0].Img *@) height="100" width="100" />
+                </td>
                 <td>@pp.Articulo.Codigo</td>
                 <td>@pp.Articulo.Nombre</td>
                 <td>@pp.Cantidad</td>
                 <td>@pp.PrecioUnitario</td>
-                <td>Poner Total</td>
+                <td>@precioTotal</td>
             </tr>
         }
     </tbody>

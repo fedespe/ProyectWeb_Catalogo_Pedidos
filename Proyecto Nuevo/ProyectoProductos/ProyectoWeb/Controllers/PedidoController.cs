@@ -15,11 +15,19 @@ namespace ProyectoWeb.Controllers
         //GET: Pedido/SinConfirmar
         public ActionResult SinConfirmar()
         {
-            if (Session["TipoUsuario"].ToString() == "Administrador")
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
-                    return View(pedidoBL.obtenerSinConfirmar());
+                    List<Pedido> pedidos = pedidoBL.obtenerSinConfirmar();
+
+                    if (pedidos.Count > 0)
+                        return View(pedidos);
+                    else
+                    {
+                        ViewBag.Mensaje = "No hay pedidos sin confirmar.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
                 }
                 catch (ProyectoException ex)
                 {
@@ -31,7 +39,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -53,12 +62,24 @@ namespace ProyectoWeb.Controllers
                         Pedido ped = pedidoBL.obtener(id);
 
                         if(Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && (Session["NombreUsuario"].ToString().Equals(ped.Cliente.NombreUsuario))))
-                            return View(ped);
+                        {
+                            if(ped!= null)
+                                return View(ped);
+                            else
+                            {
+                                ViewBag.Mensaje = "No existe el pedido indicado.";
+                                return View("~/Views/Shared/_Mensajes.cshtml");
+                            }
+                        }
                         else
-                            return RedirectToAction("Index", "Home");
+                        {
+                            ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                            return View("~/Views/Shared/_Mensajes.cshtml");
+                        }
                     }
                     else {
-                        return RedirectToAction("Index", "Home");
+                        ViewBag.Mensaje = "Debe indicar un pedido para ver los detalles.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                 }
                 catch (ProyectoException ex)
@@ -71,7 +92,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -81,13 +103,46 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //GET: Pedido/ListarPorCliente
+        public ActionResult ListarPorCliente(int id)
+        {
+            if (Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id))
+            {
+                try
+                {
+                    return View(pedidoBL.obtenerPorCliente(id));
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+        }
+
+        //GET: Pedido/Confirmar
         public ActionResult Confirmar(int id)
         {
-            if (Session["TipoUsuario"].ToString() == "Administrador")
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
                     pedidoBL.confirmar(id);
+
+                    Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
                     return RedirectToAction("SinConfirmar");
                 }
@@ -101,7 +156,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {

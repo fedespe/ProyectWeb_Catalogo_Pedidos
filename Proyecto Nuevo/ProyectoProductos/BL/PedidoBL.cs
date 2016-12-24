@@ -46,6 +46,11 @@ namespace BL
             return pedidoDAL.obtenerSinConfirmar();
         }
 
+        public List<Pedido> obtenerPorCliente(int id)
+        {
+            return pedidoDAL.obtenerPorCliente(id);
+        }
+
         public void confirmar(int id)
         {
             pedidoDAL.confirmar(id);

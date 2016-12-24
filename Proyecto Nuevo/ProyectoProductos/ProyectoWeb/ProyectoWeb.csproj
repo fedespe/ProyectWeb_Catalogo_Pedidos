@@ -270,6 +270,7 @@
     <Content Include="Views\Shared\_SeccionUsuario.cshtml" />
     <Content Include="Views\Pedido\SinConfirmar.cshtml" />
     <Content Include="Views\Pedido\Detalles.cshtml" />
+    <Content Include="Views\Pedido\ListarPorCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

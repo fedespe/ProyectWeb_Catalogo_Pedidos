@@ -1,8 +1,8 @@
-USE master;
-GO
+--USE master;
+--GO
 
-DROP DATABASE ProyectoWeb_Catalogo_Pedidos;
-GO
+--DROP DATABASE ProyectoWeb_Catalogo_Pedidos;
+--GO
 
 CREATE DATABASE ProyectoWeb_Catalogo_Pedidos;
 GO

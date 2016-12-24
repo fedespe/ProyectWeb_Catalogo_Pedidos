@@ -17,7 +17,7 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/ListaClientes
         public ActionResult ListaClientes()
         {
-            if(Session["TipoUsuario"].ToString() == "Administrador")
+            if(Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -33,7 +33,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -46,7 +47,7 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/Crear
         public ActionResult Crear()
         {
-            if(Session["TipoUsuario"].ToString() == "Administrador")
+            if(Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -62,7 +63,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -104,7 +106,7 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/Editar
         public ActionResult Editar(int id = 0)
         {
-            if(Session["TipoUsuario"].ToString() == "Administrador" || (Session["TipoUsuario"].ToString() == "Cliente") && (Convert.ToInt32(Session["IdUsuario"]) == id))
+            if(Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente")) && (Convert.ToInt32(Session["IdUsuario"]) == id))
             {
                 try
                 {
@@ -130,7 +132,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -177,7 +180,7 @@ namespace ProyectoWeb.Controllers
 
         public ActionResult Eliminar(int id)
         {
-            if(Session["TipoUsuario"].ToString() == "Administrador")
+            if(Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -210,7 +213,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -223,7 +227,7 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/CambiarPass
         public ActionResult CambiarPass(int id = 0)
         {
-            if (Session["TipoUsuario"].ToString() == "Cliente" && Convert.ToInt32(Session["IdUsuario"]) == id){
+            if (Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id){
                 try
                 {
                     CambiarPassViewModel cambiarPassVM = new CambiarPassViewModel();
@@ -241,7 +245,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -255,7 +260,7 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult CambiarPass(CambiarPassViewModel cambiarPassVM)
         {
-            if (Session["TipoUsuario"].ToString() == "Cliente" && Session["NombreUsuario"].ToString() == cambiarPassVM.NombreUsuario)
+            if (Session["TipoUsuario"].ToString().Equals("Cliente") && Session["NombreUsuario"].ToString().Equals(cambiarPassVM.NombreUsuario))
             {
                 try
                 {
@@ -283,7 +288,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {

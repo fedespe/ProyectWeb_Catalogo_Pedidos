@@ -43,22 +43,14 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         [Display(Name = "Disponible")]
         public bool Disponible { get; set; }
 
-        //**********************************************************************
-        //Para mirar
-        //**********************************************************************
+        //************************************************************************
+        //PROPIEDADES PARA MANEJO DE IMAGENES
+        //************************************************************************
         public HttpPostedFileBase Archivo1 { get; set; }
         public HttpPostedFileBase Archivo2 { get; set; }
         public HttpPostedFileBase Archivo3 { get; set; }
         public HttpPostedFileBase Archivo4 { get; set; }
         public HttpPostedFileBase Archivo5 { get; set; }
-
-        //ver si es una lista de archivos!
-        //public List<HttpPostedFileBase> Archivos { get; set; }
-        public List<Categoria> Categorias { get; set; }
-        public List<Filtro> Filtros { get; set; }
-
-        public String CadenaCategorias { get; set; }
-        public String CadenaFiltros { get; set; }
 
         public String Img1Anterior { get; set; }
         public String Img2Anterior { get; set; }
@@ -66,18 +58,34 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public String Img4Anterior { get; set; }
         public String Img5Anterior { get; set; }
 
+        public bool EliminarArchivo1 { get; set; }
+        public bool EliminarArchivo2 { get; set; }
+        public bool EliminarArchivo3 { get; set; }
+        public bool EliminarArchivo4 { get; set; }
+        public bool EliminarArchivo5 { get; set; }
+        //************************************************************************
+        //FIN PROPIEDADES PARA MANEJO DE IMAGENES
+        //************************************************************************
 
-        //**********************************************************************
-        //**********************************************************************
+        //************************************************************************
+        //PROPIEDADES PARA MANEJO DE FILTROS Y CATEGORIAS
+        //************************************************************************
+        public List<Categoria> Categorias { get; set; }
+        public List<Filtro> Filtros { get; set; }
 
+        public String CadenaCategorias { get; set; }
+        public String CadenaFiltros { get; set; }
+        //************************************************************************
+        //FIN PROPIEDADES PARA MANEJO DE FILTROS Y CATEGORIAS
+        //************************************************************************
 
         public EditarViewModel()
         {
             Articulo = new Articulo();
-            //Archivos = new List<HttpPostedFileBase>();
             Categorias = categorialBL.obtenerTodos();
             Filtros = filtroBL.obtenerTodos();
         }
+
         public void completarEditarVM()
         {
             Codigo = Articulo.Codigo;
@@ -111,6 +119,7 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
             cargarFiltros();
             cargarCategorias();
         }
+
         private void cargarCategorias()
         {
             if (CadenaCategorias != null)
@@ -161,28 +170,16 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 
         private void cargarImagenes()
         {
-
-            //if (Archivo1 != null)
-            //    Archivos.Add(Archivo1);
-            //if (Archivo2 != null)
-            //    Archivos.Add(Archivo2);
-            //if (Archivo3 != null)
-            //    Archivos.Add(Archivo3);
-            //if (Archivo4 != null)
-            //    Archivos.Add(Archivo4);
-            //if (Archivo5 != null)
-            //    Archivos.Add(Archivo5);
-
             String nombreImg = Articulo.Codigo.ToUpper().Replace(" ", "") + "_IMG";
-            if (Archivo1 != null || Img1Anterior != null)
+            if (!EliminarArchivo1 && (Archivo1 != null || Img1Anterior != null))
                 Articulo.Imagenes.Add(new Imagen() { Img = nombreImg + 1 + ".jpg" });
-            if (Archivo2 != null || Img2Anterior != null)
+            if (!EliminarArchivo2 && (Archivo2 != null || Img2Anterior != null))
                 Articulo.Imagenes.Add(new Imagen() { Img = nombreImg + 2 + ".jpg" });
-            if (Archivo3 != null || Img3Anterior != null)
+            if (!EliminarArchivo3 && (Archivo3 != null || Img3Anterior != null))
                 Articulo.Imagenes.Add(new Imagen() { Img = nombreImg + 3 + ".jpg" });
-            if (Archivo4 != null || Img4Anterior != null)
+            if (!EliminarArchivo4 && (Archivo4 != null || Img4Anterior != null))
                 Articulo.Imagenes.Add(new Imagen() { Img = nombreImg + 4 + ".jpg" });
-            if (Archivo5 != null || Img5Anterior != null)
+            if (!EliminarArchivo5 && (Archivo5 != null || Img5Anterior != null))
                 Articulo.Imagenes.Add(new Imagen() { Img = nombreImg + 5 + ".jpg" });
         }
 
@@ -190,16 +187,59 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         {
             String nombreImg = Articulo.Codigo.ToUpper().Replace(" ", "") + "_IMG";
             string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/" + nombreImg);
-            if (Archivo1 != null || Img1Anterior != null)
-                guardarUnArchivo(Archivo1,nombreImg + 1 + ".jpg",Img1Anterior);
+            if (Archivo1 != null || Img1Anterior != null) {
+                if (!EliminarArchivo1) {
+                    guardarUnArchivo(Archivo1, nombreImg + 1 + ".jpg", Img1Anterior);
+                }
+                else {
+                    if (Img1Anterior != null)
+                        eliminarArchivo(Img1Anterior);
+                }         
+            }
             if (Archivo2 != null || Img2Anterior != null)
-                guardarUnArchivo(Archivo2, nombreImg + 2 + ".jpg", Img2Anterior);
+            {
+                if (!EliminarArchivo2)
+                {
+                    guardarUnArchivo(Archivo2, nombreImg + 2 + ".jpg", Img2Anterior);
+                }
+                else {
+                    if (Img2Anterior != null)
+                        eliminarArchivo(Img2Anterior);
+                }
+            }
             if (Archivo3 != null || Img3Anterior != null)
-                guardarUnArchivo(Archivo3, nombreImg + 3 + ".jpg", Img3Anterior);
+            {
+                if (!EliminarArchivo3)
+                {
+                    guardarUnArchivo(Archivo3, nombreImg + 3 + ".jpg", Img3Anterior);
+                }
+                else {
+                    if (Img3Anterior != null)
+                        eliminarArchivo(Img3Anterior);
+                }
+            }
             if (Archivo4 != null || Img4Anterior != null)
-                guardarUnArchivo(Archivo4, nombreImg + 4 + ".jpg", Img4Anterior);
+            {
+                if (!EliminarArchivo4)
+                {
+                    guardarUnArchivo(Archivo4, nombreImg + 4 + ".jpg", Img4Anterior);
+                }
+                else {
+                    if (Img4Anterior != null)
+                        eliminarArchivo(Img4Anterior);
+                }
+            }
             if (Archivo5 != null || Img5Anterior != null)
-                guardarUnArchivo(Archivo5, nombreImg + 5 + ".jpg", Img5Anterior);
+            {
+                if (!EliminarArchivo5)
+                {
+                    guardarUnArchivo(Archivo5, nombreImg + 5 + ".jpg", Img5Anterior);
+                }
+                else {
+                    if (Img5Anterior != null)
+                        eliminarArchivo(Img5Anterior);
+                }
+            }
         }
         public void guardarUnArchivo(HttpPostedFileBase archivo, String nombreImagen, String imgAnterior) {
             string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/");
@@ -227,10 +267,10 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
             }
         }
 
-        public void eliminarArchivo()
+        public void eliminarArchivo(String img)
         {
-            //string rutaAnterior = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Clientes/");
-            //File.Delete(System.IO.Path.Combine(rutaAnterior, this.Articulo.Foto));
+            string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes/Articulos/");
+            File.Delete(System.IO.Path.Combine(ruta, img));
         }
     }
 }

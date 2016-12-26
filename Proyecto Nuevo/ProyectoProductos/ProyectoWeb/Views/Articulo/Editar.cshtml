@@ -8,51 +8,72 @@
 {
     //Seguridad
     @Html.AntiForgeryToken()
+    
     @Html.HiddenFor(x => x.Articulo.Id)
+    
+    //Lista de errores
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    //************************************************************************
+    //MANEJO DE IMAGENES
+    //************************************************************************
     @Html.HiddenFor(x => x.Img1Anterior)
     @Html.HiddenFor(x => x.Img2Anterior)
     @Html.HiddenFor(x => x.Img3Anterior)
     @Html.HiddenFor(x => x.Img4Anterior)
     @Html.HiddenFor(x => x.Img5Anterior)
-
-    //Lista de errores
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
     var contador = 1;
     foreach (var i in Model.Articulo.Imagenes)
     {
         var s = "Archivo" + contador;
-        var s1 = "ImgArchivo" + contador; /*+Model.Articulo.Codigo + "/"*/
-        <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" height="150" width="150" />
+        var s1 = "ImgArchivo" + contador; 
+        var s3 = "EliminarArchivo" + contador;
+        <div>
+            <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" height="150" width="150" />
+            <label for="@s3">@s3</label>
+            <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
+            <input name="@s3" type="hidden" value="false" />
+        </div>
         contador++;
     }
-    for (var i = Model.Articulo.Imagenes.Count+1; i <= 5; i++)
+    for (var i = Model.Articulo.Imagenes.Count + 1; i <= 5; i++)
     {
         var s = "Archivo" + @i;
         var s1 = "ImgArchivo" + @i;
-        <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" height="150" width="150" />
+        var s3 = "EliminarArchivo" + @i;
+        <div>
+            <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" height="150" width="150" />
+            <label for="@s3">@s3</label>
+            <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
+            <input name="@s3" type="hidden" value="false" />
+        </div>
     }
 
+    <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this)).html($(this).val());">
+    <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this)).html($(this).val());">
+    <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this)).html($(this).val());">
+    <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this)).html($(this).val());">
 
-        <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
-        <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this)).html($(this).val());">
-        <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this)).html($(this).val());">
-        <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this)).html($(this).val());">
-        <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this)).html($(this).val());">
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script>
-            function mostrarImagen(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var s = "#Img" + input.id;
-                        $(s).attr("src", e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        function mostrarImagen(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var s = "#Img" + input.id;
+                    $(s).attr("src", e.target.result);
                 }
+                reader.readAsDataURL(input.files[0]);
             }
-        </script>
-
+        }
+    </script>
+    //************************************************************************
+    //FIN MANEJO DE IMAGENES
+    //************************************************************************
+    //************************************************************************
+    //MANEJO DE PROPIEDADES BASICAS
+    //************************************************************************
     <div class="form-group">
         @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
@@ -91,79 +112,82 @@
     <div class="form-group">
         @Html.LabelFor(x => x.Disponible, htmlAttributes: new { @class = "control-label" })
         @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
-    </div>  
-
+    </div>
+    //************************************************************************
+    //FIN MANEJO DE PROPIEDADES BASICAS
+    //************************************************************************
     <hr>
-    foreach (var c in Model.Articulo.Categorias)
-    {
-
-            <label>@c.Nombre</label>
-    }
-    <hr>
-    foreach (var f in Model.Articulo.Filtros)
-    {
-            <label>@f.Nombre</label>
-    }
-    <hr>
+    //************************************************************************
+    //MANEJO DE CATEGORIAS
+    //************************************************************************
     <div>
+        <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
         <div>
             @foreach (var c in Model.Categorias)
             {
-                @*if (Model.Articulo.Categorias.Contains(c))
+                @c.Nombre;
+                <input class="categorias" type="checkbox" id="ChkCat_@c.Id" name="@c.Nombre" value="@c.Id">
+                if (Model.Articulo.Categorias.Contains(c))
                 {
-                    @c.Nombre;
-                    <input class="categorias" type="checkbox" id="@c.Id" name="@c.Nombre" checked>
+                    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+                    <script>
+                        var s="#ChkCat_"+@c.Id;
+                        $(s).prop("checked", true);
+                        var anterior = $('#CadenaCategorias').val();
+                        $('#CadenaCategorias').val(anterior + @c.Id + ";" + "true ");
+                    </script>
                 }
-                else {*@
-                    @c.Nombre;
-                    <input class="categorias" type="checkbox" id="@c.Id" name="@c.Nombre">
-                @*}*@
-
             }
         </div>
         <script src="~/Scripts/jquery-1.10.2.min.js"></script>
         <script>
             $(document).on("click", ".categorias", function (event) {
                 var anterior = $('#CadenaCategorias').val();
-                $('#CadenaCategorias').val(anterior + event.target.id + ";" + event.target.checked + " ");
+                $('#CadenaCategorias').val(anterior + event.target.value + ";" + event.target.checked + " ");
             });
         </script>
-        <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
+        
     </div>
-
+    //************************************************************************
+    //FIN MANEJO DE CATEGORIAS
+    //************************************************************************
     <br>
-    
+    //************************************************************************
+    //MANEJO DE FILTROS
+    //************************************************************************
     <div>
+        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
         <div>
             @foreach (var f in Model.Filtros)
             {
-                @*if (Model.Articulo.Filtros.Contains(f))
+                @f.Nombre;
+                <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                if (Model.Articulo.Filtros.Contains(f))
                 {
-                    @f.Nombre;
-                    <input class="filtros" type="checkbox" id="@f.Id" name="@f.Nombre" checked>
                     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
                     <script>
+                        var s="#ChkFil_"+@f.Id;
+                        $(s).prop("checked", true);
                         var anterior = $('#CadenaFiltros').val();
-                        $('#CadenaFiltros').val(anterior + @f.Id + ";true ");
+                        $('#CadenaFiltros').val(anterior + @f.Id + ";" + "true ");
                     </script>
                 }
-                else {*@
-                    @f.Nombre;
-                    <input class="filtros" type="checkbox" id="@f.Id" name="@f.Nombre">
-                @*}*@
             }
         </div>
         <script src="~/Scripts/jquery-1.10.2.min.js"></script>
         <script>
             $(document).on("click", ".filtros", function (event) {
                 var anterior = $('#CadenaFiltros').val();
-                $('#CadenaFiltros').val(anterior + event.target.id + ";" + event.target.checked + " ");
+                $('#CadenaFiltros').val(anterior + event.target.value + ";" + event.target.checked + " ");
             });
         </script>
-        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+        
     </div>
+    //************************************************************************
+    //FIN MANEJO DE FILTROS
+    //************************************************************************
     <br>
-    
+
     <button type="submit" class="btn btn-default">Guardar</button>
 }
 

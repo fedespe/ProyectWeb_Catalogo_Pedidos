@@ -23,6 +23,10 @@
                 <td>@p.PrecioTotal</td>
                 <td>
                     <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                    @if ((Session["TipoUsuario"].ToString().Equals("Administrador") && !p.Estado.Nombre.Equals("CONFIRMADO") && !p.Estado.Nombre.Equals("CANCELADO") && !p.Estado.Nombre.Equals("EN CONSTRUCCION")) || (Session["TipoUsuario"].ToString().Equals("Cliente") && p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")))
+                    { 
+                        <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                    }
                 </td>
             </tr>
         }

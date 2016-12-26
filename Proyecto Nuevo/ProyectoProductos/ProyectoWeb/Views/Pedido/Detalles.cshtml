@@ -10,43 +10,43 @@
 
 <div class="form-group">
     @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.FechaRealizado, new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
+    @Html.TextBoxFor(x => x.FechaRealizado, new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.FechaEntregaSolicitada, new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
+    @Html.TextBoxFor(x => x.FechaEntregaSolicitada, new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total" })
+    @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.PrecioTotal, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.DescuentoCliente, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente" })
+    @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.DescuentoCliente, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
-    @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
+    @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.Estado.Nombre, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado" })
+    @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.Cliente.NombreFantasia, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente" })
+    @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
 </div>
 
@@ -69,7 +69,7 @@
 
             <tr>
                 <td> 
-                    <img src=@("/Imagenes/Articulos/" + "ART1_IMG1.jpg"@* pp.Articulo.Imagenes[0].Img *@) height="100" width="100" />
+                    <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
                 </td>
                 <td>@pp.Articulo.Codigo</td>
                 <td>@pp.Articulo.Nombre</td>
@@ -80,6 +80,12 @@
         }
     </tbody>
 </table>
+
+@if((Session["TipoUsuario"].ToString().Equals("Administrador") && !Model.Estado.Nombre.Equals("CONFIRMADO") && !Model.Estado.Nombre.Equals("CANCELADO")) || (Session["TipoUsuario"].ToString().Equals("Cliente") && Model.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")))
+{
+    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/"+ @Model.Id>Confirmar</a>
+}
+
 
 
 

@@ -49,6 +49,7 @@
     <Compile Include="EstadoPedidoDAL.cs" />
     <Compile Include="FiltroDAL.cs" />
     <Compile Include="ImagenDAL.cs" />
+    <Compile Include="ParametroDAL.cs" />
     <Compile Include="PedidoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuarioDAL.cs" />

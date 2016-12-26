@@ -37,13 +37,13 @@ namespace DAL
 
                         C.Id as IdCliente, C.Usuario, C.NombreFantasia, C.Rut, C.RazonSocial,
                         C.Descuento as DescuentoClienteActual, C.DiasDePago, C.Direccion, C.Telefono, C.NombreContacto,
-                        C.TelefonoContacto, C.EmailContacto, C.Imagen as Imagen,
+                        C.TelefonoContacto, C.EmailContacto, C.Imagen as ImagenCliente,
 
                         PA.Id as IdPedidoCantidad, PA.Cantidad, PA.PrecioUnitario,
 
                         A.Id as IdArticulo, A.Codigo, A.Nombre as NombreArticulo, A.Descripcion as DescripcionArticulo,
                         A.Precio as PrecioArticuloActual, A.Stock, A.Disponible, A.Destacado,
-    
+
                         I.Imagen as ImagenArticulo
 
                     FROM
@@ -66,16 +66,17 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+
                         while (dr.Read())
                         {
-                            List<Imagen> imgArt = new List<Imagen>();
-                            Imagen i = new Imagen
+                            List<Imagen> imagenes = new List<Imagen>();
+                            Imagen img = new Imagen
                             {
                                 Img = dr["ImagenArticulo"].ToString(),
                             };
-                            imgArt.Add(i);
+                            imagenes.Add(img);
 
-                            pedido = new Pedido
+                            Pedido ped = new Pedido
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
@@ -104,7 +105,7 @@ namespace DAL
                                     NombreDeContacto = dr["NombreContacto"].ToString(),
                                     TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
                                     EmailDeContacto = dr["EmailContacto"].ToString(),
-                                    Foto = dr["Imagen"].ToString()
+                                    Foto = dr["ImagenCliente"].ToString()
                                 },
                                 ProductosPedidos = new List<ArticuloCantidad>()
                             };
@@ -123,13 +124,13 @@ namespace DAL
                                     Stock = Convert.ToInt32(dr["Stock"]),
                                     Disponible = (Convert.ToInt32(dr["Disponible"]) == 0 ? false : true),
                                     Destacado = (Convert.ToInt32(dr["Destacado"]) == 0 ? false : true),
-                                    Imagenes = imgArt
+                                    Imagenes = imagenes
                                 }
                             };
 
-                            pedido.ProductosPedidos.Add(ac);
+                            ped.ProductosPedidos.Add(ac);
 
-                            pedidos.Add(pedido);
+                            pedidos.Add(ped);
                         }
                     }
                 }
@@ -139,43 +140,54 @@ namespace DAL
                 throw new ProyectoException("Error: " + ex.Message);
             }
 
-            //if (pedidos.Count > 1)
-            //{
-            //    pedido = pedidos[0];
-
-            //    for (int i = 1; i < pedidos.Count; i++)
-            //    {
-            //        pedido.ProductosPedidos.Add(pedidos[i].ProductosPedidos[0]);
-            //    }
-            //}
-
-            if (pedidos.Count > 1)
+            if (pedidos.Count() >= 1)
             {
-                pedido = pedidos[0];
-
-                for (int i =1 ; i<pedidos.Count ; i++)
+                int i = 1;
+                while (i < pedidos.Count())
                 {
-                    pedido.ProductosPedidos.Add(pedidos[i].ProductosPedidos[0]);
+                    if (pedidos[i].ProductosPedidos[0].Articulo.Id == pedidos[i - 1].ProductosPedidos[0].Articulo.Id)
+                    {
+                        pedidos.RemoveAt(i);
+                    }
+                    else
+                    {
+                        i++;
+                    }
                 }
             }
-            else if(pedidos.Count ==1)
+
+            if (pedidos.Count() >= 1)
             {
-                pedido = pedidos[0];
+                int i = 1;
+                while (i < pedidos.Count())
+                {
+                    if (pedidos[i].Id == pedidos[i - 1].Id)
+                    {
+                        pedidos[i - 1].ProductosPedidos.Add(pedidos[i].ProductosPedidos[0]);
+                        pedidos.RemoveAt(i);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
             }
 
-            double precioTot = 0;
-
-            if(pedido != null)
+            foreach (Pedido p in pedidos)
             {
-                foreach (ArticuloCantidad acp in pedido.ProductosPedidos)
+                double precioTot = 0;
+
+                foreach (ArticuloCantidad acp in p.ProductosPedidos)
                 {
                     precioTot += acp.Cantidad * acp.PrecioUnitario;
                 }
 
-                precioTot -= precioTot * pedido.DescuentoCliente / 100;
+                precioTot -= precioTot * p.DescuentoCliente / 100;
 
-                pedido.PrecioTotal = precioTot;
+                p.PrecioTotal = precioTot;
             }
+
+            pedido = pedidos[0];
 
             return pedido;
         }

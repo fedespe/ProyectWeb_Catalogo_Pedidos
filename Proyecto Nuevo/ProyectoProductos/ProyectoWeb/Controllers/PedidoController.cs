@@ -1,5 +1,6 @@
 ﻿using BL;
 using ET;
+using ProyectoWeb.ViewModel.PedidoViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -166,5 +167,28 @@ namespace ProyectoWeb.Controllers
                 }
             }
         }
+
+        ////GET: Cliente/Editar
+        //public ActionResult Editar(int id = 0)
+        //{
+        //    try
+        //    {
+        //        if (id != 0)
+        //        {
+        //            EditarViewModel editVM = new EditarViewModel();
+        //            editVM.Pedido = pedidoBL.obtener(id);
+        //            editVM.completarEditarVM();
+        //            return View(editVM);
+        //        }
+        //        else {
+        //            return RedirectToAction("Crear", "Articulo");
+        //        }
+        //    }
+        //    catch (ProyectoException ex)
+        //    {
+        //        ViewBag.Mensaje = ex.Message;
+        //        return View("~/Views/Shared/_Mensajes.cshtml");
+        //    }
+        //}
     }
 }

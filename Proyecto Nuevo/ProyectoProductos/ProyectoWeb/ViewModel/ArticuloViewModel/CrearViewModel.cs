@@ -46,23 +46,36 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public bool Disponible { get; set; }
 
 
-        //**********************************************************************
-        //Para mirar
-        //**********************************************************************
+        //************************************************************************
+        //PROPIEDADES PARA MANEJO DE IMAGENES
+        //************************************************************************
         public HttpPostedFileBase Archivo1 { get; set; }
         public HttpPostedFileBase Archivo2 { get; set; }
         public HttpPostedFileBase Archivo3 { get; set; }
         public HttpPostedFileBase Archivo4 { get; set; }
         public HttpPostedFileBase Archivo5 { get; set; }
 
+        public bool EliminarArchivo1 { get; set; }
+        public bool EliminarArchivo2 { get; set; }
+        public bool EliminarArchivo3 { get; set; }
+        public bool EliminarArchivo4 { get; set; }
+        public bool EliminarArchivo5 { get; set; }
         public List<HttpPostedFileBase> Archivos { get; set; }
+        //************************************************************************
+        //FIN PROPIEDADES PARA MANEJO DE IMAGENES
+        //************************************************************************
+
+        //************************************************************************
+        //PROPIEDADES PARA MANEJO DE FILTROS Y CATEGORIAS
+        //************************************************************************
         public List<Categoria> Categorias { get; set; }
         public List<Filtro> Filtros { get; set; }
 
         public String CadenaCategorias { get; set; }
         public String CadenaFiltros { get; set; }
-        //**********************************************************************
-        //**********************************************************************
+        //************************************************************************
+        //FIN PROPIEDADES PARA MANEJO DE FILTROS Y CATEGORIAS
+        //************************************************************************
 
         public CrearViewModel()
         {
@@ -136,15 +149,15 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 
         private void cargarImagenes()
         {
-            if (Archivo1 != null)
+            if (Archivo1 != null && !EliminarArchivo1)
                 Archivos.Add(Archivo1);
-            if (Archivo2 != null)
+            if (Archivo2 != null && !EliminarArchivo2)
                 Archivos.Add(Archivo2);
-            if (Archivo3 != null)
+            if (Archivo3 != null && !EliminarArchivo3)
                 Archivos.Add(Archivo3);
-            if (Archivo4 != null)
+            if (Archivo4 != null && !EliminarArchivo4)
                 Archivos.Add(Archivo4);
-            if (Archivo5 != null)
+            if (Archivo5 != null && !EliminarArchivo5)
                 Archivos.Add(Archivo5);
 
             String nombreImg = Articulo.Codigo.ToUpper().Replace(" ", "") + "_IMG";

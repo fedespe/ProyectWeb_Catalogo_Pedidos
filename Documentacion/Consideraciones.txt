@@ -7,8 +7,9 @@ Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le mé
 CATEGORIA
 *como eliminamos la categoria
 FILTRO
-*los filtros no llevan color, sino que el color es un filtro distinto
+*los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
 ARTICULO
 *ver si la transaccion esta andando bien (creo q no)
 *agregar una imagen en chico para cada articulo
-*Falta en editar eliminar las imagenes si se quiere, y colocar los filtros y categorias que ya tenia el articulo
+*falta filtros en la lista de articulos
+*falta separar los filtros al momento de elegir o editar los filtros

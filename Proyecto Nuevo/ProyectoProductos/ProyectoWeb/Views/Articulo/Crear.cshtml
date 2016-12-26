@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Crear";
 }
+@*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
+<script src="~/Scripts/articuloCrear.js"></script>
 
 <h2>Nuevo Articulo</h2>
 
@@ -13,55 +15,35 @@
     //Lista de errores
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script>
-        function mostrarImagen(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#btnArchivo1').html('<input type="file" style="display:none;" name="Archivo1" id="Archivo1"><img src="' + e.target.result + '" height="50" width="50" />');
-                }
-                reader.readAsDataURL(input.files[0]);
-            } 
-        }
-        $(document).on("change", "#Archivo1", function (event) {
-            mostrarImagen(this);            
-        });        
-        //function quitarImagen(input) {
-        //    if (input = "") {
-        //        $('#btnArchivo1').html('<input type="file" style="display:none;" name="Archivo1" id="Archivo1">Seleccione una imágen');
-        //    }
-        //}
-    </script>*@
+    //************************************************************************
+    //MANEJO DE IMAGENES
+    //************************************************************************
 
-    <label class="btn btn-default" for="Archivo1" id="btnArchivo1">
-        <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$('#upload-file-info1').html($(this).val());">
-        Seleccione una imágen
-    </label>
-    <span class='label label-info' id="upload-file-info1"></span>
-    <label class="btn btn-default" for="Archivo2" id="btnArchivo2">
-        <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$('#upload-file-info2').html($(this).val());">
-        Seleccione una imágen
-    </label>
-    <span class='label label-info' id="upload-file-info2"></span>
-    <label class="btn btn-default" for="Archivo3" id="btnArchivo3">
-        <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$('#upload-file-info3').html($(this).val());">
-        Seleccione una imágen
-    </label>
-    <span class='label label-info' id="upload-file-info3"></span>
-    <label class="btn btn-default" for="Archivo4" id="btnArchivo4">
-        <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$('#upload-file-info4').html($(this).val());">
-        Seleccione una imágen
-    </label>
-    <span class='label label-info' id="upload-file-info4"></span>
-    <label class="btn btn-default" for="Archivo5" id="btnArchivo5">
-        <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$('#upload-file-info5').html($(this).val());">
-        Seleccione una imágen
-    </label>
-    <span class='label label-info' id="upload-file-info5"></span>
+    for (var i =1; i <= 5; i++)
+    {
+        var s = "Archivo" + @i;
+        var s1 = "ImgArchivo" + @i;
+        var s3 = "EliminarArchivo" + @i;
+        <div>
+            <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" height="150" width="150" />
+            <label for="@s3">@s3</label>
+            <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
+            <input name="@s3" type="hidden" value="false" />
+        </div>
+    }
 
+    <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this));">
 
-
+    //************************************************************************
+    //FIN MANEJO DE IMAGENES
+    //************************************************************************
+    //************************************************************************
+    //MANEJO DE PROPIEDADES BASICAS
+    //************************************************************************
     <div class="form-group">
         @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
@@ -101,44 +83,55 @@
         @Html.LabelFor(x => x.Disponible, htmlAttributes: new { @class = "control-label" })
         @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
     </div>
-
+    //************************************************************************
+    //FIN MANEJO DE PROPIEDADES BASICAS
+    //************************************************************************
+    <hr>
+    //************************************************************************
+    //MANEJO DE CATEGORIAS
+    //************************************************************************
     <div>
+        <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
         <div>
             @foreach (var c in Model.Categorias)
             {
                 @c.Nombre;
-                <input class="categorias" type="checkbox" id="@c.Id" name="@c.Nombre">
+                <input class="categorias" type="checkbox" id="ChkCat_@c.Id" name="@c.Nombre" value="@c.Id">
             }
         </div>
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script>
-            $(document).on("click", ".categorias", function (event) {
-                //alert(event.target.id + " " + event.target.checked);
-                var anterior = $('#CadenaCategorias').val();
-                $('#CadenaCategorias').val(anterior + event.target.id + ";" + event.target.checked + " ");
-            });
-        </script>
-        <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
     </div>
-
+    //************************************************************************
+    //FIN MANEJO DE CATEGORIAS
+    //************************************************************************
+    <br>
+    //************************************************************************
+    //MANEJO DE FILTROS
+    //************************************************************************
     <div>
+        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
         <div>
             @foreach (var f in Model.Filtros)
             {
-                @f.Nombre;
-                <input class="filtros" type="checkbox" id="@f.Id" name="@f.Nombre">
+                if (!f.Color)
+                {
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                }
             }
         </div>
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script>
-            $(document).on("click", ".filtros", function (event) {
-                //alert(event.target.id + " " + event.target.checked);
-                var anterior = $('#CadenaFiltros').val();
-                $('#CadenaFiltros').val(anterior + event.target.id + ";" + event.target.checked + " ");
-            });
-        </script>
-        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+        <div>
+            @foreach (var f in Model.Filtros)
+            {
+                if (f.Color)
+                {
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                }
+            }
+        </div>
     </div>
-
+    //************************************************************************
+    //FIN MANEJO DE FILTROS
+    //************************************************************************
     <button type="submit" class="btn btn-default">Guardar</button>
 }

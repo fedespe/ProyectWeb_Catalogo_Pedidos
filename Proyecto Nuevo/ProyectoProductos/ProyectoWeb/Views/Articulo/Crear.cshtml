@@ -119,17 +119,19 @@
                 }
             }
         </div>
+        <br>
         <div>
-            @foreach (var f in Model.Filtros)
+            @foreach (var f1 in Model.Filtros)
             {
-                if (f.Color)
+                if (f1.Color)
                 {
-                    @f.Nombre;
-                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                    @f1.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f1.Id" name="@f1.Nombre" value="@f1.Id">
                 }
             }
         </div>
     </div>
+    <br>
     //************************************************************************
     //FIN MANEJO DE FILTROS
     //************************************************************************

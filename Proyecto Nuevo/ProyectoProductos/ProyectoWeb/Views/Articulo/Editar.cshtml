@@ -139,16 +139,36 @@
         <div>
             @foreach (var f in Model.Filtros)
             {
-                @f.Nombre;
-                <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
-                if (Model.Articulo.Filtros.Contains(f))
+                if (!f.Color)
                 {
-                    <script>
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                    if (Model.Articulo.Filtros.Contains(f))
+                    {
+                        <script>
                         cargarFiltrosAnteriores(@f.Id)
-                    </script>
+                        </script>
+                    }
                 }
             }
-        </div>        
+        </div> 
+        <br>    
+        <div>
+            @foreach (var f in Model.Filtros)
+            {
+                if (f.Color)
+                {
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                    if (Model.Articulo.Filtros.Contains(f))
+                    {
+                        <script>
+                        cargarFiltrosAnteriores(@f.Id)
+                        </script>
+                    }
+                }
+            }
+        </div>    
     </div>
     //************************************************************************
     //FIN MANEJO DE FILTROS

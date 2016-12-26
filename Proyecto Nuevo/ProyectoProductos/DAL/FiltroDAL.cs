@@ -30,6 +30,7 @@ namespace DAL
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 Nombre = dr["Nombre"].ToString(),
+                                Color= Convert.ToBoolean(dr["Color"])
                             };
                             filtros.Add(filtro);
                         }

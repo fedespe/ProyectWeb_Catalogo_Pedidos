@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Editar";
 }
+
+@*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
+<script src="~/Scripts/articuloEditar.js"></script>
+
 <h2>Editar Articulo</h2>
 
 @using (Html.BeginForm("Editar", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -50,24 +54,11 @@
     }
 
     <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
-    <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this)).html($(this).val());">
-    <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this)).html($(this).val());">
-    <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this)).html($(this).val());">
-    <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this)).html($(this).val());">
+    <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this));">
+    <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this));">
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script>
-        function mostrarImagen(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var s = "#Img" + input.id;
-                    $(s).attr("src", e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
     //************************************************************************
     //FIN MANEJO DE IMAGENES
     //************************************************************************
@@ -128,25 +119,13 @@
                 @c.Nombre;
                 <input class="categorias" type="checkbox" id="ChkCat_@c.Id" name="@c.Nombre" value="@c.Id">
                 if (Model.Articulo.Categorias.Contains(c))
-                {
-                    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+                {                   
                     <script>
-                        var s="#ChkCat_"+@c.Id;
-                        $(s).prop("checked", true);
-                        var anterior = $('#CadenaCategorias').val();
-                        $('#CadenaCategorias').val(anterior + @c.Id + ";" + "true ");
+                        cargarCategoriasAnteriores(@c.Id)
                     </script>
                 }
             }
         </div>
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script>
-            $(document).on("click", ".categorias", function (event) {
-                var anterior = $('#CadenaCategorias').val();
-                $('#CadenaCategorias').val(anterior + event.target.value + ";" + event.target.checked + " ");
-            });
-        </script>
-        
     </div>
     //************************************************************************
     //FIN MANEJO DE CATEGORIAS
@@ -164,24 +143,12 @@
                 <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
                 if (Model.Articulo.Filtros.Contains(f))
                 {
-                    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
                     <script>
-                        var s="#ChkFil_"+@f.Id;
-                        $(s).prop("checked", true);
-                        var anterior = $('#CadenaFiltros').val();
-                        $('#CadenaFiltros').val(anterior + @f.Id + ";" + "true ");
+                        cargarFiltrosAnteriores(@f.Id)
                     </script>
                 }
             }
-        </div>
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script>
-            $(document).on("click", ".filtros", function (event) {
-                var anterior = $('#CadenaFiltros').val();
-                $('#CadenaFiltros').val(anterior + event.target.value + ";" + event.target.checked + " ");
-            });
-        </script>
-        
+        </div>        
     </div>
     //************************************************************************
     //FIN MANEJO DE FILTROS

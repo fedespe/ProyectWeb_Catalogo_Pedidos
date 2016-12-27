@@ -12,6 +12,7 @@ namespace ProyectoWeb.Controllers
     public class PedidoController : Controller
     {
         private PedidoBL pedidoBL = new PedidoBL();
+        private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
 
         //GET: Pedido/SinConfirmar
         public ActionResult SinConfirmar()
@@ -168,27 +169,96 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        ////GET: Cliente/Editar
-        //public ActionResult Editar(int id = 0)
-        //{
-        //    try
-        //    {
-        //        if (id != 0)
-        //        {
-        //            EditarViewModel editVM = new EditarViewModel();
-        //            editVM.Pedido = pedidoBL.obtener(id);
-        //            editVM.completarEditarVM();
-        //            return View(editVM);
-        //        }
-        //        else {
-        //            return RedirectToAction("Crear", "Articulo");
-        //        }
-        //    }
-        //    catch (ProyectoException ex)
-        //    {
-        //        ViewBag.Mensaje = ex.Message;
-        //        return View("~/Views/Shared/_Mensajes.cshtml");
-        //    }
-        //}
+        //GET: Pedido/Editar
+        public ActionResult Editar(int id = 0)
+        {
+            if(Session["TipoUsuario"] != null)
+            {
+                try
+                {
+                    if (id != 0)
+                    {
+                        Pedido p = pedidoBL.obtener(id);
+                        if(p != null)
+                        {
+                            EditarViewModel editVM = new EditarViewModel();
+                            editVM.Pedido = p;
+                            editVM.completarEditarVM();
+                            return View(editVM);
+                        }
+                        else
+                        {
+                            ViewBag.Mensaje = "No se encontró el pedido que desea visualizar.";
+                            return View("~/Views/Shared/_Mensajes.cshtml");
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = "Debe indicar qué pedido desea visualizar.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+
+        //POST: Pedido/Editar
+        [HttpPost]
+        public ActionResult Editar(EditarViewModel editVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
+                    {
+                        ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+
+                    editVM.completarPedido();
+
+                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    {
+                        editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
+                    }
+
+                    if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                    {
+                        editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
+                    }
+
+                    bool r = pedidoBL.actualizar(editVM.Pedido);
+
+                    if (!r)
+                    {
+                        // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
+                        ViewBag.Mensaje = "Ocurrio un error inesperado";
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = "Pedido Actualizado con éxito.";
+                    }
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else {
+                return View(editVM);
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         private ParametroBL parametroBL = new ParametroBL();
         private ClienteBL clienteBL = new ClienteBL();
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
-        //private ArticuloBL articuloBL = new ArticuloBL();
+        private ArticuloBL articuloBL = new ArticuloBL();
 
         public ET.Pedido Pedido { get; set; }
         public ET.Cliente Cliente { get; set; }
@@ -59,11 +59,9 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public string CadenaArticulos { get; set; }
 
 
-        public EditarViewModel(string estadoPedido)
+        public EditarViewModel()
         {
             ProductosPedidos = new List<ET.ArticuloCantidad>();
-            EstadoPedido = estadoPedido;
-
         }
 
         public void completarEditarVM()
@@ -74,6 +72,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             DescuentoCliente = Pedido.Cliente.Descuento;
             Iva = parametroBL.obtenerIVA();
             Comentario = Pedido.Comentario;
+            EstadoPedido = Pedido.Estado.Nombre;
         }
 
         public void completarPedido()
@@ -114,16 +113,13 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                 string[] substrings = CadenaArticulos.Split(c1);
                 for (int i = 0; i < substrings.Length; i++)
                 {
-                    //string[] substrings2 = substrings[i].Split(c2);
-                    //ArticuloBL p = new Categoria { Id = Convert.ToInt32(substrings2[0]) };
-                    //if (substrings2[1] == "true")
-                    //{
-                    //    Articulo.Categorias.Remove(c);
-                    //    Articulo.Categorias.Add(c);
-                    //}
-                    //else {
-                    //    Articulo.Categorias.Remove(c);
-                    //}
+                    string[] substrings2 = substrings[i].Split(c2);
+                    ET.Articulo a = articuloBL.obtener(Convert.ToInt32(substrings2[0]));
+                    ET.ArticuloCantidad ac = new ET.ArticuloCantidad();
+                    ac.Articulo = a;
+                    ac.PrecioUnitario = a.Precio;
+                    ac.Cantidad = Convert.ToInt32(substrings2[1]);
+                    ProductosPedidos.Add(ac);
                 }
             }
         }

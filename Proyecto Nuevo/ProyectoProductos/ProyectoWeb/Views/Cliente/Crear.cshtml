@@ -3,6 +3,8 @@
     ViewBag.Title = "Crear";
 }
 
+<script src="~/Scripts/clienteCrearEditar.js"></script>
+
 <h2>Nuevo Usuario</h2>
 @using (Html.BeginForm("Crear", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -14,26 +16,25 @@
     //Lista de errores
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
+    @*<div class="form-group">
         <label>Imagen</label><br />
         <img src=@("/Imagenes/Clientes/NuevoMuestra.jpg") height="150" width="150" />
     </div>
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Archivo)   
-        @Html.TextBoxFor(x => x.Archivo, new { type = "file" })
-        @Html.ValidationMessageFor(x => x.Archivo, "", new { @class = "text-danger" })
-    </div>*@
     <div>
-        @*<label class="btn btn-primary btn-file">
-            Seleccione una imágen <input type="file" name="Archivo" id="Archivo" style="display: none;">
-        </label>*@
         <label class="btn btn-primary" for="Archivo">
             <input type="file" style="display:none;" name="Archivo" id="Archivo" onchange="$('#upload-file-info').html($(this).val());">
             Seleccione una imágen
         </label>
         <span class='label label-info' id="upload-file-info"></span>
+    </div>*@
+
+    <div>
+        <img src=@("/Imagenes/Clientes/NuevoMuestra.jpg") id="ImgArchivo" onclick="$('#Archivo').click()" height="150" width="150" />
     </div>
+
+    <input type="file" style="display:none;" name="Archivo" id="Archivo" onchange="$(mostrarImagen(this));">
+
 
     <div class="form-group">
         @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })

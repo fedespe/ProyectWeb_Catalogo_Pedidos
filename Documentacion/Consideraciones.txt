@@ -6,10 +6,10 @@ PEDIDO
 Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le método para mostrar los pedidos sin confirmar... Los muestro bien, pero cada vez que cambio de pedido, no me quedo con la primer línea de artículos... Se dónde está el error, pero no se me ocurre como solucionarlo... Ya cambié el método de mil formas... Seguro es fácil y me quemé la cabeza ya. Ahora sigo con otra cosa, pero lo subo antes para no perder lo hecho.
 CATEGORIA
 *como eliminamos la categoria
+*Ver tema equal en clase categoria da una advertencia por sobreescribir el equal, y al ejecutar edit de categoria entra a equal con string ""
 FILTRO
 *los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
 ARTICULO
 *ver si la transaccion esta andando bien (creo q no)
 *agregar una imagen en chico para cada articulo
-*falta filtros en la lista de articulos
-*falta separar los filtros al momento de elegir o editar los filtros
+*falta paginacion para traer los articulos

@@ -19,8 +19,11 @@ namespace ET
 
         public override bool Equals(object obj)
         {
-            Categoria c = (Categoria)obj;
-            return c.Id == this.Id;
+            if (obj is Categoria) {//No se por que cuando edito una categoria entra y compara con string vacio que no es una categoria por eso el control
+                Categoria c = (Categoria)obj;
+                return c.Id == this.Id;
+            }
+            return false;
         }
     }
 }

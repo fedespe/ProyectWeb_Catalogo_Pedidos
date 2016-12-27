@@ -20,10 +20,6 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         [Display(Name = "Nombre Usuario")]
         public string NombreUsuario { get; set; }
 
-        //[Required]
-        //[Display(Name = "Password")]
-        //[DataType(DataType.Password)]
-        //public string Password { get; set; }
 
         [Required]
         [Display(Name = "Nombre Fantasía")]

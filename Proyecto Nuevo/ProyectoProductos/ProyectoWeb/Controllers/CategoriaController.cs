@@ -47,10 +47,7 @@ namespace ProyectoWeb.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    //Falta encriptar password
-                    //Le coloco el nombre con cual voy a guardar el archivo  
-                    //Para no guardar el archivo por si da problemas al ingresar los datos     
+                {     
                     crearVM.completarCategoria();
                     categoriaBL.registrar(crearVM.categoria);
                     //Guardo archivo
@@ -77,8 +74,7 @@ namespace ProyectoWeb.Controllers
                 {
                     EditarViewModel editVM = new EditarViewModel();
                     editVM.categoria = categoriaBL.obtener(id);
-                    editVM.completarEditarVM();//Es para manejo de archivo a la hora de guardar
-                    //editVM.cliente.Password = "validacion";//Es colo para validar el modelo
+                    editVM.completarEditarVM();
                     return View(editVM);
                 }
                 else {
@@ -92,16 +88,14 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        //POST: Cliente/Editar
+        //POST: Categoria/Editar
         [HttpPost]
         public ActionResult Editar(EditarViewModel editVM)
         {
             if (ModelState.IsValid)
             {
                 try
-                {
-                    //Le coloco el nombre con cual voy a guardar el archivo  
-                    //Para no guardar el archivo por si da problemas al ingresar los datos     
+                {     
                     editVM.completarCliente();
                     bool r = true;
 

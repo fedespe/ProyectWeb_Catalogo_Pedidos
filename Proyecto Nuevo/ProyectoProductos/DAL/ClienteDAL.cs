@@ -216,7 +216,7 @@ namespace DAL
                     con.Open();
 
                     SqlCommand cmd = new SqlCommand(@"INSERT INTO Cliente VALUES(
-                        @usu, @pass, @nomFan, @rut, @razSoc, @desc, @diasPago, @dir, @tel, @nomCon, @telCon, @emailCon, @foto)"
+                        @usu, @pass, null,@nomFan, @rut, @razSoc, @desc, @diasPago, @dir, @tel, @nomCon, @telCon, @emailCon, @foto)"
                         , con);
 
                     cmd.Parameters.AddWithValue("@usu", cli.NombreUsuario);

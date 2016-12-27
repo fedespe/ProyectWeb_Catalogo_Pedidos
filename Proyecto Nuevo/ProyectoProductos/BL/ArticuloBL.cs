@@ -49,6 +49,9 @@ namespace BL
         {
             return articuloDAL.quitarDestacado(id);
         }
+        public List<Articulo> obtenerConFiltros(List<Filtro> Filtros) {
+            return articuloDAL.obtenerConFiltros(Filtros);
+        }
 
         private void validar(Articulo articulo)
         {

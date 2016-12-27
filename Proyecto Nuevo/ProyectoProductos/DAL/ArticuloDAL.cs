@@ -50,6 +50,64 @@ namespace DAL
             return articulos;
         }
 
+        public List<Articulo> obtenerConFiltros(List<Filtro> Filtros){
+            List<Articulo> articulos = new List<Articulo>();
+            string consulta = "";
+            if (Filtros != null && Filtros.Count > 0)
+            {
+                int contador = 1;
+                foreach (Filtro f in Filtros) {
+                    if (contador != Filtros.Count)
+                    {
+                        consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+                                    and f.Id = "+f.Id+" INTERSECT ";
+                    }
+                    else {
+                        consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+                                    and f.Id = " + f.Id;
+                    }
+                    contador++;
+                }
+            }
+            else {
+                consulta = "SELECT * FROM Articulo";
+            }
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand(consulta, con);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Articulo articulo = new Articulo
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                Codigo = dr["Codigo"].ToString(),
+                                Nombre = dr["Nombre"].ToString(),
+                                Descripcion = dr["Descripcion"].ToString(),
+                                Precio = Convert.ToInt32(dr["Precio"]),
+                                Stock = Convert.ToInt32(dr["Stock"]),
+                                Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
+                            };
+                            articulos.Add(articulo);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return articulos;
+        }
+
+
         public List<Imagen> obtenerImagenes(int idArticulo) {
             List<Imagen> imagenes = new List<Imagen>();
 

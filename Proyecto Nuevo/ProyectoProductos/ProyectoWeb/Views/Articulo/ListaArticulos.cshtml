@@ -1,13 +1,68 @@
-﻿@model List<ET.Articulo>
+﻿@model ProyectoWeb.ViewModel.ArticuloViewModel.ListarArticuloViewModel
 @{
     ViewBag.Title = "ListaArticulos";
 }
 
+<script src="~/Scripts/articuloListar.js"></script>
+
 <h2>Lista Articulos</h2>
+
+@using (Html.BeginForm("ListaArticulos", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    //Seguridad
+    @Html.AntiForgeryToken()
+    //************************************************************************
+    //MANEJO DE FILTROS
+    //************************************************************************
+    <div>
+        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+        <div>
+            @foreach (var f in Model.FiltrosTotales)
+            {
+                if (!f.Color)
+                {
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                    if (Model.FiltrosAplicados.Contains(f))
+                    {
+                        <script>
+                        cargarFiltrosAnteriores(@f.Id)
+                        </script>
+                    }
+                }
+            }
+        </div>
+        <br>
+        <div>
+            @foreach (var f in Model.FiltrosTotales)
+            {
+                if (f.Color)
+                {
+                    @f.Nombre;
+                    <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                    if (Model.FiltrosAplicados.Contains(f))
+                    {
+                        <script>
+                        cargarFiltrosAnteriores(@f.Id)
+                        </script>
+                    }
+                }
+            }
+        </div>
+    </div>
+    //************************************************************************
+    //FIN MANEJO DE FILTROS
+    //************************************************************************
+    <br>
+    <button type="submit" class="btn btn-default">Filtrar</button>
+}
+
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Codigo</th>
+            @*<th>Imagen</th>FALTA TRAER IMAGENES DE LA BASE SI SE QUIERE MOSTRAR IMAGEN*@
+            <th>Código</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
@@ -18,9 +73,10 @@
     </thead>
 
     <tbody>
-        @foreach (var c in Model)
+        @foreach (var c in Model.Articulos)
         {
             <tr>
+                @*<td><img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) height="50" width="50" /></td>FALTA TRAER IMAGENES DE LA BASE SI SE QUIERE MOSTRAR IMAGEN*@
                 <td>@c.Codigo</td>
                 <td>@c.Nombre</td>
                 <td>@c.Descripcion</td>

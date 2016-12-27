@@ -178,6 +178,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ArticuloViewModel\ListarArticuloViewModel.cs" />
     <Compile Include="ViewModel\Models\AccountViewModels.cs" />
     <Compile Include="ViewModel\Models\IdentityModels.cs" />
     <Compile Include="ViewModel\Models\ManageViewModels.cs" />
@@ -206,6 +207,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\articuloCrear.js" />
     <Content Include="Scripts\articuloEditar.js" />
+    <Content Include="Scripts\articuloListar.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

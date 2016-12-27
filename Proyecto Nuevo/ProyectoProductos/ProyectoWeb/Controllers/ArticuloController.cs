@@ -13,11 +13,27 @@ namespace ProyectoWeb.Controllers
     {
         private ArticuloBL articuloBL = new ArticuloBL();
 
+        //GET: Articulo/ListaArticulo
         public ActionResult ListaArticulos()
         {
             try
             {
-                return View(articuloBL.obtenerTodos());
+                return View(new ListarArticuloViewModel());
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+        //POST: Articulo/ListaArticulo
+        [HttpPost]
+        public ActionResult ListaArticulos(ListarArticuloViewModel ListarVM)
+        {
+            try
+            {
+                ListarVM.cargarArticulosFiltrados();
+                return View(ListarVM);
             }
             catch (ProyectoException ex)
             {
@@ -66,7 +82,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        //GET: Cliente/Editar
+        //GET: Articulo/Editar
         public ActionResult Editar(int id = 0)
         {
             try

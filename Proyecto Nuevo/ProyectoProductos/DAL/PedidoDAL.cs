@@ -93,7 +93,7 @@ namespace DAL
 
                                 Cliente = new Cliente
                                 {
-                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
                                     NombreFantasia = dr["NombreFantasia"].ToString(),
                                     Rut = dr["Rut"].ToString(),
@@ -187,7 +187,8 @@ namespace DAL
                 p.PrecioTotal = precioTot;
             }
 
-            pedido = pedidos[0];
+            if(pedidos.Count > 0)
+                pedido = pedidos[0];
 
             return pedido;
         }
@@ -260,7 +261,7 @@ namespace DAL
 
                                 Cliente = new Cliente
                                 {
-                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
                                     NombreFantasia = dr["NombreFantasia"].ToString(),
                                     Rut = dr["Rut"].ToString(),
@@ -444,7 +445,7 @@ namespace DAL
 
                                 Cliente = new Cliente
                                 {
-                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
                                     NombreFantasia = dr["NombreFantasia"].ToString(),
                                     Rut = dr["Rut"].ToString(),

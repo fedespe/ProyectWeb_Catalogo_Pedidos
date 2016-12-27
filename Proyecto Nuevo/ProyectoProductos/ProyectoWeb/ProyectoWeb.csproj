@@ -274,6 +274,7 @@
     <Content Include="Views\Pedido\SinConfirmar.cshtml" />
     <Content Include="Views\Pedido\Detalles.cshtml" />
     <Content Include="Views\Pedido\ListarPorCliente.cshtml" />
+    <Content Include="Views\Pedido\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

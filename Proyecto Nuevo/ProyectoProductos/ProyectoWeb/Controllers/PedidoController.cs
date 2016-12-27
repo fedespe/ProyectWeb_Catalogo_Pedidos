@@ -181,6 +181,10 @@ namespace ProyectoWeb.Controllers
                         Pedido p = pedidoBL.obtener(id);
                         if(p != null)
                         {
+                            if(Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) != p.Cliente.Id) {
+                                ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                                return View("~/Views/Shared/_Mensajes.cshtml");
+                            }
                             EditarViewModel editVM = new EditarViewModel();
                             editVM.Pedido = p;
                             editVM.completarEditarVM();

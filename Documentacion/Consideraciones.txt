@@ -7,9 +7,12 @@ Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le mé
 CATEGORIA
 *como eliminamos la categoria
 *Ver tema equal en clase categoria da una advertencia por sobreescribir el equal, y al ejecutar edit de categoria entra a equal con string ""
+*Tendria que tener descripcion la categoria, no es necesario pero quedar'ia mas completo
 FILTRO
 *los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
 ARTICULO
 *ver si la transaccion esta andando bien (creo q no)
-*agregar una imagen en chico para cada articulo
+*agregar una imagen en chico para cada articulo, esta hecho, solo me traigo una imagen por articulo para no ocupar espacio al pedo
 *falta paginacion para traer los articulos
+*falta a los articulos creados ponerle bien las imagenes y sus nombres de imagen correctos
+*revisar consulta con filtros esta andando pero por las dudas que se me haya pasado algun detalle

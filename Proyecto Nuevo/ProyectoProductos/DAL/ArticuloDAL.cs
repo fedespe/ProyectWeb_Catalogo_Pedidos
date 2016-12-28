@@ -21,23 +21,50 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM Articulo", con);
+                    //SqlCommand cmd = new SqlCommand("SELECT * FROM Articulo", con);
+                    //using (SqlDataReader dr = cmd.ExecuteReader())
+                    //{
+                    //    while (dr.Read())
+                    //    {
+                    //        Articulo articulo = new Articulo
+                    //        {
+                    //            Id = Convert.ToInt32(dr["Id"]),
+                    //            Codigo = dr["Codigo"].ToString(),
+                    //            Nombre = dr["Nombre"].ToString(),
+                    //            Descripcion = dr["Descripcion"].ToString(),
+                    //            Precio = Convert.ToInt32(dr["Precio"]),
+                    //            Stock = Convert.ToInt32(dr["Stock"]),
+                    //            Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                    //            Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
+                    //        };
+                    //        articulos.Add(articulo);
+                    //    }                       
+                    //}   
+
+
+                    //SOLO HAGO LA CARGA DE UNA IMAGEN, NO ES NECESARIO TRAER TODAS LAS IMAGENES DE TODOS LOS ARTICULOS
+                    SqlCommand cmd = new SqlCommand("select a.Id as IdArticulo, i.id as IdImagen,* from ARTICULO a, IMAGEN i where i.IdArticulo=a.Id ORDER BY a.Id", con);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        int ultimoId = 0;
                         while (dr.Read())
                         {
-                            Articulo articulo = new Articulo
-                            {
-                                Id = Convert.ToInt32(dr["Id"]),
-                                Codigo = dr["Codigo"].ToString(),
-                                Nombre = dr["Nombre"].ToString(),
-                                Descripcion = dr["Descripcion"].ToString(),
-                                Precio = Convert.ToInt32(dr["Precio"]),
-                                Stock = Convert.ToInt32(dr["Stock"]),
-                                Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
-                                Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
-                            };
-                            articulos.Add(articulo);
+                            if (ultimoId != Convert.ToInt32(dr["IdArticulo"])) {
+                                Articulo articulo = new Articulo
+                                {
+                                    Id = Convert.ToInt32(dr["IdArticulo"]),
+                                    Codigo = dr["Codigo"].ToString(),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    Precio = Convert.ToInt32(dr["Precio"]),
+                                    Stock = Convert.ToInt32(dr["Stock"]),
+                                    Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                    Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))                    
+                                };
+                                articulo.Imagenes.Add(new Imagen { Id = Convert.ToInt32(dr["IdImagen"]), Img = dr["Imagen"].ToString() });
+                                articulos.Add(articulo);
+                                ultimoId = Convert.ToInt32(dr["IdArticulo"]);
+                            }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES                          
                         }
                     }
                 }
@@ -51,26 +78,48 @@ namespace DAL
         }
 
         public List<Articulo> obtenerConFiltros(List<Filtro> Filtros){
+            //List<Articulo> articulos = new List<Articulo>();
+            //string consulta = "";
+            //if (Filtros != null && Filtros.Count > 0)
+            //{
+            //    int contador = 1;
+            //    foreach (Filtro f in Filtros) {
+            //        if (contador != Filtros.Count)
+            //        {
+            //            consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+            //                        and f.Id = "+f.Id+" INTERSECT ";
+            //        }
+            //        else {
+            //            consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+            //                        and f.Id = " + f.Id;
+            //        }
+            //        contador++;
+            //    }
+            //}
+            //else {
+            //    consulta = "SELECT * FROM Articulo";
+            //}
             List<Articulo> articulos = new List<Articulo>();
             string consulta = "";
             if (Filtros != null && Filtros.Count > 0)
             {
                 int contador = 1;
-                foreach (Filtro f in Filtros) {
+                foreach (Filtro f in Filtros)
+                {
                     if (contador != Filtros.Count)
                     {
-                        consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
-                                    and f.Id = "+f.Id+" INTERSECT ";
+                        consulta += @"SELECT DISTINCT a.Id as IdArticulo, i.id as IdImagen,i.Imagen, a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f, IMAGEN i WHERE i.IdArticulo=a.Id and a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+                                    and f.Id = " + f.Id + "INTERSECT ";
                     }
                     else {
-                        consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
-                                    and f.Id = " + f.Id;
+                        consulta += @"SELECT DISTINCT a.Id as IdArticulo, i.id as IdImagen,i.Imagen, a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f, IMAGEN i WHERE i.IdArticulo=a.Id and a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+                                    and f.Id = " + f.Id + "Order by a.id ";
                     }
                     contador++;
                 }
             }
             else {
-                consulta = "SELECT * FROM Articulo";
+                consulta = "select a.Id as IdArticulo, i.id as IdImagen,* from ARTICULO a, IMAGEN i where i.IdArticulo=a.Id ORDER BY a.Id";
             }
             try
             {
@@ -81,20 +130,146 @@ namespace DAL
                     SqlCommand cmd = new SqlCommand(consulta, con);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        int ultimoId = 0;
                         while (dr.Read())
                         {
-                            Articulo articulo = new Articulo
+                            if (ultimoId != Convert.ToInt32(dr["IdArticulo"]))
                             {
-                                Id = Convert.ToInt32(dr["Id"]),
-                                Codigo = dr["Codigo"].ToString(),
-                                Nombre = dr["Nombre"].ToString(),
-                                Descripcion = dr["Descripcion"].ToString(),
-                                Precio = Convert.ToInt32(dr["Precio"]),
-                                Stock = Convert.ToInt32(dr["Stock"]),
-                                Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
-                                Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
-                            };
-                            articulos.Add(articulo);
+                                Articulo articulo = new Articulo
+                                {
+                                    Id = Convert.ToInt32(dr["IdArticulo"]),
+                                    Codigo = dr["Codigo"].ToString(),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    Precio = Convert.ToInt32(dr["Precio"]),
+                                    Stock = Convert.ToInt32(dr["Stock"]),
+                                    Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                    Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
+                                };
+                                articulo.Imagenes.Add(new Imagen { Id = Convert.ToInt32(dr["IdImagen"]), Img = dr["Imagen"].ToString() });
+                                articulos.Add(articulo);
+                                ultimoId = Convert.ToInt32(dr["IdArticulo"]);
+                            }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES 
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return articulos;
+        }
+
+        public List<Articulo> obtenerPorCategoriaConFiltros(int idCategoria, List<Filtro> filtros)
+        {
+            List<Articulo> articulos = new List<Articulo>();
+            string consulta = "";
+            if (filtros.Count > 0)
+            {
+                consulta+= @"select a.Id as IdArticulo, i.id as IdImagen,i.Imagen,a.* from ARTICULO a, IMAGEN i, ARTICULO_CATEGORIA ac where i.IdArticulo=a.Id and ac.IdArticulo=a.Id and IdCategoria=" + idCategoria+" INTERSECT ";
+            }
+            else {
+                consulta += @"select a.Id as IdArticulo, i.id as IdImagen,i.Imagen,a.* from ARTICULO a, IMAGEN i, ARTICULO_CATEGORIA ac where i.IdArticulo=a.Id and ac.IdArticulo=a.Id and IdCategoria=" + idCategoria + " ORDER BY a.Id ";
+            }
+            
+            if (filtros != null && filtros.Count > 0)
+            {
+                int contador = 1;
+                foreach (Filtro f in filtros)
+                {
+                    if (contador != filtros.Count)
+                    {
+                        consulta += @"SELECT DISTINCT a.Id as IdArticulo, i.id as IdImagen,i.Imagen, a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f, IMAGEN i WHERE i.IdArticulo=a.Id and a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+                                    and f.Id = " + f.Id + "INTERSECT ";
+                    }
+                    else {
+                        consulta += @"SELECT DISTINCT a.Id as IdArticulo, i.id as IdImagen,i.Imagen, a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f, IMAGEN i WHERE i.IdArticulo=a.Id and a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
+                                    and f.Id = " + f.Id + "Order by a.id ";
+                    }
+                    contador++;
+                }
+            }
+            //else {
+            //    consulta = "select a.Id as IdArticulo, i.id as IdImagen,* from ARTICULO a, IMAGEN i where i.IdArticulo=a.Id ORDER BY a.Id";
+            //}
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand(consulta, con);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        int ultimoId = 0;
+                        while (dr.Read())
+                        {
+                            if (ultimoId != Convert.ToInt32(dr["IdArticulo"]))
+                            {
+                                Articulo articulo = new Articulo
+                                {
+                                    Id = Convert.ToInt32(dr["IdArticulo"]),
+                                    Codigo = dr["Codigo"].ToString(),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    Precio = Convert.ToInt32(dr["Precio"]),
+                                    Stock = Convert.ToInt32(dr["Stock"]),
+                                    Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                    Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
+                                };
+                                articulo.Imagenes.Add(new Imagen { Id = Convert.ToInt32(dr["IdImagen"]), Img = dr["Imagen"].ToString() });
+                                articulos.Add(articulo);
+                                ultimoId = Convert.ToInt32(dr["IdArticulo"]);
+                            }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES 
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return articulos;
+        }
+
+        public List<Articulo> obtenerPorCategoria(int idCategoria)
+        {
+            
+            List<Articulo> articulos = new List<Articulo>();
+            string consulta = "select a.Id as IdArticulo, i.id as IdImagen,* from ARTICULO a, IMAGEN i, ARTICULO_CATEGORIA ac where i.IdArticulo=a.Id and ac.IdArticulo=a.Id and IdCategoria=@idCat ORDER BY a.Id";         
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand(consulta, con);
+                    cmd.Parameters.AddWithValue("@idCat", idCategoria);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        int ultimoId = 0;
+                        while (dr.Read())
+                        {
+                            if (ultimoId != Convert.ToInt32(dr["IdArticulo"]))
+                            {
+                                Articulo articulo = new Articulo
+                                {
+                                    Id = Convert.ToInt32(dr["IdArticulo"]),
+                                    Codigo = dr["Codigo"].ToString(),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    Precio = Convert.ToInt32(dr["Precio"]),
+                                    Stock = Convert.ToInt32(dr["Stock"]),
+                                    Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                    Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
+                                };
+                                articulo.Imagenes.Add(new Imagen { Id = Convert.ToInt32(dr["IdImagen"]), Img = dr["Imagen"].ToString() });
+                                articulos.Add(articulo);
+                                ultimoId = Convert.ToInt32(dr["IdArticulo"]);
+                            }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES 
                         }
                     }
                 }

@@ -61,7 +61,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            @*<th>Imagen</th>FALTA TRAER IMAGENES DE LA BASE SI SE QUIERE MOSTRAR IMAGEN*@
+            <th>Imagen</th>
             <th>Código</th>
             <th>Nombre</th>
             <th>Descripción</th>
@@ -76,7 +76,7 @@
         @foreach (var c in Model.Articulos)
         {
             <tr>
-                @*<td><img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) height="50" width="50" /></td>FALTA TRAER IMAGENES DE LA BASE SI SE QUIERE MOSTRAR IMAGEN*@
+                <td><img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) height="50" width="50" /></td>
                 <td>@c.Codigo</td>
                 <td>@c.Nombre</td>
                 <td>@c.Descripcion</td>

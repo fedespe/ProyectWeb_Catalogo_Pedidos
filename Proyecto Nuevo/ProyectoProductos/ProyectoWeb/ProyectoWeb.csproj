@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
+    <Compile Include="Controllers\CatalogoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -179,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ArticuloViewModel\ListarArticuloViewModel.cs" />
+    <Compile Include="ViewModel\CatalogoViewModel\ListarArticuloViewModel.cs" />
     <Compile Include="ViewModel\Models\AccountViewModels.cs" />
     <Compile Include="ViewModel\Models\IdentityModels.cs" />
     <Compile Include="ViewModel\Models\ManageViewModels.cs" />
@@ -211,6 +213,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\catalogoListarArticulo.js" />
     <Content Include="Scripts\categoriaCrearEditar.js" />
     <Content Include="Scripts\clienteCrearEditar.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -279,6 +282,8 @@
     <Content Include="Views\Pedido\Detalles.cshtml" />
     <Content Include="Views\Pedido\ListarPorCliente.cshtml" />
     <Content Include="Views\Pedido\Editar.cshtml" />
+    <Content Include="Views\Catalogo\ListaArticulos.cshtml" />
+    <Content Include="Views\Catalogo\ListaCategorias.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

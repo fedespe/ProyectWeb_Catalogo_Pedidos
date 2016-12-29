@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ProyectoWeb.ViewModel.PedidoViewModel
 {
@@ -15,9 +16,10 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
         private ArticuloBL articuloBL = new ArticuloBL();
 
-        public ET.Pedido Pedido { get; set; }
-        public ET.Cliente Cliente { get; set; }
-        public ET.EstadoPedido Estado { get; set; }
+
+        [Required]
+        [Display(Name = "IdCliente")]
+        public int IdCliente { get; set; }
 
         [Required]
         [Display(Name = "Fecha Realizado")]
@@ -27,49 +29,49 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         [Display(Name = "Fecha Entrega Solicitada")]
         public DateTime FechaEntregaSolicitada { get; set; }
 
-        [Required]
-        [Display(Name = "Precio Total")]
-        public double PrecioTotal { get; set; }
+        public string CadenaArticulos { get; set; }
+        
+        [Display(Name = "Comentario")]
+        public string Comentario { get; set; }
 
-        [Required]
-        [Display(Name = "Descuento Cliente Preferencial")]
-        [Range(0, 100)]
-        public double DescuentoCliente { get; set; }
+
+
+        //Estos están para ver si son realmente necesarios
+        //***************************************************************
+        public ET.Pedido Pedido { get; set; }
+        public ET.Cliente Cliente { get; set; }
+        public ET.EstadoPedido Estado { get; set; }
+        public IList<SelectListItem> Clientes { get; set; }
 
         [Required]
         [Display(Name = "Iva")]
         public double Iva { get; set; }
 
-        [Display(Name = "Comentario")]
-        public string Comentario { get; set; }
-
-
-        [Required]
-        [Display(Name = "IdCLiente")]
-        public int IdCLiente { get; set; }
-
-        [Display(Name = "TipoUsuarioEditor")]
-        public string TipoUsuarioEditor { get; set; }
-
         [Display(Name = "Estado")]
         public string EstadoPedido { get; set; }
 
         public List<ET.ArticuloCantidad> ProductosPedidos { get; set; }
+        //***************************************************************
 
-        public string CadenaArticulos { get; set; }
+
 
 
         public EditarViewModel()
         {
             ProductosPedidos = new List<ET.ArticuloCantidad>();
+            this.Clientes = clienteBL.obtenerTodos().Select(
+                c => new SelectListItem()
+                {
+                    Text = c.NombreFantasia,
+                    Value = c.Id.ToString()
+                }).ToList();
         }
 
         public void completarEditarVM()
         {
+            Pedido.setearTotal();
             FechaRealizado = Pedido.FechaRealizado;
             FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
-            PrecioTotal = Pedido.PrecioTotal;
-            DescuentoCliente = Pedido.Cliente.Descuento;
             Iva = parametroBL.obtenerIVA();
             Comentario = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
@@ -84,13 +86,13 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             Pedido.FechaRealizado = FechaRealizado;
             Pedido.Iva = Iva;
-            Pedido.PrecioTotal = PrecioTotal;
+            Pedido.setearTotal();
             cargarProductosPedidos();
         }
 
         private void cargarCLiente()
         {
-            Cliente = clienteBL.obtener(IdCLiente);
+            Cliente = clienteBL.obtener(IdCliente);
         }
         private void cargarEstado()
         {

@@ -288,6 +288,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Imagenes\Articulos\" />
+    <Folder Include="Imagenes\Carousel\" />
     <Folder Include="Imagenes\Clientes\" />
   </ItemGroup>
   <ItemGroup>

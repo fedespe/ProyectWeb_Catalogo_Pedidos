@@ -15,6 +15,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         private ClienteBL clienteBL = new ClienteBL();
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
         private ArticuloBL articuloBL = new ArticuloBL();
+        private PedidoBL pedidoBL = new PedidoBL();
 
 
         [Required]
@@ -34,13 +35,15 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         [Display(Name = "Comentario")]
         public string Comentario { get; set; }
 
+        [Required]
+        [Display(Name = "Descuento Cliente Preferencial (%)")]
+        public double Descuento { get; set; }
 
 
         //Estos están para ver si son realmente necesarios
         //***************************************************************
         public ET.Pedido Pedido { get; set; }
         public ET.Cliente Cliente { get; set; }
-        public ET.EstadoPedido Estado { get; set; }
         public IList<SelectListItem> Clientes { get; set; }
 
         [Required]
@@ -59,6 +62,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public EditarViewModel()
         {
             ProductosPedidos = new List<ET.ArticuloCantidad>();
+
             this.Clientes = clienteBL.obtenerTodos().Select(
                 c => new SelectListItem()
                 {
@@ -69,12 +73,13 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
 
         public void completarEditarVM()
         {
-            Pedido.setearTotal();
+            pedidoBL.setearTotal(Pedido);
             FechaRealizado = Pedido.FechaRealizado;
             FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
             Iva = parametroBL.obtenerIVA();
             Comentario = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
+            Descuento = Pedido.Cliente.Descuento;
         }
 
         public void completarPedido()
@@ -86,7 +91,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             Pedido.FechaRealizado = FechaRealizado;
             Pedido.Iva = Iva;
-            Pedido.setearTotal();
+            pedidoBL.setearTotal(Pedido);
             cargarProductosPedidos();
         }
 
@@ -102,7 +107,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             {
                 estado = "NUEVO";
             }
-            Estado = estadoPedidoBL.obtener(estado);
+            Pedido.Estado = estadoPedidoBL.obtener(estado);
         }
 
         private void cargarProductosPedidos()

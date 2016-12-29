@@ -3,6 +3,9 @@
     ViewBag.Title = "Edición del Pedido";
 }
 
+@*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
+<script src="~/Scripts/pedidoEditar.js"></script>
+
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -40,7 +43,7 @@
         @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
     </div>
 
-    <table class="table table-striped">
+    <table id="tablaPedidos" class="table table-striped">
         <thead>
             <tr>
                 <th>Imagen</th>
@@ -66,6 +69,7 @@
                     <td>@pp.Cantidad</td>
                     <td>@pp.PrecioUnitario</td>
                     <td>@precioTotal</td>
+                    <td><a title="Eliminar" onclick="{ Eliminar(this.parentNode.parentNode.rowIndex); }" >Eliminar</a></td>  @*href="~/Pedido/EliminarArticulo/@pp.Articulo.Id"*@
                 </tr>
             }
         </tbody>
@@ -74,8 +78,8 @@
     if (Model.Pedido.Cliente.Descuento > 0)
     {
         <div class="form-group">
-            @Html.LabelFor(x => x.Cliente.Descuento, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Cliente.Descuento, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
+            @Html.LabelFor(x => x.Descuento, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Descuento, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
             @*@Html.ValidationMessageFor(x => x.DescuentoCliente, "", new { @class = "text-danger" })*@
         </div>
     }
@@ -94,7 +98,7 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.EstadoPedido, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })
+        @Html.TextBoxFor(x => x.EstadoPedido, new { @id = "estadoPedido", @class = "form-control", @readonly = "readonly" })
         @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
     </div>
 

@@ -247,12 +247,12 @@ namespace ProyectoWeb.Controllers
                     {
                         // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
                         ViewBag.Mensaje = "Ocurrio un error inesperado";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                     else
                     {
-                        ViewBag.Mensaje = "Pedido Actualizado con éxito.";
+                        return View(editVM);
                     }
-                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {

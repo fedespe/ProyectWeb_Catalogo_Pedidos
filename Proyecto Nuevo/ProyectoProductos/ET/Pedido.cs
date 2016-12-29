@@ -18,22 +18,5 @@ namespace ET
         public List<ArticuloCantidad> ProductosPedidos { get; set; }
         public string Comentario { get; set; }
         public EstadoPedido Estado { get; set; }
-
-        public void setearTotal()
-        {
-            double total = 0;
-
-            foreach(ArticuloCantidad ac in ProductosPedidos)
-            {
-                total += ac.Cantidad * ac.PrecioUnitario;
-            }
-
-            if(DescuentoCliente > 0 && total > 0)
-            {
-                total -= total * DescuentoCliente / 100;
-            }
-
-            PrecioTotal = total;
-        }
     }
 }

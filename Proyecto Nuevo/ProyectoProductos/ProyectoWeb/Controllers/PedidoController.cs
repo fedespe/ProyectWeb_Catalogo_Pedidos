@@ -13,6 +13,8 @@ namespace ProyectoWeb.Controllers
     {
         private PedidoBL pedidoBL = new PedidoBL();
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
+        private ClienteBL clienteBL = new ClienteBL();
+        private AdministradorBL administradorBL = new AdministradorBL();
 
         //GET: Pedido/SinConfirmar
         public ActionResult SinConfirmar()
@@ -185,6 +187,33 @@ namespace ProyectoWeb.Controllers
                                 ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
                                 return View("~/Views/Shared/_Mensajes.cshtml");
                             }
+
+                            if(p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                            {
+                                ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
+                                return View("~/Views/Shared/_Mensajes.cshtml");
+                            }
+
+                            if (p.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                            {
+                                int pedidoEnConstruccion = 0;
+
+                                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                                {
+                                    pedidoEnConstruccion = administradorBL.obtenerPedidoEnContruccion(Convert.ToInt32(Session["IdUsuario"]));
+                                }
+                                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                                {
+                                    pedidoEnConstruccion = clienteBL.obtenerPedidoEnContruccion(Convert.ToInt32(Session["IdUsuario"]));
+                                }
+
+                                if(pedidoEnConstruccion != id)
+                                {
+                                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                                    return View("~/Views/Shared/_Mensajes.cshtml");
+                                }
+                            }
+
                             EditarViewModel editVM = new EditarViewModel();
                             editVM.Pedido = p;
                             editVM.completarEditarVM();
@@ -231,14 +260,25 @@ namespace ProyectoWeb.Controllers
 
                     editVM.completarPedido();
 
-                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    if (Session["TipoUsuario"].ToString().Equals("Administrador") && !editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
                     {
                         editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
                     }
 
                     if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                     {
-                        editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
+                        Pedido p = pedidoBL.obtener(editVM.Pedido.Id);
+
+                        if (p.Cliente.Id != Convert.ToInt32(Session["IdCliente"]))
+                        {
+                            ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                            return View("~/Views/Shared/_Mensajes.cshtml");
+                        }
+
+                        if(!editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                            editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
+
+                        editVM.Pedido.FechaRealizado = p.FechaRealizado;
                     }
 
                     bool r = pedidoBL.actualizar(editVM.Pedido);

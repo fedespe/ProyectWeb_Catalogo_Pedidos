@@ -43,5 +43,10 @@ namespace BL
         {
             return clienteDAL.eliminar(id);
         }
+
+        public int obtenerPedidoEnContruccion(int id)
+        {
+            return clienteDAL.obtenerPedidoEnContruccion(id);
+        }
     }
 }

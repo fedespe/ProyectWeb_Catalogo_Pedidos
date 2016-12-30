@@ -13,8 +13,9 @@
     //Seguridad
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(x => x.Pedido.Id)
+    @Html.HiddenFor(x => x.IdPedido)
     @Html.HiddenFor(x => x.CadenaArticulos)
+    @Html.HiddenFor(x => x.IdCliente)
 
     //Lista de errores
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -28,19 +29,19 @@
 
         <div class="form-group">
             @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.FechaRealizado, new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
+            @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
             @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
         </div>
     }
     else
     {
-        @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+        @Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
+        @*@Html.ValidationMessageFor(x => x.Pedido.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
     }
 
     <div class="form-group">
         @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
+        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
         @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
     </div>
 
@@ -72,7 +73,7 @@
                     <td><input type="number" value="@pp.Cantidad" style="text-align:center" onchange="actualizarTotales();" /></td>
                     <td>@pp.PrecioUnitario</td>
                     <td>@precioTotal</td>
-                    <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);" >Eliminar</a></td>
+                    <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
                 </tr>
             }
         </tbody>

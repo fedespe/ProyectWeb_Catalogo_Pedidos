@@ -11,9 +11,10 @@ namespace DAL
 {
     public class ParametroDAL
     {
-        double iva = 0;
         public double obtenerIVA()
         {
+            double iva = 0;
+
             try
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))

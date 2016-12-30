@@ -2,9 +2,18 @@
 function Eliminar (i) {
     if (confirm('¿Esta seguro?')) {
 
-        document.getElementById("tablaPedidos").deleteRow(i);
+        var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
-        actualizarTotal();
+        var cantidadArticulos = filasConDatos.length;
+
+        if (cantidadArticulos > 1) {
+            document.getElementById("tablaPedidos").deleteRow(i);
+
+            actualizarTotal();
+        }
+        else {
+            alert("El pedido debe contener al menos un artículo.");
+        }
     }
     
 }

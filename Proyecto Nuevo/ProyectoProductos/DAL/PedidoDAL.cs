@@ -345,7 +345,60 @@ namespace DAL
 
         public bool actualizar(Pedido ped)
         {
-            throw new NotImplementedException();
+            string cadenaDeletePedidoArticulo = "DELETE FROM PEDIDO_ARTICULO WHERE IdPedido = @Id;";
+            string cadenaInsertPedidoArticulo = "INSERT INTO PEDIDO_ARTICULO VALUES (@IdPedido, @IdArticulo, @Cantidad, @PrecioUnitario);";
+            string cadenaUpdatePedido = "UPDATE PEDIDO SET FechaRealizado = @FechaRealizado, FechaEntregaSolicitada = @FechaEntregaSolicitada, DescuentoCliente = @DescuentoCliente, Iva = @Iva, IdCliente = @IdCliente, Comentario = @Comentario, IdEstado = @IdEstado WHERE Id = @Id;";
+            SqlTransaction trn = null;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand(cadenaDeletePedidoArticulo, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", ped.Id);
+                        con.Open();
+                        trn = con.BeginTransaction();
+                        cmd.Transaction = trn;
+
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
+
+                        cmd.CommandText = cadenaInsertPedidoArticulo;
+                        foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                        {
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@IdPedido", ped.Id);
+                            cmd.Parameters.AddWithValue("@IdArticulo", ac.Articulo.Id);
+                            cmd.Parameters.AddWithValue("@Cantidad", ac.Cantidad);
+                            cmd.Parameters.AddWithValue("@PrecioUnitario", ac.Articulo.Precio);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = cadenaUpdatePedido;
+                        cmd.Parameters.AddWithValue("@Id", ped.Id);
+                        cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
+                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
+                        cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
+                        cmd.Parameters.AddWithValue("@Iva", ped.Iva);
+                        cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
+                        cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
+                        cmd.Parameters.AddWithValue("@IdEstado", ped.Estado.Id);
+                        cmd.ExecuteNonQuery();
+
+                        trn.Commit();
+                        trn.Dispose();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //if (trn != null)
+                //    trn.Rollback();
+                
+                throw new ProyectoException("Error: " + ex.Message);
+            }
         }
 
         public void registrar(Pedido ped)

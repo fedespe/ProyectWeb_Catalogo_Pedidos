@@ -43,5 +43,10 @@ namespace BL
         {
             return administradorDAL.eliminar(id);
         }
+
+        public int obtenerPedidoEnContruccion(int id)
+        {
+            return administradorDAL.obtenerPedidoEnContruccion(id);
+        }
     }
 }

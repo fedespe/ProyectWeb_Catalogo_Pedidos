@@ -18,6 +18,10 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         private PedidoBL pedidoBL = new PedidoBL();
 
         //[Required]
+        [Display(Name = "IdPedido")]
+        public int IdPedido { get; set; }
+
+        //[Required]
         [Display(Name = "IdCliente")]
         public int IdCliente { get; set; }
 
@@ -38,29 +42,18 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         [Display(Name = "Descuento Cliente Preferencial (%)")]
         public double Descuento { get; set; }
 
-
-        //Estos están para ver si son realmente necesarios
-        //***************************************************************
         public ET.Pedido Pedido { get; set; }
-        public ET.Cliente Cliente { get; set; }
+
         public IList<SelectListItem> Clientes { get; set; }
 
-        //[Required]
         [Display(Name = "Iva")]
         public double Iva { get; set; }
 
         [Display(Name = "Estado")]
         public string EstadoPedido { get; set; }
 
-        public List<ET.ArticuloCantidad> ProductosPedidos { get; set; }
-        //***************************************************************
-
-
-
         public EditarViewModel()
         {
-            ProductosPedidos = new List<ET.ArticuloCantidad>();
-
             this.Clientes = clienteBL.obtenerTodos().Select(
                 c => new SelectListItem()
                 {
@@ -78,34 +71,28 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             Comentario = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
             Descuento = Pedido.Cliente.Descuento;
+            IdCliente = Pedido.Cliente.Id; //Ver que aparte de cargar el IdCliente, tengo que ajustar el DDL para que quede seleccionado el que corresponde
+            IdPedido = Pedido.Id;
         }
 
         public void completarPedido()
         {
-            cargarCLiente();
-            cargarEstado();
+            cargarPedido();
+            cargarCliente(); //Ver si en caso de modificar el DDL cuando lo edita un administrador, me deja el Cliente que seleccionó
             Pedido.Comentario = Comentario;
-            Pedido.DescuentoCliente = Cliente.Descuento;
-            Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             Pedido.FechaRealizado = FechaRealizado;
-            Pedido.Iva = Iva;
-            pedidoBL.setearTotal(Pedido);
+            Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             cargarProductosPedidos();
+            pedidoBL.setearTotal(Pedido);
         }
 
-        private void cargarCLiente()
+        private void cargarCliente()
         {
-            Cliente = clienteBL.obtener(IdCliente);
+            Pedido.Cliente = clienteBL.obtener(IdCliente);
         }
-        private void cargarEstado()
+        private void cargarPedido()
         {
-            string estado = EstadoPedido;
-
-            if (EstadoPedido.Equals(""))
-            {
-                estado = "NUEVO";
-            }
-            Pedido.Estado = estadoPedidoBL.obtener(estado);
+            Pedido = pedidoBL.obtener(IdPedido);
         }
 
         private void cargarProductosPedidos()
@@ -120,11 +107,14 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                 {
                     string[] substrings2 = substrings[i].Split(c2);
                     ET.Articulo a = articuloBL.obtener(Convert.ToInt32(substrings2[0]));
-                    ET.ArticuloCantidad ac = new ET.ArticuloCantidad();
-                    ac.Articulo = a;
-                    ac.PrecioUnitario = a.Precio;
-                    ac.Cantidad = Convert.ToInt32(substrings2[1]);
-                    ProductosPedidos.Add(ac);
+                    ET.ArticuloCantidad ac = new ET.ArticuloCantidad()
+                    {
+                        Articulo = a,
+                        PrecioUnitario = a.Precio,
+                        Cantidad = Convert.ToInt32(substrings2[1])
+                    };
+
+                    Pedido.ProductosPedidos.Add(ac);
                 }
             }
         }

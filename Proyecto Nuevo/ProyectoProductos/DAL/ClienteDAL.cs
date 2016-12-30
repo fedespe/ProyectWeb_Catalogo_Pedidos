@@ -54,6 +54,30 @@ namespace DAL
 
             return clientes;
         }
+
+        public int obtenerPedidoEnContruccion(int id)
+        {
+            int enContruccion = 0;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT EnConstruccion FROM CLIENTE WHERE Id = @Id", con);
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    enContruccion = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return enContruccion;
+        }
+
         public Cliente login(string nombre, string pass)
         {
             Cliente cli = null;

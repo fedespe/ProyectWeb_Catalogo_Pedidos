@@ -17,25 +17,24 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         private ArticuloBL articuloBL = new ArticuloBL();
         private PedidoBL pedidoBL = new PedidoBL();
 
-
-        [Required]
+        //[Required]
         [Display(Name = "IdCliente")]
         public int IdCliente { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Fecha Realizado")]
         public DateTime FechaRealizado { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Fecha Entrega Solicitada")]
         public DateTime FechaEntregaSolicitada { get; set; }
 
         public string CadenaArticulos { get; set; }
         
-        [Display(Name = "Comentario")]
+        //[Display(Name = "Comentario")]
         public string Comentario { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Descuento Cliente Preferencial (%)")]
         public double Descuento { get; set; }
 
@@ -46,7 +45,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public ET.Cliente Cliente { get; set; }
         public IList<SelectListItem> Clientes { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Iva")]
         public double Iva { get; set; }
 
@@ -55,7 +54,6 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
 
         public List<ET.ArticuloCantidad> ProductosPedidos { get; set; }
         //***************************************************************
-
 
 
 

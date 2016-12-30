@@ -60,6 +60,8 @@ namespace DAL
                         PA.IdArticulo = A.Id AND
                         I.IdArticulo = A.Id AND
                         P.Id = @Id
+                    ORDER BY
+                        IdPedidoCantidad
                     ", con);
 
                     cmd.Parameters.AddWithValue("@Id", id);

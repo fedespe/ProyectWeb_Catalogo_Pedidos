@@ -14,6 +14,7 @@
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(x => x.Pedido.Id)
+    @Html.HiddenFor(x => x.CadenaArticulos)
 
     //Lista de errores
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -46,6 +47,7 @@
     <table id="tablaPedidos" class="table table-striped">
         <thead>
             <tr>
+                <th>IdArticulo</th>
                 <th>Imagen</th>
                 <th>Codigo Articulo</th>
                 <th>Nombre Articulo</th>
@@ -61,15 +63,16 @@
                 double precioTotal = pp.Cantidad * pp.PrecioUnitario;
 
                 <tr>
+                    <td>@pp.Articulo.Id</td>
                     <td>
                         <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
                     </td>
-                    <td>@pp.Articulo.Codigo</td>
+                    <td><a title="Confirmar" href="~/Ariculo/Detalle/@pp.Articulo.Id">@pp.Articulo.Codigo</a></td>
                     <td>@pp.Articulo.Nombre</td>
-                    <td>@pp.Cantidad</td>
+                    <td><input type="number" value="@pp.Cantidad" style="text-align:center" onchange="actualizarTotales();" /></td>
                     <td>@pp.PrecioUnitario</td>
                     <td>@precioTotal</td>
-                    <td><a title="Eliminar" onclick="{ Eliminar(this.parentNode.parentNode.rowIndex); }" >Eliminar</a></td>  @*href="~/Pedido/EliminarArticulo/@pp.Articulo.Id"*@
+                    <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);" >Eliminar</a></td>
                 </tr>
             }
         </tbody>
@@ -102,5 +105,5 @@
         @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
     </div>
 
-    <button type="submit" class="btn btn-default">Guardar</button>
+    <button type="submit" class="btn btn-default" onclick="GenerarStringArticulos();">Guardar</button>
 }

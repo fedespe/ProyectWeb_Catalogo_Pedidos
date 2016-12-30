@@ -15,16 +15,16 @@ namespace ProyectoWeb.Controllers
         private CategoriaBL categoriaBL = new CategoriaBL();
 
         //GET: Articulo/ListaArticulo
-        public ActionResult ListaArticulos()//(int idCat=0)
+        public ActionResult ListaArticulos(int Id=0)
         {
-            int idCat = 2;
+            //int idCat = 2;
             try
             {
-                if (idCat != 0)
+                if (Id != 0)
                 {
                     ListarArticuloViewModel listaVM = new ListarArticuloViewModel();// (idCat);
-                    listaVM.IdCategoria = idCat;
-                    listaVM.Articulos=articuloBL.obtenerPorCategoria(idCat);
+                    listaVM.IdCategoria = Id;
+                    listaVM.Articulos=articuloBL.obtenerPorCategoria(Id);
                     return View(listaVM);
                 }
                 else {
@@ -60,6 +60,29 @@ namespace ProyectoWeb.Controllers
             try
             {
                 return View(categoriaBL.obtenerTodos());
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+
+        //GET: Catalogo/DetalleArticulo
+        public ActionResult DetalleArticulo(int Id = 0)
+        {
+            //int idCat = 2;
+            try
+            {
+                if (Id != 0)
+                {
+                    Articulo a = articuloBL.obtener(Id);
+                    return View(a);
+                }
+                else {
+                    return RedirectToAction("ListaCategorias");
+                }
+
             }
             catch (ProyectoException ex)
             {

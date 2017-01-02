@@ -66,6 +66,10 @@ namespace BL
         {
             //Si no tiene imagen el obtener todos no trae el articulo por eso
             //validar que tenga al menos una imagen para guardar
+            if (articulo.Imagenes.Count==0) 
+                throw new ProyectoException("Error: el articulo debe tener al menos una imagen.");
+            if(articulo.Codigo=="" || articulo.Codigo.Length>20)
+                throw new ProyectoException("Error: el codigo del articulo es requerido y menor a 20 caracteres.");
         }
 
     }

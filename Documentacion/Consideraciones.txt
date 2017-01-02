@@ -16,4 +16,5 @@ ARTICULO
 *falta paginacion para traer los articulos
 *falta a los articulos creados ponerle bien las imagenes y sus nombres de imagen correctos
 *revisar consulta con filtros esta andando pero por las dudas que se me haya pasado algun detalle
-*ver si elimino todas las iagenes se esta eliminando de la lista principal, lo arreglo haciendo el control en la logica! si no tiene imagen no se puede guardar
+*ver si elimino todas las iagenes se esta eliminando de la lista principal, lo arreglo haciendo el control en la logica! si no tiene imagen no se puede guardar (agregar )
+*al editar si uno de los dattanotation salta se resetean las imagenes

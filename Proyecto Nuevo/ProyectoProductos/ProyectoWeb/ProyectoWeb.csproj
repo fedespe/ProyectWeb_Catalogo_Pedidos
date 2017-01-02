@@ -208,6 +208,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\articuloCrear.js" />
+    <Content Include="Scripts\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\jquery.mlens-1.6.min.js" />
     <Content Include="Scripts\pedidoEditar.js" />
     <Content Include="Scripts\articuloEditar.js" />
     <Content Include="Scripts\articuloListar.js" />
@@ -285,6 +287,8 @@
     <Content Include="Views\Pedido\Editar.cshtml" />
     <Content Include="Views\Catalogo\ListaArticulos.cshtml" />
     <Content Include="Views\Catalogo\ListaCategorias.cshtml" />
+    <Content Include="Views\Catalogo\DetalleArticulo.cshtml" />
+    <Content Include="Views\Home\Gestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

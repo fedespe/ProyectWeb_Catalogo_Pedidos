@@ -64,7 +64,8 @@ namespace BL
 
         private void validar(Articulo articulo)
         {
-            //throw new NotImplementedException();
+            //Si no tiene imagen el obtener todos no trae el articulo por eso
+            //validar que tenga al menos una imagen para guardar
         }
 
     }

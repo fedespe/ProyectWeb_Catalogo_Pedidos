@@ -4,10 +4,10 @@
 }
 <h2>DetalleArticulo</h2>
 
-<div class="row">
+@*<div class="row">
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">            
-                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba">
+                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" class="zoom">
 
                 <div class="caption">
                 @foreach (var i in Model.Imagenes)
@@ -21,7 +21,73 @@
                     <div class="clearfix"></div>
                 </div>  
         </div>
-    </div>
+    </div>*@
+<style type="text/css">
+    #contenido {
+        position: relative;
+        width: 90%;
+        height: 90%;
+        margin: 20px auto;
+        border: 12px solid #fff;
+        border-radius: 10px;
+        /*box-shadow: 1px 1px 5px rgba(50,50,50 0.5);*/
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-6 col-md-6">
+        <div class="thumbnail">
+            <div id="contenido">
+                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img">
+                @*<img src="/Imagenes/Articulos/pruebazoom.jpg" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/pruebazoom.jpg">*@
+            </div>
+            <div class="caption">
+                @foreach (var i in Model.Imagenes)
+                {
+                    <div class="col-xs-3 col-md-2">
+                        <a href="#" class="thumbnail">
+                            <img src="/Imagenes/Articulos/@i.Img" alt="..." class="ImgGal">
+                        </a>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+        </div>
+</div>
+    <script>
+        $(document).ready(function () {
+            $("#ImgPrincipal").mlens(
+            {
+                imgSrc: $("#ImgPrincipal").attr("data-big"),   // path of the hi-res version of the image
+                lensShape: "circle",                // shape of the lens (circle/square)
+                lensSize: 180,                  // size of the lens (in px)
+                borderSize: 4,                  // size of the lens border (in px)
+                borderColor: "#fff",                // color of the lens border (#hex)
+                borderRadius: 0,                // border radius (optional, only if the shape is square)
+                imgOverlay: $("#ImgPrincipal").attr("data-overlay"), // path of the overlay image (optional)
+                overlayAdapt: true // true if the overlay image has to adapt to the lens size (true/false)
+            });
+        });
+        $(document).on("click", ".ImgGal", function (event) {
+            $('#contenido').html('<img src="'+event.target.src+'" id="ImgPrincipal" alt="Imagen de Prueba" data-big="'+event.target.src+'">');
+    
+            $("#ImgPrincipal").mlens(
+            {
+                imgSrc: $("#ImgPrincipal").attr("data-big"),   // path of the hi-res version of the image
+                lensShape: "circle",                // shape of the lens (circle/square)
+                lensSize: 180,                  // size of the lens (in px)
+                borderSize: 4,                  // size of the lens border (in px)
+                borderColor: "#fff",                // color of the lens border (#hex)
+                borderRadius: 0,                // border radius (optional, only if the shape is square)
+                imgOverlay: $("#ImgPrincipal").attr("data-overlay"), // path of the overlay image (optional)
+                overlayAdapt: true // true if the overlay image has to adapt to the lens size (true/false)
+            });
+        });
+        $(document).on("change", "#cantidad", function (event) {
+            var total = parseFloat($('#precio').html()) * parseFloat($('#cantidad').val());
+            $('#total').html("$" + total);
+        });
+    </script>
 
 
     <div class="col-sm-6 col-md-6">
@@ -67,7 +133,7 @@
     </div>
 
 </div>
-<script>
+@*<script>
     $(document).on("click", ".ImgGal", function (event) {
         $('#ImgPrincipal').attr("src", event.target.src);       
     });
@@ -75,4 +141,7 @@
         var total=parseFloat($('#precio').html()) * parseFloat($('#cantidad').val());
         $('#total').html("$" + total);
     });
-</script>
+</script>*@
+
+
+

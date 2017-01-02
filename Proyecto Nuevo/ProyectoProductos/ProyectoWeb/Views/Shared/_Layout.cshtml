@@ -7,7 +7,7 @@
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>   
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -23,7 +23,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Destacados", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Catálogo", "ListaCategorias", "Catalogo")</li>
+                    <li>@Html.ActionLink("Contácto", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -43,5 +44,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.mlens-1.6.min.js"></script>
 </body>
 </html>

@@ -26,5 +26,9 @@ namespace ProyectoWeb.Controllers
 
             return View();
         }
+        public ActionResult Gestion()
+        {
+            return View();
+        }
     }
 }

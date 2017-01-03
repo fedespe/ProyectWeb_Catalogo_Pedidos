@@ -289,6 +289,7 @@
     <Content Include="Views\Catalogo\ListaCategorias.cshtml" />
     <Content Include="Views\Catalogo\DetalleArticulo.cshtml" />
     <Content Include="Views\Home\Gestion.cshtml" />
+    <Content Include="Views\Pedido\Historico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

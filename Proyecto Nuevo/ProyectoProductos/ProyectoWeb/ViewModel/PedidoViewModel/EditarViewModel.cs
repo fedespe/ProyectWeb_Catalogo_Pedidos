@@ -99,6 +99,8 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         {
             if (CadenaArticulos != null)
             {
+                Pedido.ProductosPedidos = new List<ET.ArticuloCantidad>();
+
                 CadenaArticulos = CadenaArticulos.Trim();
                 char c1 = ' ';
                 char c2 = ';';

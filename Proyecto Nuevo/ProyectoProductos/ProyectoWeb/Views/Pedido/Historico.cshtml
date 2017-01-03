@@ -1,13 +1,14 @@
 ﻿@model List<ET.Pedido>
 @{
-    ViewBag.Title = "PedidosPorCliente";
+    ViewBag.Title = "Historial de Pedidos";
 }
 
-<h2>Pedidos de @Model[0].Cliente.NombreFantasia</h2>
+<h2>@ViewBag.Title</h2>
 
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Cliente</th>
             <th>F. Pedido</th>
             <th>Estado</th>
             <th>Monto Total</th>
@@ -20,6 +21,7 @@
             if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
             {
                 <tr>
+                    <td>@p.Cliente.NombreFantasia</td>
                     <td>@p.FechaRealizado</td>
                     <td>@p.Estado.Nombre</td>
                     <td>@p.PrecioTotal</td>
@@ -31,10 +33,7 @@
                         else
                         {
                             <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
-                        }
-                        @if((Session["TipoUsuario"].ToString().Equals("Administrador") && !p.Estado.Nombre.Equals("CONFIRMADO") && !p.Estado.Nombre.Equals("CANCELADO")) || (Session["TipoUsuario"].ToString().Equals("Cliente") && p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")))
-                        {
-                        <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                            <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
                         }
                     </td>
                 </tr>

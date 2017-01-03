@@ -24,8 +24,14 @@
                 <td>@p.Estado.Nombre</td>
                 <td>@p.PrecioTotal</td>
                 <td>
-                    <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
-                    |
+                    @if (p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                    {
+                        <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                    }
+                    else
+                    {
+                        <a title="Confirmar" href="~/Pedido/Editar/@p.Id">Editar</a>
+                    }
                     <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
                 </td>
             </tr>

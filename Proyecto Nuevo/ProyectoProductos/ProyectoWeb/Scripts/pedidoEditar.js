@@ -34,7 +34,11 @@ function actualizarTotal() {
         total += totalFila;
     });
 
-    var descuento = parseInt(document.getElementById("descuentoCliente").value);
+    var elementoDescuento = document.getElementById("descuentoCliente");
+    var descuento = 0;
+
+    if (elementoDescuento != null)
+        descuento = parseInt(elementoDescuento.value);
 
     if (descuento > 0) {
         total -= total * descuento / 100;

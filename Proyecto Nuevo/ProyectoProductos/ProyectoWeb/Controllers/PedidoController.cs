@@ -16,6 +16,18 @@ namespace ProyectoWeb.Controllers
         private ClienteBL clienteBL = new ClienteBL();
         private AdministradorBL administradorBL = new AdministradorBL();
 
+        //GET Pedido/Create
+        public ActionResult Create(int idArticulo = 0, int cantidad = 0)
+        {
+            if(idArticulo <= 0 || cantidad <= 0 )
+            {
+                ViewBag.Mensaje = "Debe indicar un artículo y una cantidad mayor a 0.";
+                return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+            }
+
+            return RedirectToAction("Index","Home"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+        }
+
         //GET: Pedido/SinConfirmar
         public ActionResult SinConfirmar()
         {
@@ -26,7 +38,9 @@ namespace ProyectoWeb.Controllers
                     List<Pedido> pedidos = pedidoBL.obtenerSinConfirmar();
 
                     if (pedidos.Count > 0)
+                    {
                         return View(pedidos);
+                    }
                     else
                     {
                         ViewBag.Mensaje = "No hay pedidos sin confirmar.";

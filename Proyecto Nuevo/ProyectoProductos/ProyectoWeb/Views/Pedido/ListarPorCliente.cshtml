@@ -20,7 +20,7 @@
             if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
             {
                 <tr>
-                    <td>@p.FechaRealizado</td>
+                    <td>@p.FechaRealizado.ToString("d")</td>
                     <td>@p.Estado.Nombre</td>
                     <td>@p.PrecioTotal</td>
                     <td>

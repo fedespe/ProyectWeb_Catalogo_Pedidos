@@ -26,10 +26,15 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
                             Administrador admin = new Administrador
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
-                                NombreUsuario = dr["Usuario"].ToString()
+                                NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion
                             };
                             administradores.Add(admin);
                         }
@@ -86,9 +91,16 @@ namespace DAL
                         dr.Read();
                         if (dr.HasRows)
                         {
-                            admin = new Administrador();
-                            admin.Id = Convert.ToInt32(dr["id"]);
-                            admin.NombreUsuario = dr["Usuario"].ToString();
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
+                            admin = new Administrador
+                            {
+                                Id = Convert.ToInt32(dr["id"]),
+                                NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion
+                            };
                         }
                     }
                 }
@@ -118,9 +130,16 @@ namespace DAL
                         dr.Read();
                         if (dr.HasRows)
                         {
-                            admin = new Administrador();
-                            admin.Id = Convert.ToInt32(dr["id"]);
-                            admin.NombreUsuario = dr["Usuario"].ToString();
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
+                            admin = new Administrador
+                            {
+                                Id = Convert.ToInt32(dr["id"]),
+                                NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion
+                            };
                         }
                     }
                 }
@@ -187,7 +206,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Administrador(Usuario, Contrasenia) VALUES (@usu, @pass)", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Administrador(Usuario, Contrasenia) VALUES (@usu, @pass, null)", con);
 
                     cmd.Parameters.AddWithValue("@usu", admin.NombreUsuario);
                     cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(admin.Password));

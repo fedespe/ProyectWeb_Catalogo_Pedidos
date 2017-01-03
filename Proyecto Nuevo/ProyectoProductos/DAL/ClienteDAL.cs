@@ -26,10 +26,15 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
                             Cliente cli = new Cliente
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion,
                                 NombreFantasia = dr["NombreFantasia"].ToString(),
                                 Rut = dr["Rut"].ToString(),
                                 RazonSocial = dr["RazonSocial"].ToString(),
@@ -97,10 +102,15 @@ namespace DAL
                         dr.Read();
                         if (dr.HasRows)
                         {
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
                             cli = new Cliente
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion,
                                 NombreFantasia = dr["NombreFantasia"].ToString(),
                                 Rut = dr["Rut"].ToString(),
                                 RazonSocial = dr["RazonSocial"].ToString(),
@@ -142,10 +152,15 @@ namespace DAL
                         dr.Read();
                         if (dr.HasRows)
                         {
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
                             cli = new Cliente
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion,
                                 NombreFantasia = dr["NombreFantasia"].ToString(),
                                 Rut = dr["Rut"].ToString(),
                                 RazonSocial = dr["RazonSocial"].ToString(),
@@ -286,7 +301,7 @@ namespace DAL
                         }
                     }
 
-                    cmd.CommandText =@"DELETE FROM Cliente WHERE id = @id";
+                    cmd.CommandText = @"DELETE FROM Cliente WHERE id = @id";
                     
                     return cmd.ExecuteNonQuery() == 1;
                 }

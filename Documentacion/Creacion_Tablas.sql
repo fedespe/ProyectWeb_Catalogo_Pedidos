@@ -372,7 +372,7 @@ INSERT INTO PEDIDO VALUES
 ('20160101','20160102',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: CONFIRMADO',4),
 ('20160101','20160102',10,22,4,'Descuento: 10 - Cliente: 4 - Estado: CANCELADO',5),
 ('20160426','20160520',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: NUEVO',1),
-('20160110','20160115',40,22,5,'Descuento: 40 - Cliente: 5 - Estado: MODIFICADO POR EL ADMINISTRADOR',6),
+('20160110','20160115',40,22,5,'Descuento: 40 - Cliente: 5 - Estado: EN CONSTRUCCION',6),
 ('20160101','20160102',5,22,1,'Descuento: 5 - Cliente: 1 - Estado: CANCELADO',5);
 
 INSERT INTO PEDIDO_ARTICULO VALUES

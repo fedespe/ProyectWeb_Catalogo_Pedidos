@@ -60,6 +60,7 @@ namespace ProyectoWeb.Controllers
                 {
                     Session["IdUsuario"] = admin.Id;
                     Session["NombreUsuario"] = admin.NombreUsuario;
+                    Session["IdPedidoEnConstruccion"] = admin.IdPedidoEnConstruccion;
                     Session["TipoUsuario"] = "Administrador";
                     Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
                     return RedirectToAction("Index", "Home");
@@ -72,6 +73,7 @@ namespace ProyectoWeb.Controllers
                     {
                         Session["IdUsuario"] = cli.Id;
                         Session["NombreUsuario"] = cli.NombreUsuario;
+                        Session["IdPedidoEnConstruccion"] = cli.IdPedidoEnConstruccion;
                         Session["TipoUsuario"] = "Cliente";
                         return RedirectToAction("Index", "Home");
                     }

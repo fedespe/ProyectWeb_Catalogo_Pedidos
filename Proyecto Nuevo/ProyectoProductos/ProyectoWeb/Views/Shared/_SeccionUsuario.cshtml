@@ -1,28 +1,38 @@
 ﻿@if (Session["TipoUsuario"] != null)
 {
-    if (Session["TipoUsuario"].ToString() == "Administrador")
+    if (Convert.ToInt32(Session["IdPedidoEnConstruccion"]) != 0)
     {
-        <ul class="nav navbar-nav navbar-left">
-            <li>
-                @Html.ActionLink("Gestión", "Gestion", "Home")
-            </li>
-            @*<li>
-                @Html.ActionLink("Nombre Link", "Action", "Controller", new { Param = ParamValue }, null)
-            </li>*@
-        </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Sin Confirmar (" + Session["PedidosSinConfirmar"].ToString() + ")", "SinConfirmar", "Pedido", new { Id = Convert.ToInt32(Session["btnSinConfirmar"]) }, null)
+                @Html.ActionLink("Mi Carrito", "Editar", "Pedido", new { Id = Convert.ToInt32(Session["IdPedidoEnConstruccion"]) }, null)
+                @*<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>*@
             </li>
         </ul>
     }
+
+    if (Session["TipoUsuario"].ToString() == "Administrador")
+    {
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            @Html.ActionLink("Gestión", "Gestion", "Home")
+        </li>
+        @*<li>
+                @Html.ActionLink("Nombre Link", "Action", "Controller", new { Param = ParamValue }, null)
+            </li>*@
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Sin Confirmar (" + Session["PedidosSinConfirmar"].ToString() + ")", "SinConfirmar", "Pedido", new { Id = Convert.ToInt32(Session["btnSinConfirmar"]) }, null)
+        </li>
+    </ul>
+    }
     else if (Session["TipoUsuario"].ToString() == "Cliente")
     {
-        <ul class="nav navbar-nav navbar-left">
-            <li>
-                @Html.ActionLink("Mis Pedidos", "ListarPorCliente", "Pedido", new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)
-            </li>
-        </ul>
-        
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            @Html.ActionLink("Mis Pedidos", "ListarPorCliente", "Pedido", new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)
+        </li>
+    </ul>
+
     }
 }

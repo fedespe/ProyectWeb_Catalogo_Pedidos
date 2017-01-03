@@ -10,13 +10,13 @@
 
 <div class="form-group">
     @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.FechaRealizado, new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
+    @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
 </div>
 
 <div class="form-group">
     @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.FechaEntregaSolicitada, new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })
+    @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })
     @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
 </div>
 

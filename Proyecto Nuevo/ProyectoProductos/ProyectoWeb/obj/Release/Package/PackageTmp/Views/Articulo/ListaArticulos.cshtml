@@ -1,0 +1,119 @@
+﻿@model ProyectoWeb.ViewModel.ArticuloViewModel.ListarArticuloViewModel
+@{
+    ViewBag.Title = "ListaArticulos";
+}
+
+<script src="~/Scripts/articuloListar.js"></script>
+
+<div class="row">
+    @*//************************************************************************
+    //MANEJO DE FILTROS
+    //*************************************************************************@
+    <div class="col-md-2 pull-left">
+    <h3>Filtros</h3>
+    @using (Html.BeginForm("ListaArticulos", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        //Seguridad
+        @Html.AntiForgeryToken()        
+            <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+            <div>    
+                <h4>Material</h4>            
+                @foreach (var f in Model.FiltrosTotales)
+                {
+                    if (!f.Color)
+                    {
+                        <label class="checkbox-inline">
+                            <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                            @f.Nombre
+                        </label>
+                        <br>
+                        if (Model.FiltrosAplicados.Contains(f))
+                        {
+                            <script>
+                            cargarFiltrosAnteriores(@f.Id)
+                            </script>
+                        }
+                    }
+                }
+            </div>
+            <br>
+            <div>
+                <h4>Color</h4>
+                @foreach (var f in Model.FiltrosTotales)
+                {
+                    if (f.Color)
+                    {
+                        <label class="checkbox-inline">
+                        <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                        @f.Nombre
+                        </label>
+                        <br>
+                        if (Model.FiltrosAplicados.Contains(f))
+                        {
+                            <script>
+                            cargarFiltrosAnteriores(@f.Id)
+                            </script>
+                        }
+                    }
+                }
+            </div>        
+        <br>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
+    }
+    </div>
+    @*//************************************************************************
+    //FIN MANEJO DE FILTROS
+    //*************************************************************************@
+
+    <div class="col-md-10 pull-right">
+        <h2>Lista de Articulos
+
+        <button type="button" class="btn btn-success pull-right"  OnClick="location.href = 'Crear'">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Articulo
+        </button>
+        </h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Disponible</th>
+                    <th>Destacado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var c in Model.Articulos)
+            {
+                    <tr>
+                        <td><img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) height="50" width="50" /></td>
+                        <td>@c.Codigo</td>
+                        <td>@c.Nombre</td>
+                        <td>@c.Descripcion</td>
+                        <td>@c.Precio</td>
+                        <td>@c.Stock</td>
+                        <td>@c.Disponible</td>
+                        <td>@c.Destacado</td>
+                        <td>
+                            <a title="Editar" href="~/Articulo/Editar/@c.Id">Editar</a>
+                            |
+                            <a title="Inhabilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Inhabilitar/@c.Id">Inhabilitar</a>
+                            |
+                            <a title="Habilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Habilitar/@c.Id">Habilitar</a>
+                            |
+                            <a title="Destacar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Destacar/@c.Id">Destacar</a>
+                            |
+                            <a title="QuitarDestacado" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/QuitarDestacado/@c.Id">Quitar Destacado</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

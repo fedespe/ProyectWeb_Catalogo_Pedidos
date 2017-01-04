@@ -1,0 +1,44 @@
+﻿@model ProyectoWeb.ViewModel.ClienteViewModel.CambiarPassViewModel
+@{
+    ViewBag.Title = "CambiarPass";
+}
+
+<h2>Cambiar Contraseña</h2>
+
+@using (Html.BeginForm("CambiarPass", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+        @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PasswordActual, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.PasswordActual, new { @id = "pass", @class = "form-control", @placeholder = "Contraseña Actual", type = "password" })
+        @Html.ValidationMessageFor(model => model.PasswordActual, "", new { @class = "text-danger" })        
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PasswordNuevo, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.PasswordNuevo, new { @id = "passNuevo", @class = "form-control", @placeholder = "Contraseña Nueva", type = "password" })
+        @Html.ValidationMessageFor(model => model.PasswordNuevo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PasswordConfirmacion, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.PasswordConfirmacion, new { @id = "passConfirm", @class = "form-control", @placeholder = "Confirmar Contraseña", type = "password" })
+        @Html.ValidationMessageFor(model => model.PasswordConfirmacion, "", new { @class = "text-danger" })
+        <label class="text-danger">@Model.Mensaje</label>
+    </div>
+
+    <button type="submit" class="btn btn-default">Cambiar</button>
+
+}
+
+

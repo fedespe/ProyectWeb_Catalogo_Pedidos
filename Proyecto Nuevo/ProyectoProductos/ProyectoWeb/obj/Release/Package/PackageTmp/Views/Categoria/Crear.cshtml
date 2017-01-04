@@ -1,0 +1,33 @@
+﻿@model ProyectoWeb.ViewModel.CategoriaViewModel.CrearViewModel
+@{
+    ViewBag.Title = "Crear";
+}
+
+<script src="~/Scripts/categoriaCrearEditar.js"></script>
+
+<h2>Crear Categoría</h2>
+
+@using (Html.BeginForm("Crear", "Categoria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    //Seguridad
+    @Html.AntiForgeryToken()
+
+    @*@Html.HiddenFor(x => x.cliente.Id)*@
+
+    //Lista de errores
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div>
+        <img src=@("/Imagenes/Categorias/SinImagen.jpg") id="ImgArchivo" onclick="$('#Archivo').click()" height="150" width="150" />
+    </div>
+
+    <input type="file" style="display:none;" name="Archivo" id="Archivo" onchange="$(mostrarImagen(this));">
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre Categoría" })
+        @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-default">Guardar</button>
+}

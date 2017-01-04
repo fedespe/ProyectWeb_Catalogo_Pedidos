@@ -25,7 +25,7 @@
     if (celdaPrecioDescuento != null) {
         descuentoCliente = parseFloat(document.getElementById("descuentoCliente").getAttribute("value"));
 
-        celdaTextoPrecioDescuento.innerHTML = "Descuento cliente preferencial " + descuentoCliente + "%:";
+        celdaTextoPrecioDescuento.innerHTML = "Descuento cliente preferencial (" + descuentoCliente + "%):";
         montoDescuentoCliente = montoTotal * descuentoCliente / 100;
         celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente;
     }
@@ -43,7 +43,7 @@ function Eliminar (i) {
         if (cantidadArticulos > 1) {
             document.getElementById("tablaPedidos").deleteRow(i);
 
-            actualizarTotalYDescuento();
+            actualizarTotal();
         }
         else {
             alert("El pedido debe contener al menos un artículo.");
@@ -53,11 +53,10 @@ function Eliminar (i) {
 }
 
 
-function actualizarTotalYDescuento() {
+function actualizarTotal() {
 
-    var total = 0
-    var celdaPrecioTotal = document.getElementById("celdaPrecioTotal");
-    var celdaPrecioDescuento = document.getElementById("celdaPrecioDescuento");
+    var total = 0;
+    var elementoTotal = document.getElementById("precioTotal");
 
     var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
@@ -76,15 +75,12 @@ function actualizarTotalYDescuento() {
 
     if (elementoDescuento != null)
         descuento = parseInt(elementoDescuento.value);
-     
 
     if (descuento > 0) {
-        celdaPrecioDescuento.innerHTML = "$" + (total * descuento / 100);
-
         total -= total * descuento / 100;
     }
-
-    celdaPrecioTotal.innerHTML = "$" + total;
+    
+    elementoTotal.setAttribute("value", total);
 }
 
 function actualizarTotales() {
@@ -118,7 +114,7 @@ function actualizarTotales() {
         }
     });
 
-    actualizarTotalYDescuento();
+    actualizarTotal();
 }
 
 function GenerarStringArticulos() {

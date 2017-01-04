@@ -1,0 +1,34 @@
+﻿@model List<ET.Categoria>
+@{
+    ViewBag.Title = "ListaCategorias";
+}
+
+<h2>Lista Categorías</h2>
+
+<a title="Crear" href="~/Categoria/Crear/">Crear Nueva</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>
+                    <img src=@("/Imagenes/Categorias/" + c.Img) height="100" width="100" />
+                </td>
+                <td>@c.Nombre</td>
+                <td>
+                    <a title="Editar" href="~/Categoria/Editar/@c.Id">Editar</a>
+                    |
+                    <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Categoria/Eliminar/@c.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,57 @@
+﻿@model List<ET.Cliente>
+@{
+    ViewBag.Title = "ListaClientes";
+}
+
+<h2>Lista Usuarios</h2>
+
+<a title="Crear" href="~/Cliente/Crear/">Crear Nuevo</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre Usuario</th>
+            <th>Nombre Fanasia</th>
+            <th>Rut</th>
+            <th>Razón Social</th>
+            <th>% Descuento</th>
+            <th>Días de Pago</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Nombre de Contacto</th>
+            <th>Teléfono de Contacto</th>
+            <th>Email de Contacto</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>
+                    @*<img src=@("data:image/gif;base64," + c.Foto) height="150" width="150" />*@
+                    <img src=@("/Imagenes/Clientes/" + c.Foto) height="100" width="100" />
+                </td>
+                <td>@c.NombreUsuario</td>
+                <td>@c.NombreFantasia</td>
+                <td>@c.Rut</td>
+                <td>@c.RazonSocial</td>
+                <td>@c.Descuento</td>
+                <td>@c.DiasDePago</td>
+                <td>@c.Direccion</td>
+                <td>@c.Telefono</td>
+                <td>@c.NombreDeContacto</td>
+                <td>@c.TelefonoDeContacto</td>
+                <td>@c.EmailDeContacto</td>
+                <td>
+                    <a title="Editar" href="~/Cliente/Editar/@c.Id">Editar</a>
+                    |
+                    <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Cliente/Eliminar/@c.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

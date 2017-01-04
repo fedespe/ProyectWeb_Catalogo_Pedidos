@@ -1,0 +1,30 @@
+﻿@model List<ET.Administrador>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de Administradores</h2>
+
+<a title="Crear" href="~/Administrador/Crear/">Crear Nuevo</a>
+
+<table style="width:500px" class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:left;">Nombre</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.NombreUsuario</td>
+                <td style="width:200px;">
+                    <a title="Editar" href="~/Administrador/Editar/@u.Id">Editar</a>
+                    |
+                    <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Administrador/Eliminar/@u.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,44 @@
+﻿@model List<ET.Pedido>
+@{
+    ViewBag.Title = "PedidosPorCliente";
+}
+
+<h2>Pedidos de @Model[0].Cliente.NombreFantasia</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>F. Pedido</th>
+            <th>Estado</th>
+            <th>Monto Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
+            {
+                <tr>
+                    <td>@p.FechaRealizado.ToString("d")</td>
+                    <td>@p.Estado.Nombre</td>
+                    <td>@p.PrecioTotal</td>
+                    <td>
+                        @if (p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                        {
+                            <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                        }
+                        else
+                        {
+                            <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
+                        }
+                        @if((Session["TipoUsuario"].ToString().Equals("Administrador") && !p.Estado.Nombre.Equals("CONFIRMADO") && !p.Estado.Nombre.Equals("CANCELADO")) || (Session["TipoUsuario"].ToString().Equals("Cliente") && p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")))
+                        {
+                        <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

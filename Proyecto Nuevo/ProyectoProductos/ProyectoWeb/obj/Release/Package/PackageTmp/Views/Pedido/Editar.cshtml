@@ -58,8 +58,8 @@
                 <th>Codigo Articulo</th>
                 <th>Nombre Articulo</th>
                 <th>Cantidad</th>
-                <th>$ Unitario (Iva inc.)</th>
-                <th>$ Total Linea (Iva inc.)</th>
+                <th>$ Unitario</th>
+                <th>$ Total Linea</th>
             </tr>
         </thead>
 
@@ -81,7 +81,7 @@
                     <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
                 </tr>
             }
-            @if (Model.Pedido.DescuentoCliente > 0)
+            if (Model.Pedido.DescuentoCliente > 0)
             {
             <tr>
                 <td></td>
@@ -100,12 +100,18 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Monto Total (Iva inc.): </td>
+                <td>Monto Total: </td>
                 <td id="celdaPrecioTotal"></td>
                 <td></td>
             </tr>
         </tbody>
     </table>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Pedido.PrecioTotal, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Pedido.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })
+        @*@Html.ValidationMessageFor(x => x.PrecioTotal, "", new { @class = "text-danger" })*@
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })

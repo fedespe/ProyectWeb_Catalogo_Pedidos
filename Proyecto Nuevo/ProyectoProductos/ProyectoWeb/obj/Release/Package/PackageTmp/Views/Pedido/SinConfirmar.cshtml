@@ -1,0 +1,40 @@
+﻿@model List<ET.Pedido>
+@{
+    ViewBag.Title = "PedidosSinConfirmar";
+}
+
+<h2>Pedidos Sin Confirmar</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>F. Pedido</th>
+            <th>Estado</th>
+            <th>Monto Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Cliente.NombreFantasia</td>
+                <td>@p.FechaRealizado.ToString("d")</td>
+                <td>@p.Estado.Nombre</td>
+                <td>@p.PrecioTotal</td>
+                <td>
+                    @if (p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                    {
+                        <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                    }
+                    else
+                    {
+                        <a title="Confirmar" href="~/Pedido/Editar/@p.Id">Editar</a>
+                    }
+                    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

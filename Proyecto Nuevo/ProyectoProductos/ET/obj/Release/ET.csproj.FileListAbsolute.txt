@@ -1,0 +1,5 @@
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ET\bin\Release\ET.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ET\bin\Release\ET.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ET\obj\Release\ET.csprojResolveAssemblyReference.cache
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ET\obj\Release\ET.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ET\obj\Release\ET.pdb

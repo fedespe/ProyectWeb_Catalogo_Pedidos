@@ -1,0 +1,7 @@
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Release\DAL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Release\DAL.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Release\ET.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Release\ET.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Release\DAL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Release\DAL.pdb

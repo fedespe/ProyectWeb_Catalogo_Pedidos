@@ -137,12 +137,14 @@ namespace ProyectoWeb.Controllers
                     //ViewBag.Mensaje = ex.Message;
                     //return View("~/Views/Shared/_Mensajes.cshtml");
                     editVM.mensajeError = ex.Message;
+                    //por si hay errores, cargo las imagenes que ya tenia en la base, los filtros y categorias
+                    editVM.Articulo = articuloBL.obtener(editVM.Articulo.Id);
                     return View(editVM);
                 }
             }
             else {
-                //por si hay errores, cargo las imagenes que ya tenia en la base
-                editVM.cargarImagenesSeleccionas();
+                //por si hay errores, cargo las imagenes que ya tenia en la base, los filtros y categorias
+                editVM.Articulo = articuloBL.obtener(editVM.Articulo.Id);
                 return View(editVM);
             }
         }

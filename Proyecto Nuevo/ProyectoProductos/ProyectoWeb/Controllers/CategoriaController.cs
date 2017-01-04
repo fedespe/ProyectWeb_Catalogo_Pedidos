@@ -56,8 +56,8 @@ namespace ProyectoWeb.Controllers
                 }
                 catch (ProyectoException ex)
                 {
-                    ViewBag.Mensaje = ex.Message;
-                    return View("~/Views/Shared/_Mensajes.cshtml");
+                    crearVM.mensajeError = ex.Message;
+                    return View(crearVM);
                 }
             }
             else {
@@ -112,8 +112,9 @@ namespace ProyectoWeb.Controllers
                 }
                 catch (ProyectoException ex)
                 {
-                    ViewBag.Mensaje = ex.Message;
-                    return View("~/Views/Shared/_Mensajes.cshtml");
+                    editVM.mensajeError = ex.Message;
+                    editVM.categoria = categoriaBL.obtener(editVM.categoria.Id);
+                    return View(editVM);
                 }
             }
             else {

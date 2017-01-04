@@ -5,9 +5,12 @@ Los que están hechos son todos los de ClienteController y AdministradorControlle
 PEDIDO
 Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le método para mostrar los pedidos sin confirmar... Los muestro bien, pero cada vez que cambio de pedido, no me quedo con la primer línea de artículos... Se dónde está el error, pero no se me ocurre como solucionarlo... Ya cambié el método de mil formas... Seguro es fácil y me quemé la cabeza ya. Ahora sigo con otra cosa, pero lo subo antes para no perder lo hecho.
 CATEGORIA
-*como eliminamos la categoria
+*Agregar a los requerimientos que si no tiene imagen no es valida la categoria (ver que si no selecciona el programa le asigna una por defecto)
+*Agregar que el nombre debe ser menor a 50 en el documento de requerimientos
+*como eliminamos la categoria FALTA
 *Ver tema equal en clase categoria da una advertencia por sobreescribir el equal, y al ejecutar edit de categoria entra a equal con string ""
 *Tendria que tener descripcion la categoria, no es necesario pero quedar'ia mas completo
+*El nombre de la categoria es unico FALTA EN VALIDACION
 FILTRO
 *los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
 ARTICULO
@@ -19,9 +22,14 @@ ARTICULO
 *ver si elimino todas las imagenes se esta eliminando de la lista principal, lo arreglo haciendo el control en la logica! si no tiene imagen no se puede guardar (agregar al documento de requerimientos)
 *al editar si uno de los dattanotation salta se resetean las imagenes
 VALIDACIONES
-*falte verificar que le codigo sea unico. se puede hacer con un exists o un count(*), el exists es mas eficiente
+*falta verificar que le codigo sea unico. se puede hacer con un exists o un count(*), el exists es mas eficiente
 *arreglar en el documento de requerimientos el precio es money y mayor igual a cero
 *PROBLEMA CON LAS IMAGENES Y LAS VALIDACIONES VER COMO HACER PARA QUE NO SE BORREN EN EL EVENTO DE POSTBACK
-*PROBLEMA CON LOS FILTROS Y CATEGORIAS SE BORRAN EN EL POSTBACK
+*PROBLEMA CON LOS FILTROS Y CATEGORIAS SE BORRAN EN EL POSTBACK (las que  no estan guradadas en la base)
+*Faltan controles de restriccion, solo administradores
+*Falta la baja de articulo
+*FALTA DATTANOTATION
+
+
 
 

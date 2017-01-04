@@ -23,11 +23,13 @@ namespace BL
 
         public bool actualizar(Categoria cat)
         {
+            validar(cat);
             return categoriaDAL.actualizar(cat);
         }
 
         public void registrar(Categoria cat)
         {
+            validar(cat);
             categoriaDAL.registrar(cat);
         }
 
@@ -35,5 +37,14 @@ namespace BL
         {
             return categoriaDAL.eliminar(id);
         }
+        private void validar(Categoria categoria)
+        {
+            if (categoria.Img == null)
+                throw new ProyectoException("Error: la categoría debe tener al menos una imagen.");
+            if (categoria.Nombre == "" || categoria.Nombre.Length > 50)
+                throw new ProyectoException("Error: el noimbre de la categoría es requerido y menor a 50 caracteres.");
+            //falta ver que el nombre sea unico           
+        }
+
     }
 }

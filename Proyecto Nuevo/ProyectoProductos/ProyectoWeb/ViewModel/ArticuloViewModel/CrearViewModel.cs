@@ -22,7 +22,7 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public Articulo Articulo { get; set; }
         
         [Required]
-        [Display(Name = "Codigo")]
+        [Display(Name = "Código")]
         public string Codigo { get; set; }
 
         [Required]

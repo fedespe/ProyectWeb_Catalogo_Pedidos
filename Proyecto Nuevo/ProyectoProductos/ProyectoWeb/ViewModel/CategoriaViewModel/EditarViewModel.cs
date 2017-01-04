@@ -10,6 +10,9 @@ namespace ProyectoWeb.ViewModel.CategoriaViewModel
 {
     public class EditarViewModel
     {
+        public string mensajeError { get; set; }
+        public string mensajeSuccess { get; set; }
+
         public ET.Categoria categoria { get; set; }
 
         public HttpPostedFileBase Archivo { get; set; }

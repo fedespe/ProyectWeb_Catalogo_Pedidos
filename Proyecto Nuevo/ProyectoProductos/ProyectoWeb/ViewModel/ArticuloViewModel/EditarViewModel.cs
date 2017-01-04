@@ -88,19 +88,6 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
             Categorias = categorialBL.obtenerTodos();
             Filtros = filtroBL.obtenerTodos();
         }
-        //Para cargar las imagenes que ya tenia en la base si hay errores
-        public void cargarImagenesSeleccionas() {
-            if (Img1Anterior != null)
-                Articulo.Imagenes.Add(new Imagen() { Img = Img1Anterior });
-            if (Img2Anterior != null)
-                Articulo.Imagenes.Add(new Imagen() { Img = Img2Anterior });
-            if (Img3Anterior != null)
-                Articulo.Imagenes.Add(new Imagen() { Img = Img3Anterior });
-            if (Img4Anterior != null)
-                Articulo.Imagenes.Add(new Imagen() { Img = Img4Anterior });
-            if (Img5Anterior != null)
-                Articulo.Imagenes.Add(new Imagen() { Img = Img5Anterior });
-        }
 
         public void completarEditarVM()
         {

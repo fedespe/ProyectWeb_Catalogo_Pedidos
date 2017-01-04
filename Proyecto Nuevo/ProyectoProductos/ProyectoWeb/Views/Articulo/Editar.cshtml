@@ -19,9 +19,15 @@
         //Lista de errores
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        //Mensajes
+        if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+        {
+            <span class="label label-danger">@Model.mensajeError</span>
+        }
+
         //************************************************************************
         //MANEJO DE IMAGENES
-        //************************************************************************       
+        //************************************************************************
         @Html.HiddenFor(x => x.Img1Anterior)
         @Html.HiddenFor(x => x.Img2Anterior)
         @Html.HiddenFor(x => x.Img3Anterior)
@@ -206,7 +212,7 @@
         //************************************************************************
         <br>
         
-        <button type="submit" class="btn btn-lg btn-default">
+        <button type="submit" class="btn btn-lg btn-primary">
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
         </button>
     }

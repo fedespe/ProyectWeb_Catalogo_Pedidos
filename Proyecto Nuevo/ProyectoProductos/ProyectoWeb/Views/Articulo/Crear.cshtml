@@ -16,6 +16,12 @@
         //Lista de errores
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        //Mensajes
+        if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+        {
+                <span class="label label-danger">@Model.mensajeError</span>
+        }
+
         //************************************************************************
         //MANEJO DE IMAGENES
         //************************************************************************

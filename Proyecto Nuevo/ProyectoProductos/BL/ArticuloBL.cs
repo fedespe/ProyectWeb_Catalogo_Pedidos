@@ -57,6 +57,7 @@ namespace BL
         public List<Articulo> obtenerPorCategoria(int idCategoria) {
             return articuloDAL.obtenerPorCategoria(idCategoria);
         }
+        //todos los articulos de una catgegoria con filtros determinados
         public List<Articulo> obtenerPorCategoriaConFiltros(int idCategoria, List<Filtro> filtros)
         {
             return articuloDAL.obtenerPorCategoriaConFiltros(idCategoria, filtros);
@@ -67,9 +68,20 @@ namespace BL
             //Si no tiene imagen el obtener todos no trae el articulo por eso
             //validar que tenga al menos una imagen para guardar
             if (articulo.Imagenes.Count==0) 
-                throw new ProyectoException("Error: el articulo debe tener al menos una imagen.");
+                throw new ProyectoException("Error: el artículo debe tener al menos una imagen.");
             if(articulo.Codigo=="" || articulo.Codigo.Length>20)
-                throw new ProyectoException("Error: el codigo del articulo es requerido y menor a 20 caracteres.");
+                throw new ProyectoException("Error: el código del artículo es requerido y menor a 20 caracteres.");
+            
+            //falta ver que el codigo sea unico
+
+            if (articulo.Nombre=="" || articulo.Nombre.Length>50)
+                throw new ProyectoException("Error: el nombre del artículo es requerido y menor a 50 caracteres.");
+            if (articulo.Descripcion == "" || articulo.Descripcion.Length > 250)
+                throw new ProyectoException("Error: la descripción del artículo es requerida y menor a 250 caracteres.");
+            if (articulo.Precio <= 0 || Double.IsNaN(articulo.Precio))
+                throw new ProyectoException("Error: el precio del artículo debe ser mayor a cero.");
+            //Se puede dejar sin filtros y sin categorias y  luego editar el articulo
+            //por lo que no lleva controles
         }
 
     }

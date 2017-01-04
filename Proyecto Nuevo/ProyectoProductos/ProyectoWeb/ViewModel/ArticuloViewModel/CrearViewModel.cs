@@ -13,6 +13,9 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 {
     public class CrearViewModel
     {
+        public string mensajeError { get; set; }
+        public string mensajeSuccess { get; set; }
+
         private CategoriaBL categorialBL= new CategoriaBL();
         private FiltroBL filtroBL = new FiltroBL();
 

@@ -13,8 +13,15 @@ FILTRO
 ARTICULO
 *ver si la transaccion esta andando bien (creo q no)
 *agregar una imagen en chico para cada articulo, esta hecho, solo me traigo una imagen por articulo para no ocupar espacio al pedo
-*falta paginacion para traer los articulos
+*falta paginaci'on para traer los articulos
 *falta a los articulos creados ponerle bien las imagenes y sus nombres de imagen correctos
 *revisar consulta con filtros esta andando pero por las dudas que se me haya pasado algun detalle
-*ver si elimino todas las iagenes se esta eliminando de la lista principal, lo arreglo haciendo el control en la logica! si no tiene imagen no se puede guardar (agregar )
+*ver si elimino todas las imagenes se esta eliminando de la lista principal, lo arreglo haciendo el control en la logica! si no tiene imagen no se puede guardar (agregar al documento de requerimientos)
 *al editar si uno de los dattanotation salta se resetean las imagenes
+VALIDACIONES
+*falte verificar que le codigo sea unico. se puede hacer con un exists o un count(*), el exists es mas eficiente
+*arreglar en el documento de requerimientos el precio es money y mayor igual a cero
+*PROBLEMA CON LAS IMAGENES Y LAS VALIDACIONES VER COMO HACER PARA QUE NO SE BORREN EN EL EVENTO DE POSTBACK
+*PROBLEMA CON LOS FILTROS Y CATEGORIAS SE BORRAN EN EL POSTBACK
+
+

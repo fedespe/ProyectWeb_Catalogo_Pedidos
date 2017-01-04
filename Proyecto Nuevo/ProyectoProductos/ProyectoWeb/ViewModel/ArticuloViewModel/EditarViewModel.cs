@@ -11,6 +11,9 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 {
     public class EditarViewModel
     {
+        public string mensajeError { get; set; }
+        public string mensajeSuccess { get; set; }
+
         private CategoriaBL categorialBL = new CategoriaBL();
         private FiltroBL filtroBL = new FiltroBL();
 
@@ -84,6 +87,19 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
             Articulo = new Articulo();
             Categorias = categorialBL.obtenerTodos();
             Filtros = filtroBL.obtenerTodos();
+        }
+        //Para cargar las imagenes que ya tenia en la base si hay errores
+        public void cargarImagenesSeleccionas() {
+            if (Img1Anterior != null)
+                Articulo.Imagenes.Add(new Imagen() { Img = Img1Anterior });
+            if (Img2Anterior != null)
+                Articulo.Imagenes.Add(new Imagen() { Img = Img2Anterior });
+            if (Img3Anterior != null)
+                Articulo.Imagenes.Add(new Imagen() { Img = Img3Anterior });
+            if (Img4Anterior != null)
+                Articulo.Imagenes.Add(new Imagen() { Img = Img4Anterior });
+            if (Img5Anterior != null)
+                Articulo.Imagenes.Add(new Imagen() { Img = Img5Anterior });
         }
 
         public void completarEditarVM()

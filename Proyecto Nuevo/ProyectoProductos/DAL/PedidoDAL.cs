@@ -543,8 +543,9 @@ namespace DAL
             }
         }
 
-        public void registrar(Pedido ped)
+        public int registrar(Pedido ped)
         {
+            //Registrar el Pedido, agregarl el ID y retornarlo para agregarle al usuario Logueado el pedido en construcción
             throw new NotImplementedException();
         }
 

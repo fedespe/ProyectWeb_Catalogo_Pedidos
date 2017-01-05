@@ -54,23 +54,40 @@ namespace ProyectoWeb.Controllers
                 idEnConstruccion = clienteBL.obtenerPedidoEnContruccion(idUsuario);
             }
 
-            //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
-            Pedido pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
+            Pedido pedidoEnConstruccion = null;
 
-            ArticuloCantidad ac = new ArticuloCantidad
+            if (idEnConstruccion > 0)
             {
-                Articulo = a,
-                Cantidad = cantidad,
-                PrecioUnitario = a.Precio
-            };
+                //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
+                pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
 
-            //Si en el Pedido en construcción ya se encuentra un ArticuloCantidad con el artículo seleccionado, se avisa que se debe modificar el pedido en construcción (Carrito)
-            if (pedidoEnConstruccion.ProductosPedidos.Contains(ac))
-            {
-                ViewBag.Mensaje = "En su carrito ya se encuentra el artículo seleccionado, modifique el mismo.";
-                return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+                ArticuloCantidad ac = new ArticuloCantidad
+                {
+                    Articulo = a,
+                    Cantidad = cantidad,
+                    PrecioUnitario = a.Precio
+                };
+
+                //Si en el Pedido en construcción ya se encuentra un ArticuloCantidad con el artículo seleccionado, se avisa que se debe modificar el pedido en construcción (Carrito)
+                if (pedidoEnConstruccion.ProductosPedidos.Contains(ac))
+                {
+                    ViewBag.Mensaje = "En su carrito ya se encuentra el artículo seleccionado, modifique el mismo.";
+                    return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+                }
+
+                pedidoEnConstruccion.ProductosPedidos.Add(ac);
+
+                pedidoBL.actualizar(pedidoEnConstruccion);
             }
+            else
+            {
+                pedidoEnConstruccion = new Pedido
+                {
 
+                };
+
+                pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
+            }
 
             return RedirectToAction("Index","Home"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
         }

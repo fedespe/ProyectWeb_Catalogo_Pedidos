@@ -27,9 +27,22 @@ namespace BL
             return pedidoDAL.actualizar(ped);
         }
 
-        public void registrar(Pedido ped)
+        public void registrar(Pedido ped, int idUsuario, string tipoUsuario)
         {
-            pedidoDAL.registrar(ped);
+            int idPedidoGenerado = pedidoDAL.registrar(ped);
+
+            if (tipoUsuario.Equals("Administrador"))
+            {
+                AdministradorBL administradorBL = new AdministradorBL();
+                Administrador a = administradorBL.obtener(idUsuario);
+                //administradorBL.registrarPedidoEnConstruccion(a, idPedidoGenerado);
+            }
+            else if (tipoUsuario.Equals("Cliente"))
+            {
+                ClienteBL clienteBL = new ClienteBL();
+                Cliente c = clienteBL.obtener(idUsuario);
+                //clienteBL.registrarPedidoEnConstruccion(c, idPedidoGenerado);
+            }
         }
 
         public bool eliminar(int id)

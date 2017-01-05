@@ -11,5 +11,12 @@ namespace ET
         public int Cantidad { get; set; }
         public Articulo Articulo { get; set; }
         public double PrecioUnitario { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            ArticuloCantidad ac = (ArticuloCantidad)obj;
+
+            return this.Articulo.Equals(ac.Articulo);
+        }
     }
 }

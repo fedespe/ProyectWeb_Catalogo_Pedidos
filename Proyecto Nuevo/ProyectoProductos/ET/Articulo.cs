@@ -25,5 +25,12 @@ namespace ET
             Categorias = new List<Categoria>();
             Filtros = new List<Filtro>();
         }
+
+        public override bool Equals(object obj)
+        {
+            Articulo a = (Articulo)obj;
+
+            return this.Id == a.Id;
+        }
     }
 }

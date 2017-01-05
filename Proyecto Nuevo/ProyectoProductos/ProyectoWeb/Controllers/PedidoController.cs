@@ -15,15 +15,62 @@ namespace ProyectoWeb.Controllers
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
         private ClienteBL clienteBL = new ClienteBL();
         private AdministradorBL administradorBL = new AdministradorBL();
+        private ArticuloBL articuloBL = new ArticuloBL();
 
         //GET Pedido/Create
         public ActionResult Create(int idArticulo = 0, int cantidad = 0)
         {
-            if(idArticulo <= 0 || cantidad <= 0 )
+            //Si no está logueado, le doy aviso de que no tiene permisos
+            if(Session["TipoUsuario"] == null)
             {
-                ViewBag.Mensaje = "Debe indicar un artículo y una cantidad mayor a 0.";
+                ViewBag.Mensaje = "No tiene permisos para realizar esta acción.";
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+
+            //Si no hace llegar un artículo o una cantidad, le doy aviso de que debe indicarlos
+            if (idArticulo <= 0 || cantidad <= 0)
+            {
+                ViewBag.Mensaje = "Debe indicar el artículo y una cantidad mayor a 0.";
                 return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
             }
+
+            //Si no existe un artículo con el ID que llega, doy aviso, si existe, ya me queda guardado
+            Articulo a = articuloBL.obtener(idArticulo);
+            if (a == null)
+            {
+                ViewBag.Mensaje = "No se encontró un Artículo con el identificador especificado.";
+                return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+            }
+
+            //Si el Usuario logueado tiene un pedido en construcción, me quedo con el ID del mismo, sino me queda en 0
+            int idUsuario = Convert.ToInt32(Session["IdUsuario"]);
+            int idEnConstruccion = 0;
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                idEnConstruccion = administradorBL.obtenerPedidoEnContruccion(idUsuario);
+            }
+            else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+            {
+                idEnConstruccion = clienteBL.obtenerPedidoEnContruccion(idUsuario);
+            }
+
+            //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
+            Pedido pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
+
+            ArticuloCantidad ac = new ArticuloCantidad
+            {
+                Articulo = a,
+                Cantidad = cantidad,
+                PrecioUnitario = a.Precio
+            };
+
+            //Si en el Pedido en construcción ya se encuentra un ArticuloCantidad con el artículo seleccionado, se avisa que se debe modificar el pedido en construcción (Carrito)
+            if (pedidoEnConstruccion.ProductosPedidos.Contains(ac))
+            {
+                ViewBag.Mensaje = "En su carrito ya se encuentra el artículo seleccionado, modifique el mismo.";
+                return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+            }
+
 
             return RedirectToAction("Index","Home"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
         }

@@ -63,7 +63,7 @@ function actualizarTotalYDescuento() {
 
     Array.from(filasConDatos).forEach(function (fila) {
         var celdaTotalFila = fila.children[6];
-        if (!isNaN(celdaTotalFila.innerHTML)) {
+        if (fila.children[4].innerHTML != "") {
             var totalFila = parseInt(celdaTotalFila.innerHTML);
 
             total += totalFila;
@@ -97,7 +97,7 @@ function actualizarTotales() {
         var celdaPrecioUnitario = fila.children[5];
         var inputCantidad = fila.children[4].children[0];
 
-        if (!isNaN(celdaPrecioUnitario.innerHTML)) {
+        if (fila.children[4].innerHTML != "") {
             var precioUnitario = parseInt(celdaPrecioUnitario.innerHTML);
             var cantidad = parseInt(inputCantidad.value);
 
@@ -130,7 +130,7 @@ function GenerarStringArticulos() {
 
     Array.from(filasConDatos).forEach(function (fila) {
 
-        if (!isNaN(fila.children[4].children[0])) {
+        if (fila.children[4].innerHTML != "") {
             var celdaArticulo = fila.children[0];
             var articulo = celdaArticulo.innerHTML;
 

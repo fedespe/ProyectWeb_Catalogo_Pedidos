@@ -17,6 +17,7 @@ namespace ProyectoWeb.ViewModel.CategoriaViewModel
         public HttpPostedFileBase Archivo { get; set; }
 
         [Required]
+        [StringLength(50)]
         [Display(Name = "Nombre Categoría")]
         public string Nombre { get; set; }
 

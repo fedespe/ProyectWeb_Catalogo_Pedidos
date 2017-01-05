@@ -11,20 +11,22 @@ CATEGORIA
 *Ver tema equal en clase categoria da una advertencia por sobreescribir el equal, y al ejecutar edit de categoria entra a equal con string ""
 *Tendria que tener descripcion la categoria, no es necesario pero quedar'ia mas completo
 *El nombre de la categoria es unico FALTA EN VALIDACION
+*IMPORTANTE LA TABLA FILTROS CATEGORIAS NO SE USA, A LA CATEGORIA NO SE LE ASOCIAN FILTROS NI HAY BIDIRECCIONALIDAD CON ARTICULO.
+*IMPORTANTE NO TIENE DESCRIPCION CREADA EN LA BASE
+
 FILTRO
 *los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
 ARTICULO
-*ver si la transaccion esta andando bien (creo q no)
+*ver si la transaccion esta andando bien 
 *agregar una imagen en chico para cada articulo, esta hecho, solo me traigo una imagen por articulo para no ocupar espacio al pedo
 *falta paginaci'on para traer los articulos
-*falta a los articulos creados ponerle bien las imagenes y sus nombres de imagen correctos
 *revisar consulta con filtros esta andando pero por las dudas que se me haya pasado algun detalle
 *ver si elimino todas las imagenes se esta eliminando de la lista principal, lo arreglo haciendo el control en la logica! si no tiene imagen no se puede guardar (agregar al documento de requerimientos)
-*al editar si uno de los dattanotation salta se resetean las imagenes
+*al editar si uno de los dataaanotation salta se resetean las imagenes (las que no estan guardadas en la base)
 VALIDACIONES
-*falta verificar que le codigo sea unico. se puede hacer con un exists o un count(*), el exists es mas eficiente
+*falta verificar que le codigo sea unico. se puede hacer con un exists o un count(*), el exists es mas eficiente. EN ESTE MOMENTO ESTA TIRANDO EL MENSAJE DEL SQL
 *arreglar en el documento de requerimientos el precio es money y mayor igual a cero
-*PROBLEMA CON LAS IMAGENES Y LAS VALIDACIONES VER COMO HACER PARA QUE NO SE BORREN EN EL EVENTO DE POSTBACK
+*PROBLEMA CON LAS IMAGENES Y LAS VALIDACIONES VER COMO HACER PARA QUE NO SE BORREN EN EL EVENTO DE POSTBACK (las que no estan guardadas en la base)
 *PROBLEMA CON LOS FILTROS Y CATEGORIAS SE BORRAN EN EL POSTBACK (las que  no estan guradadas en la base)
 *Faltan controles de restriccion, solo administradores
 *Falta la baja de articulo

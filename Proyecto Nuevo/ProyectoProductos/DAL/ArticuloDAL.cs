@@ -485,99 +485,100 @@ namespace DAL
         {
             bool res = true;
             SqlTransaction trn = null;
-            try
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
             {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
-                {
-                    con.Open();
-                    SqlCommand cmd = new SqlCommand(@"UPDATE Articulo SET Codigo = @codigo, Nombre = @nombre, 
-                                                    Descripcion=@descripcion, Precio=@precio, Stock=@stock,
-                                                    Disponible=@disponible, Destacado=@destacado WHERE id = @id", con);
+                try{
+                
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand(@"UPDATE Articulo SET Codigo = @codigo, Nombre = @nombre, 
+                                                        Descripcion=@descripcion, Precio=@precio, Stock=@stock,
+                                                        Disponible=@disponible, Destacado=@destacado WHERE id = @id", con);
 
-                    cmd.Parameters.AddWithValue("@codigo", articulo.Codigo);
-                    cmd.Parameters.AddWithValue("@nombre", articulo.Nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", articulo.Descripcion);
-                    cmd.Parameters.AddWithValue("@precio", articulo.Precio);
-                    cmd.Parameters.AddWithValue("@stock", articulo.Stock);
-                    cmd.Parameters.AddWithValue("@disponible", articulo.Disponible);
-                    cmd.Parameters.AddWithValue("@destacado", articulo.Destacado);
-                    cmd.Parameters.AddWithValue("@id", articulo.Id);
-
-                    trn = con.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
-                    cmd.Transaction = trn;
-
-                    if (cmd.ExecuteNonQuery() == 0) {
-                        res = false;
-                    } 
-                    if (res) {
-                        //ACTUALIZO IMAGENES 
-                        cmd.Parameters.Clear();
-                        cmd.CommandText = @"Delete FROM Imagen WHERE IdArticulo = @id";
+                        cmd.Parameters.AddWithValue("@codigo", articulo.Codigo);
+                        cmd.Parameters.AddWithValue("@nombre", articulo.Nombre);
+                        cmd.Parameters.AddWithValue("@descripcion", articulo.Descripcion);
+                        cmd.Parameters.AddWithValue("@precio", articulo.Precio);
+                        cmd.Parameters.AddWithValue("@stock", articulo.Stock);
+                        cmd.Parameters.AddWithValue("@disponible", articulo.Disponible);
+                        cmd.Parameters.AddWithValue("@destacado", articulo.Destacado);
                         cmd.Parameters.AddWithValue("@id", articulo.Id);
-                        cmd.ExecuteNonQuery();
-                        foreach (Imagen i in articulo.Imagenes) {
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = @"INSERT INTO Imagen VALUES (@idArt, @imagen)";
-                            cmd.Parameters.AddWithValue("@imagen", i.Img);
-                            cmd.Parameters.AddWithValue("@idArt", articulo.Id);
-                            if (cmd.ExecuteNonQuery() == 0)
-                            {
-                                res = false;
-                            }
-                        }
 
-                        //ACTUALIZO FILTROS
+                        trn = con.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
+                        cmd.Transaction = trn;
+
+                        if (cmd.ExecuteNonQuery() == 0) {
+                            res = false;
+                        } 
                         if (res) {
+                            //ACTUALIZO IMAGENES 
                             cmd.Parameters.Clear();
-                            cmd.CommandText = @"Delete FROM Filtro_Articulo WHERE IdArticulo = @id";
+                            cmd.CommandText = @"Delete FROM Imagen WHERE IdArticulo = @id";
                             cmd.Parameters.AddWithValue("@id", articulo.Id);
                             cmd.ExecuteNonQuery();
-                            foreach (Filtro f in articulo.Filtros)
-                            {
+                            foreach (Imagen i in articulo.Imagenes) {
                                 cmd.Parameters.Clear();
-                                cmd.CommandText = @"INSERT INTO Filtro_Articulo VALUES (@idFiltro, @idArt)";
-                                cmd.Parameters.AddWithValue("@idFiltro", f.Id);
+                                cmd.CommandText = @"INSERT INTO Imagen VALUES (@idArt, @imagen)";
+                                cmd.Parameters.AddWithValue("@imagen", i.Img);
                                 cmd.Parameters.AddWithValue("@idArt", articulo.Id);
                                 if (cmd.ExecuteNonQuery() == 0)
                                 {
                                     res = false;
                                 }
                             }
-                        }
 
-                        //ACTUALIZO CATEGORIAS
-                        if (res)
-                        {
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = @"Delete FROM Articulo_Categoria WHERE IdArticulo = @id";
-                            cmd.Parameters.AddWithValue("@id", articulo.Id);
-                            cmd.ExecuteNonQuery();
-                            foreach (Categoria c in articulo.Categorias)
-                            {
+                            //ACTUALIZO FILTROS
+                            if (res) {
                                 cmd.Parameters.Clear();
-                                cmd.CommandText = @"INSERT INTO Articulo_Categoria VALUES (@idArt, @idCat)";
-                                cmd.Parameters.AddWithValue("@idArt", articulo.Id);
-                                cmd.Parameters.AddWithValue("@idCat", c.Id);
-                                if (cmd.ExecuteNonQuery() == 0)
+                                cmd.CommandText = @"Delete FROM Filtro_Articulo WHERE IdArticulo = @id";
+                                cmd.Parameters.AddWithValue("@id", articulo.Id);
+                                cmd.ExecuteNonQuery();
+                                foreach (Filtro f in articulo.Filtros)
                                 {
-                                    res = false;
+                                    cmd.Parameters.Clear();
+                                    cmd.CommandText = @"INSERT INTO Filtro_Articulo VALUES (@idFiltro, @idArt)";
+                                    cmd.Parameters.AddWithValue("@idFiltro", f.Id);
+                                    cmd.Parameters.AddWithValue("@idArt", articulo.Id);
+                                    if (cmd.ExecuteNonQuery() == 0)
+                                    {
+                                        res = false;
+                                    }
                                 }
                             }
-                        }
 
+                            //ACTUALIZO CATEGORIAS
+                            if (res)
+                            {
+                                cmd.Parameters.Clear();
+                                cmd.CommandText = @"Delete FROM Articulo_Categoria WHERE IdArticulo = @id";
+                                cmd.Parameters.AddWithValue("@id", articulo.Id);
+                                cmd.ExecuteNonQuery();
+                                foreach (Categoria c in articulo.Categorias)
+                                {
+                                    cmd.Parameters.Clear();
+                                    cmd.CommandText = @"INSERT INTO Articulo_Categoria VALUES (@idArt, @idCat)";
+                                    cmd.Parameters.AddWithValue("@idArt", articulo.Id);
+                                    cmd.Parameters.AddWithValue("@idCat", c.Id);
+                                    if (cmd.ExecuteNonQuery() == 0)
+                                    {
+                                        res = false;
+                                    }
+                                }
+                        
+
+                        }
+                        trn.Commit();
+                        trn.Dispose();
+                        trn = null;                        
                     }
-                    trn.Commit();
-                    trn.Dispose();
-                    trn = null;
                     return res;
                 }
-            }
-            catch (Exception ex)
-            {
-                if (trn != null) {
-                    trn.Rollback();
+                catch (Exception ex)
+                {
+                    if (trn != null) {
+                        trn.Rollback();
+                    }
+                    throw new ProyectoException("Error: " + ex.Message);
                 }
-                throw new ProyectoException("Error: " + ex.Message);
             }
         }
 
@@ -585,10 +586,10 @@ namespace DAL
         {
             bool res = true;
             SqlTransaction trn = null;
-            try
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
             {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
-                {
+                try
+                {                
                     con.Open();
                     SqlCommand cmd = new SqlCommand(@"INSERT INTO Articulo VALUES (@codigo, @nombre, 
                                                     @descripcion, @precio, @stock,
@@ -655,24 +656,24 @@ namespace DAL
                                 if (cmd.ExecuteNonQuery() == 0)
                                 {
                                     res = false;
-                                }
+                                }                            
                             }
-                        }
 
+                        }
+                        trn.Commit();
+                        trn.Dispose();
+                        trn = null;                       
                     }
-                    trn.Commit();
-                    trn.Dispose();
-                    trn = null;
                     return res;
                 }
-            }
-            catch (Exception ex)
-            {
-                if (trn != null)
+                catch (Exception ex)
                 {
-                    trn.Rollback();
+                    if (trn != null)
+                    {
+                        trn.Rollback();
+                    }
+                    throw new ProyectoException("Error: " + ex.Message);
                 }
-                throw new ProyectoException("Error: " + ex.Message);
             }
         }
 

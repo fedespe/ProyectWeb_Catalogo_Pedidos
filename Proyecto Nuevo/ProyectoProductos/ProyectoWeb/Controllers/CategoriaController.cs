@@ -122,5 +122,29 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        public ActionResult Eliminar(int id)
+        {
+            try
+            {
+                bool r = categoriaBL.eliminar(id);
+                if (r)
+                {
+                    return RedirectToAction("ListaCategorias");
+                }
+                else
+                {
+                    // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
+                    ViewBag.Mensaje = "Ocurrio un error inesperado";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }                
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }                       
+        }
+
+
     }
 }

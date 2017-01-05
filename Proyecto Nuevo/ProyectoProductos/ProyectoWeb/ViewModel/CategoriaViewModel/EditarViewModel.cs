@@ -20,7 +20,8 @@ namespace ProyectoWeb.ViewModel.CategoriaViewModel
         public String ImgAnterior { get; set; }
 
         [Required]
-        [Display(Name = "Nombre Categoía")]
+        [StringLength(50)]
+        [Display(Name = "Nombre Categoría")]
         public string Nombre { get; set; }
 
 

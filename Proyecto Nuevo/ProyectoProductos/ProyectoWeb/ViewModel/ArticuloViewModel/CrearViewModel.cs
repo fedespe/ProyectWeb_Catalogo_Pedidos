@@ -23,14 +23,17 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         
         [Required]
         [Display(Name = "Código")]
+        [StringLength(20)]
         public string Codigo { get; set; }
 
         [Required]
         [Display(Name = "Nombre Articulo")]
-        [DataType(DataType.Password)]
+        [StringLength(50)]
         public string Nombre { get; set; }
 
+        [Required]
         [Display(Name = "Descripción")]
+        [StringLength(250)]
         public string Descripcion { get; set; }
 
         [Required]

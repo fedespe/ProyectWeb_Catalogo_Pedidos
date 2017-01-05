@@ -80,6 +80,8 @@ namespace BL
                 throw new ProyectoException("Error: la descripción del artículo es requerida y menor a 250 caracteres.");
             if (articulo.Precio <= 0 || Double.IsNaN(articulo.Precio))
                 throw new ProyectoException("Error: el precio del artículo debe ser mayor a cero.");
+            if (articulo.Stock <= 0 || Double.IsNaN(articulo.Stock))
+                throw new ProyectoException("Error: el stock del artículo debe ser mayor a cero.");
             //Se puede dejar sin filtros y sin categorias y  luego editar el articulo
             //por lo que no lleva controles
         }

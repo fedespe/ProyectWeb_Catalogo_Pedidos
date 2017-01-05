@@ -134,10 +134,39 @@ namespace DAL
 
         public bool eliminar(int id)
         {
-            //ver como vamos a eliminar la categoria
-            //capas eliminaos todas las referencias asociadas a la categoria
-            //y luego eliminamos la categoria
-            return true;
+            bool res = true;
+            SqlTransaction trn = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+            {
+                try
+                {
+
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(@"delete from ARTICULO_CATEGORIA where IdCategoria = @id", con);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    trn = con.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
+                    cmd.Transaction = trn;
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = @"delete from FILTRO_CATEGORIA where IdCategoria = @id";
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = @"delete from CATEGORIA where id = @id";
+                    res= cmd.ExecuteNonQuery()!=0;
+                    trn.Commit();
+                    trn.Dispose();
+                    trn = null;
+                    return res;
+                }
+                catch (Exception ex)
+                {
+                    if (trn != null)
+                    {
+                        trn.Rollback();
+                    }
+                    throw new ProyectoException("Error: " + ex.Message);
+                }
+            }
         }
     }
 

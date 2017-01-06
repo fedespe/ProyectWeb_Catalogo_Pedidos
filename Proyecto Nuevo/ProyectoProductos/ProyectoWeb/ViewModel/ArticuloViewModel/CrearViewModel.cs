@@ -93,11 +93,18 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 
         public void completarArticulo()
         {
-            Articulo.Codigo = Codigo;
-            Articulo.Descripcion = Descripcion;
+            if (Codigo != null) Articulo.Codigo = Codigo;
+            else Articulo.Codigo = "";
+
+            if (Descripcion != null) Articulo.Descripcion = Descripcion;
+            else Articulo.Descripcion = "";
+
             Articulo.Destacado = Destacado;
             Articulo.Disponible = Disponible;
-            Articulo.Nombre = Nombre;
+
+            if (Nombre != null) Articulo.Nombre = Nombre;
+            else Articulo.Nombre = "";
+
             Articulo.Precio = Precio;
             Articulo.Stock = Stock;
             cargarImagenes();

@@ -15,8 +15,12 @@ namespace ET
 
         public override bool Equals(object obj)
         {
-            Filtro f = (Filtro)obj;
-            return f.Id == this.Id;
+            if (obj is Filtro)
+            {
+                Filtro f = (Filtro)obj;
+                return f.Id == this.Id;
+            }
+            return false;
         }
     }
 }

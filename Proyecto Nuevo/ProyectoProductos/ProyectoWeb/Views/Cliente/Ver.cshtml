@@ -1,0 +1,99 @@
+﻿@model ET.Cliente
+@{
+    ViewBag.Title = "Ver";
+}
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Datos del Cliente</h2>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Imagen</div>
+            <div class="panel-body">
+                <div>
+                    <div class="thumbnail">
+                        <img src=@("/Imagenes/Clientes/"+Model.Foto) height="150" width="150" />
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nombre de Usuario</div>
+            <div class="panel-body">
+                @Model.NombreUsuario
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nombre de Fantasía</div>
+            <div class="panel-body">
+                @Model.NombreFantasia
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">RUT</div>
+            <div class="panel-body">
+                @Model.Rut
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Razón Social</div>
+            <div class="panel-body">
+                @Model.RazonSocial
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Descuento</div>
+            <div class="panel-body">
+                @Model.Descuento
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Días de Pago</div>
+            <div class="panel-body">
+                @Model.DiasDePago
+            </div>
+        </div>.
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Dirección</div>
+            <div class="panel-body">
+                @Model.Direccion
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Teléfono</div>
+            <div class="panel-body">
+                @Model.Telefono
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nombre de Contacto</div>
+            <div class="panel-body">
+                @Model.NombreDeContacto
+            </div>
+        </div>.
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Teléfono de Contacto</div>
+            <div class="panel-body">
+                @Model.TelefonoDeContacto
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Email</div>
+            <div class="panel-body">
+                @Model.EmailDeContacto
+            </div>
+        </div>
+    </div>
+</div>

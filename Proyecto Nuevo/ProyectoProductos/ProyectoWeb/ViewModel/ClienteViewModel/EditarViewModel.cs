@@ -10,6 +10,9 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
 {
     public class EditarViewModel
     {
+        public string mensajeError { get; set; }
+        public string mensajeSuccess { get; set; }
+
         public ET.Cliente cliente { get; set; }
 
         public HttpPostedFileBase Archivo { get; set; }
@@ -83,18 +86,38 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         public void completarCliente()
         {
             cliente.Descuento = Descuento;
-            cliente.DiasDePago = DiasDePago;
-            cliente.Direccion = Direccion;
-            cliente.Foto = NombreUsuario.ToUpper().Replace(" ", "") + ".jpg";
-            cliente.NombreDeContacto = NombreDeContacto;
-            cliente.NombreFantasia = NombreFantasia;
-            cliente.NombreUsuario = NombreUsuario;
-            //cliente.Password = Password;
-            cliente.RazonSocial = RazonSocial;
-            cliente.Rut = Rut;
-            cliente.Telefono = Telefono;
-            cliente.TelefonoDeContacto = TelefonoDeContacto;
-            cliente.EmailDeContacto = EmailContacto;
+
+            if (DiasDePago != null) cliente.DiasDePago = DiasDePago;
+            else cliente.DiasDePago = "";
+
+            if (Direccion != null) cliente.Direccion = Direccion;
+            else cliente.Direccion = "";
+
+            if (NombreDeContacto != null) cliente.NombreDeContacto = NombreDeContacto;
+            else cliente.NombreDeContacto = "";
+
+            if (NombreFantasia != null) cliente.NombreFantasia = NombreFantasia;
+            else cliente.NombreFantasia = "";
+
+            if (NombreUsuario != null) cliente.NombreUsuario = NombreUsuario;
+            else cliente.NombreUsuario = "";
+
+            cliente.Foto = cliente.NombreUsuario.ToUpper().Replace(" ", "") + ".jpg";
+
+            if (RazonSocial != null) cliente.RazonSocial = RazonSocial;
+            else cliente.RazonSocial = "";
+
+            if (Rut != null) cliente.Rut = Rut;
+            else cliente.Rut = "";
+
+            if (Telefono != null) cliente.Telefono = Telefono;
+            else cliente.Telefono = "";
+
+            if (TelefonoDeContacto != null) cliente.TelefonoDeContacto = TelefonoDeContacto;
+            else cliente.TelefonoDeContacto = "";
+
+            if (EmailContacto != null) cliente.EmailDeContacto = EmailContacto;
+            else cliente.EmailDeContacto = "";
         }
 
         public void guardarArchivo()

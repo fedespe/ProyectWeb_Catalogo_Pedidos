@@ -11,9 +11,11 @@ namespace ProyectoWeb.ViewModel.CatalogoViewModel
     {
         private FiltroBL filtroBL = new FiltroBL();
         private ArticuloBL articuloBL = new ArticuloBL();
+        private CategoriaBL categoriaBL = new CategoriaBL();
 
         public List<Articulo> Articulos { get; set; }
         public int IdCategoria { get; set; }
+        public List<Categoria> Categorias { get; set; }
 
         //************************************************************************
         //PROPIEDADES PARA MANEJO DE FILTROS 
@@ -50,19 +52,16 @@ namespace ProyectoWeb.ViewModel.CatalogoViewModel
         //FIN PROPIEDADES PARA MANEJO DE FILTROS 
         //************************************************************************
 
-        public ListarArticuloViewModel()//(int idCat)
+        public ListarArticuloViewModel()
         {
-            //Articulos = articuloBL.obtenerPorCategoria(IdCategoria);
-            //Articulos = articuloBL.obtenerTodos();
             FiltrosTotales = filtroBL.obtenerTodos();
             FiltrosAplicados = new List<Filtro>();
-            //IdCategoria = idCat;
+            Categorias = categoriaBL.obtenerTodos();
         }
 
         public void cargarArticulosFiltrados()
         {
             cargarFiltros();
-            //Articulos = articuloBL.obtenerConFiltros(FiltrosAplicados);
             Articulos = articuloBL.obtenerPorCategoriaConFiltros(IdCategoria,FiltrosAplicados);
         }
     }

@@ -14,9 +14,12 @@ namespace ET
 
         public override bool Equals(object obj)
         {
-            ArticuloCantidad ac = (ArticuloCantidad)obj;
-
-            return this.Articulo.Equals(ac.Articulo);
+            if (obj is ArticuloCantidad)
+            {
+                ArticuloCantidad ac = (ArticuloCantidad)obj;
+                return this.Articulo.Equals(ac.Articulo);
+            }
+            return false;
         }
     }
 }

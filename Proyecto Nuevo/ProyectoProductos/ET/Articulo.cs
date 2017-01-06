@@ -28,9 +28,12 @@ namespace ET
 
         public override bool Equals(object obj)
         {
-            Articulo a = (Articulo)obj;
-
-            return this.Id == a.Id;
+            if (obj is Articulo)
+            {
+                Articulo a = (Articulo)obj;
+                return this.Id == a.Id;
+            }
+            return false;
         }
     }
 }

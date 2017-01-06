@@ -28,8 +28,10 @@ namespace ProyectoWeb.ViewModel.CategoriaViewModel
 
         public void completarCategoria()
         {
-            categoria.Nombre = Nombre;
-            categoria.Img = Nombre.ToUpper().Replace(" ", "") + ".jpg";
+            if (Nombre != null) categoria.Nombre = Nombre;
+            else categoria.Nombre = "";
+
+            categoria.Img = categoria.Nombre.ToUpper().Replace(" ", "") + ".jpg";
         }
 
         public void guardarArchivo()

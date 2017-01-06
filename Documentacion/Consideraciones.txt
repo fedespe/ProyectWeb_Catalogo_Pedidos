@@ -8,6 +8,7 @@ BRUNO
 
 PEDIDO
 Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le método para mostrar los pedidos sin confirmar... Los muestro bien, pero cada vez que cambio de pedido, no me quedo con la primer línea de artículos... Se dónde está el error, pero no se me ocurre como solucionarlo... Ya cambié el método de mil formas... Seguro es fácil y me quemé la cabeza ya. Ahora sigo con otra cosa, pero lo subo antes para no perder lo hecho.
+
 CATEGORIA
 *Agregar a los requerimientos que si no tiene imagen no es valida la categoria (ver que si no selecciona el programa le asigna una por defecto)
 *Agregar que el nombre debe ser menor a 50 en el documento de requerimientos
@@ -20,6 +21,7 @@ CATEGORIA
 
 FILTRO
 *los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
+
 ARTICULO
 *ver si la transaccion esta andando bien 
 *agregar una imagen en chico para cada articulo, esta hecho, solo me traigo una imagen por articulo para no ocupar espacio al pedo
@@ -36,6 +38,9 @@ VALIDACIONES
 *Falta la baja de articulo
 *FALTA DATTANOTATION
 
-
+CLIENTE
+*ver que la tabla con el listado de todos los clientes tiene muchos datos (capas que sacar datos y crear una nueva vista que sea detalle para ver todos los datos del cliente)
+*No tiene confirmacion de password
+*Ver si el RUT es requerido, sino como hacer para ponerlo en null y no ¨¨
 
 

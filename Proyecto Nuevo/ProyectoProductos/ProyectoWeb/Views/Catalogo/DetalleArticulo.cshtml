@@ -4,24 +4,6 @@
 }
 <h2>DetalleArticulo</h2>
 
-@*<div class="row">
-    <div class="col-sm-6 col-md-6">
-        <div class="thumbnail">            
-                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" class="zoom">
-
-                <div class="caption">
-                @foreach (var i in Model.Imagenes)
-                {
-                    <div class="col-xs-3 col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img src="/Imagenes/Articulos/@i.Img" alt="..." class="ImgGal">
-                        </a>
-                    </div>                    
-                }
-                    <div class="clearfix"></div>
-                </div>  
-        </div>
-    </div>*@
 <style type="text/css">
     #contenido {
         position: relative;
@@ -38,7 +20,7 @@
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
             <div id="contenido">
-                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img">
+                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" style="width:100%; height:100%;">
                 @*<img src="/Imagenes/Articulos/pruebazoom.jpg" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/pruebazoom.jpg">*@
             </div>
             <div class="caption">

@@ -17,7 +17,7 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/ListaClientes
         public ActionResult ListaClientes()
         {
-            if(Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -47,7 +47,7 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/Crear
         public ActionResult Crear()
         {
-            if(Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -92,21 +92,23 @@ namespace ProyectoWeb.Controllers
                 }
                 catch (ProyectoException ex)
                 {
-                    ViewBag.Mensaje = ex.Message;
-                    return View("~/Views/Shared/_Mensajes.cshtml");
+                    //ViewBag.Mensaje = ex.Message;
+                    //return View("~/Views/Shared/_Mensajes.cshtml");
+                    crearVM.mensajeError = ex.Message;
+                    return View(crearVM);
                 }
             }
             else {
                 return View(crearVM);
             }
 
-            
+
         }
 
         //GET: Cliente/Editar
         public ActionResult Editar(int id = 0)
         {
-            if(Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente")) && (Convert.ToInt32(Session["IdUsuario"]) == id))
+            if (Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente")) && (Convert.ToInt32(Session["IdUsuario"]) == id))
             {
                 try
                 {
@@ -169,8 +171,10 @@ namespace ProyectoWeb.Controllers
                 }
                 catch (ProyectoException ex)
                 {
-                    ViewBag.Mensaje = ex.Message;
-                    return View("~/Views/Shared/_Mensajes.cshtml");
+                    //ViewBag.Mensaje = ex.Message;
+                    //return View("~/Views/Shared/_Mensajes.cshtml");
+                    editVM.mensajeError = ex.Message;
+                    return View(editVM);
                 }
             }
             else {
@@ -180,7 +184,7 @@ namespace ProyectoWeb.Controllers
 
         public ActionResult Eliminar(int id)
         {
-            if(Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -227,7 +231,8 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/CambiarPass
         public ActionResult CambiarPass(int id = 0)
         {
-            if (Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id){
+            if (Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id)
+            {
                 try
                 {
                     CambiarPassViewModel cambiarPassVM = new CambiarPassViewModel();
@@ -277,6 +282,35 @@ namespace ProyectoWeb.Controllers
                     }
                     cambiarPassVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
                     return View(cambiarPassVM);
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+        }
+
+        public ActionResult Ver(int Id)
+        {
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                try
+                {
+                    return View(clienteBL.obtener(Id));
                 }
                 catch (ProyectoException ex)
                 {

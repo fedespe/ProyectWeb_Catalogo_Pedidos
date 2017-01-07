@@ -41,7 +41,7 @@ namespace BL
             {
                 ClienteBL clienteBL = new ClienteBL();
                 Cliente c = clienteBL.obtener(idUsuario);
-                //clienteBL.registrarPedidoEnConstruccion(c, idPedidoGenerado);
+                clienteBL.registrarPedidoEnConstruccion(c, idPedidoGenerado);
             }
         }
 

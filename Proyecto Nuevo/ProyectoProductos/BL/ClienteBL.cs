@@ -50,6 +50,13 @@ namespace BL
         {
             return clienteDAL.obtenerPedidoEnContruccion(id);
         }
+
+        internal void registrarPedidoEnConstruccion(Cliente c, int idPedidoGenerado)
+        {
+            c.IdPedidoEnConstruccion = idPedidoGenerado;
+            clienteDAL.actualizar(c);
+        }
+
         private void validar(Cliente cliente)
         {
             //falta validar que son unicos: nombre de usuario, rut, razon social (lo controla la base por ahora) 

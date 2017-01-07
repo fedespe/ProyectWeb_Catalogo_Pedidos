@@ -545,8 +545,57 @@ namespace DAL
 
         public int registrar(Pedido ped)
         {
-            //Registrar el Pedido, agregarl el ID y retornarlo para agregarle al usuario Logueado el pedido en construcción
-            throw new NotImplementedException();
+            //Registrar el Pedido, retornar el ID generado para agregarle al usuario Logueado el pedido en construcción
+            string cadenaInsertPedido = @"INSERT INTO PEDIDO VALUES(
+                @FechaRealizado, @FechaEntregaSolicitada, @DescuentoCliente, @Iva, @IdCliente, @Comentario, @IdEstado); SELECT CAST(Scope_Identity() AS INT);";
+            string cadenaInsertPedidoArticulo = "INSERT INTO PEDIDO_ARTICULO VALUES (@IdPedido, @IdArticulo, @Cantidad, @PrecioUnitario);";
+            int idPedidoGenerado = 0;
+
+            SqlTransaction trn = null;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand(cadenaInsertPedido, con))
+                    {
+                        cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
+                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
+                        cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
+                        cmd.Parameters.AddWithValue("@Iva", ped.Iva);
+                        cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
+                        cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
+                        cmd.Parameters.AddWithValue("@IdEstado", ped.Estado.Id);
+                        con.Open();
+                        trn = con.BeginTransaction();
+                        cmd.Transaction = trn;
+
+                        idPedidoGenerado = (int)cmd.ExecuteScalar();
+                        cmd.Parameters.Clear();
+
+                        cmd.CommandText = cadenaInsertPedidoArticulo;
+                        foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                        {
+                            cmd.Parameters.AddWithValue("@IdPedido", idPedidoGenerado);
+                            cmd.Parameters.AddWithValue("@IdArticulo", ac.Articulo.Id);
+                            cmd.Parameters.AddWithValue("@Cantidad", ac.Cantidad);
+                            cmd.Parameters.AddWithValue("@PrecioUnitario", ac.Articulo.Precio);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+
+                        trn.Commit();
+                        trn.Dispose();
+                        return idPedidoGenerado;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //if (trn != null)
+                //    trn.Rollback();
+
+                throw new ProyectoException("Error: " + ex.Message);
+            }
         }
 
         public bool eliminar(int id)

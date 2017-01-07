@@ -60,6 +60,7 @@ namespace DAL
             return clientes;
         }
 
+
         public int obtenerPedidoEnContruccion(int id)
         {
             int enContruccion = 0;
@@ -194,11 +195,19 @@ namespace DAL
                     con.Open();
 
                     SqlCommand cmd = new SqlCommand(@"UPDATE Cliente SET
-                        Usuario = @usu, NombreFantasia = @nomFan, Rut = @rut, RazonSocial = @razSoc, Descuento = @desc,
+                        Usuario = @usu, EnConstruccion = @enConstruccion, NombreFantasia = @nomFan, Rut = @rut, RazonSocial = @razSoc, Descuento = @desc,
                         DiasDePago = @diasPago, Direccion = @dir, Telefono = @tel, NombreContacto = @nomCon,
                         TelefonoContacto = @telCon, EmailContacto = @emailCon, Imagen = @foto
                         WHERE id = @id", con);
 
+                    if(cli.IdPedidoEnConstruccion > 0)
+                    {
+                        cmd.Parameters.AddWithValue("@enConstruccion", cli.IdPedidoEnConstruccion);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@enConstruccion", DBNull.Value);
+                    }
                     cmd.Parameters.AddWithValue("@usu", cli.NombreUsuario);
                     cmd.Parameters.AddWithValue("@id", cli.Id);
                     cmd.Parameters.AddWithValue("@nomFan", cli.NombreFantasia);

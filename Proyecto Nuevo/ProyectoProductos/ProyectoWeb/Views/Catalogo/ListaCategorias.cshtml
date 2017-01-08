@@ -3,33 +3,34 @@
     ViewBag.Title = "ListaCategorias";
 }
 
-<h2>Categorías</h2>
-<hr>
 <div class="row">
-    @foreach (var c in Model)
-    {
-
-        <div class="col-sm-6 col-md-3">
-            <a href="~/Catalogo/ListaArticulos/@c.Id">
-                <div class="thumbnail">
-                    <img src=@("/Imagenes/Categorias/"+ c.Img) alt="Imagen de Prueba" height="200" width="200">
-
-                    <div class="caption">
-                        <center>@c.Nombre</center>
-                        @*<br />
-                        <p>
-                        <a href="~/Catalogo/ListaArticulos/@c.Id" class="btn btn-default pull-right" role="button">
-                            Detalles <span class="glyphicon glyphicon-eye-open"></span>
-                        </a>
-                        <div class="clearfix"></div>
-                        </p>*@
-
-                        @*<a title="ListaArticulos" href="~/Catalogo/ListaArticulos/@c.Id">Ver</a>*@
-
-                    </div>
-                </div>
-            </a>
+    <div class="col-md-2 pull-left">
+        <div>
+            <h3>Categorías</h3>
+            @foreach (var c in Model)
+            {
+                <a href="~/Catalogo/ListaArticulos/@c.Id">@c.Nombre</a><br />
+            }
         </div>
-    }
+    </div>
+    <div class="col-md-10 pull-right">
+        <h2>Categorías</h2>
+        <br>
+        @foreach (var c in Model)
+        {
+
+            <div class="col-sm-6 col-md-3" style="padding-bottom:20px;">
+                <a href="~/Catalogo/ListaArticulos/@c.Id">
+                    <div class="thumbnail">
+                        <img src=@("/Imagenes/Categorias/"+ c.Img) alt="Imagen de Prueba" style="width:100%; height:100%;">
+
+                        <div class="caption">
+                            <center>@c.Nombre</center>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
 </div>
 

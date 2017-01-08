@@ -16,28 +16,60 @@ namespace ProyectoWeb.Controllers
         //GET: Categoria/ListaCategorias
         public ActionResult ListaCategorias()
         {
-            try
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
-                return View(categoriaBL.obtenerTodos());
+                try
+                {
+                    return View(categoriaBL.obtenerTodos());
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
-            }
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }           
         }
 
         //GET: Categoria/Crear
         public ActionResult Crear()
         {
-            try
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
-                return View(new CrearViewModel());
+                try
+                {
+                    return View(new CrearViewModel());
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
         //POST: Categoria/Crear
@@ -68,23 +100,39 @@ namespace ProyectoWeb.Controllers
         //GET: Categoria/Editar
         public ActionResult Editar(int id = 0)
         {
-            try
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
-                if (id != 0)
+                try
                 {
-                    EditarViewModel editVM = new EditarViewModel();
-                    editVM.categoria = categoriaBL.obtener(id);
-                    editVM.completarEditarVM();
-                    return View(editVM);
+                    if (id != 0)
+                    {
+                        EditarViewModel editVM = new EditarViewModel();
+                        editVM.categoria = categoriaBL.obtener(id);
+                        editVM.completarEditarVM();
+                        return View(editVM);
+                    }
+                    else {
+                        return RedirectToAction("Crear", "Categoria");
+                    }
                 }
-                else {
-                    return RedirectToAction("Crear", "Categoria");
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
 
@@ -124,25 +172,41 @@ namespace ProyectoWeb.Controllers
 
         public ActionResult Eliminar(int id)
         {
-            try
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
-                bool r = categoriaBL.eliminar(id);
-                if (r)
+                try
                 {
-                    return RedirectToAction("ListaCategorias");
+                    bool r = categoriaBL.eliminar(id);
+                    if (r)
+                    {
+                        return RedirectToAction("ListaCategorias");
+                    }
+                    else
+                    {
+                        // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
+                        ViewBag.Mensaje = "Ocurrio un error inesperado";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }                
                 }
-                else
+                catch (ProyectoException ex)
                 {
-                    // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
-                    ViewBag.Mensaje = "Ocurrio un error inesperado";
+                    ViewBag.Mensaje = ex.Message;
                     return View("~/Views/Shared/_Mensajes.cshtml");
-                }                
+                }
             }
-            catch (ProyectoException ex)
+            else
             {
-                ViewBag.Mensaje = ex.Message;
-                return View("~/Views/Shared/_Mensajes.cshtml");
-            }                       
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
         }
 
 

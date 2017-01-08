@@ -559,11 +559,26 @@ namespace DAL
                     using (SqlCommand cmd = new SqlCommand(cadenaInsertPedido, con))
                     {
                         cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
-                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
+                        if(ped.FechaEntregaSolicitada == new DateTime())
+                        {
+                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", "17530101");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
+                        }
                         cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
                         cmd.Parameters.AddWithValue("@Iva", ped.Iva);
                         cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
-                        cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
+                        if (ped.Comentario.Equals(""))
+                        {
+                            cmd.Parameters.AddWithValue("@Comentario", DBNull.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
+                        }
+                        
                         cmd.Parameters.AddWithValue("@IdEstado", ped.Estado.Id);
                         con.Open();
                         trn = con.BeginTransaction();

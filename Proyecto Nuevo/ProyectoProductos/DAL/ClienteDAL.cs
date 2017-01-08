@@ -73,7 +73,8 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("SELECT EnConstruccion FROM CLIENTE WHERE Id = @Id", con);
                     cmd.Parameters.AddWithValue("@Id", id);
-                    enContruccion = Convert.ToInt32(cmd.ExecuteScalar());
+                    if(cmd.ExecuteScalar() != DBNull.Value) //Ver cómo controlar esto de otra forma... No está bueno ejecutar 2 veces
+                        enContruccion = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -135,6 +136,29 @@ namespace DAL
 
             return cli;
         }
+
+        public int obtenerPrimerCliente()
+        {
+            int idPrimerCliente = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT MIN(Id) FROM CLIENTE", con);
+
+                    idPrimerCliente = (int)cmd.ExecuteScalar();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return idPrimerCliente;
+        }
+
         public Cliente obtener(int id)
         {
             Cliente cli = null;

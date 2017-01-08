@@ -87,5 +87,10 @@ namespace BL
             if (cliente.TelefonoDeContacto.Length > 30)
                 throw new ProyectoException("Error: el teléfono de contacto debe ser menor a 20 caracteres.");
         }
+
+        public int obtenerPrimerCliente()
+        {
+            return clienteDAL.obtenerPrimerCliente();
+        }
     }
 }

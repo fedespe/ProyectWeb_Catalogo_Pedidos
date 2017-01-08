@@ -16,6 +16,7 @@ namespace ProyectoWeb.Controllers
         private ClienteBL clienteBL = new ClienteBL();
         private AdministradorBL administradorBL = new AdministradorBL();
         private ArticuloBL articuloBL = new ArticuloBL();
+        private ParametroBL parametroBL = new ParametroBL();
 
         //GET Pedido/Create
         public ActionResult Create(int idArticulo = 0, int cantidad = 0)
@@ -56,17 +57,17 @@ namespace ProyectoWeb.Controllers
 
             Pedido pedidoEnConstruccion = null;
 
+            ArticuloCantidad ac = new ArticuloCantidad
+            {
+                Articulo = a,
+                Cantidad = cantidad,
+                PrecioUnitario = a.Precio
+            };
+
             if (idEnConstruccion > 0)
             {
                 //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
                 pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
-
-                ArticuloCantidad ac = new ArticuloCantidad
-                {
-                    Articulo = a,
-                    Cantidad = cantidad,
-                    PrecioUnitario = a.Precio
-                };
 
                 //Si en el Pedido en construcción ya se encuentra un ArticuloCantidad con el artículo seleccionado, se avisa que se debe modificar el pedido en construcción (Carrito)
                 if (pedidoEnConstruccion.ProductosPedidos.Contains(ac))
@@ -81,10 +82,39 @@ namespace ProyectoWeb.Controllers
             }
             else
             {
+                Cliente c = null;
+                EstadoPedido ep = estadoPedidoBL.obtener("EN CONSTRUCCION");
+                double iva = parametroBL.obtenerIVA();
+
+                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                {
+                    int idPrimerCliente = clienteBL.obtenerPrimerCliente();
+                    if(idPrimerCliente == 0)
+                    {
+                        ViewBag.Mensaje = "Debe existir al menos un cliente registrado para poder construir un pedido.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+
+                    c = clienteBL.obtener(idPrimerCliente);
+                }
+                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                {
+                    c = clienteBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
+                }
+                
+
                 pedidoEnConstruccion = new Pedido
                 {
-
+                    FechaRealizado = DateTime.Today,
+                    FechaEntregaSolicitada = new DateTime(),
+                    ProductosPedidos = new List<ArticuloCantidad>(),
+                    Comentario = "",
+                    Estado = ep,
+                    Iva = iva,
+                    Cliente = c
                 };
+
+                pedidoEnConstruccion.ProductosPedidos.Add(ac);
 
                 pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
             }

@@ -19,29 +19,7 @@ namespace DAL
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
                 {
-                    con.Open();
-
-                    //SqlCommand cmd = new SqlCommand("SELECT * FROM Articulo", con);
-                    //using (SqlDataReader dr = cmd.ExecuteReader())
-                    //{
-                    //    while (dr.Read())
-                    //    {
-                    //        Articulo articulo = new Articulo
-                    //        {
-                    //            Id = Convert.ToInt32(dr["Id"]),
-                    //            Codigo = dr["Codigo"].ToString(),
-                    //            Nombre = dr["Nombre"].ToString(),
-                    //            Descripcion = dr["Descripcion"].ToString(),
-                    //            Precio = Convert.ToInt32(dr["Precio"]),
-                    //            Stock = Convert.ToInt32(dr["Stock"]),
-                    //            Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
-                    //            Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
-                    //        };
-                    //        articulos.Add(articulo);
-                    //    }                       
-                    //}   
-
-
+                    con.Open();                    
                     //SOLO HAGO LA CARGA DE UNA IMAGEN, NO ES NECESARIO TRAER TODAS LAS IMAGENES DE TODOS LOS ARTICULOS
                     SqlCommand cmd = new SqlCommand("select a.Id as IdArticulo, i.id as IdImagen,* from ARTICULO a, IMAGEN i where i.IdArticulo=a.Id ORDER BY a.Id", con);
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -76,6 +54,52 @@ namespace DAL
 
             return articulos;
         }
+
+        public List<Articulo> obtenerDestacados()
+        {
+            List<Articulo> articulos = new List<Articulo>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+                    //SOLO HAGO LA CARGA DE UNA IMAGEN, NO ES NECESARIO TRAER TODAS LAS IMAGENES DE TODOS LOS ARTICULOS
+                    SqlCommand cmd = new SqlCommand("select a.Id as IdArticulo, i.id as IdImagen,* from ARTICULO a, IMAGEN i where i.IdArticulo=a.Id and a.Destacado=1 ORDER BY a.Id", con);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        int ultimoId = 0;
+                        while (dr.Read())
+                        {
+                            if (ultimoId != Convert.ToInt32(dr["IdArticulo"]))
+                            {
+                                Articulo articulo = new Articulo
+                                {
+                                    Id = Convert.ToInt32(dr["IdArticulo"]),
+                                    Codigo = dr["Codigo"].ToString(),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    Precio = Convert.ToInt32(dr["Precio"]),
+                                    Stock = Convert.ToInt32(dr["Stock"]),
+                                    Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                    Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"]))
+                                };
+                                articulo.Imagenes.Add(new Imagen { Id = Convert.ToInt32(dr["IdImagen"]), Img = dr["Imagen"].ToString() });
+                                articulos.Add(articulo);
+                                ultimoId = Convert.ToInt32(dr["IdArticulo"]);
+                            }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES                          
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return articulos;
+        }
+
 
         public List<Articulo> obtenerConFiltros(List<Filtro> Filtros){
             //List<Articulo> articulos = new List<Articulo>();

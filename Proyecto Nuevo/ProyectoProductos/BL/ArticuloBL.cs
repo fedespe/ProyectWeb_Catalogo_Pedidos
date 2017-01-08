@@ -20,6 +20,10 @@ namespace BL
         {
             return articuloDAL.obtener(id);
         }
+        public List<Articulo> obtenerDestacados()
+        {
+            return articuloDAL.obtenerDestacados();
+        }
 
         public bool actualizar(Articulo articulo)
         {

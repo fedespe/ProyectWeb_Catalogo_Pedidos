@@ -15,6 +15,7 @@ namespace ProyectoWeb.ViewModel.CatalogoViewModel
 
         public List<Articulo> Articulos { get; set; }
         public int IdCategoria { get; set; }
+        public string NombreCat { get; set; }
         public List<Categoria> Categorias { get; set; }
 
         //************************************************************************
@@ -57,6 +58,11 @@ namespace ProyectoWeb.ViewModel.CatalogoViewModel
             FiltrosTotales = filtroBL.obtenerTodos();
             FiltrosAplicados = new List<Filtro>();
             Categorias = categoriaBL.obtenerTodos();
+        }
+        public void completar(int id, string nombre) {
+            IdCategoria = id;
+            Articulos = articuloBL.obtenerPorCategoria(id);
+            NombreCat = nombre;
         }
 
         public void cargarArticulosFiltrados()

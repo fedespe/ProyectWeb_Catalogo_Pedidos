@@ -21,6 +21,7 @@ CATEGORIA
 
 FILTRO
 HECHO *los filtros llevan un atributo indicando si es color o no para poder diferenciarlos
+*Falta filtro en rango de precios
 
 ARTICULO
 HECHO *ver si la transaccion esta andando bien 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BL;
+using ET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,11 @@ namespace ProyectoWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private ArticuloBL articuloBL = new ArticuloBL();
         public ActionResult Index()
         {
-            return View();
+            List<Articulo> articulosDestacados = articuloBL.obtenerDestacados();
+            return View(articulosDestacados);
         }
 
         public ActionResult About()

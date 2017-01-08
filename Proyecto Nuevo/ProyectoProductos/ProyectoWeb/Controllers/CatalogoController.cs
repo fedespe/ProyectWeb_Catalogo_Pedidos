@@ -15,16 +15,15 @@ namespace ProyectoWeb.Controllers
         private CategoriaBL categoriaBL = new CategoriaBL();
 
         //GET: Articulo/ListaArticulo
-        public ActionResult ListaArticulos(int Id=0)
+        public ActionResult ListaArticulos(int Id=0, string Nombre="")
         {
             //int idCat = 2;
             try
             {
-                if (Id != 0)
+                if (Id != 0 && Nombre!="")
                 {
-                    ListarArticuloViewModel listaVM = new ListarArticuloViewModel();// (idCat);
-                    listaVM.IdCategoria = Id;
-                    listaVM.Articulos=articuloBL.obtenerPorCategoria(Id);
+                    ListarArticuloViewModel listaVM = new ListarArticuloViewModel();
+                    listaVM.completar(Id, Nombre);              
                     return View(listaVM);
                 }
                 else {

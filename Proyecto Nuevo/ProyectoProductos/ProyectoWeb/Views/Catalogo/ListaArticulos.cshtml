@@ -20,7 +20,7 @@
                 <h3>Categorías</h3>
                 @foreach (var c in Model.Categorias)
                 {
-                    <a href="~/Catalogo/ListaArticulos/@c.Id">@c.Nombre</a><br />
+                    <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre">@c.Nombre</a><br />
                 }
             </div>
             <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
@@ -75,7 +75,7 @@
     }
     </div>
     <div class="col-md-10 pull-right">
-        <h2>Articulos de Nombre de la categoria seleccionada</h2>
+        <h2>@Model.NombreCat</h2>
         @foreach (var c in Model.Articulos)
         {
             if (@c.Disponible)

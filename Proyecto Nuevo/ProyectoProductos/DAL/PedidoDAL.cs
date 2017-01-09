@@ -524,7 +524,14 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
                         cmd.Parameters.AddWithValue("@Iva", ped.Iva);
                         cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
-                        cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
+                        if (ped.Comentario == null || ped.Comentario.Equals(""))
+                        {
+                            cmd.Parameters.AddWithValue("@Comentario", DBNull.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
+                        }
                         cmd.Parameters.AddWithValue("@IdEstado", ped.Estado.Id);
                         cmd.ExecuteNonQuery();
 

@@ -169,7 +169,7 @@ CREATE TABLE PEDIDO
 (
 	Id	INT  NOT NULL IDENTITY(1,1),
 	FechaRealizado DATETIME NOT NULL,
-	FechaEntregaSolicitada DATETIME,
+	FechaEntregaSolicitada DATETIME NOT NULL,
 	DescuentoCliente NUMERIC (5,2) NOT NULL,
 	Iva NUMERIC (5,2) NOT NULL,
 	IdCliente INT NOT NULL,

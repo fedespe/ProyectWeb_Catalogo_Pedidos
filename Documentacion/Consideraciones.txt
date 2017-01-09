@@ -5,9 +5,13 @@ BRUNO
 *Si edito un Artículo y elimino la primer imagen, las demás se renombran? Yo siempre me quedo con la IMG1 cuando se necesita una sola. Si esto no se está haciendo, ver si cambio la forma en la que los tomo, o si lo hacemos así.
 *Al editar un artículo (su precio), hay que actualizarle el valor de ese producto a algunos pedidos... Ver con el cliente a cuales... Va a ser de acuerdo al estado, seguro que CONFIRMADO y CANCELADO no se van a tocar, ver los demás.
 *El cliente no debe poder modificar alguno de sus datos (Ver cuales).
-
-PEDIDO
-Subo lo que tengo hasta ahora, he perdido flojo 5 horas (sin exagerar) con le método para mostrar los pedidos sin confirmar... Los muestro bien, pero cada vez que cambio de pedido, no me quedo con la primer línea de artículos... Se dónde está el error, pero no se me ocurre como solucionarlo... Ya cambié el método de mil formas... Seguro es fácil y me quemé la cabeza ya. Ahora sigo con otra cosa, pero lo subo antes para no perder lo hecho.
+*En el HOME, no se están viendo todos los recuadros del mismo tamaño (Visto con Art 10 y Art 11).
+*En el HOME, cuando el usuario no está logueado, no mostrar el botón de AGREGAR el producto al carrito.
+*Ver si no había que ocultar el precio en caso de que el Usuario no esté logueado.
+*Habilitar / Deshabilitar Cliente
+*DDL Clientes con Autocomplete
+*Ver cómo era el tema del Stock, creo que ibamos a mostrar solo texto, y no la cantidad real que queda...
+*Agregar un bool al EditarViewModel de Pedido, para que cuando está EN CONSTRUCCIÓN, se peuda realizar el Pedido o solo editarlo sin confirmarlo
 
 CATEGORIA
 *Agregar a los requerimientos que si no tiene imagen no es valida la categoria (ver que si no selecciona el programa le asigna una por defecto)

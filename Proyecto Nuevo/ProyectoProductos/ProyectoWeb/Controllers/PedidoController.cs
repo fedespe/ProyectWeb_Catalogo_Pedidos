@@ -406,9 +406,16 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
 
-                    if (Session["TipoUsuario"].ToString().Equals("Administrador") && !editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                     {
-                        editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
+                        if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        {
+                            editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
+                        }
+                        else
+                        {
+                            editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
+                        }
                     }
 
                     if (Session["TipoUsuario"].ToString().Equals("Cliente"))
@@ -421,7 +428,11 @@ namespace ProyectoWeb.Controllers
                             return View("~/Views/Shared/_Mensajes.cshtml");
                         }
 
-                        if(!editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        if(editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        {
+                            editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
+                        }
+                        else
                         {
                             editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
                         }

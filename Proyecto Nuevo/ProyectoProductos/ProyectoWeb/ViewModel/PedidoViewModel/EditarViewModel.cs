@@ -52,6 +52,8 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         [Display(Name = "Estado")]
         public string EstadoPedido { get; set; }
 
+        public bool RealizarPedido { get; set; }
+
         public EditarViewModel()
         {
             this.Clientes = clienteBL.obtenerTodos().Select(

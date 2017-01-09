@@ -90,6 +90,35 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        public ActionResult Buscar(string codigo = "")
+        {
+            try
+            {
+                if (codigo != "")
+                {
+                    Articulo articulo = articuloBL.obtenerPorCodigo(codigo);
+                    if (articulo != null)
+                    {
+                        return View("DetalleArticulo", articulo);
+                    }
+                    else {
+                        ViewBag.Mensaje = "No existe ningun articulo con dicho código.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                    
+                }
+                else {
+                    ViewBag.Mensaje = "No existe ningun articulo con dicho código.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+
+            }
+            catch (ProyectoException ex)
+            {
+                ViewBag.Mensaje = ex.Message;
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
 
     }
 }

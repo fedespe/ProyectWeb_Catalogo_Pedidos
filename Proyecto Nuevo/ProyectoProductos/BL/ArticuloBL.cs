@@ -20,6 +20,9 @@ namespace BL
         {
             return articuloDAL.obtener(id);
         }
+        public Articulo obtenerPorCodigo(string codigo) {
+            return articuloDAL.obtenerPorCodigo(codigo);
+        }
         public List<Articulo> obtenerDestacados()
         {
             return articuloDAL.obtenerDestacados();

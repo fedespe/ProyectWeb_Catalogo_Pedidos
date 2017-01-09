@@ -102,27 +102,6 @@ namespace DAL
 
 
         public List<Articulo> obtenerConFiltros(List<Filtro> Filtros){
-            //List<Articulo> articulos = new List<Articulo>();
-            //string consulta = "";
-            //if (Filtros != null && Filtros.Count > 0)
-            //{
-            //    int contador = 1;
-            //    foreach (Filtro f in Filtros) {
-            //        if (contador != Filtros.Count)
-            //        {
-            //            consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
-            //                        and f.Id = "+f.Id+" INTERSECT ";
-            //        }
-            //        else {
-            //            consulta += @"SELECT DISTINCT a.* FROM ARTICULO a, FILTRO_ARTICULO fa, FILTRO f WHERE a.Id=fa.IdArticulo and f.Id=fa.IdFiltro 
-            //                        and f.Id = " + f.Id;
-            //        }
-            //        contador++;
-            //    }
-            //}
-            //else {
-            //    consulta = "SELECT * FROM Articulo";
-            //}
             List<Articulo> articulos = new List<Articulo>();
             string consulta = "";
             if (Filtros != null && Filtros.Count > 0)
@@ -495,6 +474,102 @@ namespace DAL
                         }
                     }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return articulo;
+        }
+
+        public Articulo obtenerPorCodigo(string codigo)
+        {
+            Articulo articulo = null;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Articulo WHERE Codigo = @codigo", con);
+                    cmd.Parameters.AddWithValue("@codigo", codigo);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        dr.Read();
+                        if (dr.HasRows)
+                        {
+                            articulo = new Articulo
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                Codigo = dr["Codigo"].ToString(),
+                                Nombre = dr["Nombre"].ToString(),
+                                Descripcion = dr["Descripcion"].ToString(),
+                                Precio = Convert.ToInt32(dr["Precio"]),
+                                Stock = Convert.ToInt32(dr["Stock"]),
+                                Disponible = Convert.ToBoolean(Convert.ToInt32(dr["Disponible"])),
+                                Destacado = Convert.ToBoolean(Convert.ToInt32(dr["Destacado"])),
+                                Imagenes = new List<Imagen>(),
+                                Categorias = new List<Categoria>(),
+                                Filtros = new List<Filtro>()
+                            };
+                        }
+                    }
+                    if (articulo != null) {
+                        //AGREGO IMAGENES
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"SELECT * FROM Imagen WHERE IdArticulo =@id";
+                        cmd.Parameters.AddWithValue("@id", articulo.Id);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Imagen img = new Imagen
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Img = dr["Imagen"].ToString()
+                                };
+                                articulo.Imagenes.Add(img);
+                            }
+                        }
+                        //AGREGO FILTROS
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.IdFiltro AND IdArticulo =@id";
+                        cmd.Parameters.AddWithValue("@id", articulo.Id);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Filtro filtro = new Filtro
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"]))
+                                };
+                                articulo.Filtros.Add(filtro);
+                            }
+                        }
+                        //AGREGO CATEGORIAS
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"SELECT c.* FROM ARTICULO_CATEGORIA ac, CATEGORIA c WHERE c.Id=ac.IdCategoria AND IdArticulo =@id";
+                        cmd.Parameters.AddWithValue("@id", articulo.Id);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Categoria categoria = new Categoria
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Img = dr["Imagen"].ToString()
+                                };
+                                articulo.Categorias.Add(categoria);
+                            }
+                        }
+                    }                  
                 }
             }
             catch (Exception ex)

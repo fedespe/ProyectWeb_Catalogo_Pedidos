@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        @*<div class="container">*@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -25,15 +25,40 @@
                     <li>@Html.ActionLink("Destacados", "Index", "Home")</li>
                     <li>@Html.ActionLink("Catálogo", "ListaCategorias", "Catalogo")</li>
                     <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contácto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Contácto", "Contact", "Home")</li>                    
                 </ul>
                 @Html.Partial("_LoginPartial")
                 @Html.Partial("_SeccionUsuario")
-                
-            </div>
-        </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @using (Html.BeginForm("Buscar", "Catalogo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+
+                            <div class="pull-right ">
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Código" name="codigo" id="codigo">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </li>
+                </ul>
+
+            </div>                                          
+        @*</div>*@
     </div>
-    <div class="container body-content">
+       
+    <div id="slider">
+        @RenderSection("Slider",required: false)
+    </div>  
+    <div class="container body-content">        
         @RenderBody()
         <hr />
         <footer>

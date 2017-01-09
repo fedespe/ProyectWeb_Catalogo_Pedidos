@@ -38,6 +38,7 @@ VALIDACIONES
 HECHO *Faltan controles de restriccion, solo administradores
 *Falta la baja de articulo
 *FALTA DATTANOTATION
+*sacar lo que sobra de las descripciones, y ocultar si no esta logueado
 
 CLIENTE
 *ver que la tabla con el listado de todos los clientes tiene muchos datos (capas que sacar datos y crear una nueva vista que sea detalle para ver todos los datos del cliente)

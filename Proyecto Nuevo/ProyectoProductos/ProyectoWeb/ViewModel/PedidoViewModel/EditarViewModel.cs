@@ -73,6 +73,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             Comentario = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
             Descuento = Pedido.Cliente.Descuento;
+            RealizarPedido = false;
             IdCliente = Pedido.Cliente.Id; //Ver que aparte de cargar el IdCliente, tengo que ajustar el DDL para que quede seleccionado el que corresponde
             IdPedido = Pedido.Id;
         }

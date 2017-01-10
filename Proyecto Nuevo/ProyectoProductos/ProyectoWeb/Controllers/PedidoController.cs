@@ -410,7 +410,10 @@ namespace ProyectoWeb.Controllers
                     {
                         if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
                         {
-                            editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
+                            if (editVM.RealizarPedido)
+                            {
+                                editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
+                            }
                         }
                         else
                         {
@@ -428,13 +431,19 @@ namespace ProyectoWeb.Controllers
                             return View("~/Views/Shared/_Mensajes.cshtml");
                         }
 
-                        if(editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        if (!editVM.Pedido.Estado.Nombre.Equals("NUEVO"))
                         {
-                            editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
-                        }
-                        else
-                        {
-                            editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
+                            if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                            {
+                                if (editVM.RealizarPedido)
+                                {
+                                    editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
+                                }
+                            }
+                            else
+                            {
+                                editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
+                            }
                         }
 
                         editVM.Pedido.FechaRealizado = p.FechaRealizado;

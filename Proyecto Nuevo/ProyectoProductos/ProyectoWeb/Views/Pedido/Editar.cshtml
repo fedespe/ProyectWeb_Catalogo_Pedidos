@@ -16,7 +16,6 @@
     @Html.HiddenFor(x => x.IdPedido)
     @Html.HiddenFor(x => x.CadenaArticulos)
     @Html.HiddenFor(x => x.IdCliente)
-    @Html.HiddenFor(x => x.RealizarPedido)
 
     if (Model.Pedido.Cliente.Descuento > 0)
     {
@@ -120,7 +119,11 @@
         @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
     </div>
     
+    <button type="submit" class="btn btn-default" onclick="GuardarCambios();">Guardar Cambios</button>
 
-    <button type="submit" class="btn btn-default" onclick="GenerarStringArticulos();">Guardar</button>
-    <button type="submit" class="btn btn-default" onclick="GenerarStringArticulos();">Realizar Pedido</button>
+    if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+    {
+        @Html.HiddenFor(x => x.RealizarPedido, new { @id = "enConstruccion" })
+        <button type="submit" class="btn btn-default" onclick="RealizarPedido();">Realizar Pedido</button>
+    }
 }

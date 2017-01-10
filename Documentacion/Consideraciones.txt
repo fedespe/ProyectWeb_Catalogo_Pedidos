@@ -11,7 +11,8 @@ BRUNO
 *Habilitar / Deshabilitar Cliente
 *DDL Clientes con Autocomplete
 *Ver cómo era el tema del Stock, creo que ibamos a mostrar solo texto, y no la cantidad real que queda...
-*Agregar un bool al EditarViewModel de Pedido, para que cuando está EN CONSTRUCCIÓN, se peuda realizar el Pedido o solo editarlo sin confirmarlo
+*En el Edit de Pedido, el botón de Guardar Cambios anda y reconoce la función Javascript, pero el de RealizarPedido no está funcionando... Ver qué puede estar pasando...
+*Si el usuario logueado crea un pedido, no aparece automáticamente "Mi Carrito" - Ver cómo recargar el Layout o algo de eso...
 
 CATEGORIA
 *Agregar a los requerimientos que si no tiene imagen no es valida la categoria (ver que si no selecciona el programa le asigna una por defecto)

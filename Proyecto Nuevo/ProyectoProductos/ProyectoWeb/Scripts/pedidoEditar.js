@@ -31,6 +31,8 @@
     }
 
     celdaPrecioTotal.innerHTML = "$" + (montoTotal - montoDescuentoCliente);
+
+    document.getElementById("enConstruccion").checked = true;
 });
 
 function Eliminar (i) {
@@ -142,4 +144,15 @@ function GenerarStringArticulos() {
     });
 
     inputString.setAttribute("value", cadenaArticulos);
+}
+
+function GuardarCambios() {
+    GenerarStringArticulos();
+}
+
+function RealizarPedido() {
+    alert("Entré!!!");
+    //document.getElementById("enConstruccion").setAttribute.checked = true;
+    //document.getElementById("enConstruccion").setAttribute("checked",true);
+    GenerarStringArticulos();
 }

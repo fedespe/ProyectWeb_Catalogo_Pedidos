@@ -35,7 +35,7 @@ namespace BL
             {
                 AdministradorBL administradorBL = new AdministradorBL();
                 Administrador a = administradorBL.obtener(idUsuario);
-                //administradorBL.registrarPedidoEnConstruccion(a, idPedidoGenerado);
+                administradorBL.registrarPedidoEnConstruccion(a, idPedidoGenerado);
             }
             else if (tipoUsuario.Equals("Cliente"))
             {

@@ -60,7 +60,6 @@ namespace DAL
             return clientes;
         }
 
-
         public int obtenerPedidoEnContruccion(int id)
         {
             int enContruccion = 0;
@@ -276,7 +275,6 @@ namespace DAL
                 throw new ProyectoException("Error: " + ex.Message);
             }
         }
-
 
         public void registrar(Cliente cli)
         {

@@ -61,7 +61,8 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("SELECT EnConstruccion FROM ADMINISTRADOR WHERE Id = @Id", con);
                     cmd.Parameters.AddWithValue("@Id", id);
-                    enContruccion = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (cmd.ExecuteScalar() != DBNull.Value) //Ver cómo controlar esto de otra forma... No está bueno ejecutar 2 veces
+                        enContruccion = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception ex)
@@ -160,8 +161,16 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("UPDATE Administrador SET Usuario = @usu WHERE id = @id", con);
+                    SqlCommand cmd = new SqlCommand("UPDATE Administrador SET Usuario = @usu, EnConstruccion = @enConstruccion WHERE id = @id", con);
 
+                    if (admin.IdPedidoEnConstruccion > 0)
+                    {
+                        cmd.Parameters.AddWithValue("@enConstruccion", admin.IdPedidoEnConstruccion);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@enConstruccion", DBNull.Value);
+                    }
                     cmd.Parameters.AddWithValue("@usu", admin.NombreUsuario);
                     cmd.Parameters.AddWithValue("@id", admin.Id);
 

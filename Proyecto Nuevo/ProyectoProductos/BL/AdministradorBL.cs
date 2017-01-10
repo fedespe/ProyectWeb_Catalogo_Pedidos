@@ -48,5 +48,11 @@ namespace BL
         {
             return administradorDAL.obtenerPedidoEnContruccion(id);
         }
+
+        internal void registrarPedidoEnConstruccion(Administrador a, int idPedidoGenerado)
+        {
+            a.IdPedidoEnConstruccion = idPedidoGenerado;
+            administradorDAL.actualizar(a);
+        }
     }
 }

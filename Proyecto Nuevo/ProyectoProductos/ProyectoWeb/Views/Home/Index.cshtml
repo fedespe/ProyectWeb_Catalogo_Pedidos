@@ -64,16 +64,19 @@
 
 <div class="row">   
     <h2 class="text-center">Artículos Destacados</h2>
+    <br>
     <hr>
     @foreach (var c in Model)
     {
         <div class="col-md-3" style="padding-bottom:20px;">
-            <div class="thumbnail" style="border-radius:0px; border-color:whitesmoke">
+            <div class="thumbnail sombra">
                 <a href="~/Catalogo/DetalleArticulo/@c.Id">
-                    <img src=@("/Imagenes/Articulos/"+ c.Imagenes.ElementAt(0).Img) alt="Imagen de Prueba" style="width:100%; height:100%;">
+                    <div align="center" style="width:100%; height:100%;">
+                        <img src=@("/Imagenes/Articulos/"+ c.Imagenes.ElementAt(0).Img) alt="Imagen de Prueba" style="width:70%; height:70%;">
+                    </div>
                 </a>     
                 <div class="caption">
-                    <h4><em>Codigo:</em> @c.Codigo</h4>
+                    <h4><em>Código:</em> @c.Codigo</h4>
                     <h3>@c.Nombre</h3>
                     @if (c.Stock == 0)
                     {
@@ -108,5 +111,5 @@
                 </div>
             </div>
         </div>
-    }
+    }    
 </div>

@@ -3,41 +3,55 @@
     ViewBag.Title = "Historial de Pedidos";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-2 pull-left">
+        <div>
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+        </div>
+    </div>
+    <div class="col-md-10 pull-right">
+        <h2>@ViewBag.Title</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Cliente</th>
-            <th>F. Pedido</th>
-            <th>Estado</th>
-            <th>Monto Total</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var p in Model)
-        {
-            if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@p.Cliente.NombreFantasia</td>
-                    <td>@p.FechaRealizado.ToString("d")</td>
-                    <td>@p.Estado.Nombre</td>
-                    <td>@p.PrecioTotal</td>
-                    <td>
-                        @if (p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
-                        {
-                            <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
-                        }
-                        else
-                        {
-                            <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
-                            <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
-                        }
-                    </td>
+                    <th>Cliente</th>
+                    <th>F. Pedido</th>
+                    <th>Estado</th>
+                    <th>Monto Total</th>
+                    <th>Acciones</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+            </thead>
+
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                    {
+                        <tr>
+                            <td>@p.Cliente.NombreFantasia</td>
+                            <td>@p.FechaRealizado.ToString("d")</td>
+                            <td>@p.Estado.Nombre</td>
+                            <td>@p.PrecioTotal</td>
+                            <td>
+                                @if (p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                                {
+                                    <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                                }
+                                else
+                                {
+                                    <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a><span> |</span>
+                                    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

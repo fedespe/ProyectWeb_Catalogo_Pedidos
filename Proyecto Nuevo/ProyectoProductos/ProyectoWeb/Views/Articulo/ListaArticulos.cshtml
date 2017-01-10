@@ -17,14 +17,34 @@
             @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
-        <h3>Filtros</h3>
-        @using (Html.BeginForm("ListaArticulos", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            //Seguridad
-            @Html.AntiForgeryToken()        
+        <br>
+        <div>
+            @using (Html.BeginForm("Buscar", "Catalogo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div>
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Código" name="codigo" id="codigo">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
+        <div>
+            <h3>Filtros</h3>
+            @using (Html.BeginForm("ListaArticulos", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                //Seguridad
+                @Html.AntiForgeryToken()
                 <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
-                <div>    
-                    <h4>Material</h4>            
+                <div>
+                    <h4>Material</h4>
                     @foreach (var f in Model.FiltrosTotales)
                     {
                         if (!f.Color)
@@ -51,8 +71,8 @@
                         if (f.Color)
                         {
                             <label class="checkbox-inline">
-                            <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
-                            @f.Nombre
+                                <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                                @f.Nombre
                             </label>
                             <br>
                             if (Model.FiltrosAplicados.Contains(f))
@@ -63,10 +83,11 @@
                             }
                         }
                     }
-                </div>        
-            <br>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
-        }
+                </div>
+                <br>
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
+            }
+        </div>        
     </div>
     @*//************************************************************************
     //FIN MANEJO DE FILTROS

@@ -13,6 +13,8 @@ BRUNO
 *Ver cómo era el tema del Stock, creo que ibamos a mostrar solo texto, y no la cantidad real que queda...
 *En el Edit de Pedido, el botón de Guardar Cambios anda y reconoce la función Javascript, pero el de RealizarPedido no está funcionando... Ver qué puede estar pasando...
 *Si el usuario logueado crea un pedido, no aparece automáticamente "Mi Carrito" - Ver cómo recargar el Layout o algo de eso...
+*Poder cambiar el cliente del pedido siendo Admin
+*En el Create de Pedido, puedo utilizar el Id para mandar el IdArticulo
 
 CATEGORIA
 *Agregar a los requerimientos que si no tiene imagen no es valida la categoria (ver que si no selecciona el programa le asigna una por defecto)
@@ -49,5 +51,8 @@ CLIENTE
 *ver que la tabla con el listado de todos los clientes tiene muchos datos (capas que sacar datos y crear una nueva vista que sea detalle para ver todos los datos del cliente)
 *No tiene confirmacion de password
 *Ver si el RUT es requerido, sino como hacer para ponerlo en null y no ¨¨
+
+Articulo
+*precio iva incluido
 
 

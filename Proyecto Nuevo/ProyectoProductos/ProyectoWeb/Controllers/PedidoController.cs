@@ -19,7 +19,7 @@ namespace ProyectoWeb.Controllers
         private ParametroBL parametroBL = new ParametroBL();
 
         //GET Pedido/Create
-        public ActionResult Create(int idArticulo = 0, int cantidad = 0)
+        public ActionResult Create(int id = 0, int cantidad = 0)
         {
             //Si no está logueado, le doy aviso de que no tiene permisos
             if(Session["TipoUsuario"] == null)
@@ -29,14 +29,14 @@ namespace ProyectoWeb.Controllers
             }
 
             //Si no hace llegar un artículo o una cantidad, le doy aviso de que debe indicarlos
-            if (idArticulo <= 0 || cantidad <= 0)
+            if (id <= 0 || cantidad <= 0)
             {
                 ViewBag.Mensaje = "Debe indicar el artículo y una cantidad mayor a 0.";
                 return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
             }
 
             //Si no existe un artículo con el ID que llega, doy aviso, si existe, ya me queda guardado
-            Articulo a = articuloBL.obtener(idArticulo);
+            Articulo a = articuloBL.obtener(id);
             if (a == null)
             {
                 ViewBag.Mensaje = "No se encontró un Artículo con el identificador especificado.";

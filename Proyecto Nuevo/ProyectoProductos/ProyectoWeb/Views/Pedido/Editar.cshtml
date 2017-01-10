@@ -6,124 +6,126 @@
 @*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
 <script src="~/Scripts/pedidoEditar.js"></script>
 
-<h2>@ViewBag.Title</h2>
+<div class="row">
+    <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    //Seguridad
-    @Html.AntiForgeryToken()
-
-    @Html.HiddenFor(x => x.IdPedido)
-    @Html.HiddenFor(x => x.CadenaArticulos)
-    @Html.HiddenFor(x => x.IdCliente)
-
-    if (Model.Pedido.Cliente.Descuento > 0)
+    @using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        //Seguridad
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(x => x.IdPedido)
+        @Html.HiddenFor(x => x.CadenaArticulos)
+        @Html.HiddenFor(x => x.IdCliente)
+
+
         @Html.HiddenFor(x => x.Descuento, new { @id = "descuentoCliente" });
-    }
+   
 
-    //Lista de errores
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        //Lista de errores
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-    {
+        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        {
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.IdCliente, Model.Clientes, new { @class = "selectpicker form-control", @id = "ddlNombreFantasiaCliente" })
+                @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
+                @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
+            </div>
+        }
+        else
+        {
+            @Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
+            @*@Html.ValidationMessageFor(x => x.Pedido.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+        }
+
         <div class="form-group">
-            @Html.DropDownListFor(model => model.IdCliente, Model.Clientes, new { @class = "selectpicker form-control", @id = "ddlNombreFantasiaCliente" })
-            @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+            @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
+            @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
-            @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
-        </div>
-    }
-    else
-    {
-        @Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Pedido.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
-    }
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
-        @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
-    </div>
-
-    <table id="tablaPedidos" class="table table-striped">
-        <thead>
-            <tr>
-                <th>IdArticulo</th>
-                <th>Imagen</th>
-                <th>Codigo Articulo</th>
-                <th>Nombre Articulo</th>
-                <th>Cantidad</th>
-                <th>$ Unitario (Iva inc.)</th>
-                <th>$ Total Linea (Iva inc.)</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var pp in Model.Pedido.ProductosPedidos)
-            {
-                double varPrecioTotal = pp.Cantidad * pp.PrecioUnitario;
-
+        
+        <table id="tablaPedidos" class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@pp.Articulo.Id</td>
-                    <td>
-                        <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
-                    </td>
-                    <td><a title="Confirmar" href="~/Ariculo/Detalle/@pp.Articulo.Id">@pp.Articulo.Codigo</a></td>
-                    <td>@pp.Articulo.Nombre</td>
-                    <td><input type="number" value="@pp.Cantidad" style="text-align:center" onchange="actualizarTotales();" /></td>
-                    <td>@pp.PrecioUnitario</td>
-                    <td>@varPrecioTotal</td>
-                    <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
+                    <th hidden>IdArticulo</th>
+                    <th>Imagen</th>
+                    <th>Codigo Articulo</th>
+                    <th>Nombre Articulo</th>
+                    <th>Cantidad</th>
+                    <th>$ Unitario (Iva inc.)</th>
+                    <th>$ Total Linea (Iva inc.)</th>
                 </tr>
-            }
-            @if (Model.Pedido.DescuentoCliente > 0)
-            {
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td id="celdaTextoPrecioDescuento"></td>
-                <td id="celdaPrecioDescuento"></td>
-                <td></td>
-            </tr>
-            }
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Monto Total (Iva inc.): </td>
-                <td id="celdaPrecioTotal"></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+            </thead>
 
-    <div class="form-group">
-        @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
-        @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
-        @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
-    </div>
+            <tbody>
+                @foreach (var pp in Model.Pedido.ProductosPedidos)
+                {
+                    double varPrecioTotal = pp.Cantidad * pp.PrecioUnitario;
 
-    <div class="form-group">
-        @Html.LabelFor(x => x.EstadoPedido, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.EstadoPedido, new { @id = "estadoPedido", @class = "form-control", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
-    </div>
-    
-    <button type="submit" class="btn btn-default" onclick="GuardarCambios();">Guardar Cambios</button>
+                    <tr>
+                        <td hidden>@pp.Articulo.Id</td>
+                        <td>
+                            <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
+                        </td>
+                        <td><a title="Confirmar" href="~/Ariculo/Detalle/@pp.Articulo.Id">@pp.Articulo.Codigo</a></td>
+                        <td>@pp.Articulo.Nombre</td>
+                        <td><input type="number" value="@pp.Cantidad" style="text-align:center" onchange="actualizarTotales();" /></td>
+                        <td>@pp.PrecioUnitario</td>
+                        <td>@varPrecioTotal</td>
+                        <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
+                    </tr>
+                }
+                @if (Model.Pedido.DescuentoCliente > 0)
+                {
+                <tr>
+                    <td hidden></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="celdaTextoPrecioDescuento"></td>
+                    <td id="celdaPrecioDescuento"></td>
+                    <td></td>
+                </tr>
+                }
+                <tr>
+                    <td hidden></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Monto Total (Iva inc.): </td>
+                    <td id="celdaPrecioTotal"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
 
-    if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
-    {
-        @Html.HiddenFor(x => x.RealizarPedido, new { @id = "enConstruccion" })
-        <button type="submit" class="btn btn-default" onclick="RealizarPedido();">Realizar Pedido</button>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
+            @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.EstadoPedido, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.EstadoPedido, new { @id = "estadoPedido", @class = "form-control", @readonly = "readonly" })
+            @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
+        </div>
+
+        if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+        {
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(x => x.RealizarPedido)
+                Realizar Pedido
+            </label>
+        }
+        <button type="submit" class="btn btn-default" onclick="GuardarCambios();">Guardar Cambios</button>
     }
-}
+</div>

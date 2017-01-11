@@ -12,6 +12,26 @@
                 <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre">@c.Nombre</a><br />
             }
         </div>
+        <br>
+        <div>
+            @using (Html.BeginForm("Buscar", "Catalogo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div>
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Código" name="codigo" id="codigo">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
     <div class="col-md-10 pull-right">
         <h2 style="text-align:center">Categorías</h2>

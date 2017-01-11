@@ -261,12 +261,12 @@ INSERT INTO CATEGORIA VALUES
 ('Otros','CAT5.jpg');
 
 INSERT INTO ARTICULO VALUES
-('COD 1','Artículo 1','Descripción Artículo 1',10,0,0,0),
-('COD 2','Artículo 2','Descripción Artículo 2',20,10,1,0),
-('COD 3','Artículo 3','Descripción Artículo 3',30,20,1,0),
-('COD 4','Artículo 4','Descripción Artículo 4',40,30,1,0),
-('COD 5','Artículo 5','Descripción Artículo 5',50,40,1,0),
-('COD 6','Artículo 6','Descripción Artículo 6',60,50,1,0),
+('COD 1','Artículo 1','Descripción Artículo 1',10,0,0,1),
+('COD 2','Artículo 2','Descripción Artículo 2',20,10,1,1),
+('COD 3','Artículo 3','Descripción Artículo 3',30,20,1,1),
+('COD 4','Artículo 4','Descripción Artículo 4',40,30,1,1),
+('COD 5','Artículo 5','Descripción Artículo 5',50,40,1,1),
+('COD 6','Artículo 6','Descripción Artículo 6',60,50,1,1),
 ('COD 7','Artículo 7','Descripción Artículo 7',70,60,1,0),
 ('COD 8','Artículo 8','Descripción Artículo 8',80,70,1,0),
 ('COD 9','Artículo 9','Descripción Artículo 9',90,80,1,0),

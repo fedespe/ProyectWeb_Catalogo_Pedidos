@@ -5,6 +5,7 @@
 
 <div class="row">
     <h2>Detalles del Pedido</h2>
+    <br>
 
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.Iva)
@@ -15,7 +16,7 @@
         @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
     </div>
 
-    <div class="form-group pull-left">
+    <div class="form-group">
         @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })
         @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
@@ -51,16 +52,15 @@
         @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-hover" style="text-align:center">
         <thead>
             <tr>
-                <th>Imagen</th>
-                <th>Codigo Articulo</th>
-                <th>Nombre Articulo</th>
-                <th>Cantidad</th>
-                <th>$ Unitario</th>
-                <th>$ Total Linea</th>
-                <th>Acciones</th>
+                <th style="text-align:center">Imagen</th>
+                <th style="text-align:center">Codigo Articulo</th>
+                <th style="text-align:center">Nombre Articulo</th>
+                <th style="text-align:center">Cantidad</th>
+                <th style="text-align:center">$ Unitario</th>
+                <th style="text-align:center">$ Total Linea</th>
             </tr>
         </thead>
 
@@ -70,14 +70,14 @@
                 double precioTotal = pp.Cantidad * pp.PrecioUnitario;
 
                 <tr>
-                    <td> 
+                    <td style="text-align:center"> 
                         <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
                     </td>
-                    <td>@pp.Articulo.Codigo</td>
-                    <td>@pp.Articulo.Nombre</td>
-                    <td>@pp.Cantidad</td>
-                    <td>@pp.PrecioUnitario</td>
-                    <td>@precioTotal</td>
+                    <td style="text-align:center">@pp.Articulo.Codigo</td>
+                    <td style="text-align:center">@pp.Articulo.Nombre</td>
+                    <td style="text-align:center">@pp.Cantidad</td>
+                    <td style="text-align:center">@pp.PrecioUnitario</td>
+                    <td style="text-align:center">@precioTotal</td>
                 </tr>
             }
         </tbody>

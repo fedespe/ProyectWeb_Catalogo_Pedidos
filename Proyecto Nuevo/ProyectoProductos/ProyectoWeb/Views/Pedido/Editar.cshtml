@@ -123,10 +123,11 @@
 
         if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
         {
-            <label class="checkbox-inline">
+            <label class="checkbox-inline" style="font-size:large;padding:5px; padding-left:30px;padding-right:20px; border-radius:5px;border: thin solid #bbbbbb;">
                 @Html.CheckBoxFor(x => x.RealizarPedido)
                 Realizar Pedido
             </label>
+            <br>
         }
         <br>
         <button type="submit" class="btn btn-lg btn-primary" onclick="GuardarCambios();">

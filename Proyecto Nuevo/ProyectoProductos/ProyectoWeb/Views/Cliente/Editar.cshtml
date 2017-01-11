@@ -6,16 +6,19 @@
 <script src="~/Scripts/clienteCrearEditar.js"></script>
 
 <div class="row">
-    <div class="col-md-2 pull-left">
-        <div>
-            <h3>Gestión</h3>
-            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
-            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
-            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
-            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+    {
+        <div class="col-md-2 pull-left">
+            <div>
+                <h3>Gestión</h3>
+                @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+                @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+                @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+                @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+            </div>
         </div>
-    </div>
-    <div class="col-md-10 pull-right">
+    }
+    <div class="col-md-10">
         <h2>@(Model.cliente.NombreUsuario)</h2>
         <br>
         @using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -111,7 +114,12 @@
                 @Html.TextBoxFor(x => x.EmailContacto, new { @id = "emailContacto", @class = "form-control", @placeholder = "Email de Contacto" })
                 @Html.ValidationMessageFor(x => x.EmailContacto, "", new { @class = "text-danger" })
             </div>
-
+            <div>
+                <a title="CambiarPassword" href="~/Cliente/CambiarPass/@Model.cliente.Id">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Cambiar Contraseña
+                </a>
+            </div>
+            <br>
             <button type="submit" class="btn btn-lg btn-primary">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
             </button>

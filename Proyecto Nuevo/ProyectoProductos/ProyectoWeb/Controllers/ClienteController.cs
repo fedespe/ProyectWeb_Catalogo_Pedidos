@@ -231,13 +231,14 @@ namespace ProyectoWeb.Controllers
         //GET: Cliente/CambiarPass
         public ActionResult CambiarPass(int id = 0)
         {
-            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id)
+            if (Session["TipoUsuario"] != null && ((Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id) || Session["TipoUsuario"].ToString().Equals("Administrador")))
             {
                 try
                 {
                     CambiarPassViewModel cambiarPassVM = new CambiarPassViewModel();
-                    cambiarPassVM.NombreUsuario = Session["NombreUsuario"].ToString();
-
+                    cambiarPassVM.Cliente = clienteBL.obtener(id);                    
+                    cambiarPassVM.NombreUsuario = cambiarPassVM.Cliente.NombreUsuario;
+                    cambiarPassVM.Id = id;
                     return View(cambiarPassVM);
                 }
                 catch (ProyectoException ex)
@@ -265,7 +266,7 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult CambiarPass(CambiarPassViewModel cambiarPassVM)
         {
-            if (Session["TipoUsuario"] != null && (Session["TipoUsuario"].ToString().Equals("Cliente") && Session["NombreUsuario"].ToString().Equals(cambiarPassVM.NombreUsuario)))
+            if (Session["TipoUsuario"] != null && ((Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == cambiarPassVM.Id) || Session["TipoUsuario"].ToString().Equals("Administrador")))
             {
                 try
                 {

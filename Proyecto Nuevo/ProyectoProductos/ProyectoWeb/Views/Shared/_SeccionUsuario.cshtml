@@ -37,7 +37,7 @@
     }
     else if (Session["TipoUsuario"].ToString() == "Cliente")
     {
-    <ul class="nav navbar-nav navbar-left">
+    <ul class="nav navbar-nav navbar-right">
         <li>
             @Html.ActionLink("Mis Pedidos", "ListarPorCliente", "Pedido", new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)
         </li>

@@ -10,6 +10,8 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
 {
     public class CambiarPassViewModel
     {
+        public int Id { get; set; }
+        public Cliente Cliente { get; set; }
         [Display(Name = "Nombre Usuario")]
         public String NombreUsuario { get; set; }
         [Display(Name = "Contraseña Actual")]

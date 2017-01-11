@@ -6,40 +6,53 @@
 <script src="~/Scripts/categoriaCrearEditar.js"></script>
 
 <div class="row">
-    <h2>Crear Categoría</h2>
-
-    @using (Html.BeginForm("Crear", "Categoria", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        //Seguridad
-        @Html.AntiForgeryToken()
-
-        @*@Html.HiddenFor(x => x.cliente.Id)*@
-
-        //Lista de errores
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        //Mensajes
-        if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+    <div class="col-md-2 pull-left">
+        <div>
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+        </div>
+    </div>
+    <div class="col-md-10 pull-right">
+        <h2>Crear Categoría</h2>
+        <br>
+        @using (Html.BeginForm("Crear", "Categoria", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <span class="label label-danger">@Model.mensajeError</span>
-        }
+            //Seguridad
+            @Html.AntiForgeryToken()
 
-        <div class="col-md-2">
-            <div class="thumbnail">
-                <img src=@("/Imagenes/Categorias/SinImagen.jpg") id="ImgArchivo" onclick="$('#Archivo').click()" height="150" width="150" />
+            @*@Html.HiddenFor(x => x.cliente.Id)*@
+
+            //Lista de errores
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            //Mensajes
+            if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+            {
+                <span class="label label-danger">@Model.mensajeError</span>
+            }
+
+            <div class="col-md-2">
+                <div class="thumbnail">
+                    <img src=@("/Imagenes/Categorias/SinImagen.jpg") id="ImgArchivo" onclick="$('#Archivo').click()" height="150" width="150" />
+                </div>
             </div>
-        </div>
 
-        <input type="file" style="display:none;" name="Archivo" id="Archivo" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo" id="Archivo" onchange="$(mostrarImagen(this));">
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre Categoría" })
-            @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
-        </div>
+            <div class="clearfix"></div>
+            <br>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre Categoría" })
+                @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
+            </div>
 
-        <button type="submit" class="btn btn-lg btn-primary">
-            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
-        </button>
-    }
+            <button type="submit" class="btn btn-lg btn-primary">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
+            </button>
+        }
+    </div>
 </div>

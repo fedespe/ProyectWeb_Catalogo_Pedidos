@@ -7,213 +7,224 @@
 <script src="~/Scripts/articuloEditar.js"></script>
 
 <div class="row">
-    <h2>Editar Articulo</h2>
-
-    @using (Html.BeginForm("Editar", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        //Seguridad
-        @Html.AntiForgeryToken()
-
-        @Html.HiddenFor(x => x.Articulo.Id)
-
-        //Lista de errores
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        //Mensajes
-        if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
-        {
-            <span class="label label-danger">@Model.mensajeError</span>
-        }
-
-        //************************************************************************
-        //MANEJO DE IMAGENES
-        //************************************************************************
-        @Html.HiddenFor(x => x.Img1Anterior)
-        @Html.HiddenFor(x => x.Img2Anterior)
-        @Html.HiddenFor(x => x.Img3Anterior)
-        @Html.HiddenFor(x => x.Img4Anterior)
-        @Html.HiddenFor(x => x.Img5Anterior)
-        var contador = 1;
-        <h3>Selección de imagenes</h3>
-        foreach (var i in Model.Articulo.Imagenes)
-        {
-            var s = "Archivo" + contador;
-            var s1 = "ImgArchivo" + contador;
-            var s3 = "EliminarArchivo" + contador;
-            <div class="col-md-2">
-                <div class="thumbnail">
-                    <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" style="width:100%; height:100%;" />
-                    <div class="caption">
-                        <label class="checkbox-inline">
-                            <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
-                            Eliminar
-                        </label>
-                        <input name="@s3" type="hidden" value="false" />
-                    </div>
-                </div>
-            </div>
-            contador++;
-        }
-        for (var i = Model.Articulo.Imagenes.Count + 1; i <= 5; i++)
-        {
-            var s = "Archivo" + @i;
-            var s1 = "ImgArchivo" + @i;
-            var s3 = "EliminarArchivo" + @i;
-            <div class="col-md-2">
-                <div class="thumbnail">
-                    <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" style="width:100%; height:100%;" />
-                    <div class="caption">
-                        <label class="checkbox-inline">
-                            <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
-                            Eliminar
-                        </label>
-                        <input name="@s3" type="hidden" value="false" />
-                    </div>
-                </div>
-            </div>
-        }
-
-        <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
-        <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this));">
-        <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this));">
-        <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this));">
-        <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this));">
-
-        <div class="clearfix"></div>
-        //************************************************************************
-        //FIN MANEJO DE IMAGENES
-        //************************************************************************
-        //************************************************************************
-        //MANEJO DE PROPIEDADES BASICAS
-        //************************************************************************
-        <br>
-        <div class="form-group">
-            @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
-            @Html.ValidationMessageFor(x => x.Codigo, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre" })
-            @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Descripcion, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Descripcion, new { @id = "descripcion", @class = "form-control", @placeholder = "Descripción" })
-            @Html.ValidationMessageFor(x => x.Descripcion, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Precio, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Precio, new { @id = "precio", @class = "form-control", @placeholder = "Precio" })
-            @Html.ValidationMessageFor(x => x.Precio, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Stock, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Stock, new { @id = "stock", @class = "form-control", @placeholder = "Stock" })
-            @Html.ValidationMessageFor(x => x.Stock, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            <label class="checkbox-inline">
-                @Html.CheckBoxFor(x => x.Destacado, new { @id = "destacado" })
-                Destacado
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label class="checkbox-inline">
-                @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
-                Disponible
-            </label>
-        </div>
-        //************************************************************************
-        //FIN MANEJO DE PROPIEDADES BASICAS
-        //************************************************************************
-
-        //************************************************************************
-        //MANEJO DE CATEGORIAS
-        //************************************************************************
-        <h3>Categorías</h3>
+    <div class="col-md-2 pull-left">
         <div>
-            <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+        </div>
+    </div>
+    <div class="col-md-10 pull-right">
+        <h2>Editar Articulo</h2>
+
+        @using (Html.BeginForm("Editar", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            //Seguridad
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(x => x.Articulo.Id)
+
+            //Lista de errores
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            //Mensajes
+            if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+            {
+                <span class="label label-danger">@Model.mensajeError</span>
+            }
+
+            //************************************************************************
+            //MANEJO DE IMAGENES
+            //************************************************************************
+            @Html.HiddenFor(x => x.Img1Anterior)
+            @Html.HiddenFor(x => x.Img2Anterior)
+            @Html.HiddenFor(x => x.Img3Anterior)
+            @Html.HiddenFor(x => x.Img4Anterior)
+            @Html.HiddenFor(x => x.Img5Anterior)
+            var contador = 1;
+            <h3>Selección de imagenes</h3>
+            foreach (var i in Model.Articulo.Imagenes)
+            {
+                var s = "Archivo" + contador;
+                var s1 = "ImgArchivo" + contador;
+                var s3 = "EliminarArchivo" + contador;
+                <div class="col-md-2">
+                    <div class="thumbnail">
+                        <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" style="width:100%; height:100%;" />
+                        <div class="caption">
+                            <label class="checkbox-inline">
+                                <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
+                                Eliminar
+                            </label>
+                            <input name="@s3" type="hidden" value="false" />
+                        </div>
+                    </div>
+                </div>
+                contador++;
+            }
+            for (var i = Model.Articulo.Imagenes.Count + 1; i <= 5; i++)
+            {
+                var s = "Archivo" + @i;
+                var s1 = "ImgArchivo" + @i;
+                var s3 = "EliminarArchivo" + @i;
+                <div class="col-md-2">
+                    <div class="thumbnail">
+                        <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" style="width:100%; height:100%;" />
+                        <div class="caption">
+                            <label class="checkbox-inline">
+                                <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />
+                                Eliminar
+                            </label>
+                            <input name="@s3" type="hidden" value="false" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo5" id="Archivo5" onchange="$(mostrarImagen(this));">
+
+            <div class="clearfix"></div>
+            //************************************************************************
+            //FIN MANEJO DE IMAGENES
+            //************************************************************************
+            //************************************************************************
+            //MANEJO DE PROPIEDADES BASICAS
+            //************************************************************************
+            <br>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Codigo, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.Codigo, new { @id = "codigo", @class = "form-control", @placeholder = "Codigo" })
+                @Html.ValidationMessageFor(x => x.Codigo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Nombre, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.Nombre, new { @id = "nombre", @class = "form-control", @placeholder = "Nombre" })
+                @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Descripcion, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.Descripcion, new { @id = "descripcion", @class = "form-control", @placeholder = "Descripción" })
+                @Html.ValidationMessageFor(x => x.Descripcion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Precio, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.Precio, new { @id = "precio", @class = "form-control", @placeholder = "Precio" })
+                @Html.ValidationMessageFor(x => x.Precio, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Stock, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.Stock, new { @id = "stock", @class = "form-control", @placeholder = "Stock" })
+                @Html.ValidationMessageFor(x => x.Stock, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(x => x.Destacado, new { @id = "destacado" })
+                    Destacado
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(x => x.Disponible, new { @id = "disponible" })
+                    Disponible
+                </label>
+            </div>
+            //************************************************************************
+            //FIN MANEJO DE PROPIEDADES BASICAS
+            //************************************************************************
+
+            //************************************************************************
+            //MANEJO DE CATEGORIAS
+            //************************************************************************
+            <h3>Categorías</h3>
             <div>
-                @foreach (var c in Model.Categorias)
-                {                   
-                    <label class="checkbox-inline">
-                        <input class="categorias" type="checkbox" id="ChkCat_@c.Id" name="@c.Nombre" value="@c.Id">
-                        @c.Nombre
-                    </label>
-                    if (Model.Articulo.Categorias.Contains(c))
-                    {
-                        <script>
-                            cargarCategoriasAnteriores(@c.Id)
-                        </script>
+                <input type="hidden" id="CadenaCategorias" name="CadenaCategorias">
+                <div>
+                    @foreach (var c in Model.Categorias)
+                    {                   
+                        <label class="checkbox-inline">
+                            <input class="categorias" type="checkbox" id="ChkCat_@c.Id" name="@c.Nombre" value="@c.Id">
+                            @c.Nombre
+                        </label>
+                        if (Model.Articulo.Categorias.Contains(c))
+                        {
+                            <script>
+                                cargarCategoriasAnteriores(@c.Id)
+                            </script>
+                        }
                     }
-                }
+                </div>
             </div>
-        </div>
-        //************************************************************************
-        //FIN MANEJO DE CATEGORIAS
-        //************************************************************************
+            //************************************************************************
+            //FIN MANEJO DE CATEGORIAS
+            //************************************************************************
 
-        //************************************************************************
-        //MANEJO DE FILTROS
-        //************************************************************************
-        <h3>Filtros</h3>
-        <div>
-            <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+            //************************************************************************
+            //MANEJO DE FILTROS
+            //************************************************************************
+            <h3>Filtros</h3>
             <div>
-                <h4>Material</h4>
-                @foreach (var f in Model.Filtros)
-                {
-                    if (!f.Color)
-                    {                       
-                        <label class="checkbox-inline">
+                <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+                <div>
+                    <h4>Material</h4>
+                    @foreach (var f in Model.Filtros)
+                    {
+                        if (!f.Color)
+                        {                       
+                            <label class="checkbox-inline">
+                                <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
+                                @f.Nombre
+                            </label>
+                            if (Model.Articulo.Filtros.Contains(f))
+                            {
+                                <script>
+                                    cargarFiltrosAnteriores(@f.Id)
+                                </script>
+                            }
+                        }
+                    }
+                </div>
+            
+                <div>
+                    <h4>Color</h4>
+                    @foreach (var f in Model.Filtros)
+                    {
+                        if (f.Color)
+                        {                       
+                            <label class="checkbox-inline">
                             <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
                             @f.Nombre
-                        </label>
-                        if (Model.Articulo.Filtros.Contains(f))
-                        {
-                            <script>
-                                cargarFiltrosAnteriores(@f.Id)
-                            </script>
+                            </label>    
+                            if (Model.Articulo.Filtros.Contains(f))
+                            {
+                                <script>
+                                    cargarFiltrosAnteriores(@f.Id)
+                                </script>
+                            }
                         }
                     }
-                }
+                </div>
             </div>
-            
-            <div>
-                <h4>Color</h4>
-                @foreach (var f in Model.Filtros)
-                {
-                    if (f.Color)
-                    {                       
-                        <label class="checkbox-inline">
-                        <input class="filtros" type="checkbox" id="ChkFil_@f.Id" name="@f.Nombre" value="@f.Id">
-                        @f.Nombre
-                        </label>    
-                        if (Model.Articulo.Filtros.Contains(f))
-                        {
-                            <script>
-                                cargarFiltrosAnteriores(@f.Id)
-                            </script>
-                        }
-                    }
-                }
-            </div>
-        </div>
-        <br>
-        //************************************************************************
-        //FIN MANEJO DE FILTROS
-        //************************************************************************
-        <br>
+            <br>
+            //************************************************************************
+            //FIN MANEJO DE FILTROS
+            //************************************************************************
+            <br>
         
-        <button type="submit" class="btn btn-lg btn-primary">
-            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
-        </button>
-    }
+            <button type="submit" class="btn btn-lg btn-primary">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
+            </button>
+        }
+    </div>
 </div>

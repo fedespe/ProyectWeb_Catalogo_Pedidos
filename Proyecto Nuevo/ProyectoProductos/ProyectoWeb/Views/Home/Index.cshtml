@@ -64,7 +64,6 @@
 <script src="~/Scripts/agregarArticulo.js"></script>
 <div class="row">   
     <h2 class="text-center">Artículos Destacados</h2>
-    <br>
     <hr>
     @foreach (var c in Model)
     {
@@ -78,16 +77,16 @@
                     </div>
                 </a>     
                 <div class="caption">
-                    <h4><em>Código:</em> @c.Codigo</h4>
+                    <h4>Código: @c.Codigo</h4>
                     <h3>@c.Nombre</h3>
                     @if (c.Stock == 0)
                     {
-                        <h4><em>Stock:</em> <span class="label label-warning">Consultar</span></h4>
+                        <h4>Stock: <span class="label label-warning">Consultar</span></h4>
                     }
                     else {
-                        <h4><em>Stock:</em> @c.Stock</h4>
+                        <h4>Stock: @c.Stock</h4>
                     }                    
-                    <h4><em>Precio:</em> $ @c.Precio c/u</h4>
+                    <h4>Precio: $ @c.Precio c/u</h4>
                     <p>
                         <div class="input-group">
                             

@@ -33,8 +33,6 @@
                 </div>
             }
         </div>
-        <br>
-        <br>
         <div>
             @using (Html.BeginForm("ListaArticulos", "Catalogo", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -42,6 +40,7 @@
                 @Html.AntiForgeryToken()
 
                 @Html.HiddenFor(x => x.IdCategoria)
+                @Html.HiddenFor(x => x.NombreCat)
                 <script src="~/Scripts/agregarArticulo.js"></script>
                 //************************************************************************
                 //MANEJO DE FILTROS
@@ -99,7 +98,8 @@
     </div>
     
     <div class="col-md-10 pull-right">
-        <h2>@Model.NombreCat</h2>
+        <h2 style="text-align:center">@Model.NombreCat</h2>
+        <hr>
         @foreach (var c in Model.Articulos)
         {
             if (@c.Disponible)
@@ -113,16 +113,16 @@
                             </div>
                         </a>
                         <div class="caption">
-                            <h4><em>Código:</em> @c.Codigo</h4>
+                            <h4>Código: @c.Codigo</h4>
                             <h3>@c.Nombre</h3>
                             @if (c.Stock == 0)
                             {
-                                <h4><em>Stock:</em> <span class="label label-warning">Consultar</span></h4>
+                                <h4>Stock: <span class="label label-warning">Consultar</span></h4>
                             }
                             else {
-                                <h4><em>Stock:</em> @c.Stock</h4>
+                                <h4>Stock: @c.Stock</h4>
                             }
-                            <h4><em>Precio:</em> $ @c.Precio c/u</h4>                            
+                            <h4>Precio: $ @c.Precio c/u</h4>                            
                             <p>                               
                                 <div class="input-group">
                                     <input type="number" class="form-control" placeholder="Unidades" id="@s1">

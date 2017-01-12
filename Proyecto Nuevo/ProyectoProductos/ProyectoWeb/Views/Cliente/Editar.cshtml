@@ -18,7 +18,8 @@
             </div>
         </div>
     }
-    <div class="col-md-10">
+    <div class="clearfix hidden-md hidden-lg"></div>
+    <div class="col-md-10 ">
         <h2>@(Model.cliente.NombreUsuario)</h2>
         <br>
         @using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -39,7 +40,7 @@
                 <span class="label label-danger">@Model.mensajeError</span>
             }
 
-            <div class="col-md-2">
+            <div class="col-xs-8 col-sm-5 col-md-2">
                 <div class="thumbnail">
                     <img src=@("/Imagenes/Clientes/" + Model.cliente.Foto) id="ImgArchivo" onclick="$('#Archivo').click()" style="width:100%; height:100%;" />
                 </div>

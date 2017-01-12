@@ -9,8 +9,8 @@
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>   
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="height:70px;padding-top:10px;">
+<body style="padding-top:70px">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="padding-top:10px;padding-bottom:10px;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,7 +32,7 @@
             </div>                                          
         </div>
     </div>
-    <div class="clearfix" style="height:20px"></div>
+    <div class="hidden-xs hidden-md hidden-lg" style="padding-top:50px"></div>
     <div id="slider">
         @RenderSection("Slider",required: false)
     </div>  

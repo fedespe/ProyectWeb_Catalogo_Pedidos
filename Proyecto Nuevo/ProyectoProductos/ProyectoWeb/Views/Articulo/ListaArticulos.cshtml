@@ -9,7 +9,7 @@
     @*//************************************************************************
     //MANEJO DE FILTROS
     //*************************************************************************@
-    <div class="col-md-2 pull-left">
+    <div class="col-xs-6 col-sm-4 col-md-2 pull-left">
         <div>
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
@@ -105,8 +105,8 @@
                 <tr>
                     <th>Imagen</th>
                     <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
+                    <th class="hidden-sm hidden-xs">Nombre</th>
+                    <th class="hidden-sm hidden-xs">Descripción</th>
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Disponible</th>
@@ -121,8 +121,8 @@
                     <tr>
                         <td><img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) height="50" width="50" /></td>
                         <td>@c.Codigo</td>
-                        <td>@c.Nombre</td>
-                        <td>@c.Descripcion</td>
+                        <td class="hidden-sm hidden-xs">@c.Nombre</td>
+                        <td class="hidden-sm hidden-xs">@c.Descripcion</td>
                         <td>@c.Precio</td>
                         <td>@c.Stock</td>
                         <td>@c.Disponible</td>

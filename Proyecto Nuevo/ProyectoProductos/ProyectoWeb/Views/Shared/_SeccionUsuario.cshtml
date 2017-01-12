@@ -1,14 +1,11 @@
 ﻿@if (Session["TipoUsuario"] != null)
 {
-    if (Convert.ToInt32(Session["IdPedidoEnConstruccion"]) != 0)
-    {
         <ul class="nav navbar-nav navbar-right">
             <li>
                 @Html.ActionLink("Mi Carrito", "Editar", "Pedido", new { Id = Convert.ToInt32(Session["IdPedidoEnConstruccion"]) }, null)
                 @*<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>*@
             </li>
         </ul>
-    }
 
     if (Session["TipoUsuario"].ToString() == "Administrador")
     {

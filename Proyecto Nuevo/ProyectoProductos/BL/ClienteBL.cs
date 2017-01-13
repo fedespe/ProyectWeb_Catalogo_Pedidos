@@ -88,9 +88,9 @@ namespace BL
                 throw new ProyectoException("Error: el teléfono de contacto debe ser menor a 20 caracteres.");
         }
 
-        public int obtenerPrimerCliente()
+        public int obtenerPrimerClienteHabilitado()
         {
-            return clienteDAL.obtenerPrimerCliente();
+            return clienteDAL.obtenerPrimerClienteHabilitado();
         }
     }
 }

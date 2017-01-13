@@ -136,7 +136,7 @@ namespace DAL
             return cli;
         }
 
-        public int obtenerPrimerCliente()
+        public int obtenerPrimerClienteHabilitado()
         {
             int idPrimerCliente = 0;
             try
@@ -145,7 +145,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT MIN(Id) FROM CLIENTE", con);
+                    SqlCommand cmd = new SqlCommand("SELECT MIN(Id) FROM CLIENTE WHERE Habilitado = 1", con);
 
                     idPrimerCliente = (int)cmd.ExecuteScalar();
                 }

@@ -18,6 +18,7 @@ namespace ProyectoWeb.Controllers
         private ArticuloBL articuloBL = new ArticuloBL();
         private ParametroBL parametroBL = new ParametroBL();
 
+        //LOGICA REVISADA 12/01/17
         //GET Pedido/Create
         public ActionResult Create(int id = 0, int cantidad = 0)
         {
@@ -88,10 +89,10 @@ namespace ProyectoWeb.Controllers
 
                 if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                 {
-                    int idPrimerCliente = clienteBL.obtenerPrimerCliente();
+                    int idPrimerCliente = clienteBL.obtenerPrimerClienteHabilitado();
                     if(idPrimerCliente == 0)
                     {
-                        ViewBag.Mensaje = "Debe existir al menos un cliente registrado para poder construir un pedido.";
+                        ViewBag.Mensaje = "Debe existir al menos un cliente registrado y habilitado para poder construir un pedido.";
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
 
@@ -101,11 +102,10 @@ namespace ProyectoWeb.Controllers
                 {
                     c = clienteBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
                 }
-                
 
                 pedidoEnConstruccion = new Pedido
                 {
-                    FechaRealizado = DateTime.Today,
+                    FechaRealizado = new DateTime(),
                     FechaEntregaSolicitada = new DateTime(),
                     ProductosPedidos = new List<ArticuloCantidad>(),
                     Comentario = "",
@@ -116,12 +116,15 @@ namespace ProyectoWeb.Controllers
 
                 pedidoEnConstruccion.ProductosPedidos.Add(ac);
 
-                pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
+                pedidoEnConstruccion.Id = pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
             }
 
-            return RedirectToAction("Index","Home"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+            Session["IdPedidoEnConstruccion"] = pedidoEnConstruccion.Id;
+
+            return RedirectToAction("Editar", new { id = pedidoEnConstruccion.Id }); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
         }
 
+        //LOGICA REVISADA 12/01/17
         //GET: Pedido/SinConfirmar
         public ActionResult SinConfirmar()
         {
@@ -162,6 +165,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         //GET: Pedido/Historico
         public ActionResult Historico()
         {
@@ -169,7 +173,7 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    List<Pedido> pedidos = pedidoBL.obtenerTodos();
+                    List<Pedido> pedidos = pedidoBL.obtenerTodosSinContarEnConstruccion();
 
                     if (pedidos.Count > 0)
                         return View(pedidos);

@@ -11,7 +11,8 @@ namespace DAL
 {
     public class PedidoDAL
     {
-        public List<Pedido> obtenerTodos()
+        //LOGICA REVISADA 12/01/17
+        public List<Pedido> obtenerTodosSinContarEnConstruccion()
         {
             List<Pedido> pedidos = new List<Pedido>();
 
@@ -31,7 +32,7 @@ namespace DAL
 
 	                    C.Id as IdCliente, C.Usuario, C.NombreFantasia, C.Rut, C.RazonSocial,
                         C.Descuento as DescuentoClienteActual, C.DiasDePago, C.Direccion, C.Telefono, C.NombreContacto,
-                        C.TelefonoContacto, C.EmailContacto, C.Imagen,
+                        C.TelefonoContacto, C.EmailContacto, C.Imagen, C.EnConstruccion,
 
 	                    PA.Id as IdPedidoCantidad, PA.Cantidad, PA.PrecioUnitario,
 
@@ -48,7 +49,8 @@ namespace DAL
 	                    P.IdEstado = E.Id AND
 	                    P.IdCliente = C.Id AND
 	                    PA.IdPedido = P.Id AND
-	                    PA.IdArticulo = A.Id
+	                    PA.IdArticulo = A.Id AND
+	                    E.Nombre <> 'EN CONSTRUCCION'
                     ORDER BY
 	                    Id,
 	                    IdArticulo,
@@ -61,13 +63,71 @@ namespace DAL
 
                         while (dr.Read())
                         {
+
+                            string comentario = "";
+                            int enConstruccion = 0;
+                            string nombreFantasia = "";
+                            string rut = "";
+                            string razonSocial = "";
+                            string diasDePago = "";
+                            string direccion = "";
+                            string telefono = "";
+                            string nombreContacto = "";
+                            string telefonoContacto = "";
+                            string emailContacto = "";
+
+                            if (dr["Comentario"] != DBNull.Value)
+                            {
+                                comentario = dr["Comentario"].ToString();
+                            }
+                            if (dr["NombreFantasia"] != DBNull.Value)
+                            {
+                                nombreFantasia = dr["NombreFantasia"].ToString();
+                            }
+                            if (dr["Rut"] != DBNull.Value)
+                            {
+                                rut = dr["Rut"].ToString();
+                            }
+                            if (dr["RazonSocial"] != DBNull.Value)
+                            {
+                                razonSocial = dr["RazonSocial"].ToString();
+                            }
+                            if (dr["DiasDePago"] != DBNull.Value)
+                            {
+                                diasDePago = dr["DiasDePago"].ToString();
+                            }
+                            if (dr["Direccion"] != DBNull.Value)
+                            {
+                                direccion = dr["Direccion"].ToString();
+                            }
+                            if (dr["Telefono"] != DBNull.Value)
+                            {
+                                telefono = dr["Telefono"].ToString();
+                            }
+                            if (dr["NombreContacto"] != DBNull.Value)
+                            {
+                                nombreContacto = dr["NombreContacto"].ToString();
+                            }
+                            if (dr["TelefonoContacto"] != DBNull.Value)
+                            {
+                                telefonoContacto = dr["TelefonoContacto"].ToString();
+                            }
+                            if (dr["EmailContacto"] != DBNull.Value)
+                            {
+                                emailContacto = dr["EmailContacto"].ToString();
+                            }
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                            {
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+                            }
+
                             Pedido ped = new Pedido
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
                                 FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
-                                Comentario = dr["Comentario"].ToString(),
+                                Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),
 
                                 Estado = new EstadoPedido
@@ -80,17 +140,18 @@ namespace DAL
                                 {
                                     Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
-                                    NombreFantasia = dr["NombreFantasia"].ToString(),
-                                    Rut = dr["Rut"].ToString(),
-                                    RazonSocial = dr["RazonSocial"].ToString(),
+                                    NombreFantasia = nombreFantasia,
+                                    Rut = rut,
+                                    RazonSocial = razonSocial,
                                     Descuento = Convert.ToDouble(dr["DescuentoClienteActual"]),
-                                    DiasDePago = dr["DiasDePago"].ToString(),
-                                    Direccion = dr["Direccion"].ToString(),
-                                    Telefono = dr["Telefono"].ToString(),
-                                    NombreDeContacto = dr["NombreContacto"].ToString(),
-                                    TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
-                                    EmailDeContacto = dr["EmailContacto"].ToString(),
-                                    Foto = dr["Imagen"].ToString()
+                                    DiasDePago = diasDePago,
+                                    Direccion = direccion,
+                                    Telefono = telefono,
+                                    NombreDeContacto = nombreContacto,
+                                    TelefonoDeContacto = telefonoContacto,
+                                    EmailDeContacto = emailContacto,
+                                    Foto = dr["Imagen"].ToString(),
+                                    IdPedidoEnConstruccion = enConstruccion
                                 },
                                 ProductosPedidos = new List<ArticuloCantidad>()
                             };
@@ -158,6 +219,7 @@ namespace DAL
             return pedidos;
         }
 
+        //LOGICA REVISADA 12/01/17
         public Pedido obtener(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();
@@ -179,7 +241,7 @@ namespace DAL
 
                         C.Id as IdCliente, C.Usuario, C.NombreFantasia, C.Rut, C.RazonSocial,
                         C.Descuento as DescuentoClienteActual, C.DiasDePago, C.Direccion, C.Telefono, C.NombreContacto,
-                        C.TelefonoContacto, C.EmailContacto, C.Imagen as ImagenCliente,
+                        C.TelefonoContacto, C.EmailContacto, C.Imagen as ImagenCliente, C.EnConstruccion,
 
                         PA.Id as IdPedidoCantidad, PA.Cantidad, PA.PrecioUnitario,
 
@@ -213,6 +275,63 @@ namespace DAL
 
                         while (dr.Read())
                         {
+                            string comentario = "";
+                            int enConstruccion = 0;
+                            string nombreFantasia = "";
+                            string rut = "";
+                            string razonSocial = "";
+                            string diasDePago = "";
+                            string direccion = "";
+                            string telefono = "";
+                            string nombreContacto = "";
+                            string telefonoContacto = "";
+                            string emailContacto = "";
+
+                            if (dr["Comentario"] != DBNull.Value)
+                            {
+                                comentario = dr["Comentario"].ToString();
+                            }
+                            if (dr["NombreFantasia"] != DBNull.Value)
+                            {
+                                nombreFantasia = dr["NombreFantasia"].ToString();
+                            }
+                            if (dr["Rut"] != DBNull.Value)
+                            {
+                                rut = dr["Rut"].ToString();
+                            }
+                            if (dr["RazonSocial"] != DBNull.Value)
+                            {
+                                razonSocial = dr["RazonSocial"].ToString();
+                            }
+                            if (dr["DiasDePago"] != DBNull.Value)
+                            {
+                                diasDePago = dr["DiasDePago"].ToString();
+                            }
+                            if (dr["Direccion"] != DBNull.Value)
+                            {
+                                direccion = dr["Direccion"].ToString();
+                            }
+                            if (dr["Telefono"] != DBNull.Value)
+                            {
+                                telefono = dr["Telefono"].ToString();
+                            }
+                            if (dr["NombreContacto"] != DBNull.Value)
+                            {
+                                nombreContacto = dr["NombreContacto"].ToString();
+                            }
+                            if (dr["TelefonoContacto"] != DBNull.Value)
+                            {
+                                telefonoContacto = dr["TelefonoContacto"].ToString();
+                            }
+                            if (dr["EmailContacto"] != DBNull.Value)
+                            {
+                                emailContacto = dr["EmailContacto"].ToString();
+                            }
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                            {
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+                            }
+
                             List<Imagen> imagenes = new List<Imagen>();
                             Imagen img = new Imagen
                             {
@@ -226,7 +345,7 @@ namespace DAL
                                 FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
                                 FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
-                                Comentario = dr["Comentario"].ToString(),
+                                Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),
 
                                 Estado = new EstadoPedido
@@ -239,17 +358,18 @@ namespace DAL
                                 {
                                     Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
-                                    NombreFantasia = dr["NombreFantasia"].ToString(),
-                                    Rut = dr["Rut"].ToString(),
-                                    RazonSocial = dr["RazonSocial"].ToString(),
+                                    NombreFantasia = nombreFantasia,
+                                    Rut = rut,
+                                    RazonSocial = razonSocial,
                                     Descuento = Convert.ToDouble(dr["DescuentoClienteActual"]),
-                                    DiasDePago = dr["DiasDePago"].ToString(),
-                                    Direccion = dr["Direccion"].ToString(),
-                                    Telefono = dr["Telefono"].ToString(),
-                                    NombreDeContacto = dr["NombreContacto"].ToString(),
-                                    TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
-                                    EmailDeContacto = dr["EmailContacto"].ToString(),
-                                    Foto = dr["ImagenCliente"].ToString()
+                                    DiasDePago = diasDePago,
+                                    Direccion = direccion,
+                                    Telefono = telefono,
+                                    NombreDeContacto = nombreContacto,
+                                    TelefonoDeContacto = telefonoContacto,
+                                    EmailDeContacto = emailContacto,
+                                    Foto = dr["ImagenCliente"].ToString(),
+                                    IdPedidoEnConstruccion = enConstruccion
                                 },
                                 ProductosPedidos = new List<ArticuloCantidad>()
                             };
@@ -337,6 +457,7 @@ namespace DAL
             return pedido;
         }
 
+        //LOGICA REVISADA 12/01/17
         public List<Pedido> obtenerPorCliente(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();
@@ -357,7 +478,7 @@ namespace DAL
 
 	                    C.Id as IdCliente, C.Usuario, C.NombreFantasia, C.Rut, C.RazonSocial,
                         C.Descuento as DescuentoClienteActual, C.DiasDePago, C.Direccion, C.Telefono, C.NombreContacto,
-                        C.TelefonoContacto, C.EmailContacto, C.Imagen,
+                        C.TelefonoContacto, C.EmailContacto, C.Imagen, C.EnConstruccion,
 
 	                    PA.Id as IdPedidoCantidad, PA.Cantidad, PA.PrecioUnitario,
 
@@ -388,13 +509,69 @@ namespace DAL
 
                         while (dr.Read())
                         {
+                            string comentario = "";
+                            int enConstruccion = 0;
+                            string nombreFantasia = "";
+                            string rut = "";
+                            string razonSocial = "";
+                            string diasDePago = "";
+                            string direccion = "";
+                            string telefono = "";
+                            string nombreContacto = "";
+                            string telefonoContacto = "";
+                            string emailContacto = "";
+
+                            if (dr["Comentario"] != DBNull.Value)
+                            {
+                                comentario = dr["Comentario"].ToString();
+                            }
+                            if (dr["NombreFantasia"] != DBNull.Value)
+                            {
+                                nombreFantasia = dr["NombreFantasia"].ToString();
+                            }
+                            if (dr["Rut"] != DBNull.Value)
+                            {
+                                rut = dr["Rut"].ToString();
+                            }
+                            if (dr["RazonSocial"] != DBNull.Value)
+                            {
+                                razonSocial = dr["RazonSocial"].ToString();
+                            }
+                            if (dr["DiasDePago"] != DBNull.Value)
+                            {
+                                diasDePago = dr["DiasDePago"].ToString();
+                            }
+                            if (dr["Direccion"] != DBNull.Value)
+                            {
+                                direccion = dr["Direccion"].ToString();
+                            }
+                            if (dr["Telefono"] != DBNull.Value)
+                            {
+                                telefono = dr["Telefono"].ToString();
+                            }
+                            if (dr["NombreContacto"] != DBNull.Value)
+                            {
+                                nombreContacto = dr["NombreContacto"].ToString();
+                            }
+                            if (dr["TelefonoContacto"] != DBNull.Value)
+                            {
+                                telefonoContacto = dr["TelefonoContacto"].ToString();
+                            }
+                            if (dr["EmailContacto"] != DBNull.Value)
+                            {
+                                emailContacto = dr["EmailContacto"].ToString();
+                            }
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                            {
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+                            }
                             Pedido ped = new Pedido
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
                                 FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
                                 FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
-                                Comentario = dr["Comentario"].ToString(),
+                                Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),
 
                                 Estado = new EstadoPedido
@@ -407,17 +584,18 @@ namespace DAL
                                 {
                                     Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
-                                    NombreFantasia = dr["NombreFantasia"].ToString(),
-                                    Rut = dr["Rut"].ToString(),
-                                    RazonSocial = dr["RazonSocial"].ToString(),
+                                    NombreFantasia = nombreFantasia,
+                                    Rut = rut,
+                                    RazonSocial = razonSocial,
                                     Descuento = Convert.ToDouble(dr["DescuentoClienteActual"]),
-                                    DiasDePago = dr["DiasDePago"].ToString(),
-                                    Direccion = dr["Direccion"].ToString(),
-                                    Telefono = dr["Telefono"].ToString(),
-                                    NombreDeContacto = dr["NombreContacto"].ToString(),
-                                    TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
-                                    EmailDeContacto = dr["EmailContacto"].ToString(),
-                                    Foto = dr["Imagen"].ToString()
+                                    DiasDePago = diasDePago,
+                                    Direccion = direccion,
+                                    Telefono = telefono,
+                                    NombreDeContacto = nombreContacto,
+                                    TelefonoDeContacto = telefonoContacto,
+                                    EmailDeContacto = emailContacto,
+                                    Foto = dr["Imagen"].ToString(),
+                                    IdPedidoEnConstruccion = enConstruccion
                                 },
                                 ProductosPedidos = new List<ArticuloCantidad>()
                             };
@@ -485,6 +663,7 @@ namespace DAL
             return pedidos;
         }
 
+        //LOGICA REVISADA 12/01/17
         public bool actualizar(Pedido ped)
         {
             string cadenaDeletePedidoArticulo = "DELETE FROM PEDIDO_ARTICULO WHERE IdPedido = @Id;";
@@ -519,8 +698,22 @@ namespace DAL
                         cmd.Parameters.Clear();
                         cmd.CommandText = cadenaUpdatePedido;
                         cmd.Parameters.AddWithValue("@Id", ped.Id);
-                        cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
-                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
+                        if(ped.FechaRealizado == new DateTime())
+                        {
+                            cmd.Parameters.AddWithValue("@FechaRealizado", "17530101");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
+                        }
+                        if (ped.FechaEntregaSolicitada == new DateTime())
+                        {
+                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", "17530101");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
+                        }
                         cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
                         cmd.Parameters.AddWithValue("@Iva", ped.Iva);
                         cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
@@ -550,9 +743,9 @@ namespace DAL
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         public int registrar(Pedido ped)
         {
-            //Registrar el Pedido, retornar el ID generado para agregarle al usuario Logueado el pedido en construcción
             string cadenaInsertPedido = @"INSERT INTO PEDIDO VALUES(
                 @FechaRealizado, @FechaEntregaSolicitada, @DescuentoCliente, @Iva, @IdCliente, @Comentario, @IdEstado); SELECT CAST(Scope_Identity() AS INT);";
             string cadenaInsertPedidoArticulo = "INSERT INTO PEDIDO_ARTICULO VALUES (@IdPedido, @IdArticulo, @Cantidad, @PrecioUnitario);";
@@ -565,27 +758,12 @@ namespace DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(cadenaInsertPedido, con))
                     {
-                        cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
-                        if(ped.FechaEntregaSolicitada == new DateTime())
-                        {
-                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", "17530101");
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", ped.FechaEntregaSolicitada);
-                        }
+                        cmd.Parameters.AddWithValue("@FechaRealizado", "17530101");
+                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", "17530101");
                         cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
                         cmd.Parameters.AddWithValue("@Iva", ped.Iva);
                         cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
-                        if (ped.Comentario.Equals(""))
-                        {
-                            cmd.Parameters.AddWithValue("@Comentario", DBNull.Value);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@Comentario", ped.Comentario);
-                        }
-                        
+                        cmd.Parameters.AddWithValue("@Comentario", DBNull.Value);
                         cmd.Parameters.AddWithValue("@IdEstado", ped.Estado.Id);
                         con.Open();
                         trn = con.BeginTransaction();
@@ -620,11 +798,13 @@ namespace DAL
             }
         }
 
+        //NO IMPLEMENTADO
         public bool eliminar(int id)
         {
             throw new NotImplementedException();
         }
 
+        //LOGICA REVISADA 12/01/17
         public int obtenerCantidadSinConfirmar()
         {
             int pedidos = 0;
@@ -635,7 +815,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Pedido P, Estado E WHERE P.IdEstado = E.Id AND (E.Nombre = 'MODIFICADO POR CLIENTE' OR E.Nombre = 'NUEVO')", con);
+                    SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Pedido P, Estado E WHERE P.IdEstado = E.Id AND E.Nombre = 'CONFIRMADO POR CLIENTE';", con);
                     pedidos = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -647,6 +827,7 @@ namespace DAL
             return pedidos;
         }
 
+        //LOGICA REVISADA 12/01/17
         public List<Pedido> obtenerSinConfirmar()
         {
             List<Pedido> pedidos = new List<Pedido>();
@@ -667,7 +848,7 @@ namespace DAL
 
 	                    C.Id as IdCliente, C.Usuario, C.NombreFantasia, C.Rut, C.RazonSocial,
                         C.Descuento as DescuentoClienteActual, C.DiasDePago, C.Direccion, C.Telefono, C.NombreContacto,
-                        C.TelefonoContacto, C.EmailContacto, C.Imagen,
+                        C.TelefonoContacto, C.EmailContacto, C.Imagen, C.EnConstruccion,
 
 	                    PA.Id as IdPedidoCantidad, PA.Cantidad, PA.PrecioUnitario,
 
@@ -685,7 +866,7 @@ namespace DAL
 	                    P.IdCliente = C.Id AND
 	                    PA.IdPedido = P.Id AND
 	                    PA.IdArticulo = A.Id AND
-	                    (E.Nombre = 'MODIFICADO POR CLIENTE' OR E.Nombre = 'NUEVO')
+	                    E.Nombre = 'CONFIRMADO POR CLIENTE'
                     ORDER BY
 	                    Id,
 	                    IdArticulo
@@ -696,6 +877,62 @@ namespace DAL
 
                         while (dr.Read())
                         {
+                            string comentario = "";
+                            int enConstruccion = 0;
+                            string nombreFantasia = "";
+                            string rut = "";
+                            string razonSocial = "";
+                            string diasDePago = "";
+                            string direccion = "";
+                            string telefono = "";
+                            string nombreContacto = "";
+                            string telefonoContacto = "";
+                            string emailContacto = "";
+
+                            if (dr["Comentario"] != DBNull.Value)
+                            {
+                                comentario = dr["Comentario"].ToString();
+                            }
+                            if (dr["NombreFantasia"] != DBNull.Value)
+                            {
+                                nombreFantasia = dr["NombreFantasia"].ToString();
+                            }
+                            if (dr["Rut"] != DBNull.Value)
+                            {
+                                rut = dr["Rut"].ToString();
+                            }
+                            if (dr["RazonSocial"] != DBNull.Value)
+                            {
+                                razonSocial = dr["RazonSocial"].ToString();
+                            }
+                            if (dr["DiasDePago"] != DBNull.Value)
+                            {
+                                diasDePago = dr["DiasDePago"].ToString();
+                            }
+                            if (dr["Direccion"] != DBNull.Value)
+                            {
+                                direccion = dr["Direccion"].ToString();
+                            }
+                            if (dr["Telefono"] != DBNull.Value)
+                            {
+                                telefono = dr["Telefono"].ToString();
+                            }
+                            if (dr["NombreContacto"] != DBNull.Value)
+                            {
+                                nombreContacto = dr["NombreContacto"].ToString();
+                            }
+                            if (dr["TelefonoContacto"] != DBNull.Value)
+                            {
+                                telefonoContacto = dr["TelefonoContacto"].ToString();
+                            }
+                            if (dr["EmailContacto"] != DBNull.Value)
+                            {
+                                emailContacto = dr["EmailContacto"].ToString();
+                            }
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                            {
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+                            }
 
                             Pedido ped = new Pedido
                             {
@@ -703,7 +940,7 @@ namespace DAL
                                 FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
                                 FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
-                                Comentario = dr["Comentario"].ToString(),
+                                Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),
 
                                 Estado = new EstadoPedido
@@ -716,17 +953,18 @@ namespace DAL
                                 {
                                     Id = Convert.ToInt32(dr["IdCliente"]),
                                     NombreUsuario = dr["Usuario"].ToString(),
-                                    NombreFantasia = dr["NombreFantasia"].ToString(),
-                                    Rut = dr["Rut"].ToString(),
-                                    RazonSocial = dr["RazonSocial"].ToString(),
+                                    NombreFantasia = nombreFantasia,
+                                    Rut = rut,
+                                    RazonSocial = razonSocial,
                                     Descuento = Convert.ToDouble(dr["DescuentoClienteActual"]),
-                                    DiasDePago = dr["DiasDePago"].ToString(),
-                                    Direccion = dr["Direccion"].ToString(),
-                                    Telefono = dr["Telefono"].ToString(),
-                                    NombreDeContacto = dr["NombreContacto"].ToString(),
-                                    TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
-                                    EmailDeContacto = dr["EmailContacto"].ToString(),
-                                    Foto = dr["Imagen"].ToString()
+                                    DiasDePago = diasDePago,
+                                    Direccion = direccion,
+                                    Telefono = telefono,
+                                    NombreDeContacto = nombreContacto,
+                                    TelefonoDeContacto = telefonoContacto,
+                                    EmailDeContacto = emailContacto,
+                                    Foto = dr["Imagen"].ToString(),
+                                    IdPedidoEnConstruccion = enConstruccion
                                 },
                                 ProductosPedidos = new List<ArticuloCantidad>()
                             };
@@ -794,17 +1032,25 @@ namespace DAL
             return pedidos;
         }
 
+        //REVISADO 12/01/17
         public void confirmar(int id)
         {
             try
             {
+                string cadenaObtenerIdEstadoConfirmado = "SELECT Id FROM ESTADO WHERE Nombre = 'CONFIRMADO';";
+                string cadenaUpdate = "UPDATE Pedido SET IdEstado = @IdEstado WHERE Id = @Id;";
+                int idEstado = 0;
+
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
                 {
                     con.Open();
+                    SqlCommand cmd = new SqlCommand(cadenaUpdate, con);
+                    
+                    idEstado = (int)cmd.ExecuteScalar();
 
-                    SqlCommand cmd = new SqlCommand("UPDATE Pedido SET IdEstado = 4 WHERE Id = @Id", con);
+                    cmd.CommandText = cadenaObtenerIdEstadoConfirmado;
                     cmd.Parameters.AddWithValue("@Id", id);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@IdEstado", idEstado);
                 }
             }
             catch (Exception ex)

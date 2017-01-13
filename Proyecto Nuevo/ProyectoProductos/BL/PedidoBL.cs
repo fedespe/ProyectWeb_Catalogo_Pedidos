@@ -12,9 +12,9 @@ namespace BL
     {
         private PedidoDAL pedidoDAL = new PedidoDAL();
 
-        public List<Pedido> obtenerTodos()
+        public List<Pedido> obtenerTodosSinContarEnConstruccion()
         {
-            return pedidoDAL.obtenerTodos();
+            return pedidoDAL.obtenerTodosSinContarEnConstruccion();
         }
 
         public Pedido obtener(int id)
@@ -27,7 +27,7 @@ namespace BL
             return pedidoDAL.actualizar(ped);
         }
 
-        public void registrar(Pedido ped, int idUsuario, string tipoUsuario)
+        public int registrar(Pedido ped, int idUsuario, string tipoUsuario)
         {
             int idPedidoGenerado = pedidoDAL.registrar(ped);
 
@@ -43,6 +43,8 @@ namespace BL
                 Cliente c = clienteBL.obtener(idUsuario);
                 clienteBL.registrarPedidoEnConstruccion(c, idPedidoGenerado);
             }
+
+            return idPedidoGenerado;
         }
 
         public bool eliminar(int id)

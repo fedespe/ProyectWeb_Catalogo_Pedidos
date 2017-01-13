@@ -28,14 +28,6 @@
 
         if (Session["TipoUsuario"].ToString().Equals("Administrador"))
         {
-            //PRUEBAS PARA DDL AUTOCOMPLETE
-
-            @*@Html.LabelFor(model => Model.Clientes, new { @class = "control-label" })
-            @Html.TextBoxFor(model => Model.Clientes, new { @class = "form-control" })
-            @Html.HiddenFor(model => model.IdCliente)*@
-
-            //TERMINAN PRUEBAS PARA DDL AUTOMPLETE
-
             <div class="form-group">
                 @Html.DropDownListFor(model => model.IdCliente, Model.Clientes, new { @class = "selectpicker form-control", @id = "ddlNombreFantasiaCliente" })
                 @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@

@@ -176,9 +176,13 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
+                    //para poder borrar la imagen
+                    EditarViewModel editVM = new EditarViewModel();
+                    editVM.categoria = categoriaBL.obtener(id);
                     bool r = categoriaBL.eliminar(id);
                     if (r)
                     {
+                        editVM.eliminarArchivo();
                         return RedirectToAction("ListaCategorias");
                     }
                     else

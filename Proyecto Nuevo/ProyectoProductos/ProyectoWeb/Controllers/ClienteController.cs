@@ -167,7 +167,14 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                     editVM.guardarArchivo();
-                    return RedirectToAction("ListaClientes");
+                    if (Session["TipoUsuario"].ToString().Equals("Administrador")) {
+                        return RedirectToAction("ListaClientes");
+                    }
+                    else {
+                        Session["NombreUsuario"] = editVM.cliente.NombreUsuario;
+                        return RedirectToAction("Index","Home");
+                    }
+                    
                 }
                 catch (ProyectoException ex)
                 {
@@ -266,42 +273,48 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult CambiarPass(CambiarPassViewModel cambiarPassVM)
         {
-            if (Session["TipoUsuario"] != null && ((Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == cambiarPassVM.Id) || Session["TipoUsuario"].ToString().Equals("Administrador")))
+            if (ModelState.IsValid)
             {
-                try
+                if (Session["TipoUsuario"] != null && ((Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == cambiarPassVM.Id) || Session["TipoUsuario"].ToString().Equals("Administrador")))
                 {
-                    if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion))
+                    try
                     {
-                        Cliente cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
-                        if (cli != null)
+                        if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion))
                         {
-                            cli.Password = cambiarPassVM.PasswordNuevo;
-                            clienteBL.actualizarPassword(cli);
-                            return RedirectToAction("Index", "Home");
-                        }
+                            Cliente cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
+                            if (cli != null)
+                            {
+                                cli.Password = cambiarPassVM.PasswordNuevo;
+                                clienteBL.actualizarPassword(cli);
+                                return RedirectToAction("Index", "Home");
+                            }
 
+                        }
+                        cambiarPassVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
+                        return View(cambiarPassVM);
                     }
-                    cambiarPassVM.Mensaje = "Datos erróneos. Por favor, inténtelo otra vez.";
-                    return View(cambiarPassVM);
+                    catch (ProyectoException ex)
+                    {
+                        ViewBag.Mensaje = ex.Message;
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
                 }
-                catch (ProyectoException ex)
+                else
                 {
-                    ViewBag.Mensaje = ex.Message;
-                    return View("~/Views/Shared/_Mensajes.cshtml");
+                    try
+                    {
+                        ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                    catch (ProyectoException ex)
+                    {
+                        ViewBag.Mensaje = ex.Message;
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
                 }
             }
-            else
-            {
-                try
-                {
-                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
-                    return View("~/Views/Shared/_Mensajes.cshtml");
-                }
-                catch (ProyectoException ex)
-                {
-                    ViewBag.Mensaje = ex.Message;
-                    return View("~/Views/Shared/_Mensajes.cshtml");
-                }
+            else {
+                return View(cambiarPassVM);
             }
         }
 

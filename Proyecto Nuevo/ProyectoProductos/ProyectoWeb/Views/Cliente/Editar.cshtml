@@ -20,7 +20,8 @@
     }
     <div class="clearfix hidden-md hidden-lg"></div>
     <div class="col-md-10 ">
-        <h2>@(Model.cliente.NombreUsuario)</h2>
+        <h2>Editar</h2>
+        <h3>@(Model.cliente.NombreUsuario)</h3>
         <br>
         @using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -74,11 +75,17 @@
                 @Html.ValidationMessageFor(x => x.RazonSocial, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(x => x.Descuento, htmlAttributes: new { @class = "control-label" })
-                @Html.TextBoxFor(x => x.Descuento, new { @id = "descuento", @class = "form-control", @placeholder = "% Descuento" })
-                @Html.ValidationMessageFor(x => x.Descuento, "", new { @class = "text-danger" })
-            </div>
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Descuento, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(x => x.Descuento, new { @id = "descuento", @class = "form-control", @placeholder = "% Descuento" })
+                    @Html.ValidationMessageFor(x => x.Descuento, "", new { @class = "text-danger" })
+                </div>
+            }
+            else {
+                @Html.HiddenFor(x => x.Descuento)
+            }
 
             <div class="form-group">
                 @Html.LabelFor(x => x.DiasDePago, htmlAttributes: new { @class = "control-label" })
@@ -121,7 +128,7 @@
                 </a>
             </div>
             <br>
-            <button type="submit" class="btn btn-lg btn-primary">
+            <button type="submit" class="btn btn-primary">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
             </button>
         }

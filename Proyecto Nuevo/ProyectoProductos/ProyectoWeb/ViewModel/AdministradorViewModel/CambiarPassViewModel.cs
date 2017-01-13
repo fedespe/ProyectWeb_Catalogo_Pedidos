@@ -10,19 +10,23 @@ namespace ProyectoWeb.ViewModel.AdministradorViewModel
 {
     public class CambiarPassViewModel
     {
+        public int Id { get; set; }
         [Display(Name = "Nombre Usuario")]
         public String NombreUsuario { get; set; }
 
-        public List<Administrador> administradores { get; set; }
+        public Administrador Administrador { get; set; }
 
         [Display(Name = "Contraseña Actual")]
         [DataType(DataType.Password)]
+        [Required]
         public String PasswordActual { get; set; }
         [Display(Name = "Contraseña Nueva")]
         [DataType(DataType.Password)]
+        [Required]
         public String PasswordNuevo { get; set; }
         [Display(Name = "Confirmar Contraseña")]
         [DataType(DataType.Password)]
+        [Required]
         public String PasswordConfirmacion { get; set; }
         public String Mensaje { get; set; }
     }

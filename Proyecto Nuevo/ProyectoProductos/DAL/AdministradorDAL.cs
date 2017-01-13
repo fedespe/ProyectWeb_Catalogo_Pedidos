@@ -215,7 +215,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Administrador(Usuario, Contrasenia) VALUES (@usu, @pass, null)", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Administrador(Usuario, Contrasenia, EnConstruccion) VALUES (@usu, @pass, null)", con);
 
                     cmd.Parameters.AddWithValue("@usu", admin.NombreUsuario);
                     cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(admin.Password));

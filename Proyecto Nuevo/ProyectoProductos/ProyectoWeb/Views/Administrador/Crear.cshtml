@@ -3,29 +3,32 @@
     ViewBag.Title = "Crear";
 }
 
-<h2>Nuevo Usuario</h2>
-@using (Html.BeginForm("Crear", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    //Seguridad
-    @Html.AntiForgeryToken()
+<div class="row">
+    <h2>Nuevo Administrador</h2>
+    @using (Html.BeginForm("Crear", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        //Seguridad
+        @Html.AntiForgeryToken()
 
-    @*@Html.HiddenFor(x => x.administrador.Id)*@
+        @*@Html.HiddenFor(x => x.administrador.Id)*@
 
-    //Lista de errores
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        //Lista de errores
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
-        @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+            @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(x => x.Password, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
-        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Password, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
+            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+        </div>
 
-    <button type="submit" class="btn btn-default">Guardar</button>
-}
-
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
+        </button>
+    }
+</div>

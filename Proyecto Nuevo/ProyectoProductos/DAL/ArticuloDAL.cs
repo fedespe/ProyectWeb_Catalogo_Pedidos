@@ -786,7 +786,8 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand("Update Articulo SET Disponible = 0 WHERE id = @id", con);
                     cmd.Parameters.AddWithValue("@id", id);
-                    return cmd.ExecuteNonQuery() == 1;
+                    int res = cmd.ExecuteNonQuery();
+                    return cmd.ExecuteNonQuery() >= 1;
                 }
             }
             catch (Exception ex)

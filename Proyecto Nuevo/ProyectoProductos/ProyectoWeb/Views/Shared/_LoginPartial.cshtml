@@ -18,7 +18,14 @@ else
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @Session["NombreUsuario"] <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li>@Html.ActionLink("Mi Perfil", "Editar", Session["TipoUsuario"].ToString(), new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)</li>
+                    @if (Session["TipoUsuario"].ToString() == "Cliente")
+                    {
+                        <li>@Html.ActionLink("Mi Perfil", "Editar", Session["TipoUsuario"].ToString(), new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)</li>
+                    }
+                    else if (Session["TipoUsuario"].ToString() == "Administrador")
+                    {
+                        <li>@Html.ActionLink("Administradores", "ListaAdministradores", Session["TipoUsuario"].ToString(), new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)</li>
+                    }                    
                     <li role="separator" class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
                 </ul>

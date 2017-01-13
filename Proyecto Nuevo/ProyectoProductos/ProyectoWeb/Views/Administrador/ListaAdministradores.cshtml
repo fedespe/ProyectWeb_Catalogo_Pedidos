@@ -3,28 +3,35 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Lista de Administradores</h2>
+<div class="row">
+    <div >
+        <h2>
+            Lista Administradores
+            <button type="button" class="btn btn-success pull-right" OnClick="location.href = '/Administrador/Crear'">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Administrador
+            </button>
+        </h2>
 
-<a title="Crear" href="~/Administrador/Crear/">Crear Nuevo</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="text-align:left;">Nombre</th>
+                </tr>
+            </thead>
 
-<table style="width:500px" class="table table-striped">
-    <thead>
-        <tr>
-            <th style="text-align:left;">Nombre</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var u in Model)
-        {
-            <tr>
-                <td>@u.NombreUsuario</td>
-                <td style="width:200px;">
-                    <a title="Editar" href="~/Administrador/Editar/@u.Id">Editar</a>
-                    |
-                    <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Administrador/Eliminar/@u.Id">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <tbody>
+                @foreach (var u in Model)
+            {
+                    <tr>
+                        <td>@u.NombreUsuario</td>
+                        <td style="width:200px;">
+                            <a title="Editar" href="~/Administrador/Editar/@u.Id">Editar</a>
+                            |
+                            <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Administrador/Eliminar/@u.Id">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

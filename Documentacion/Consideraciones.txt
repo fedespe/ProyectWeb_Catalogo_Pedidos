@@ -51,8 +51,13 @@ CLIENTE
 *ver que la tabla con el listado de todos los clientes tiene muchos datos (capas que sacar datos y crear una nueva vista que sea detalle para ver todos los datos del cliente)
 *No tiene confirmacion de password
 *Ver si el RUT es requerido, sino como hacer para ponerlo en null y no ии
+*Si es administrador para cambiar la contrase;a necesita la anterior VER
 
+VISUAL
+**error con el listado de clientes visual tablet
 Articulo
 *precio iva incluido
+*arreglar la barra de menu para sm
+
 
 

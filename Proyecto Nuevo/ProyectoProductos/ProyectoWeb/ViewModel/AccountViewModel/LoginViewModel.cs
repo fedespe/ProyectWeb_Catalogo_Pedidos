@@ -12,7 +12,7 @@ namespace ProyectoWeb.ViewModel.AccountViewModel
         [Display(Name = "Nombre Usuario")]
         public String NombreUsuario { get; set; }
 
-        [Display(Name = "Password")]
+        [Display(Name = "Contraseña")]
         [DataType(DataType.Password)]
         public String Password { get; set; }
 

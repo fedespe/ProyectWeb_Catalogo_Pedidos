@@ -202,6 +202,25 @@ CREATE TABLE PEDIDO_ARTICULO
 	CONSTRAINT FK_IdArticulo_PEDIDO_ARTICULO FOREIGN KEY (IdArticulo) REFERENCES ARTICULO (Id)
 );
 GO
+--despues de cambiar el precio de un articulo
+CREATE TRIGGER trg_actualizarPrecioEstadoPedidoEnConstruccion
+ON ARTICULO
+AFTER UPDATE
+AS
+BEGIN
+	DECLARE @idArticulo INT, @precio INT, @estado BIT
+	SELECT @idArticulo = Id, @precio = Precio, @estado = Disponible  FROM inserted
+	
+	UPDATE PEDIDO_ARTICULO SET PrecioUnitario = @precio WHERE IdArticulo=@idArticulo 
+	and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 6)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+	
+	IF @estado = 0
+		BEGIN
+			DELETE PEDIDO_ARTICULO WHERE IdArticulo=@idArticulo
+			and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 6)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+		END
+END
+GO
 
 --ANTES DE BORRAR UNA CATEGORÍA, LE ELIMINA TODOS LOS ARTICULOS QUE TIENE ASOCIADOS
 CREATE TRIGGER trg_eliminarCategoria

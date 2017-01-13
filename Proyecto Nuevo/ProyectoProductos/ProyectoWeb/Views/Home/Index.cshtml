@@ -68,42 +68,44 @@
     <hr>
     @foreach (var c in Model)
     {
+        if (c.Disponible) {
         var s1 = "unidades" + c.Id;
 
-        <div class="col-xs-12 col-sm-6 col-md-3" style="padding-bottom:20px;">
-            <div class="thumbnail sombra">
-                <a href="~/Catalogo/DetalleArticulo/@c.Id">
-                    <div align="center" style="width:100%; height:100%;">
-                        <img src=@("/Imagenes/Articulos/"+ c.Imagenes.ElementAt(0).Img) alt="Imagen de Prueba" style="width:70%; height:70%;">
-                    </div>
-                </a>     
-                <div class="caption">
-                    <h4>Código: @c.Codigo</h4>
-                    <h3>@c.Nombre</h3>
-                    @if (c.Stock == 0)
-                    {
-                        <h4>Stock: <span class="label label-warning">Consultar</span></h4>
-                    }
-                    else {
-                        <h4>Stock: @c.Stock</h4>
-                    }                    
-                    <h4>Precio: $ @c.Precio c/u</h4>
-                    
-                    <p>
-                        <div class="input-group">
-                            
-                            <input type="number" class="form-control" placeholder="Unidades" id="@s1">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                            </span>                  
+            <div class="col-xs-12 col-sm-6 col-md-3" style="padding-bottom:20px;">
+                <div class="thumbnail sombra">
+                    <a href="~/Catalogo/DetalleArticulo/@c.Id">
+                        <div align="center" style="width:100%; height:100%;">
+                            <img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) alt="Imagen de Prueba" style="width:70%; height:70%;">
                         </div>
+                    </a>     
+                    <div class="caption">
+                        <h4>Código: @c.Codigo</h4>
+                        <h3>@c.Nombre</h3>
+                        @if (c.Stock == 0)
+                        {
+                            <h4>Stock: <span class="label label-warning">Consultar</span></h4>
+                        }
+                        else {
+                            <h4>Stock: @c.Stock</h4>
+                        }                    
+                        <h4>Precio: $ @c.Precio c/u</h4>
+                    
+                        <p>
+                            <div class="input-group">
+                            
+                                <input type="number" class="form-control" placeholder="Unidades" id="@s1">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                </span>                  
+                            </div>
 
-                        <div class="clearfix"></div>
-                    </p>
+                            <div class="clearfix"></div>
+                        </p>
 
 
+                    </div>
                 </div>
             </div>
-        </div>
-    }    
+        }
+    }
 </div>

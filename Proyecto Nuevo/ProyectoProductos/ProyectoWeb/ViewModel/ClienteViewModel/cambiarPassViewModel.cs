@@ -16,12 +16,15 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         public String NombreUsuario { get; set; }
         [Display(Name = "Contraseña Actual")]
         [DataType(DataType.Password)]
+        [Required]
         public String PasswordActual { get; set; }
         [Display(Name = "Contraseña Nueva")]
         [DataType(DataType.Password)]
+        [Required]
         public String PasswordNuevo { get; set; }
         [Display(Name = "Confirmar Contraseña")]
         [DataType(DataType.Password)]
+        [Required]
         public String PasswordConfirmacion { get; set; }
         public String Mensaje { get; set; }
     }

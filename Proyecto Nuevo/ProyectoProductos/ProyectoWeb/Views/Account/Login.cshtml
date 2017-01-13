@@ -4,25 +4,27 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+<div class="row">
+    <h2>Login</h2>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(model => model.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
-        @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(model => model.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        <label class="text-danger">@Model.Mensaje</label>
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            <label class="text-danger">@Model.Mensaje</label>
+        </div>
 
-    <button type="submit" class="btn btn-default">Ingresar</button>
-}
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+    }
+</div>

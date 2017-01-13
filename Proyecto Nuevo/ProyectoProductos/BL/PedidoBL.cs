@@ -61,9 +61,9 @@ namespace BL
             return pedidoDAL.obtenerSinConfirmar();
         }
 
-        public List<Pedido> obtenerPorCliente(int id)
+        public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
         {
-            return pedidoDAL.obtenerPorCliente(id);
+            return pedidoDAL.obtenerPorClienteSinContarEnConstruccion(id);
         }
 
         public void confirmar(int id)
@@ -86,6 +86,11 @@ namespace BL
             }
 
             p.PrecioTotal = total;
+        }
+
+        public void cancelar(int id)
+        {
+            pedidoDAL.cancelar(id);
         }
     }
 }

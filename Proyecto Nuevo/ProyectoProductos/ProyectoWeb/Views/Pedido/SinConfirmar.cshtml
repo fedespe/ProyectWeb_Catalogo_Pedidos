@@ -36,16 +36,22 @@
                         <td>@p.Estado.Nombre</td>
                         <td>$ @p.PrecioTotal</td>
                         <td>
-                            @if (p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                            @if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO"))
                             {
                                 <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
                             }
-                            else
+                            @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                             {
-                                <a title="Confirmar" href="~/Pedido/Editar/@p.Id">Editar</a>
+                                <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
                             }
-                            |
-                            <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                            @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                            {
+                                <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                            }
+                            @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                            {
+                                <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>
+                            }
                         </td>
                     </tr>
                 }

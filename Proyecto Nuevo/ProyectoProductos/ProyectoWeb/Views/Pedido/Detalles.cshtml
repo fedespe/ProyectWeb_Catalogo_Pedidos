@@ -82,11 +82,6 @@
             }
         </tbody>
     </table>
-
-    @if((Session["TipoUsuario"].ToString().Equals("Administrador") && !Model.Estado.Nombre.Equals("CONFIRMADO") && !Model.Estado.Nombre.Equals("CANCELADO")) || (Session["TipoUsuario"].ToString().Equals("Cliente") && Model.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")))
-    {
-        <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/"+ @Model.Id>Confirmar</a>
-    }
 </div>
 
 

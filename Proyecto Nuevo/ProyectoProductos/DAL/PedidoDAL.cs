@@ -220,6 +220,34 @@ namespace DAL
         }
 
         //LOGICA REVISADA 12/01/17
+        public void cancelar(int id)
+        {
+            try
+            {
+                string cadenaObtenerIdEstadoCancelado = "SELECT Id FROM ESTADO WHERE Nombre = 'CANCELADO';";
+                string cadenaUpdate = "UPDATE Pedido SET IdEstado = @IdEstado WHERE Id = @Id;";
+                int idEstado = 0;
+
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(cadenaObtenerIdEstadoCancelado, con);
+
+                    idEstado = (int)cmd.ExecuteScalar();
+
+                    cmd.CommandText = cadenaUpdate;
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@IdEstado", idEstado);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+        }
+
+        //LOGICA REVISADA 12/01/17
         public Pedido obtener(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();
@@ -458,7 +486,7 @@ namespace DAL
         }
 
         //LOGICA REVISADA 12/01/17
-        public List<Pedido> obtenerPorCliente(int id)
+        public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();
 
@@ -496,6 +524,7 @@ namespace DAL
 	                    P.IdCliente = C.Id AND
 	                    PA.IdPedido = P.Id AND
 	                    PA.IdArticulo = A.Id AND
+	                    E.Nombre <> 'EN CONSTRUCCION' AND
 	                    C.Id = @Id
                     ORDER BY
 	                    Id,
@@ -1037,20 +1066,21 @@ namespace DAL
         {
             try
             {
-                string cadenaObtenerIdEstadoConfirmado = "SELECT Id FROM ESTADO WHERE Nombre = 'CONFIRMADO';";
+                string cadenaObtenerIdEstadoRealizado = "SELECT Id FROM ESTADO WHERE Nombre = 'REALIZADO';";
                 string cadenaUpdate = "UPDATE Pedido SET IdEstado = @IdEstado WHERE Id = @Id;";
                 int idEstado = 0;
 
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
                 {
                     con.Open();
-                    SqlCommand cmd = new SqlCommand(cadenaUpdate, con);
+                    SqlCommand cmd = new SqlCommand(cadenaObtenerIdEstadoRealizado, con);
                     
                     idEstado = (int)cmd.ExecuteScalar();
 
-                    cmd.CommandText = cadenaObtenerIdEstadoConfirmado;
+                    cmd.CommandText = cadenaUpdate;
                     cmd.Parameters.AddWithValue("@Id", id);
                     cmd.Parameters.AddWithValue("@IdEstado", idEstado);
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)

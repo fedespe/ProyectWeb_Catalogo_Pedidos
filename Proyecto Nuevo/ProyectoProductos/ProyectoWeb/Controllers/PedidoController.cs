@@ -204,6 +204,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         //GET: Pedido/Detalles
         public ActionResult Detalles(int id = 0)
         {
@@ -215,21 +216,32 @@ namespace ProyectoWeb.Controllers
                     {
                         Pedido ped = pedidoBL.obtener(id);
 
-                        if(Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && (Session["NombreUsuario"].ToString().Equals(ped.Cliente.NombreUsuario))))
+                        if(ped!= null)
                         {
-                            if(ped!= null)
-                                return View(ped);
+                            if (Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && (Session["NombreUsuario"].ToString().Equals(ped.Cliente.NombreUsuario))))
+                            {
+                                if (!ped.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                                {
+                                    return View(ped);
+                                }
+                                else
+                                {
+                                    ViewBag.Mensaje = "Unicamente puede ver un pedido en construcción propio, seleccione la opción Mi Carrito";
+                                    return View("~/Views/Shared/_Mensajes.cshtml");
+                                }
+                            }
                             else
                             {
-                                ViewBag.Mensaje = "No existe el pedido indicado.";
+                                ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
                                 return View("~/Views/Shared/_Mensajes.cshtml");
                             }
                         }
                         else
                         {
-                            ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                            ViewBag.Mensaje = "No existe el pedido indicado.";
                             return View("~/Views/Shared/_Mensajes.cshtml");
                         }
+                            
                     }
                     else {
                         ViewBag.Mensaje = "Debe indicar un pedido para ver los detalles.";
@@ -257,6 +269,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         //GET: Pedido/ListarPorCliente
         public ActionResult ListarPorCliente(int id)
         {
@@ -264,7 +277,7 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return View(pedidoBL.obtenerPorCliente(id));
+                    return View(pedidoBL.obtenerPorClienteSinContarEnConstruccion(id));
                 }
                 catch (ProyectoException ex)
                 {
@@ -287,6 +300,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         //GET: Pedido/Confirmar
         public ActionResult Confirmar(int id)
         {
@@ -321,6 +335,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         //GET: Pedido/Editar
         public ActionResult Editar(int id = 0)
         {
@@ -338,7 +353,7 @@ namespace ProyectoWeb.Controllers
                                 return View("~/Views/Shared/_Mensajes.cshtml");
                             }
 
-                            if(p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                            if(p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CANCELADO"))
                             {
                                 ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
                                 return View("~/Views/Shared/_Mensajes.cshtml");
@@ -362,6 +377,12 @@ namespace ProyectoWeb.Controllers
                                     ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
                                     return View("~/Views/Shared/_Mensajes.cshtml");
                                 }
+                            }
+
+                            if (p.Estado.Nombre.Equals("CONFIRMADO POR EL CLIENTE") && Session["TipoUsuario"].ToString().Equals("Cliente"))
+                            {
+                                ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                                return View("~/Views/Shared/_Mensajes.cshtml");
                             }
 
                             EditarViewModel editVM = new EditarViewModel();
@@ -394,6 +415,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //LOGICA REVISADA 12/01/17
         //POST: Pedido/Editar
         [HttpPost]
         public ActionResult Editar(EditarViewModel editVM)
@@ -410,47 +432,50 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
 
-                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    if (editVM.Pedido.Estado.Nombre.Equals("REALIZADO") || editVM.Pedido.Estado.Nombre.Equals("CANCELADO") || (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")))
                     {
-                        if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+
+                    if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                    {
+                        if (editVM.Pedido.Id == Convert.ToInt32(Session["IdPedidoEnConstruccion"]))
                         {
-                            if (editVM.RealizarPedido)
+                            if (Session["TipoUsuario"].ToString().Equals("Administrador")){
+                                if (editVM.RealizarPedido)
+                                {
+                                    editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
+                                    editVM.Pedido.FechaRealizado = DateTime.Today;
+                                    Session["IdPedidoEnConstruccion"] = 0;
+                                }
+                            }
+                            else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                             {
-                                editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
+                                if (editVM.RealizarPedido)
+                                {
+                                    editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
+                                    editVM.Pedido.FechaRealizado = DateTime.Today;
+                                    Session["IdPedidoEnConstruccion"] = 0;
+                                }
                             }
                         }
                         else
                         {
-                            editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
-                        }
-                    }
-
-                    if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-                    {
-                        Pedido p = pedidoBL.obtener(editVM.Pedido.Id);
-
-                        if (p.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
-                        {
                             ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
                             return View("~/Views/Shared/_Mensajes.cshtml");
                         }
-
-                        if (!editVM.Pedido.Estado.Nombre.Equals("NUEVO"))
+                    }
+                    else
+                    {
+                        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
-                            if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
-                            {
-                                if (editVM.RealizarPedido)
-                                {
-                                    editVM.Pedido.Estado = estadoPedidoBL.obtener("NUEVO");
-                                }
-                            }
-                            else
-                            {
-                                editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR CLIENTE");
-                            }
+                            editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
                         }
-
-                        editVM.Pedido.FechaRealizado = p.FechaRealizado;
+                        else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                        {
+                            editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
+                        }
                     }
 
                     bool r = pedidoBL.actualizar(editVM.Pedido);
@@ -475,6 +500,54 @@ namespace ProyectoWeb.Controllers
             }
             else {
                 return View(editVM);
+            }
+        }
+
+        //LOGICA REVISADA 12/01/17
+        //GET: Pedido/Cancelar
+        public ActionResult Cancelar(int id)
+        {
+            if (id != 0)
+            {
+                if (Session["TipoUsuario"] == null)
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+
+                Pedido p = pedidoBL.obtener(id);
+
+                if (p != null)
+                {
+                    if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                    {
+                        if(p.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
+                        {
+                            ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                            return View("~/Views/Shared/_Mensajes.cshtml");
+                        }
+                    }
+
+                    if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                    {
+                        ViewBag.Mensaje = "El pedido no se encuetra en un estado que permita cancelarlo.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+
+                    pedidoBL.cancelar(p.Id);
+
+                    return RedirectToAction("Detalles", new { id = p.Id});
+                }
+                else
+                {
+                    ViewBag.Mensaje = "No se encontró el pedido que desea visualizar.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                ViewBag.Mensaje = "Debe indicar qué pedido desea visualizar.";
+                return View("~/Views/Shared/_Mensajes.cshtml");
             }
         }
     }

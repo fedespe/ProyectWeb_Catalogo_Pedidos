@@ -122,17 +122,20 @@
                             else {
                                 <h4>Stock: @c.Stock</h4>
                             }
-                            <h4>Precio: $ @c.Precio c/u</h4>                            
-                            <p>                               
-                                <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Unidades" id="@s1">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                                    </span>
-                                </div>
+                            <h4>Precio: $ @c.Precio c/u</h4>
+                            @if (Session["TipoUsuario"] != null)
+                            {
+                                <p>                               
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="Unidades" id="@s1">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                        </span>
+                                    </div>
 
-                                <div class="clearfix"></div>
-                            </p>
+                                    <div class="clearfix"></div>
+                                </p>
+                            }
                         </div>
                     </div>
                 </div>

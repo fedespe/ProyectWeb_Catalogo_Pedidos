@@ -282,7 +282,7 @@ INSERT INTO CATEGORIA VALUES
 ('Otros','CAT5.jpg',1);
 
 INSERT INTO ARTICULO VALUES
-('COD 1','Artículo 1','Descripción Artículo 1',10,0,0,1),
+('COD 1','Artículo 1','Descripción Artículo 1',10,0,1,1),
 ('COD 2','Artículo 2','Descripción Artículo 2',20,10,1,1),
 ('COD 3','Artículo 3','Descripción Artículo 3',30,20,1,1),
 ('COD 4','Artículo 4','Descripción Artículo 4',40,30,1,1),
@@ -376,13 +376,13 @@ INSERT INTO FILTRO_ARTICULO VALUES
 (1,11);
 
 INSERT INTO PEDIDO VALUES
-('20160215','20160315',0,22,1,'Descuento: 0 - Cliente: 1 - Estado: NUEVO',1),
-('20160110','20160115',10,22,2,'Descuento: 10 - Cliente: 2 - Estado: MODIFICADO POR EL CLIENTE',1),
+('20160215','20160315',0,22,1,'Descuento: 0 - Cliente: 1 - Estado: CONFIRMADO POR CLIENTE',1),
+('20160110','20160115',10,22,2,'Descuento: 10 - Cliente: 2 - Estado: CONFIRMADO POR CLIENTE',1),
 ('20160110','20160115',20,22,3,'Descuento: 20 - Cliente: 3 - Estado: MODIFICADO POR EL ADMINISTRADOR',2),
 ('20160101','20160102',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: CONFIRMADO',3),
 ('20160101','20160102',10,22,4,'Descuento: 10 - Cliente: 4 - Estado: CANCELADO',4),
-('20160426','20160520',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: NUEVO',1),
-('20160110','20160115',40,22,5,'Descuento: 40 - Cliente: 5 - Estado: EN CONSTRUCCION',5),
+('20160426','20160520',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: CONFIRMADO POR CLIENTE',1),
+('20160110','20160115',40,22,5,'Descuento: 40 - Cliente: 5 - Estado: EN CONSTRUCCION',1),
 ('20160101','20160102',5,22,1,'Descuento: 5 - Cliente: 1 - Estado: CANCELADO',4);
 
 INSERT INTO PEDIDO_ARTICULO VALUES
@@ -402,6 +402,3 @@ INSERT INTO PEDIDO_ARTICULO VALUES
 (7,2,6,30),
 (8,10,5,100),
 (8,9,4,90);
-
-UPDATE ADMINISTRADOR SET EnConstruccion = 7 WHERE Id = 1;
-

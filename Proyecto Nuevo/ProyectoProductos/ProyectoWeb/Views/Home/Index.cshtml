@@ -64,10 +64,7 @@
 <script src="~/Scripts/agregarArticulo.js"></script>
 
 <div class="row"> 
-    <div>
-        @*<h2 class="text-center">Categorías</h2>*@
-        @*<br>
-        <br>*@
+    <div class="hidden-xs hidden-sm hidden-md hidden-lg">
         @{//IMPORTANTE VER QUE ESTO SE PODRIA HACER AGREGANDO UN ATRIBUTO DESTACADO A LA CATEGORIA
             var guia = 0;
             var contador = 0;
@@ -79,15 +76,11 @@
                 {
                     if (guia == 0)
                     {
-                        <div class="col-md-12 pull-left" style="padding:10px;">
-                            <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;border-right:none">
+                        <div class="col-md-12 pull-left" style="padding:10px">
+                            <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;border-right:none;background-size: 10%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 30% 15px;">
                                 <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre" style="color:#000000;text-decoration:none">
-                                    <div align="center" style="width:10%; height:10%;">
-                                        <img src=@("/Imagenes/Categorias/" + c.Img) alt="Imagen de Prueba" style="width:80%; height:80%;">
-                                    </div>
-
-                                    <div class="caption">
-                                        <center><h3>@c.Nombre</h3></center>
+                                    <div style="height:100px;text-align:center;">
+                                        <h3>@c.Nombre</h3>
                                     </div>
                                 </a>
                             </div>
@@ -97,14 +90,10 @@
                     else {
                         if (contador == 1)
                         {
-                            <div class="col-md-6 pull-left" style="padding:10px;">
-                                <div class="sombra fade" style="border: thin solid whitesmoke;border-right:none;">
+                            <div class="col-md-6 pull-left" style="padding:10px">
+                                <div class="sombra fade" style="border: thin solid whitesmoke;border-right:none;background-size: 20%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 10% 15px;">
                                     <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre" style="color:#000000;text-decoration:none">
-                                        <div align="center" style="width:15%; height:15%;">
-                                            <img src=@("/Imagenes/Categorias/" + c.Img) alt="Imagen de Prueba" style="width:80%; height:80%;">
-                                        </div>
-
-                                        <div class="caption">
+                                        <div style="height:100px;text-align:center;">
                                             <center><h3>@c.Nombre</h3></center>
                                         </div>
                                     </a>
@@ -112,14 +101,10 @@
                             </div>
                         }
                         else {
-                            <div class="col-md-6 pull-left" style="padding:10px;">
-                                <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none">
+                            <div class="col-md-6 pull-left" style="padding:10px">
+                                <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;background-size: 20%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 10% 15px;">
                                     <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre" style="color:#000000;text-decoration:none">
-                                        <div align="center" style="width:15%; height:15%;">
-                                            <img src=@("/Imagenes/Categorias/" + c.Img) alt="Imagen de Prueba" style="width:80%; height:80%;">
-                                        </div>
-
-                                        <div class="caption">
+                                        <div style="height:100px;text-align:center;">
                                             <center><h3>@c.Nombre</h3></center>
                                         </div>
                                     </a>
@@ -166,20 +151,19 @@
                                 <h4>Stock: @c.Stock</h4>
                             }                    
                             <h4>Precio: $ @c.Precio c/u</h4>
-                    
-                            <p>
-                                <div class="input-group">
-                            
-                                    <input type="number" class="form-control" placeholder="Unidades" id="@s1">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                                    </span>                  
-                                </div>
+                            @if (Session["TipoUsuario"]!=null)
+                            {
+                                <p>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="Unidades" id="@s1">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                        </span>
+                                    </div>
 
-                                <div class="clearfix"></div>
-                            </p>
-
-
+                                    <div class="clearfix"></div>
+                                </p>
+                            }                            
                         </div>
                     </div>
                 </div>
@@ -199,7 +183,7 @@
             
             .fade
             {
-                    opacity:0.8;
+                    opacity:0.75;
             }
             .fade:hover
             {

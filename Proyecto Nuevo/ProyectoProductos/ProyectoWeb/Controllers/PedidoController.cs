@@ -70,11 +70,18 @@ namespace ProyectoWeb.Controllers
                 //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
                 pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
 
+                //Si pedidoEnConstruccion == null, debo obtener el pedidoEnConstruccion pero con otra consulta, sin artículos
+
                 //Si en el Pedido en construcción ya se encuentra un ArticuloCantidad con el artículo seleccionado, se avisa que se debe modificar el pedido en construcción (Carrito)
-                if (pedidoEnConstruccion.ProductosPedidos.Contains(ac))
+                if (pedidoEnConstruccion.ProductosPedidos!=null && pedidoEnConstruccion.ProductosPedidos.Contains(ac))
                 {
                     ViewBag.Mensaje = "En su carrito ya se encuentra el artículo seleccionado, modifique el mismo.";
                     return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+                }
+
+                if (pedidoEnConstruccion.ProductosPedidos == null)
+                {
+                    pedidoEnConstruccion.ProductosPedidos = new List<ArticuloCantidad>();
                 }
 
                 pedidoEnConstruccion.ProductosPedidos.Add(ac);
@@ -393,6 +400,8 @@ namespace ProyectoWeb.Controllers
                                 return View("~/Views/Shared/_Mensajes.cshtml");
                             }
 
+
+
                             EditarViewModel editVM = new EditarViewModel();
                             editVM.Pedido = p;
                             editVM.completarEditarVM();
@@ -496,6 +505,17 @@ namespace ProyectoWeb.Controllers
                     }
                     else
                     {
+                        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        {
+                            Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+                            Administrador a = administradorBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
+                            administradorBL.registrarPedidoEnConstruccion(a, 0);
+                        }
+                        else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                        {
+                            clienteBL.registrarPedidoEnConstruccion(editVM.Pedido.Cliente, 0);
+                        }
+                            
                         editVM.completarEditarVM();
                         return View(editVM);
                     }

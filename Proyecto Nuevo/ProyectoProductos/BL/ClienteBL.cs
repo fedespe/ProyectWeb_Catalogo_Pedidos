@@ -51,7 +51,7 @@ namespace BL
             return clienteDAL.obtenerPedidoEnContruccion(id);
         }
 
-        internal void registrarPedidoEnConstruccion(Cliente c, int idPedidoGenerado)
+        public void registrarPedidoEnConstruccion(Cliente c, int idPedidoGenerado)
         {
             c.IdPedidoEnConstruccion = idPedidoGenerado;
             clienteDAL.actualizar(c);

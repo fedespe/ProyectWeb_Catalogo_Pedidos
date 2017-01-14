@@ -92,26 +92,29 @@
                     <tr>
                         <td><b>Stock disponible:</b> <p class="pull-right">@Model.Stock</p></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <b>Cantidad: </b>
-                            <div class="col-md-3 pull-right">
-                                <input type="number" class="form-control cantidad" value="1" id="@s1">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Total: </b> <p class="pull-right" id="total">$@Model.Precio</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#" class="btn btn-primary pull-right" role="button" OnClick="agregarCarrito(this)" id="@Model.Id">
-                                Agregar <span class="glyphicon glyphicon-shopping-cart"></span>
-                            </a>
-                        </td>
-                    </tr>
+                    @if (Session["TipoUsuario"] != null)
+                    {
+                        <tr>
+                            <td>
+                                <b>Cantidad: </b>
+                                <div class="col-md-3 pull-right">
+                                    <input type="number" class="form-control cantidad" value="1" id="@s1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Total: </b> <p class="pull-right" id="total">$@Model.Precio</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" class="btn btn-primary pull-right" role="button" OnClick="agregarCarrito(this)" id="@Model.Id">
+                                    Agregar <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

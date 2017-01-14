@@ -129,15 +129,27 @@
                         <td>@c.Disponible</td>
                         <td>@c.Destacado</td>
                         <td>
+                            
                             <a title="Editar" href="~/Articulo/Editar/@c.Id">Editar</a>
-                            |
-                            <a title="Inhabilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Inhabilitar/@c.Id">Inhabilitar</a>
-                            |
-                            <a title="Habilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Habilitar/@c.Id">Habilitar</a>
-                            |
-                            <a title="Destacar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Destacar/@c.Id">Destacar</a>
-                            |
-                            <a title="QuitarDestacado" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/QuitarDestacado/@c.Id">Quitar Destacado</a>
+                            
+                            @if (c.Disponible)
+                            {
+                                <a title="Inhabilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Inhabilitar/@c.Id">Inhabilitar</a>
+                               
+                            }
+                            else {
+                                <a title="Habilitar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Habilitar/@c.Id">Habilitar</a>
+                                
+                            }
+                            @if (c.Destacado)
+                            {
+                                <a title="QuitarDestacado" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/QuitarDestacado/@c.Id">Quitar Destacado</a>
+                                
+                            }
+                            else {
+                                <a title="Destacar" onclick="return confirm('¿Esta seguro?');" href="~/Articulo/Destacar/@c.Id">Destacar</a>
+                                
+                            }                                
                         </td>
                     </tr>
                 }

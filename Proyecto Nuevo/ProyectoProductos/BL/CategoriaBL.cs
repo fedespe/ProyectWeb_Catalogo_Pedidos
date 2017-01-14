@@ -16,6 +16,10 @@ namespace BL
         {
             return categoriaDAL.obtenerTodos();
         }
+        public List<Categoria> obtenerCategoriasDestacadas()
+        {
+            return categoriaDAL.obtenerCategoriasDestacadas();
+        }
         public Categoria obtener(int id)
         {
             return categoriaDAL.obtener(id);

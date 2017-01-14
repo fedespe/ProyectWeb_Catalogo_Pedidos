@@ -1,5 +1,6 @@
 ﻿using BL;
 using ET;
+using ProyectoWeb.ViewModel.HomeViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,14 @@ namespace ProyectoWeb.Controllers
     public class HomeController : Controller
     {
         private ArticuloBL articuloBL = new ArticuloBL();
+        private CategoriaBL categoriaBL = new CategoriaBL();
+
         public ActionResult Index()
         {
-            List<Articulo> articulosDestacados = articuloBL.obtenerDestacados();
-            return View(articulosDestacados);
+            IndexViewModel indexVM = new IndexViewModel();
+            indexVM.ArticulosDestacados = articuloBL.obtenerDestacados();
+            indexVM.Categorias = categoriaBL.obtenerCategoriasDestacadas();
+            return View(indexVM);
         }
 
         public ActionResult About()

@@ -277,7 +277,15 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    return View(pedidoBL.obtenerPorClienteSinContarEnConstruccion(id));
+                    List<Pedido> lista = pedidoBL.obtenerPorClienteSinContarEnConstruccion(id);
+                    if (lista.Count!=0)
+                    {
+                        return View(lista);
+                    }
+                    else {
+                        ViewBag.Mensaje = "No tiene pedidos asociados.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }                    
                 }
                 catch (ProyectoException ex)
                 {

@@ -5,52 +5,64 @@
 
 <div class="row">
     <h2>Detalles del Pedido</h2>
-    <br>
 
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.Iva)
 
-    <div class="form-group">
+    <div>
+        <h3>Cliente:</h3>
+        <h4>@Model.Cliente.NombreUsuario | @Model.Cliente.NombreFantasia</h4>
+    </div>
+    <div>
+        <h3>Fechas:</h3>
+        <h4>Fecha Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Fecha Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
+    </div>
+    <div>
+        <h3>Descuento:</h3>
+        <h4>@Model.DescuentoCliente</h4>
+    </div>
+    <div>
+        <h3>Comentario:</h3>
+        <p>@Model.Comentario</p>
+    </div>
+    <div>
+        <h3>Estado:</h3>
+        <p>@Model.Estado.Nombre</p>
+    </div>
+
+    @*<div class="form-group">
         @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
-    </div>
+    </div>*@
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
-    </div>
+        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })        
+    </div>*@
 
-    <div class="form-group">
-        @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.PrecioTotal, "", new { @class = "text-danger" })*@
-    </div>
+    
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(x => x.DescuentoCliente, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.DescuentoCliente, "", new { @class = "text-danger" })*@
-    </div>
+        
+    </div>*@
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
-        @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
-    </div>
+        @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario", @readonly = "readonly" })        
+    </div>*@
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(x => x.Estado.Nombre, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
-    </div>
+        @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })        
+    </div>*@
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(x => x.Cliente.NombreFantasia, htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
-    </div>
+        
+    </div>*@
 
     <table class="table table-hover" style="text-align:center">
         <thead>
@@ -82,6 +94,11 @@
             }
         </tbody>
     </table>
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })        
+    </div>*@
+    <h1>Monto Total (IVA inc.): $@Model.PrecioTotal</h1>
 </div>
 
 

@@ -28,11 +28,11 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         [Display(Name = "Nombre Fantasía")]
         public string NombreFantasia { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Rut")]
         public string Rut { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }
 

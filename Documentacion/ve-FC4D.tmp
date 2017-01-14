@@ -77,7 +77,6 @@ CREATE TABLE CATEGORIA
 	Id	INT  NOT NULL IDENTITY(1,1),
 	Nombre NVARCHAR(50) NOT NULL,
 	Imagen NVARCHAR(MAX) NOT NULL,
-	Destacado BIT NOT NULL,
 
 	CONSTRAINT PK_CATEGORIA PRIMARY KEY(Id),
 	CONSTRAINT UK_Nombre_CATEGORIA UNIQUE(Nombre)
@@ -214,12 +213,12 @@ BEGIN
 	SELECT @idArticulo = Id, @precio = Precio, @estado = Disponible  FROM inserted
 	
 	UPDATE PEDIDO_ARTICULO SET PrecioUnitario = @precio WHERE IdArticulo=@idArticulo 
-	and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 5)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+	and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 6)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
 	
 	IF @estado = 0
 		BEGIN
 			DELETE PEDIDO_ARTICULO WHERE IdArticulo=@idArticulo
-			and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 5)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+			and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 6)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
 		END
 END
 GO
@@ -275,11 +274,11 @@ INSERT INTO CLIENTE VALUES
 ('CLIENTE5','202cb962ac59075b964b07152d234b70', NULL,'NOMBRE FANTASIA CLIENTE 5','5','RAZ. SOC. 5',40,'MIERCOLES','DIRECCION 5','5','CONTACTO CLIENTE 5','5','EMAIL5@EMAIL.COM','CLIENTE5.jpg',1);
 
 INSERT INTO CATEGORIA VALUES
-('Anillos','CAT1.jpg',1),
-('Caravanas','CAT2.jpg',1),
-('Collares','CAT3.jpg',1),
-('Pulseras','CAT4.jpg',1),
-('Otros','CAT5.jpg',1);
+('Anillos','CAT1.jpg'),
+('Caravanas','CAT2.jpg'),
+('Collares','CAT3.jpg'),
+('Pulseras','CAT4.jpg'),
+('Otros','CAT5.jpg');
 
 INSERT INTO ARTICULO VALUES
 ('COD 1','Artículo 1','Descripción Artículo 1',10,0,0,1),

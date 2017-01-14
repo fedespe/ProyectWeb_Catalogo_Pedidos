@@ -4,7 +4,17 @@
 }
 
 <div class="row">
-    <div >
+    <div class="col-md-2 pull-left">
+        <div>
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+        </div>
+    </div>
+    <div class="col-md-10 pull-right">
         <h2>
             Lista Administradores
             <button type="button" class="btn btn-success pull-right" OnClick="location.href = '/Administrador/Crear'">

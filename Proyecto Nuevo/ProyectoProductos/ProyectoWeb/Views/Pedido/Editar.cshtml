@@ -8,7 +8,6 @@
 
 <div class="row">
     <h2>Editar Pedido</h2>
-    <br>
 
     @using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -41,10 +40,12 @@
         }
         else
         {
-            @Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
+            @*@Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })*@
             @*@Html.ValidationMessageFor(x => x.Pedido.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+            @Html.HiddenFor(x => x.Pedido.Cliente.NombreFantasia)
+            <h3>@Model.Pedido.Cliente.NombreFantasia</h3>
         }
-
+        <br>
         <div class="form-group">
             @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
             @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
@@ -102,7 +103,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="vertical-align:middle" ><h2>Monto Total (Iva inc.): </h2></td>
+                    <td style="vertical-align:middle" ><h2>Monto Total (IVA inc.): </h2></td>
                     <td style="vertical-align:middle" ><h2 id="celdaPrecioTotal"></h2></td>
                     <td></td>
                 </tr>
@@ -114,23 +115,28 @@
             @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
             @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.EstadoPedido, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.EstadoPedido, new { @id = "estadoPedido", @class = "form-control", @readonly = "readonly" })
-            @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
-        </div>
-
+        <br>
+        @Html.HiddenFor(x => x.EstadoPedido)
         if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
         {
-            <label class="checkbox-inline" style="font-size:large;padding:5px; padding-left:30px;padding-right:20px; border-radius:5px;border: thin solid #bbbbbb;">
+            <h3>Estado: EN CONSTRUCCIÓN</h3>
+        }
+        else {
+            <h3>Estado: @Model.EstadoPedido</h3>
+        }
+
+        <br>
+        if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+        {
+            <br>
+            <label class="checkbox-inline" style="font-size:large">
                 @Html.CheckBoxFor(x => x.RealizarPedido)
                 Realizar Pedido
             </label>
             <br>
         }
         <br>
-        <button type="submit" class="btn btn-lg btn-primary" onclick="GuardarCambios();">
+        <button type="submit" class="btn btn-primary" onclick="GuardarCambios();">
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
         </button>
 

@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="ViewModel\ArticuloViewModel\ListarArticuloViewModel.cs" />
     <Compile Include="ViewModel\CatalogoViewModel\ListarArticuloViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel\IndexViewModel.cs" />
     <Compile Include="ViewModel\Models\AccountViewModels.cs" />
     <Compile Include="ViewModel\Models\IdentityModels.cs" />
     <Compile Include="ViewModel\Models\ManageViewModels.cs" />

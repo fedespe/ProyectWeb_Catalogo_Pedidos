@@ -6,6 +6,7 @@
     <div class="col-md-2 pull-left">
         <div>
             <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
             @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
             @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
             @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
@@ -19,7 +20,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Cliente</th>
+                    <th>N. Usuario</th>
+                    <th>N. Fantasía</th>
                     <th>F. Pedido</th>
                     <th>Estado</th>
                     <th>Monto Total</th>
@@ -31,6 +33,7 @@
                 @foreach (var p in Model)
                 {
                     <tr>
+                        <td>@p.Cliente.NombreUsuario</td>
                         <td>@p.Cliente.NombreFantasia</td>
                         <td>@p.FechaRealizado.ToString("d")</td>
                         <td>@p.Estado.Nombre</td>

@@ -4,36 +4,48 @@
 }
 
 <div class="row">
-    <h2>Editar</h2>
-    <h3>@(Model.administrador.NombreUsuario)</h3>
-    <br>
-
-
-    @using (Html.BeginForm("Editar", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        //Seguridad
-        @Html.AntiForgeryToken()
-
-        @Html.HiddenFor(x => x.administrador.Id)
-
-        //Lista de errores
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
-            @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
-        </div>
+    <div class="col-md-2 pull-left">
         <div>
-            <a title="CambiarPassword" href="~/Administrador/CambiarPass/@Model.administrador.Id">
-                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Cambiar Contraseña
-            </a>
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
+    </div>
+    <div class="col-md-10 pull-right">
+        <h2>Editar</h2>
+        <h3>@(Model.administrador.NombreUsuario)</h3>
         <br>
-        <button type="submit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
-        </button>
-    }
+
+
+        @using (Html.BeginForm("Editar", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            //Seguridad
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(x => x.administrador.Id)
+
+            //Lista de errores
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.NombreUsuario, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(x => x.NombreUsuario, new { @id = "nombreUsuario", @class = "form-control", @placeholder = "Nombre Usuario" })
+                @Html.ValidationMessageFor(x => x.NombreUsuario, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <a title="CambiarPassword" href="~/Administrador/CambiarPass/@Model.administrador.Id">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Cambiar Contraseña
+                </a>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
+            </button>
+        }
+    </div>
 </div>
 
 

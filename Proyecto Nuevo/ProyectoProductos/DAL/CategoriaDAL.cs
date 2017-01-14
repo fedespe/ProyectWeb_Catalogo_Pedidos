@@ -44,6 +44,39 @@ namespace DAL
 
             return categorias;
         }
+        public List<Categoria> obtenerCategoriasDestacadas()
+        {
+            List<Categoria> categorias = new List<Categoria>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Categoria WHERE Destacado=1", con);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Categoria categoria = new Categoria
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                Nombre = dr["Nombre"].ToString(),
+                                Img = dr["Imagen"].ToString(),
+                            };
+                            categorias.Add(categoria);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return categorias;
+        }
 
         public Categoria obtener(int id)
         {
@@ -117,7 +150,7 @@ namespace DAL
                     con.Open();
 
                     SqlCommand cmd = new SqlCommand(@"INSERT INTO Categoria VALUES(
-                        @nom,@img)"
+                        @nom,@img,0)"
                         , con);
 
                     cmd.Parameters.AddWithValue("@nom", cat.Nombre);

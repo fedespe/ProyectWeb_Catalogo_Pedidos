@@ -24,7 +24,7 @@ else
                     }
                     else if (Session["TipoUsuario"].ToString() == "Administrador")
                     {
-                        <li>@Html.ActionLink("Administradores", "ListaAdministradores", Session["TipoUsuario"].ToString(), new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)</li>
+                        <li>@Html.ActionLink("Mi Perfil", "Editar", Session["TipoUsuario"].ToString(), new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)</li>
                     }                    
                     <li role="separator" class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>

@@ -77,9 +77,9 @@
                     if (guia == 0)
                     {
                         <div class="col-md-12 pull-left" style="padding:10px">
-                            <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;border-right:none;background-size: 10%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 30% 15px;">
+                            <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;border-right:none;background-size: 15%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 30% -40px;">
                                 <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre" style="color:#000000;text-decoration:none">
-                                    <div style="height:100px;text-align:center;">
+                                    <div style="height:50px;text-align:center;">
                                         <h3>@c.Nombre</h3>
                                     </div>
                                 </a>
@@ -91,9 +91,9 @@
                         if (contador == 1)
                         {
                             <div class="col-md-6 pull-left" style="padding:10px">
-                                <div class="sombra fade" style="border: thin solid whitesmoke;border-right:none;background-size: 20%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 10% 15px;">
+                                <div class="sombra fade" style="border: thin solid whitesmoke;border-right:none;background-size: 25%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 10% 5px;">
                                     <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre" style="color:#000000;text-decoration:none">
-                                        <div style="height:100px;text-align:center;">
+                                        <div style="height:50px;text-align:center;">
                                             <center><h3>@c.Nombre</h3></center>
                                         </div>
                                     </a>
@@ -102,9 +102,9 @@
                         }
                         else {
                             <div class="col-md-6 pull-left" style="padding:10px">
-                                <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;background-size: 20%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 10% 15px;">
+                                <div class="sombra fade" style="border: thin solid whitesmoke;border-left:none;background-size: 25%;background-image: url(@("/Imagenes/Categorias/" + c.Img)); background-repeat: no-repeat;background-position: 10% -20px;">
                                     <a href="~/Catalogo/ListaArticulos/@c.Id?Nombre=@c.Nombre" style="color:#000000;text-decoration:none">
-                                        <div style="height:100px;text-align:center;">
+                                        <div style="height:50px;text-align:center;">
                                             <center><h3>@c.Nombre</h3></center>
                                         </div>
                                     </a>
@@ -150,9 +150,10 @@
                             else {
                                 <h4>Stock: @c.Stock</h4>
                             }                    
-                            <h4>Precio: $ @c.Precio c/u</h4>
-                            @if (Session["TipoUsuario"]!=null)
+                            
+                            @if (Session["TipoUsuario"] != null)
                             {
+                                <h4>Precio: $ @c.Precio c/u</h4>
                                 <p>
                                     <div class="input-group">
                                         <input type="number" class="form-control" placeholder="Unidades" id="@s1">

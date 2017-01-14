@@ -1,4 +1,5 @@
 ﻿using BL;
+using ET;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -53,6 +54,53 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public string EstadoPedido { get; set; }
 
         public bool RealizarPedido { get; set; }
+        //*********************************************************
+        //Filtros
+        //*********************************************************
+        public String CadenaFiltros { get; set; }
+
+        private void cargarFiltros()
+        {
+            foreach (ArticuloCantidad a in Pedido.ProductosPedidos) {
+                a.Articulo.Filtros = new List<Filtro>();
+            }
+            if (CadenaFiltros != null)
+            {
+                CadenaFiltros = CadenaFiltros.Trim();
+                Char c1 = ' ';
+                Char c2 = ';';
+                String[] substrings = CadenaFiltros.Split(c1);
+                for (int i = 0; i < substrings.Length; i++)
+                {
+                    String[] substrings2 = substrings[i].Split(c2);
+                    Filtro f = new Filtro { Id = Convert.ToInt32(substrings2[0]) };
+                    if (substrings2[2] == "true")
+                    {
+                        for (int j = 0; j < Pedido.ProductosPedidos.Count; j++) {
+                            if (Pedido.ProductosPedidos.ElementAt(j).Id == Convert.ToInt32(substrings2[1])) {
+                                Pedido.ProductosPedidos.ElementAt(j).Articulo.Filtros.Remove(f);
+                                Pedido.ProductosPedidos.ElementAt(j).Articulo.Filtros.Add(f);
+                                j = Pedido.ProductosPedidos.Count;
+                            }
+                        }
+                    }
+                    else {
+                        for (int h = 0; h < Pedido.ProductosPedidos.Count; h++)
+                        {
+                            if (Pedido.ProductosPedidos.ElementAt(h).Id == Convert.ToInt32(substrings2[1]))
+                            {
+                                Pedido.ProductosPedidos.ElementAt(h).Articulo.Filtros.Remove(f);
+                                h = Pedido.ProductosPedidos.Count;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //*********************************************************
+        //Filtros Fin
+        //*********************************************************
 
         public EditarViewModel()
         {
@@ -87,6 +135,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             cargarProductosPedidos();
             pedidoBL.setearTotal(Pedido);
+            cargarFiltros();//en el post
         }
 
         private void cargarCliente()
@@ -114,9 +163,10 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                     ET.Articulo a = articuloBL.obtener(Convert.ToInt32(substrings2[0]));
                     ET.ArticuloCantidad ac = new ET.ArticuloCantidad()
                     {
+                        Id= Convert.ToInt32(substrings2[1]),
                         Articulo = a,
                         PrecioUnitario = a.Precio,
-                        Cantidad = Convert.ToInt32(substrings2[1])
+                        Cantidad = Convert.ToInt32(substrings2[2])
                     };
 
                     Pedido.ProductosPedidos.Add(ac);

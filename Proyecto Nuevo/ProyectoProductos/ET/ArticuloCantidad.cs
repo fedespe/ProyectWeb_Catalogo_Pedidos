@@ -8,6 +8,7 @@ namespace ET
 {
     public class ArticuloCantidad
     {
+        public int Id { get; set; }
         public int Cantidad { get; set; }
         public Articulo Articulo { get; set; }
         public double PrecioUnitario { get; set; }

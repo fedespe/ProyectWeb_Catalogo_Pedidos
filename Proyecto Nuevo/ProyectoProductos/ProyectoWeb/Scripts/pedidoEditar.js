@@ -13,7 +13,7 @@
     
 
     Array.from(filasConDatos).forEach(function (fila) {
-        var celdaTotalFila = fila.children[6];
+        var celdaTotalFila = fila.children[7];
 
         if (fila.children[4].innerHTML != "") {
             var totalFila = parseFloat(celdaTotalFila.innerHTML);
@@ -25,7 +25,7 @@
     if (celdaPrecioDescuento != null) {
         descuentoCliente = parseFloat(document.getElementById("descuentoCliente").getAttribute("value"));
 
-        celdaTextoPrecioDescuento.innerHTML = "Descuento cliente preferencial " + descuentoCliente + "%:";
+        celdaTextoPrecioDescuento.innerHTML = descuentoCliente + "%";
         montoDescuentoCliente = montoTotal * descuentoCliente / 100;
         celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente;
     }
@@ -62,7 +62,7 @@ function actualizarTotalYDescuento() {
     var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
     Array.from(filasConDatos).forEach(function (fila) {
-        var celdaTotalFila = fila.children[6];
+        var celdaTotalFila = fila.children[7];
         if (fila.children[4].innerHTML != "") {
             var totalFila = parseInt(celdaTotalFila.innerHTML);
 
@@ -93,8 +93,8 @@ function actualizarTotales() {
 
     Array.from(filasConDatos).forEach(function (fila) {
         var totalFila = 0;
-        var celdaTotalFila = fila.children[6];
-        var celdaPrecioUnitario = fila.children[5];
+        var celdaTotalFila = fila.children[7];
+        var celdaPrecioUnitario = fila.children[6];
         var inputCantidad = fila.children[4].children[0];
 
         if (fila.children[4].innerHTML != "") {

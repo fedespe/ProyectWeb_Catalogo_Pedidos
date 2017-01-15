@@ -17,6 +17,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
         private ArticuloBL articuloBL = new ArticuloBL();
         private PedidoBL pedidoBL = new PedidoBL();
+        public List<ArticuloCantidad> FiltrosSeleccionados { get; set; }
 
         //[Required]
         [Display(Name = "IdPedido")]
@@ -124,6 +125,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             RealizarPedido = false;
             IdCliente = Pedido.Cliente.Id; //Ver que aparte de cargar el IdCliente, tengo que ajustar el DDL para que quede seleccionado el que corresponde
             IdPedido = Pedido.Id;
+            FiltrosSeleccionados = pedidoBL.obtenerFiltrosSeleccionados(Pedido);
         }
 
         public void completarPedido()

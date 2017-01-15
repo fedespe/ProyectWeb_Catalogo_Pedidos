@@ -478,7 +478,7 @@ namespace DAL
                                 ultimoIdFiltro = Convert.ToInt32(dr["IdFiltro"]);
                             }
                         }
-                    }
+                    }                    
                 }
             }
             catch (Exception ex)
@@ -487,9 +487,70 @@ namespace DAL
             }
             return pedido;
         }
+        public List<ArticuloCantidad> obtenerFiltrosSeleccionados(Pedido pedido) {
+            List<ArticuloCantidad> lista = new List<ArticuloCantidad>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand(@"Select paf.* from Pedido_Articulo_Filtro paf, PEDIDO_ARTICULO pa where paf.IdPedidoArticulo=pa.Id and pa.idPedido=@idPedido;", con))
+                    {
+                        
+                        if (pedido != null)
+                        {
+                            con.Open();
+                            cmd.Parameters.AddWithValue("@idPedido", pedido.Id);
+                            SqlDataReader dr = cmd.ExecuteReader();
+                            int ultimoId = 0;
+                            while (dr.Read())
+                            {
+                                if (ultimoId != Convert.ToInt32(dr["idPedidoArticulo"]))
+                                {
+                                    List<Filtro> filtros = new List<Filtro>();
+                                    Filtro f = new Filtro
+                                    {
+                                        Id = Convert.ToInt32(dr["idFiltro"])
+                                    };
+                                    filtros.Add(f);
+                                    ArticuloCantidad ac = new ArticuloCantidad
+                                    {
+                                        Id = Convert.ToInt32(dr["idPedidoArticulo"]),
+                                        Articulo = new Articulo
+                                        {
+                                            Filtros = filtros
+                                        }
+                                    };
+                                    lista.Add(ac);
+                                    ultimoId = Convert.ToInt32(dr["idPedidoArticulo"]);
+                                }
+                                else {
+                                    Filtro f = new Filtro
+                                    {
+                                        Id = Convert.ToInt32(dr["idFiltro"])
+                                    };
+                                    lista.ElementAt(lista.Count - 1).Articulo.Filtros.Add(f);
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
-        //LOGICA REVISADA 12/01/17
-        public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+            return lista;
+        }
+           
+        
+            
+            
+            
+
+    //LOGICA REVISADA 12/01/17
+    public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();
 
@@ -708,12 +769,21 @@ namespace DAL
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
                 {
-                    using (SqlCommand cmd = new SqlCommand(cadenaDeletePedidoArticulo, con))
+                    using (SqlCommand cmd = new SqlCommand(cadenaDeletePedidoArticuloFiltro, con))
                     {
-                        cmd.Parameters.AddWithValue("@Id", ped.Id);
+                        
                         con.Open();
                         trn = con.BeginTransaction();
                         cmd.Transaction = trn;
+                        
+                        foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                        {
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@IdPedidoArticulo", ac.Id);
+                            cmd.ExecuteNonQuery();
+                        }
+                        cmd.CommandText = cadenaDeletePedidoArticulo;
+                        cmd.Parameters.AddWithValue("@Id", ped.Id);
 
                         cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
@@ -763,12 +833,7 @@ namespace DAL
                         cmd.ExecuteNonQuery();
 
 
-                        cmd.CommandText = cadenaDeletePedidoArticuloFiltro;
-                        foreach (ArticuloCantidad ac in ped.ProductosPedidos) {
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@IdPedidoArticulo", ac.Id);
-                            cmd.ExecuteNonQuery();
-                        }
+                        
 
                         cmd.CommandText = cadenaInsertPedidoArticuloFiltro;
                         cmd.Parameters.Clear();

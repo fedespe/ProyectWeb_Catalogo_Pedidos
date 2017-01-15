@@ -21,6 +21,10 @@ namespace BL
         {
             return pedidoDAL.obtener(id);
         }
+        public List<ArticuloCantidad> obtenerFiltrosSeleccionados(Pedido pedido)
+        {
+            return pedidoDAL.obtenerFiltrosSeleccionados(pedido);
+        }
 
         public bool actualizar(Pedido ped)
         {

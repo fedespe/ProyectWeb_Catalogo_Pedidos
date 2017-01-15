@@ -389,14 +389,14 @@ INSERT INTO FILTRO_ARTICULO VALUES
 (1,11);
 
 INSERT INTO PEDIDO VALUES
-('20160215','20160315',0,22,1,'Descuento: 0 - Cliente: 1 - Estado: CONFIRMADO POR CLIENTE',1),
-('20160110','20160115',10,22,2,'Descuento: 10 - Cliente: 2 - Estado: CONFIRMADO POR CLIENTE',1),
-('20160110','20160115',20,22,3,'Descuento: 20 - Cliente: 3 - Estado: MODIFICADO POR EL ADMINISTRADOR',2),
-('20160101','20160102',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: CONFIRMADO',3),
-('20160101','20160102',10,22,4,'Descuento: 10 - Cliente: 4 - Estado: CANCELADO',4),
-('20160426','20160520',30,22,4,'Descuento: 30 - Cliente: 4 - Estado: CONFIRMADO POR CLIENTE',1),
-('20160110','20160115',40,22,5,'Descuento: 40 - Cliente: 5 - Estado: EN CONSTRUCCION',1),
-('20160101','20160102',5,22,1,'Descuento: 5 - Cliente: 1 - Estado: CANCELADO',4);
+('20160215','20160315',0,22,1,'15/02/2016 - Cliente: Primer Comentario de Prueba|20/02/2016 - Administrador: Segundo Comentario de Prueba|10/03/2016 - Cliente:  Tercer Comentario de Prueba',1),
+('20160110','20160115',10,22,2,'10/01/2016 - Cliente: Primer Comentario de Prueba',1),
+('20160110','20160115',20,22,3,'10/01/2016 - Administrador: Primer Comentario de Prueba',2),
+('20160101','20160102',30,22,4,'01/01/2016 - Cliente: Primer Comentario de Prueba|02/01/2016 - Administrador: Segundo Comentario de Prueba',3),
+('20160101','20160102',10,22,4,NULL,4),
+('20160426','20160520',30,22,4,'26/04/2016 - Cliente: Primer Comentario de Prueba',1),
+('20160110','20160115',40,22,5,NULL,1),
+('20160101','20160102',5,22,1,'01/01/2016 - Administrador: Primer Comentario de Prueba|01/01/2016 - Administrador: Segundo Comentario de Prueba',4);
 
 INSERT INTO PEDIDO_ARTICULO VALUES
 (1,1,1,10),

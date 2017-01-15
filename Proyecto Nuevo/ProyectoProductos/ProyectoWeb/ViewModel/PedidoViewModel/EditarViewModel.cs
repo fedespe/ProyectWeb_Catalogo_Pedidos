@@ -3,6 +3,7 @@ using ET;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,10 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public DateTime FechaEntregaSolicitada { get; set; }
 
         public string CadenaArticulos { get; set; }
-        
+
+        //[Display(Name = "Comentario")]
+        public string ComentarioAnterior { get; set; }
+
         //[Display(Name = "Comentario")]
         public string Comentario { get; set; }
 
@@ -119,7 +123,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             FechaRealizado = Pedido.FechaRealizado;
             FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
             Iva = parametroBL.obtenerIVA();
-            Comentario = Pedido.Comentario;
+            ComentarioAnterior = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
             Descuento = Pedido.Cliente.Descuento;
             RealizarPedido = false;
@@ -128,12 +132,20 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             FiltrosSeleccionados = pedidoBL.obtenerFiltrosSeleccionados(Pedido);
         }
 
-        public void completarPedido()
+        public void completarPedido(string tipoUsuario)
         {
             cargarPedido();
             cargarCliente(); //Ver si en caso de modificar el DDL cuando lo edita un administrador, me deja el Cliente que seleccionó
-            Pedido.Comentario = Comentario;
-            Pedido.FechaRealizado = FechaRealizado;
+            if (Comentario != null && !Comentario.Trim().Equals(""))
+            {
+                string comentario = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + tipoUsuario + ": " + Comentario.Trim();
+                if (Pedido.Comentario != null && !Pedido.Comentario.Trim().Equals(""))
+                    Pedido.Comentario = Pedido.Comentario.Trim() + "|" + comentario;
+                else
+                    Pedido.Comentario = comentario;
+            }
+            if(tipoUsuario.Equals("Administrador"))
+                Pedido.FechaRealizado = FechaRealizado;
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             cargarProductosPedidos();
             pedidoBL.setearTotal(Pedido);

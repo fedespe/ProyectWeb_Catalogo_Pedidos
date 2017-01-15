@@ -441,7 +441,7 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    editVM.completarPedido();
+                    editVM.completarPedido(Session["TipoUsuario"].ToString());
 
                     if (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
                     {
@@ -459,17 +459,15 @@ namespace ProyectoWeb.Controllers
                     {
                         if (editVM.Pedido.Id == Convert.ToInt32(Session["IdPedidoEnConstruccion"]))
                         {
-                            if (Session["TipoUsuario"].ToString().Equals("Administrador")){
-                                if (editVM.RealizarPedido)
+                            if (editVM.RealizarPedido)
+                            {
+                                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                                 {
                                     editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
                                     editVM.Pedido.FechaRealizado = DateTime.Today;
                                     Session["IdPedidoEnConstruccion"] = 0;
                                 }
-                            }
-                            else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-                            {
-                                if (editVM.RealizarPedido)
+                                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                                 {
                                     editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
                                     editVM.Pedido.FechaRealizado = DateTime.Today;
@@ -494,7 +492,7 @@ namespace ProyectoWeb.Controllers
                             editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
                         }
                     }
-
+                    
                     bool r = pedidoBL.actualizar(editVM.Pedido);
 
                     if (!r)
@@ -505,11 +503,15 @@ namespace ProyectoWeb.Controllers
                     }
                     else
                     {
+                        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        {
+                            Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+                        }
+
                         if (editVM.RealizarPedido)
                         {
                             if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                             {
-                                Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
                                 Administrador a = administradorBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
                                 administradorBL.registrarPedidoEnConstruccion(a, 0);
                             }
@@ -566,6 +568,7 @@ namespace ProyectoWeb.Controllers
                     }
 
                     pedidoBL.cancelar(p.Id);
+                    Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
                     return RedirectToAction("Detalles", new { id = p.Id});
                 }

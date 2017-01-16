@@ -12,6 +12,8 @@ namespace BL
     {
         private PedidoDAL pedidoDAL = new PedidoDAL();
 
+        //OBTIENE TODOS LOS PEDIDOS MENOS LOS QUE SE ENCUENTRAN EN CONSTRUCCION
+        //SOLO TRAE LA PRIMERA LINEA DEL PEDIDO
         public List<Pedido> obtenerTodosSinContarEnConstruccion()
         {
             return pedidoDAL.obtenerTodosSinContarEnConstruccion();
@@ -60,6 +62,9 @@ namespace BL
             return pedidoDAL.obtenerFiltrosSeleccionados(pedido);
         }
 
+        //ACTUALIZA TODOS LOS DATOS DEL PEDIDO, 
+        //INCLUYENDO LOS FILTROS SELECCIONADOS PARA CADA ARTICULO
+        //NO ESTA TOMANDO EL IVA DE LA BASE SINO QUE UTILIZA EL QUE TENIA EL PEDIDO ***CAMBIAR
         public bool actualizar(Pedido ped)
         {
             return pedidoDAL.actualizar(ped);
@@ -94,16 +99,21 @@ namespace BL
             return pedidoDAL.obtenerCantidadSinConfirmar();
         }
 
+        //OBTIENE TODOS LOS PEDIDOS SIN CONFIRMAR, 
+        //SOLO TRAE LA PRIMERA LINEA DEL PEDIDO
         public List<Pedido> obtenerSinConfirmar()
         {
             return pedidoDAL.obtenerSinConfirmar();
         }
 
+        //LISTA TODOS LOS PEDIDOS DE UN CLIENTE, SIN TRAER EL PEDIDO EN CONTRUCCION
+        //SOLO TRAE LA PRIMERA LINEA DEL PEDIDO
         public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
         {
             return pedidoDAL.obtenerPorClienteSinContarEnConstruccion(id);
         }
 
+        //CAMBIA EL ESTADO DEL PEDIDO A REALIZADO
         public void confirmar(int id)
         {
             pedidoDAL.confirmar(id);
@@ -125,7 +135,7 @@ namespace BL
 
             p.PrecioTotal = total;
         }
-
+        //CAMBIA EL ESTADO DEL PEDIDO A CANCELADO
         public void cancelar(int id)
         {
             pedidoDAL.cancelar(id);

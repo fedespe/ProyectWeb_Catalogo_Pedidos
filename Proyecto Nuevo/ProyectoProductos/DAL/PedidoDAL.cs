@@ -767,7 +767,7 @@ namespace DAL
         }
 
         //LOGICA REVISADA 12/01/17
-        public bool actualizar(Pedido ped)
+        public bool actualizar(Pedido ped)//VER QUE NO SE ACTUALIZA EL IVA CON EL VALOR DEL MOMENTO (BD) SINO QUE SE UTILIZA EL QUE VENIA EN EL PEDIDO
         {
             string cadenaDeletePedidoArticulo = "DELETE FROM PEDIDO_ARTICULO WHERE IdPedido = @Id;";
             string cadenaInsertPedidoArticulo = "INSERT INTO PEDIDO_ARTICULO VALUES (@IdPedido, @IdArticulo, @Cantidad, @PrecioUnitario); SELECT CAST(Scope_Identity() AS INT);";
@@ -931,9 +931,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                //if (trn != null)
-                //    trn.Rollback();
-
                 throw new ProyectoException("Error: " + ex.Message);
             }
         }

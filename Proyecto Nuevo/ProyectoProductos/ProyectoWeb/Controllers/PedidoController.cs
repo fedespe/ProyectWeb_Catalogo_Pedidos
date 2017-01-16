@@ -58,7 +58,8 @@ namespace ProyectoWeb.Controllers
 
             Pedido pedidoEnConstruccion = null;
             //ACA LE SETEO LOS FILTROS QUE QUIERO TENGA SELECCIONADO POR DEFECTO
-            a.Filtros = new List<Filtro>();//LOS DEJO TODOS DESELECCIONADOS, PODRIAMOS PENSAR UNA LOGICA PARA VER CUAL SELECCIONAMOS
+            //LOS DEJO TODOS DESELECCIONADOS, PODRIAMOS PENSAR UNA LOGICA PARA VER CUAL SELECCIONAMOS
+            a.Filtros = new List<Filtro>();
 
             ArticuloCantidad ac = new ArticuloCantidad
             {
@@ -70,10 +71,11 @@ namespace ProyectoWeb.Controllers
             if (idEnConstruccion > 0)
             {
                 //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
+
                 //CAMBIO IMPORTANTE  OBTENGO EL PEDIDO PERO SOLO CON LOS FILTROS SELECCIONADOS
+                //YA QUE LUEGO VOY A ACTUALIZAR EL PEDIDO CON SUS FILTROS SELECCIONADOS
                 //pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
                 pedidoEnConstruccion = pedidoBL.obtenerPedidoConFiltrosSeleccionados(idEnConstruccion);
-
 
                 if (pedidoEnConstruccion.ProductosPedidos == null)
                 {
@@ -217,9 +219,11 @@ namespace ProyectoWeb.Controllers
                 {
                     if (id != 0)
                     {
-                        Pedido ped = pedidoBL.obtener(id);
+                        //CAMBIO IMPORTANTE, TRAIGO TODOS LOS PEDIDOS CON SUS FILTROS ASOCIADOS
+                        //Pedido ped = pedidoBL.obtener(id);
+                        Pedido ped = pedidoBL.obtenerPedidoConFiltrosSeleccionados(id);
 
-                        if(ped!= null)
+                        if (ped!= null)
                         {
                             if (Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && (Session["NombreUsuario"].ToString().Equals(ped.Cliente.NombreUsuario))))
                             {
@@ -356,6 +360,8 @@ namespace ProyectoWeb.Controllers
                 {
                     if (id != 0)
                     {
+                        //TRAIGO EL PEDIDO CON LOS ARTICULOS Y TODOS SUS FILTROS
+                        //INCLUYENDO SELECCIONADOS Y NO SELECCIONADOS
                         Pedido p = pedidoBL.obtener(id);
                         if(p != null)
                         {
@@ -437,6 +443,8 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
+                    //COMPLETO EL PEDIDO CON LOS NUEVOS DATOS
+                    //INCLUYE LA ACTUALIZACION DE LOS FILTROS SELECCIONADOS
                     editVM.completarPedido(Session["TipoUsuario"].ToString());
 
                     if (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
@@ -489,6 +497,7 @@ namespace ProyectoWeb.Controllers
                         }
                     }
                     
+                    //ACTUALIZO EL PEDIDO
                     bool r = pedidoBL.actualizar(editVM.Pedido);
 
                     if (!r)

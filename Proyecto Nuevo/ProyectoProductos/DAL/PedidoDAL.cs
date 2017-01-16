@@ -434,7 +434,9 @@ namespace DAL
                                 ultimoIdLinea = Convert.ToInt32(dr["IdPedidoCantidad"]);
                                 primera = false;
                             }
+
                             
+
                             if (!primera && ultimoIdLinea != Convert.ToInt32(dr["IdPedidoCantidad"]))
                             {                               
                                 List<Imagen> imagenes = new List<Imagen>();
@@ -463,10 +465,10 @@ namespace DAL
                                     }
                                 };
 
-                                pedido.ProductosPedidos.Add(ac);
-                                ultimoIdLinea = Convert.ToInt32(dr["IdPedidoCantidad"]);
+                                pedido.ProductosPedidos.Add(ac);                
                             }
-                            if (ultimoIdFiltro!= Convert.ToInt32(dr["IdFiltro"]))
+
+                            if (ultimoIdFiltro != Convert.ToInt32(dr["IdFiltro"]) || ultimoIdLinea != Convert.ToInt32(dr["IdPedidoCantidad"]))
                             {
                                 Filtro f = new Filtro
                                 {
@@ -475,7 +477,14 @@ namespace DAL
                                     Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"]))
                                 };
                                 pedido.ProductosPedidos.ElementAt(pedido.ProductosPedidos.Count - 1).Articulo.Filtros.Add(f);
-                                ultimoIdFiltro = Convert.ToInt32(dr["IdFiltro"]);
+                                if (ultimoIdFiltro != Convert.ToInt32(dr["IdFiltro"]))
+                                {
+                                    ultimoIdFiltro = Convert.ToInt32(dr["IdFiltro"]);
+                                }
+                            }
+                            if (!primera && ultimoIdLinea != Convert.ToInt32(dr["IdPedidoCantidad"]))
+                            {
+                                ultimoIdLinea = Convert.ToInt32(dr["IdPedidoCantidad"]);
                             }
                         }
                     }                    

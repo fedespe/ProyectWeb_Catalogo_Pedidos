@@ -89,12 +89,38 @@
                             @foreach (ET.Filtro f in pp.Articulo.Filtros)
                             {
                                 var s1 = f.Id + ";" + pp.Id;
+                                var sId = f.Id + "" + pp.Id;
                                 <label class="checkbox-inline">
-                                    <input class="filtros" type="checkbox" id="ChkFil_@s1" name="@pp.Id" value="@s1">
+                                    <input class="filtros" type="checkbox" id="ChkFil_@sId" name="@pp.Id" value="@s1">
                                     @f.Nombre
                                 </label>
-                                        <br>
-                                        @*<li><input type="checkbox" id="ChkFil_@s1" class="filtros" value="@s1" name="@pp.Id"><label for="ChkFil_@s1" name="NAME" value="VALUE" >@f.Nombre</label></li>*@
+                                <br>
+                                //if (pp.Articulo.Filtros.Contains(f))
+                                if (Model.FiltrosSeleccionados.Count != 0)
+                                {
+                                    for (int i = 0; i < Model.FiltrosSeleccionados.Count; i++)
+                                    {
+                                        if (Model.FiltrosSeleccionados.ElementAt(i).Id == pp.Id)
+                                        {
+                                            if (Model.FiltrosSeleccionados.ElementAt(i).Articulo.Filtros.Contains(f))
+                                            {
+                                                <script>
+                                                cargarFiltrosAnteriores(@sId);
+                                                function cargarFiltrosAnteriores(filId) {
+                                                    var s = "#ChkFil_" + filId;
+                                                    $(s).prop("checked", true);
+                                                    var sVal = $(s).val();
+                                                    var anterior = $('#CadenaFiltros').val();
+                                                    $('#CadenaFiltros').val(anterior + sVal + ";" + "true ");
+                                                }
+                                                </script>
+                                            }
+                                            i = Model.FiltrosSeleccionados.Count;
+                                        }
+
+                                    }
+                                }
+                                @*<li><input type="checkbox" id="ChkFil_@s1" class="filtros" value="@s1" name="@pp.Id"><label for="ChkFil_@s1" name="NAME" value="VALUE" >@f.Nombre</label></li>*@
                             }
                             @*</ul>
                             </div>*@
@@ -201,6 +227,6 @@
             var anterior = $('#CadenaFiltros').val();
             $('#CadenaFiltros').val(anterior + event.target.value + ";" + event.target.checked + " ");
             //alert($('#CadenaFiltros').val());
-        });
+        });       
     </script>
 </div>

@@ -57,6 +57,8 @@ namespace ProyectoWeb.Controllers
             }
 
             Pedido pedidoEnConstruccion = null;
+            //ACA LE SETEO LOS FILTROS QUE QUIERO TENGA SELECCIONADO POR DEFECTO
+            a.Filtros = new List<Filtro>();
 
             ArticuloCantidad ac = new ArticuloCantidad
             {

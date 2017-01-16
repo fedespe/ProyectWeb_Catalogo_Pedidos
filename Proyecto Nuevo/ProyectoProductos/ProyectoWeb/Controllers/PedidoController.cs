@@ -58,7 +58,7 @@ namespace ProyectoWeb.Controllers
 
             Pedido pedidoEnConstruccion = null;
             //ACA LE SETEO LOS FILTROS QUE QUIERO TENGA SELECCIONADO POR DEFECTO
-            a.Filtros = new List<Filtro>();
+            a.Filtros = new List<Filtro>();//LOS DEJO TODOS DESELECCIONADOS, PODRIAMOS PENSAR UNA LOGICA PARA VER CUAL SELECCIONAMOS
 
             ArticuloCantidad ac = new ArticuloCantidad
             {
@@ -70,16 +70,10 @@ namespace ProyectoWeb.Controllers
             if (idEnConstruccion > 0)
             {
                 //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
-                pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
+                //CAMBIO IMPORTANTE  OBTENGO EL PEDIDO PERO SOLO CON LOS FILTROS SELECCIONADOS
+                //pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
+                pedidoEnConstruccion = pedidoBL.obtenerPedidoConFiltrosSeleccionados(idEnConstruccion);
 
-                //Si pedidoEnConstruccion == null, debo obtener el pedidoEnConstruccion pero con otra consulta, sin artículos
-
-                //Si en el Pedido en construcción ya se encuentra un ArticuloCantidad con el artículo seleccionado, se avisa que se debe modificar el pedido en construcción (Carrito)
-                //if (pedidoEnConstruccion.ProductosPedidos!=null && pedidoEnConstruccion.ProductosPedidos.Contains(ac))
-                //{
-                //    ViewBag.Mensaje = "En su carrito ya se encuentra el artículo seleccionado, modifique el mismo.";
-                //    return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
-                //}
 
                 if (pedidoEnConstruccion.ProductosPedidos == null)
                 {

@@ -496,6 +496,7 @@ namespace DAL
             }
             return pedido;
         }
+
         public List<ArticuloCantidad> obtenerFiltrosSeleccionados(Pedido pedido) {
             List<ArticuloCantidad> lista = new List<ArticuloCantidad>();
             try
@@ -771,27 +772,38 @@ namespace DAL
             string cadenaDeletePedidoArticulo = "DELETE FROM PEDIDO_ARTICULO WHERE IdPedido = @Id;";
             string cadenaInsertPedidoArticulo = "INSERT INTO PEDIDO_ARTICULO VALUES (@IdPedido, @IdArticulo, @Cantidad, @PrecioUnitario); SELECT CAST(Scope_Identity() AS INT);";
             string cadenaUpdatePedido = "UPDATE PEDIDO SET FechaRealizado = @FechaRealizado, FechaEntregaSolicitada = @FechaEntregaSolicitada, DescuentoCliente = @DescuentoCliente, Iva = @Iva, IdCliente = @IdCliente, Comentario = @Comentario, IdEstado = @IdEstado WHERE Id = @Id;";
-            string cadenaDeletePedidoArticuloFiltro = "DELETE FROM PEDIDO_ARTICULO_FILTRO WHERE IdPedidoArticulo = @IdPedidoArticulo;";
+            string cadenaSelectIdPedidoArticulo = @"select paf.id from PEDIDO_ARTICULO_FILTRO paf, PEDIDO_ARTICULO pa, PEDIDO p
+                                                    where paf.IdPedidoArticulo=pa.Id and pa.IdPedido=p.Id and p.Id=@IdPedido";
+            string cadenaDeletePedidoArticuloFiltro = "DELETE FROM PEDIDO_ARTICULO_FILTRO WHERE Id = @Id;";
             string cadenaInsertPedidoArticuloFiltro = "INSERT INTO PEDIDO_ARTICULO_FILTRO VALUES (@IdPedidoArticulo, @IdFiltro);";
             SqlTransaction trn = null;
             try
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
                 {
-                    using (SqlCommand cmd = new SqlCommand(cadenaDeletePedidoArticuloFiltro, con))
+                    using (SqlCommand cmd = new SqlCommand(cadenaSelectIdPedidoArticulo, con))
                     {
                         
                         con.Open();
                         trn = con.BeginTransaction();
                         cmd.Transaction = trn;
-                        
-                        foreach (ArticuloCantidad ac in ped.ProductosPedidos)
-                        {
+
+                        cmd.Parameters.AddWithValue("@IdPedido", ped.Id);
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        List<int> listaIdPedidoArticulo = new List<int>();
+                        while (dr.Read()) {
+                            listaIdPedidoArticulo.Add(Convert.ToInt32(dr["id"]));                            
+                        }
+                        dr.Close();
+                        cmd.CommandText = cadenaDeletePedidoArticuloFiltro;
+                        foreach (int i in listaIdPedidoArticulo) {                            
                             cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@IdPedidoArticulo", ac.Id);
+                            cmd.Parameters.AddWithValue("@Id", i);
                             cmd.ExecuteNonQuery();
                         }
+
                         cmd.CommandText = cadenaDeletePedidoArticulo;
+                        cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@Id", ped.Id);
 
                         cmd.ExecuteNonQuery();

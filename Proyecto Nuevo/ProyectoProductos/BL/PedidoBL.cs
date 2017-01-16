@@ -16,11 +16,45 @@ namespace BL
         {
             return pedidoDAL.obtenerTodosSinContarEnConstruccion();
         }
-
+        //Obtiene el pedido por id, trae los articulos con todos sus filtros, 
+        //incluyendo los no seleccionados
         public Pedido obtener(int id)
         {
             return pedidoDAL.obtener(id);
         }
+
+        //NO ES EFICIENTE NO ESTA HECHA EN LA BASE
+        //SE OPTIMIZA A AGREGANDO A LA CONSULTA DE OBTENER POR ID 
+        //UN LEFT JOIN CON LA TABLA PED ART FIL
+        //Obtiene el pedido por id, trae los articulos con los filtros seleccionados
+        public Pedido obtenerPedidoConFiltrosSeleccionados(int id)
+        {
+            Pedido p = obtener(id);
+            List<ArticuloCantidad> listaConFiltros = obtenerFiltrosSeleccionados(p);
+            if (p != null) {
+                foreach (ArticuloCantidad ac in p.ProductosPedidos)
+                {
+                    ac.Articulo.Filtros = new List<Filtro>();
+                }
+                foreach (ArticuloCantidad ac in p.ProductosPedidos)
+                {
+                    foreach (ArticuloCantidad ac2 in listaConFiltros)
+                    {
+                        if (ac.Id == ac2.Id)
+                        {
+                            for(int i=0; i< ac2.Articulo.Filtros.Count; i++)
+                            {
+                                ac.Articulo.Filtros.Add(ac2.Articulo.Filtros.ElementAt(i));
+                            }
+                        }
+                    }
+                }                
+            }
+            
+            return p;
+        }
+        //Obtiene una lista de las lineas del pedido incluyendo su id
+        //y por cada articulo los filtros seleccionados
         public List<ArticuloCantidad> obtenerFiltrosSeleccionados(Pedido pedido)
         {
             return pedidoDAL.obtenerFiltrosSeleccionados(pedido);

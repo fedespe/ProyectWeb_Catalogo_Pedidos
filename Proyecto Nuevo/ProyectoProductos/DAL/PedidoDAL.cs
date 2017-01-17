@@ -219,6 +219,28 @@ namespace DAL
             return pedidos;
         }
 
+        public object obtenerCantidadProductos(int id)
+        {
+            try
+            {
+                string obtenerCantidadProductos = "SELECT COUNT(*) FROM PEDIDO P, PEDIDO_ARTICULO PA WHERE P.Id = PA.IdPedido AND P.Id = @Id; ";
+
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(obtenerCantidadProductos, con);
+
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+        }
+
         //LOGICA REVISADA 12/01/17
         public void cancelar(int id)
         {

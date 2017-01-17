@@ -140,5 +140,13 @@ namespace BL
         {
             pedidoDAL.cancelar(id);
         }
+
+        public object obtenerCantidadProductos(int id)
+        {
+            if (id <= 0)
+                return 0;
+            else
+                return pedidoDAL.obtenerCantidadProductos(id);
+        }
     }
 }

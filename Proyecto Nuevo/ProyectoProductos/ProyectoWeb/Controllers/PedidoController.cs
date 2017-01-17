@@ -125,6 +125,7 @@ namespace ProyectoWeb.Controllers
             }
 
             Session["IdPedidoEnConstruccion"] = pedidoEnConstruccion.Id;
+            Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(pedidoEnConstruccion.Id);
 
             return RedirectToAction("Editar", new { id = pedidoEnConstruccion.Id }); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
         }
@@ -402,11 +403,10 @@ namespace ProyectoWeb.Controllers
                                 return View("~/Views/Shared/_Mensajes.cshtml");
                             }
 
-
-
                             EditarViewModel editVM = new EditarViewModel();
                             editVM.Pedido = p;
                             editVM.completarEditarVM();
+
                             return View(editVM);
                         }
                         else
@@ -468,15 +468,13 @@ namespace ProyectoWeb.Controllers
                                 if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                                 {
                                     editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
-                                    editVM.Pedido.FechaRealizado = DateTime.Today;
-                                    Session["IdPedidoEnConstruccion"] = 0;
                                 }
                                 else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                                 {
                                     editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
-                                    editVM.Pedido.FechaRealizado = DateTime.Today;
-                                    Session["IdPedidoEnConstruccion"] = 0;
                                 }
+                                editVM.Pedido.FechaRealizado = DateTime.Today;
+                                Session["IdPedidoEnConstruccion"] = 0;
                             }
                         }
                         else
@@ -508,6 +506,8 @@ namespace ProyectoWeb.Controllers
                     }
                     else
                     {
+                        Session["CantidadProductosCarrito"] = Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
+
                         if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
                             Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();

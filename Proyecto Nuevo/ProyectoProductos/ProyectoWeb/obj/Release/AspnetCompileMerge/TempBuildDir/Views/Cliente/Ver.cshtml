@@ -1,0 +1,108 @@
+﻿@model ET.Cliente
+@{
+    ViewBag.Title = "Ver";
+}
+
+
+<div class="row">
+    <div class="col-md-2 pull-left">
+        <div>
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+        </div>
+    </div>
+    <div class="clearfix hidden-md hidden-lg"></div>
+    <div class="col-md-10">
+        <br>
+        <div class="col-xs-8 col-sm-5 col-md-3">
+            <div class="thumbnail">
+                <img src=@("/Imagenes/Clientes/"+Model.Foto) style="width:100%; height:100%;" />
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <br>
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nombre de Usuario</div>
+            <div class="panel-body">
+                @Model.NombreUsuario
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nombre de Fantasía</div>
+            <div class="panel-body">
+                @Model.NombreFantasia
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">RUT</div>
+            <div class="panel-body">
+                @Model.Rut
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Razón Social</div>
+            <div class="panel-body">
+                @Model.RazonSocial
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Descuento</div>
+            <div class="panel-body">
+                @Model.Descuento
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Días de Pago</div>
+            <div class="panel-body">
+                @Model.DiasDePago
+            </div>
+        </div>.
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Dirección</div>
+            <div class="panel-body">
+                @Model.Direccion
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Teléfono</div>
+            <div class="panel-body">
+                @Model.Telefono
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nombre de Contacto</div>
+            <div class="panel-body">
+                @Model.NombreDeContacto
+            </div>
+        </div>.
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Teléfono de Contacto</div>
+            <div class="panel-body">
+                @Model.TelefonoDeContacto
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Email</div>
+            <div class="panel-body">
+                @Model.EmailDeContacto
+            </div>
+        </div>
+    </div>
+</div>

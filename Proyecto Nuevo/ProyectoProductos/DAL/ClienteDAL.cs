@@ -21,7 +21,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente", con);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente ORDER BY NombreFantasia ASC", con);
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
@@ -136,7 +136,7 @@ namespace DAL
             return cli;
         }
 
-        public int obtenerPrimerClienteHabilitado()
+        public int obtenerPrimerNombreFantasiaHabilitado()
         {
             int idPrimerCliente = 0;
             try
@@ -145,7 +145,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT MIN(Id) FROM CLIENTE WHERE Habilitado = 1", con);
+                    SqlCommand cmd = new SqlCommand("SELECT Id FROM CLIENTE WHERE Habilitado = 1 ORDER BY NombreFantasia ASC", con);
 
                     idPrimerCliente = (int)cmd.ExecuteScalar();
                 }

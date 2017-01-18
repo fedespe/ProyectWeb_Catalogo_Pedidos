@@ -6,124 +6,234 @@
 @*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
 <script src="~/Scripts/pedidoEditar.js"></script>
 
-<h2>@ViewBag.Title</h2>
+<div class="row">
+    <h2>Editar Pedido</h2>
 
-@using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    //Seguridad
-    @Html.AntiForgeryToken()
-
-    @Html.HiddenFor(x => x.IdPedido)
-    @Html.HiddenFor(x => x.CadenaArticulos)
-    @Html.HiddenFor(x => x.IdCliente)
-
-    if (Model.Pedido.Cliente.Descuento > 0)
+    @using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        //Seguridad
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(x => x.IdPedido)
+        @Html.HiddenFor(x => x.CadenaArticulos)
+        @Html.HiddenFor(x => x.IdCliente)
+
+
         @Html.HiddenFor(x => x.Descuento, new { @id = "descuentoCliente" });
-    }
 
-    //Lista de errores
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-    {
-        <div class="form-group">
-            @Html.DropDownListFor(model => model.IdCliente, Model.Clientes, new { @class = "selectpicker form-control", @id = "ddlNombreFantasiaCliente" })
-            @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+        //Lista de errores
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
+
+        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        {
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.IdCliente, Model.Clientes, new { @class = "selectpicker form-control", @id = "ddlNombreFantasiaCliente" })
+                @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+            </div>
+
+            //Calendario 1
+            <div class="form-group" id="dateTimePickerFechaRealizado">
+                @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label"})
+                @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control add-on", @placeholder = "Fecha Realizado", @type = "text" })
+                @*<span class="add-on glyphicon glyphicon-calendar">
+                </span>*@
+                @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
+            </div>
+        }
+        else
+        {
+            @*@Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })*@
+            @*@Html.ValidationMessageFor(x => x.Pedido.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+            @Html.HiddenFor(x => x.Pedido.Cliente.NombreFantasia)
+            <h3>@Model.Pedido.Cliente.NombreFantasia</h3>
+        }
+        <br>
+
+        //Calendario 2
+        <div class="form-group" id="dateTimePickerFechaEntregaSolicitada">
+            @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control add-on", @placeholder = "Fecha Entrega Solicitada", @type = "text" })
+            @*<span class="add-on glyphicon glyphicon-calendar">
+                </span>*@
+            @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })
-            @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
-        </div>
-    }
-    else
-    {
-        @Html.TextBoxFor(x => x.Pedido.Cliente.NombreFantasia, new { @id = "txtNombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Pedido.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
-    }
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })
-        @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
-    </div>
-
-    <table id="tablaPedidos" class="table table-striped">
-        <thead>
-            <tr>
-                <th>IdArticulo</th>
-                <th>Imagen</th>
-                <th>Codigo Articulo</th>
-                <th>Nombre Articulo</th>
-                <th>Cantidad</th>
-                <th>$ Unitario</th>
-                <th>$ Total Linea</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var pp in Model.Pedido.ProductosPedidos)
-            {
-                double varPrecioTotal = pp.Cantidad * pp.PrecioUnitario;
-
+        <table id="tablaPedidos" class="table table-hover" style="text-align:center">
+            <thead>
                 <tr>
-                    <td>@pp.Articulo.Id</td>
-                    <td>
-                        <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
-                    </td>
-                    <td><a title="Confirmar" href="~/Ariculo/Detalle/@pp.Articulo.Id">@pp.Articulo.Codigo</a></td>
-                    <td>@pp.Articulo.Nombre</td>
-                    <td><input type="number" value="@pp.Cantidad" style="text-align:center" onchange="actualizarTotales();" /></td>
-                    <td>@pp.PrecioUnitario</td>
-                    <td>@varPrecioTotal</td>
-                    <td><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
+                    <th hidden>IdArticulo</th>
+                    <th style="text-align:center">Imagen</th>
+                    <th style="text-align:center">Codigo Articulo</th>
+                    <th style="text-align:center">Nombre Articulo</th>
+                    <th style="text-align:center">Cantidad</th>
+                    <th style="text-align:center">Opciones</th>
+                    <th style="text-align:center">$ Unitario (Iva inc.)</th>
+                    <th style="text-align:center">$ Total Linea (Iva inc.)</th>                   
+                    <th style="text-align:center">Acciones</th>
                 </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var pp in Model.Pedido.ProductosPedidos)
+                {
+                    var s2 = pp.Articulo.Id + ";" + pp.Id;
+                    double varPrecioTotal = pp.Cantidad * pp.PrecioUnitario;
+
+                    <tr>
+                        <td hidden>@s2</td>
+                        <td style="vertical-align:middle">
+                            <img src=@("/Imagenes/Articulos/" + pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
+                        </td>
+                        <td style="vertical-align:middle"><a title="Ver" href="~/Catalogo/DetalleArticulo/@pp.Articulo.Id"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> @pp.Articulo.Codigo</a></td>
+                        <td style="vertical-align:middle">@pp.Articulo.Nombre</td>
+                        <td style="vertical-align:middle"><input type="number" class="form-control" value="@pp.Cantidad" style="text-align:center;" onchange="actualizarTotales();" /></td>
+                        <td style="vertical-align:middle; text-align:left">
+                            @*<div class="btn-group">
+                            <button data-toggle="dropdown" class="btn dropdown-toggle" data-placeholder="Please select">Checked option <span class="caret"></span></button>
+                            <ul class="dropdown-menu">*@
+                            @foreach (ET.Filtro f in pp.Articulo.Filtros)
+                            {
+                                var s1 = f.Id + ";" + pp.Id;
+                                var sId = f.Id + "" + pp.Id;
+                                <label class="checkbox-inline">
+                                    <input class="filtros" type="checkbox" id="ChkFil_@sId" name="@pp.Id" value="@s1">
+                                    @f.Nombre
+                                </label>
+                                <br>
+                                //if (pp.Articulo.Filtros.Contains(f))
+                                if (Model.FiltrosSeleccionados.Count != 0)
+                                {
+                                    for (int i = 0; i < Model.FiltrosSeleccionados.Count; i++)
+                                    {
+                                        if (Model.FiltrosSeleccionados.ElementAt(i).Id == pp.Id)
+                                        {
+                                            if (Model.FiltrosSeleccionados.ElementAt(i).Articulo.Filtros.Contains(f))
+                                            {
+                                                <script>
+                                                cargarFiltrosAnteriores(@sId);
+                                                function cargarFiltrosAnteriores(filId) {
+                                                    var s = "#ChkFil_" + filId;
+                                                    $(s).prop("checked", true);
+                                                    var sVal = $(s).val();
+                                                    var anterior = $('#CadenaFiltros').val();
+                                                    $('#CadenaFiltros').val(anterior + sVal + ";" + "true ");
+                                                }
+                                                </script>
+                                            }
+                                            i = Model.FiltrosSeleccionados.Count;
+                                        }
+
+                                    }
+                                }
+                                @*<li><input type="checkbox" id="ChkFil_@s1" class="filtros" value="@s1" name="@pp.Id"><label for="ChkFil_@s1" name="NAME" value="VALUE" >@f.Nombre</label></li>*@
+                            }
+                            @*</ul>
+                            </div>*@
+                        </td>
+                        <td style="vertical-align:middle">@pp.PrecioUnitario</td>
+                        <td style="vertical-align:middle">@varPrecioTotal</td>                        
+                        <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
+                    </tr>
+                }
+                @if (Model.Pedido.DescuentoCliente > 0)
+                {
+                <tr>
+                    <td hidden></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="vertical-align:middle"><h4>Descuento cliente preferencial</h4></td>
+                    <td style="vertical-align:middle" ><h4 id="celdaTextoPrecioDescuento"></h4></td>
+                    <td style="vertical-align:middle" ><h4 id="celdaPrecioDescuento"></h4></td>
+                    <td></td>
+                </tr>
+                }
+                <tr>
+                    <td hidden></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="vertical-align:middle"><h2>Monto Total</h2></td>
+                    <td style="vertical-align:middle" >@*<h4>(IVA inc.) </h4>*@</td>
+                    <td style="vertical-align:middle" ><h2 id="celdaPrecioTotal"></h2></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            @{
+                if (Model.ComentarioAnterior != null && !Model.ComentarioAnterior.Trim().Equals(""))
+                {
+                    string[] comentarios = Model.ComentarioAnterior.Trim().Split('|');
+                    foreach (string s in comentarios)
+                    {
+                        <p>
+                            @s
+                        </p>
+                    }
+                }
             }
-            if (Model.Pedido.DescuentoCliente > 0)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
+            @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
+        </div>
+        <br>
+        @Html.HiddenFor(x => x.EstadoPedido)
+        if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+        {
+            <h3>Estado: EN CONSTRUCCIÓN</h3>
+        }
+        else {
+            <h3>Estado: @Model.EstadoPedido</h3>
+        }
+
+        <br>
+        if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+        {
+            <br>
+            <label class="checkbox-inline" style="font-size:large">
+                @Html.CheckBoxFor(x => x.RealizarPedido)
+                Realizar Pedido
+            </label>
+            <br>
+        }
+        <br>
+        <button type="submit" class="btn btn-primary" onclick="GuardarCambios();">
+            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
+        </button>
+
+        if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+        {
+            if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
             {
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td id="celdaTextoPrecioDescuento"></td>
-                <td id="celdaPrecioDescuento"></td>
-                <td></td>
-            </tr>
+                <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@Model.Pedido.Id">Cancelar</a>
             }
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Monto Total: </td>
-                <td id="celdaPrecioTotal"></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.Pedido.PrecioTotal, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.Pedido.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.PrecioTotal, "", new { @class = "text-danger" })*@
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
-        @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario" })
-        @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.EstadoPedido, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.EstadoPedido, new { @id = "estadoPedido", @class = "form-control", @readonly = "readonly" })
-        @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
-    </div>
-
-    <button type="submit" class="btn btn-default" onclick="GenerarStringArticulos();">Guardar</button>
-}
+        }
+        else if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        {
+            if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+            {
+                <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@Model.Pedido.Id">Confirmar</a>
+            }
+            if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+            {
+                <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@Model.Pedido.Id">Cancelar</a>
+            }
+        }
+    }   
+    <script>
+        $(document).on("click", ".filtros", function (event) {
+            var anterior = $('#CadenaFiltros').val();
+            $('#CadenaFiltros').val(anterior + event.target.value + ";" + event.target.checked + " ");
+            //alert($('#CadenaFiltros').val());
+        });       
+    </script>
+</div>

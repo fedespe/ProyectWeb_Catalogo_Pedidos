@@ -13,7 +13,7 @@
     
 
     Array.from(filasConDatos).forEach(function (fila) {
-        var celdaTotalFila = fila.children[6];
+        var celdaTotalFila = fila.children[7];
 
         if (fila.children[4].innerHTML != "") {
             var totalFila = parseFloat(celdaTotalFila.innerHTML);
@@ -25,7 +25,7 @@
     if (celdaPrecioDescuento != null) {
         descuentoCliente = parseFloat(document.getElementById("descuentoCliente").getAttribute("value"));
 
-        celdaTextoPrecioDescuento.innerHTML = "Descuento cliente preferencial (" + descuentoCliente + "%):";
+        celdaTextoPrecioDescuento.innerHTML = descuentoCliente + "%";
         montoDescuentoCliente = montoTotal * descuentoCliente / 100;
         celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente;
     }
@@ -43,7 +43,7 @@ function Eliminar (i) {
         if (cantidadArticulos > 1) {
             document.getElementById("tablaPedidos").deleteRow(i);
 
-            actualizarTotal();
+            actualizarTotalYDescuento();
         }
         else {
             alert("El pedido debe contener al menos un artículo.");
@@ -53,16 +53,17 @@ function Eliminar (i) {
 }
 
 
-function actualizarTotal() {
+function actualizarTotalYDescuento() {
 
-    var total = 0;
-    var elementoTotal = document.getElementById("precioTotal");
+    var total = 0
+    var celdaPrecioTotal = document.getElementById("celdaPrecioTotal");
+    var celdaPrecioDescuento = document.getElementById("celdaPrecioDescuento");
 
     var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
     Array.from(filasConDatos).forEach(function (fila) {
-        var celdaTotalFila = fila.children[6];
-        if (!isNaN(celdaTotalFila.innerHTML)) {
+        var celdaTotalFila = fila.children[7];
+        if (fila.children[4].innerHTML != "") {
             var totalFila = parseInt(celdaTotalFila.innerHTML);
 
             total += totalFila;
@@ -75,12 +76,15 @@ function actualizarTotal() {
 
     if (elementoDescuento != null)
         descuento = parseInt(elementoDescuento.value);
+     
 
     if (descuento > 0) {
+        celdaPrecioDescuento.innerHTML = "$" + (total * descuento / 100);
+
         total -= total * descuento / 100;
     }
-    
-    elementoTotal.setAttribute("value", total);
+
+    celdaPrecioTotal.innerHTML = "$" + total;
 }
 
 function actualizarTotales() {
@@ -89,11 +93,11 @@ function actualizarTotales() {
 
     Array.from(filasConDatos).forEach(function (fila) {
         var totalFila = 0;
-        var celdaTotalFila = fila.children[6];
-        var celdaPrecioUnitario = fila.children[5];
+        var celdaTotalFila = fila.children[7];
+        var celdaPrecioUnitario = fila.children[6];
         var inputCantidad = fila.children[4].children[0];
 
-        if (!isNaN(celdaPrecioUnitario.innerHTML)) {
+        if (fila.children[4].innerHTML != "") {
             var precioUnitario = parseInt(celdaPrecioUnitario.innerHTML);
             var cantidad = parseInt(inputCantidad.value);
 
@@ -114,7 +118,7 @@ function actualizarTotales() {
         }
     });
 
-    actualizarTotal();
+    actualizarTotalYDescuento();
 }
 
 function GenerarStringArticulos() {
@@ -126,7 +130,7 @@ function GenerarStringArticulos() {
 
     Array.from(filasConDatos).forEach(function (fila) {
 
-        if (!isNaN(fila.children[4].children[0])) {
+        if (fila.children[4].innerHTML != "") {
             var celdaArticulo = fila.children[0];
             var articulo = celdaArticulo.innerHTML;
 
@@ -139,3 +143,22 @@ function GenerarStringArticulos() {
 
     inputString.setAttribute("value", cadenaArticulos);
 }
+
+function GuardarCambios() {
+    GenerarStringArticulos();
+}
+
+//Para los Calendarios
+$(function () {
+    $('#dateTimePickerFechaRealizado').datetimepicker({
+        language: 'en',
+        pickTime: false
+    });
+});
+
+$(function () {
+    $('#dateTimePickerFechaEntregaSolicitada').datetimepicker({
+        language: 'en',
+        pickTime: false
+    });
+});

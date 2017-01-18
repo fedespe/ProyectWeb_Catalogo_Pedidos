@@ -120,8 +120,15 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public void completarEditarVM()
         {
             pedidoBL.setearTotal(Pedido);
-            FechaRealizado = Pedido.FechaRealizado;
-            FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
+            if (Pedido.FechaRealizado == new DateTime(1753, 01, 01))
+                FechaRealizado = DateTime.Today;
+            else
+                FechaRealizado = Pedido.FechaRealizado;
+
+            if (Pedido.FechaEntregaSolicitada == new DateTime(1753, 01, 01))
+                FechaEntregaSolicitada = DateTime.Today;
+            else
+                FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
             Iva = parametroBL.obtenerIVA();
             ComentarioAnterior = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
@@ -144,8 +151,10 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                 else
                     Pedido.Comentario = comentario;
             }
+
             if(tipoUsuario.Equals("Administrador"))
                 Pedido.FechaRealizado = FechaRealizado;
+
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
             cargarProductosPedidos();
             pedidoBL.setearTotal(Pedido);

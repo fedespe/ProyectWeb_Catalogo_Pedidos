@@ -5,13 +5,6 @@ C:\Users\Usuario\Desktop\ProyectoProductos\DAL\bin\Debug\ET.pdb
 C:\Users\Usuario\Desktop\ProyectoProductos\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\Usuario\Desktop\ProyectoProductos\DAL\obj\Debug\DAL.dll
 C:\Users\Usuario\Desktop\ProyectoProductos\DAL\obj\Debug\DAL.pdb
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.dll
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.pdb
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.dll
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.pdb
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.dll
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.pdb
 C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.dll
 C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.pdb
 C:\Users\Usuario\Documents\FEDE\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.dll
@@ -26,3 +19,10 @@ C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProd
 C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.dll
 C:\Users\Usuario\Github\ProyectoWeb_Catalogo_Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\DAL.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\bin\Debug\ET.pdb
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.dll
+C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\DAL\obj\Debug\DAL.pdb

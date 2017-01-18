@@ -2,26 +2,7 @@
 @{
     ViewBag.Title = "DetalleArticulo";
 }
-<h2>DetalleArticulo</h2>
-
-@*<div class="row">
-    <div class="col-sm-6 col-md-6">
-        <div class="thumbnail">            
-                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" class="zoom">
-
-                <div class="caption">
-                @foreach (var i in Model.Imagenes)
-                {
-                    <div class="col-xs-3 col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img src="/Imagenes/Articulos/@i.Img" alt="..." class="ImgGal">
-                        </a>
-                    </div>                    
-                }
-                    <div class="clearfix"></div>
-                </div>  
-        </div>
-    </div>*@
+<script src="~/Scripts/agregarArticulo.js"></script>
 <style type="text/css">
     #contenido {
         position: relative;
@@ -36,16 +17,17 @@
 
 <div class="row">
     <div class="col-sm-6 col-md-6">
-        <div class="thumbnail">
+        <br>
+        <div class="thumbnail" style="border-radius:0px; border-color:whitesmoke">
             <div id="contenido">
-                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img">
+                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" style="width:100%; height:100%;">
                 @*<img src="/Imagenes/Articulos/pruebazoom.jpg" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/pruebazoom.jpg">*@
             </div>
             <div class="caption">
                 @foreach (var i in Model.Imagenes)
                 {
                     <div class="col-xs-3 col-md-2">
-                        <a href="#" class="thumbnail">
+                        <a href="#" class="thumbnail sombra">
                             <img src="/Imagenes/Articulos/@i.Img" alt="..." class="ImgGal">
                         </a>
                     </div>
@@ -53,7 +35,7 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-</div>
+    </div>
     <script>
         $(document).ready(function () {
             $("#ImgPrincipal").mlens(
@@ -83,65 +65,68 @@
                 overlayAdapt: true // true if the overlay image has to adapt to the lens size (true/false)
             });
         });
-        $(document).on("change", "#cantidad", function (event) {
-            var total = parseFloat($('#precio').html()) * parseFloat($('#cantidad').val());
+        $(document).on("change", ".cantidad", function (event) {
+            var total = parseFloat($('#precio').html()) * parseFloat($('.cantidad').val());
             $('#total').html("$" + total);
         });
     </script>
 
+    @{
+        var s1 = "unidades" + Model.Id;
+        <div class="col-sm-6 col-md-6">
+            <h2>DetalleArticulo</h2>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td><b>Código:</b> <p class="pull-right">@Model.Codigo</p></td>
+                    </tr>
+                    <tr>
+                        <td><b>Nombre:</b> <p class="pull-right">@Model.Nombre</p></td>
+                    </tr>
+                    <tr>
+                        <td><b>Descripción:</b> <p class="pull-right">@Model.Descripcion</p></td>
+                    </tr>
+                    
+                    @if (Session["TipoUsuario"] != null)
+                    {
+                        <tr>
+                            <td><b>Precio unitario:</b> <p class="pull-right" id="precio">@Model.Precio</p></td>
+                        </tr>
+                        if (Session["TipoUsuario"].Equals("Administrador"))
+                        {
+                            <tr>
+                                <td><b>Stock disponible:</b> <p class="pull-right">@Model.Stock</p></td>
+                            </tr>
+                        }
 
-    <div class="col-sm-6 col-md-6">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td><b>Código:</b> <p class="pull-right">@Model.Codigo</p></td>
-                </tr>
-                <tr>
-                    <td><b>Nombre:</b> <p class="pull-right">@Model.Nombre</p></td>
-                </tr>
-                <tr>
-                    <td><b>Descripción:</b> <p class="pull-right">@Model.Descripcion</p></td>
-                </tr>
-                <tr>
-                    <td><b>Precio unitario:</b> <p class="pull-right" id="precio">@Model.Precio</p></td>
-                </tr>
-                <tr>
-                    <td><b>Stock disponible:</b> <p class="pull-right">@Model.Stock</p></td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Cantidad: </b>
-                        <div class="col-md-3 pull-right">
-                            <input type="number" id="cantidad" class="form-control " placeholder="1">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Total: </b> <p class="pull-right" id="total">$@Model.Precio</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#" class="btn btn-primary pull-right" role="button">
-                            Agregar <span class="glyphicon glyphicon-shopping-cart"></span>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                        <tr>
+                            <td>
+                                <b>Cantidad: </b>
+                                <div class="col-md-3 pull-right">
+                                    <input type="number" class="form-control cantidad" value="1" id="@s1">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Total: </b> <p class="pull-right" id="total">$@Model.Precio</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" class="btn btn-primary pull-right" role="button" OnClick="agregarCarrito(this)" id="@Model.Id">
+                                    Agregar <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
 
 </div>
-@*<script>
-    $(document).on("click", ".ImgGal", function (event) {
-        $('#ImgPrincipal').attr("src", event.target.src);       
-    });
-    $(document).on("change", "#cantidad", function (event) {
-        var total=parseFloat($('#precio').html()) * parseFloat($('#cantidad').val());
-        $('#total').html("$" + total);
-    });
-</script>*@
+
 
 
 

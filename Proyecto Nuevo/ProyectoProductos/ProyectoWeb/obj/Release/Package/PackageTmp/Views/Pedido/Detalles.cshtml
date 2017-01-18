@@ -3,89 +3,114 @@
     ViewBag.Title = "DetallesPedido";
 }
 
-<h2>Detalles del Pedido</h2>
+<div class="row">
+    <h2>Detalles del Pedido</h2>
 
-@Html.HiddenFor(x => x.Id)
-@Html.HiddenFor(x => x.Iva)
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Iva)
 
-<div class="form-group">
-    @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.PrecioTotal, "", new { @class = "text-danger" })*@
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.DescuentoCliente, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.DescuentoCliente, "", new { @class = "text-danger" })*@
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
-    @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.Comentario, "", new { @class = "text-danger" })*@
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.Estado.Nombre, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.Estado.Nombre, "", new { @class = "text-danger" })*@
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(x => x.Cliente.NombreFantasia, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
-    @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
-</div>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Imagen</th>
-            <th>Codigo Articulo</th>
-            <th>Nombre Articulo</th>
-            <th>Cantidad</th>
-            <th>$ Unitario</th>
-            <th>$ Total Linea</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var pp in Model.ProductosPedidos)
-        {
-            double precioTotal = pp.Cantidad * pp.PrecioUnitario;
-
-            <tr>
-                <td> 
-                    <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
-                </td>
-                <td>@pp.Articulo.Codigo</td>
-                <td>@pp.Articulo.Nombre</td>
-                <td>@pp.Cantidad</td>
-                <td>@pp.PrecioUnitario</td>
-                <td>@precioTotal</td>
-            </tr>
+    <div>
+        <h3>Cliente:</h3>
+        <h4>@Model.Cliente.NombreUsuario | @Model.Cliente.NombreFantasia</h4>
+    </div>
+    <div>
+        <h3>Fechas:</h3>
+        <h4>Fecha Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Fecha Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
+    </div>
+    <div>
+        <h3>Descuento:</h3>
+        <h4>@Model.DescuentoCliente</h4>
+    </div>
+    <div>
+        @{
+            if (Model.Comentario != null && !Model.Comentario.Trim().Equals(""))
+            {
+                <h3>Comentarios:</h3>
+                string[] comentarios = Model.Comentario.Trim().Split('|');
+                foreach (string s in comentarios)
+                {
+                    <p>
+                        @s
+                    </p>
+                }
+            }
         }
-    </tbody>
-</table>
+    </div>
+    <div>
+        <h3>Estado:</h3>
+        <p>@Model.Estado.Nombre</p>
+    </div>
 
-@if((Session["TipoUsuario"].ToString().Equals("Administrador") && !Model.Estado.Nombre.Equals("CONFIRMADO") && !Model.Estado.Nombre.Equals("CANCELADO")) || (Session["TipoUsuario"].ToString().Equals("Cliente") && Model.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")))
-{
-    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/"+ @Model.Id>Confirmar</a>
-}
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
+    </div>*@
 
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })        
+    </div>*@
+
+    
+
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.DescuentoCliente, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
+        
+    </div>*@
+
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
+        @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario", @readonly = "readonly" })        
+    </div>*@
+
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.Estado.Nombre, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })        
+    </div>*@
+
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.Cliente.NombreFantasia, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
+        
+    </div>*@
+
+    <table class="table table-hover" style="text-align:center">
+        <thead>
+            <tr>
+                <th style="text-align:center">Imagen</th>
+                <th style="text-align:center">Codigo Articulo</th>
+                <th style="text-align:center">Nombre Articulo</th>
+                <th style="text-align:center">Cantidad</th>
+                <th style="text-align:center">$ Unitario</th>
+                <th style="text-align:center">$ Total Linea</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var pp in Model.ProductosPedidos)
+            {
+                double precioTotal = pp.Cantidad * pp.PrecioUnitario;
+
+                <tr>
+                    <td style="text-align:center"> 
+                        <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
+                    </td>
+                    <td style="text-align:center">@pp.Articulo.Codigo</td>
+                    <td style="text-align:center">@pp.Articulo.Nombre</td>
+                    <td style="text-align:center">@pp.Cantidad</td>
+                    <td style="text-align:center">@pp.PrecioUnitario</td>
+                    <td style="text-align:center">@precioTotal</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })        
+    </div>*@
+    <h1>Monto Total (IVA inc.): $@Model.PrecioTotal</h1>
+</div>
 
 
 

@@ -94,7 +94,7 @@ namespace ProyectoWeb.Controllers
 
                 if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                 {
-                    int idPrimerCliente = clienteBL.obtenerPrimerClienteHabilitado();
+                    int idPrimerCliente = clienteBL.obtenerPrimerNombreFantasiaHabilitado();
                     if(idPrimerCliente == 0)
                     {
                         ViewBag.Mensaje = "Debe existir al menos un cliente registrado y habilitado para poder construir un pedido.";

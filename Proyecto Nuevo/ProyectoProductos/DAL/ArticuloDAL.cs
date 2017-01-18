@@ -73,7 +73,7 @@ namespace DAL
                         {
                             if (ultimoId != Convert.ToInt32(dr["IdArticulo"]))
                             {
-                                Articulo articulo = new Articulo
+                                Articulo articulo = new ET.Articulo
                                 {
                                     Id = Convert.ToInt32(dr["IdArticulo"]),
                                     Codigo = dr["Codigo"].ToString(),

@@ -845,7 +845,7 @@ namespace DAL
                         cmd.Parameters.Clear();
                         cmd.CommandText = cadenaUpdatePedido;
                         cmd.Parameters.AddWithValue("@Id", ped.Id);
-                        if(ped.FechaRealizado == new DateTime())
+                        if(ped.Estado.Nombre.Equals("EN CONSTRUCCION"))
                         {
                             cmd.Parameters.AddWithValue("@FechaRealizado", "17530101");
                         }

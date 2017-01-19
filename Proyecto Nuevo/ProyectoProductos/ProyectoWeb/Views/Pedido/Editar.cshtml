@@ -256,6 +256,10 @@
         }
         else if (Session["TipoUsuario"].ToString().Equals("Administrador"))
         {
+            if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO"))
+            {
+                <a title="MarcarRealiado" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/MarcarRealizado/@Model.Pedido.Id">Marcar Realizado</a>
+            }
             if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
             {
                 <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@Model.Pedido.Id">Confirmar</a>

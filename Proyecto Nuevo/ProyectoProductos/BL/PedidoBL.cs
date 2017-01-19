@@ -113,7 +113,7 @@ namespace BL
             return pedidoDAL.obtenerPorClienteSinContarEnConstruccion(id);
         }
 
-        //CAMBIA EL ESTADO DEL PEDIDO A REALIZADO
+        //CAMBIA EL ESTADO DEL PEDIDO A CONFIRMADO
         public void confirmar(int id)
         {
             pedidoDAL.confirmar(id);
@@ -147,6 +147,12 @@ namespace BL
                 return 0;
             else
                 return pedidoDAL.obtenerCantidadProductos(id);
+        }
+
+        //CAMBIA EL ESTADO DEL PEDIDO A REALIZADO
+        public void marcarRealizado(int id)
+        {
+            pedidoDAL.marcarRealizado(id);
         }
     }
 }

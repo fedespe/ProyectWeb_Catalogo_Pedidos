@@ -1232,7 +1232,7 @@ namespace DAL
         {
             try
             {
-                string cadenaObtenerIdEstadoRealizado = "SELECT Id FROM ESTADO WHERE Nombre = 'REALIZADO';";
+                string cadenaObtenerIdEstadoRealizado = "SELECT Id FROM ESTADO WHERE Nombre = 'CONFIRMADO';";
                 string cadenaUpdate = "UPDATE Pedido SET IdEstado = @IdEstado WHERE Id = @Id;";
                 int idEstado = 0;
 
@@ -1241,6 +1241,34 @@ namespace DAL
                     con.Open();
                     SqlCommand cmd = new SqlCommand(cadenaObtenerIdEstadoRealizado, con);
                     
+                    idEstado = (int)cmd.ExecuteScalar();
+
+                    cmd.CommandText = cadenaUpdate;
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@IdEstado", idEstado);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+        }
+
+        //REVISADO 12/01/17
+        public void marcarRealizado(int id)
+        {
+            try
+            {
+                string cadenaObtenerIdEstadoRealizado = "SELECT Id FROM ESTADO WHERE Nombre = 'REALIZADO';";
+                string cadenaUpdate = "UPDATE Pedido SET IdEstado = @IdEstado WHERE Id = @Id;";
+                int idEstado = 0;
+
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(cadenaObtenerIdEstadoRealizado, con);
+
                     idEstado = (int)cmd.ExecuteScalar();
 
                     cmd.CommandText = cadenaUpdate;

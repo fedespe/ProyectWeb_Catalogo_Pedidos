@@ -100,7 +100,6 @@ namespace DAL
             return articulos;
         }
 
-
         public List<Articulo> obtenerConFiltros(List<Filtro> Filtros){
             List<Articulo> articulos = new List<Articulo>();
             string consulta = "";
@@ -284,7 +283,6 @@ namespace DAL
 
             return articulos;
         }
-
 
         public List<Imagen> obtenerImagenes(int idArticulo) {
             List<Imagen> imagenes = new List<Imagen>();

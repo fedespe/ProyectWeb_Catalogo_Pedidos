@@ -371,7 +371,7 @@ namespace ProyectoWeb.Controllers
                                 return View("~/Views/Shared/_Mensajes.cshtml");
                             }
 
-                            if(p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CANCELADO"))
+                            if(p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO"))
                             {
                                 ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
                                 return View("~/Views/Shared/_Mensajes.cshtml");
@@ -453,7 +453,7 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
 
-                    if (editVM.Pedido.Estado.Nombre.Equals("REALIZADO") || editVM.Pedido.Estado.Nombre.Equals("CANCELADO") || (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")))
+                    if (editVM.Pedido.Estado.Nombre.Equals("REALIZADO") || editVM.Pedido.Estado.Nombre.Equals("CANCELADO") || editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO") || (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")))
                     {
                         ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
                         return View("~/Views/Shared/_Mensajes.cshtml");
@@ -587,6 +587,41 @@ namespace ProyectoWeb.Controllers
             {
                 ViewBag.Mensaje = "Debe indicar qué pedido desea visualizar.";
                 return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+        }
+
+        //LOGICA REVISADA 12/01/17
+        //GET: Pedido/MarcarRealizado
+        public ActionResult MarcarRealizado(int id)
+        {
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                try
+                {
+                    pedidoBL.marcarRealizado(id);
+
+                    Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+
+                    return RedirectToAction("SinConfirmar");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
             }
         }
     }

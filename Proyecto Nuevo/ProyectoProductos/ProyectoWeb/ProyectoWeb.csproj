@@ -214,6 +214,7 @@
     <Content Include="Scripts\agregarArticulo.js" />
     <Content Include="Scripts\articuloCrear.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\detalleArticulo.js" />
     <Content Include="Scripts\dropdowns-enhancement.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.mlens-1.6.min.js" />

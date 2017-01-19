@@ -87,9 +87,32 @@ namespace DAL
                                 articulo.Imagenes.Add(new Imagen { Id = Convert.ToInt32(dr["IdImagen"]), Img = dr["Imagen"].ToString() });
                                 articulos.Add(articulo);
                                 ultimoId = Convert.ToInt32(dr["IdArticulo"]);
-                            }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES                          
+                            }
                         }
-                    }
+                    }                    
+                    cmd.CommandText = @"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.IdFiltro AND IdArticulo =@id";
+                    foreach (Articulo a in articulos) {
+                        //AGREGO FILTROS
+                        cmd.Parameters.Clear();                                
+                        cmd.Parameters.AddWithValue("@id", a.Id);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Filtro filtro = new Filtro
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"]))
+                                };
+                                if (a.Filtros == null) {
+                                    a.Filtros = new List<Filtro>();
+                                }
+                                a.Filtros.Add(filtro);
+                            }
+                        }
+                    }  
+                    
                 }
             }
             catch (Exception ex)
@@ -227,6 +250,31 @@ namespace DAL
                             }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES 
                         }
                     }
+
+                    cmd.CommandText = @"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.IdFiltro AND IdArticulo =@id";
+                    foreach (Articulo a in articulos)
+                    {
+                        //AGREGO FILTROS
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", a.Id);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Filtro filtro = new Filtro
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"]))
+                                };
+                                if (a.Filtros == null)
+                                {
+                                    a.Filtros = new List<Filtro>();
+                                }
+                                a.Filtros.Add(filtro);
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -272,6 +320,31 @@ namespace DAL
                                 articulos.Add(articulo);
                                 ultimoId = Convert.ToInt32(dr["IdArticulo"]);
                             }//EN UN ELSE SI QUISIERA TRAIGO EL RESTO DE LAS IMAGENES 
+                        }
+                    }
+
+                    cmd.CommandText = @"SELECT f.* FROM Filtro_Articulo fa, FILTRO f WHERE f.Id=fa.IdFiltro AND IdArticulo =@id";
+                    foreach (Articulo a in articulos)
+                    {
+                        //AGREGO FILTROS
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", a.Id);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Filtro filtro = new Filtro
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Nombre = dr["Nombre"].ToString(),
+                                    Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"]))
+                                };
+                                if (a.Filtros == null)
+                                {
+                                    a.Filtros = new List<Filtro>();
+                                }
+                                a.Filtros.Add(filtro);
+                            }
                         }
                     }
                 }

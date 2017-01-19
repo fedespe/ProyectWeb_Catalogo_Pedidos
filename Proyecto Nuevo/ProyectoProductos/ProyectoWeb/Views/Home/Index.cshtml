@@ -130,8 +130,9 @@
         <br>
         @foreach (var c in Model.ArticulosDestacados)
         {
-            if (c.Disponible) {
-            var s1 = "unidades" + c.Id;
+            if (c.Disponible)
+            {
+                var s1 = "unidades" + c.Id;
 
                 <div class="col-xs-12 col-sm-6 col-md-3" style="padding-bottom:20px;">
                     <div class="thumbnail sombra">
@@ -141,10 +142,49 @@
                             </div>
                         </a>     
                         <div class="caption">
-                            <h4>Código: @c.Codigo</h4>
-                            <h3>@c.Nombre</h3>
-                                             
-                            
+                            @{
+                                List<string> color = new List<string>();
+                                List<string> material = new List<string>();
+                                string strcol = "";
+                                string strMat = "";
+                                //int cont = 0;
+                                foreach (ET.Filtro f in c.Filtros)
+                                {
+                                    if (f.Color)
+                                    {
+                                        color.Add(f.Nombre);
+                                    }
+                                    else {
+                                        material.Add(f.Nombre);
+                                    }
+                                }
+                                for(int i=0;i<color.Count;i++) {
+                                    if (i != color.Count - 1)
+                                    {
+                                        strcol += color.ElementAt(i) + " | ";
+                                    }
+                                    else {
+                                        strcol += color.ElementAt(i);
+                                    }
+                                }
+                                for (int i = 0; i < material.Count; i++)
+                                {
+                                    if (i != material.Count - 1)
+                                    {
+                                        strMat += material.ElementAt(i) + " | ";
+                                    }
+                                    else {
+                                        strMat += material.ElementAt(i);
+                                    }
+                                }
+                                if (material.Count == 0) { strMat = "Material: Sin descripción"; }
+                                if (color.Count == 0) { strcol = "Color: Sin descripción"; }
+                                <div style="font-size:smaller"><small>@strMat</small></div>
+                                <div style="font-size:smaller"><small>@strcol</small></div>
+                            }
+                            <div style="font-size:medium">@c.Codigo</div>
+                            <div style="font-size:x-large">@c.Nombre</div>
+                                                                                                   
                             @if (Session["TipoUsuario"] != null)
                             {
                                 @*if (c.Stock == 0)
@@ -154,12 +194,12 @@
                                 else {*@
                                 if (Session["TipoUsuario"].Equals("Administrador"))
                                 {
-                                    <h4>Stock: @c.Stock</h4>
+                                    <div style="font-size:medium">Stock: @c.Stock</div>
                                 }
 
                                 //}
 
-                                <h4>Precio: $ @c.Precio c/u</h4>
+                                <div style="font-size:large">Precio: $ @c.Precio c/u</div>
                                 <p>
                                     <div class="input-group">
                                         <input type="number" class="form-control" value="1" id="@s1" onchange="verificarCantidad(this)">

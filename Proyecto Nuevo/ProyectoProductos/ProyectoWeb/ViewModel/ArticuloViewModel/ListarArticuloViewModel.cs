@@ -21,6 +21,7 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         //************************************************************************
         //PROPIEDADES PARA MANEJO DE FILTROS 
         //************************************************************************
+        public bool ChkPrecio { get; set; }
         public List<Filtro> FiltrosTotales { get; set; }
         public List<Filtro> FiltrosAplicados { get; set; }
 
@@ -61,7 +62,14 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
 
         public void cargarArticulosFiltrados() {
             cargarFiltros();
-            Articulos = articuloBL.obtenerConFiltros(FiltrosAplicados);
+            if (ChkPrecio)
+            {
+                Articulos = articuloBL.obtenerConFiltrosPorPrecio(FiltrosAplicados);
+            }
+            else {
+                Articulos = articuloBL.obtenerConFiltros(FiltrosAplicados);
+            }
+            
         }
         
 

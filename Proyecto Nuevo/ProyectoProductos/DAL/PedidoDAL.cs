@@ -1234,19 +1234,64 @@ namespace DAL
             {
                 string cadenaObtenerIdEstadoRealizado = "SELECT Id FROM ESTADO WHERE Nombre = 'CONFIRMADO';";
                 string cadenaUpdate = "UPDATE Pedido SET IdEstado = @IdEstado WHERE Id = @Id;";
+                string cadenaUpdateStock = "UPDATE Articulo SET Stock = Stock-@Cant WHERE Id = @IdArt;";
+                string cadenaSelect = "SELECT * FROM PEDIDO_ARTICULO where IdPedido=@IdPedido";
                 int idEstado = 0;
 
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                SqlTransaction trn = null;
+                try
                 {
-                    con.Open();
-                    SqlCommand cmd = new SqlCommand(cadenaObtenerIdEstadoRealizado, con);
-                    
-                    idEstado = (int)cmd.ExecuteScalar();
+                    using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand(cadenaObtenerIdEstadoRealizado, con);
 
-                    cmd.CommandText = cadenaUpdate;
-                    cmd.Parameters.AddWithValue("@Id", id);
-                    cmd.Parameters.AddWithValue("@IdEstado", idEstado);
-                    cmd.ExecuteNonQuery();
+                        trn = con.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
+                        cmd.Transaction = trn;
+
+                        idEstado = (int)cmd.ExecuteScalar();
+
+                        cmd.CommandText = cadenaUpdate;
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.Parameters.AddWithValue("@IdEstado", idEstado);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = cadenaSelect;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@IdPedido", id);
+                        SqlDataReader dr = cmd.ExecuteReader();
+
+                        List<ArticuloCantidad> listaAC = new List<ArticuloCantidad>();
+                        while (dr.Read()) {
+                            listaAC.Add(new ArticuloCantidad {
+                                Articulo = new Articulo {
+                                    Id = Convert.ToInt32(dr["IdArticulo"])
+                                },
+                                Cantidad = Convert.ToInt32(dr["Cantidad"])
+                            });
+                        }
+                        dr.Close();
+
+                        cmd.CommandText = cadenaUpdateStock;
+                        foreach (ArticuloCantidad ac in listaAC) {
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@Cant", ac.Cantidad);
+                            cmd.Parameters.AddWithValue("@IdArt", ac.Articulo.Id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        trn.Commit();
+                        trn.Dispose();
+                        trn = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (trn != null)
+                    {
+                        trn.Rollback();
+                    }
+                    throw new ProyectoException("Error: " + ex.Message);
                 }
             }
             catch (Exception ex)

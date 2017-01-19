@@ -107,7 +107,11 @@
                     <th style="text-align:center">Cantidad</th>
                     <th style="text-align:center">Opciones</th>
                     <th style="text-align:center">$ Unitario (Iva inc.)</th>
-                    <th style="text-align:center">$ Total Linea (Iva inc.)</th>                   
+                    <th style="text-align:center">$ Total Linea (Iva inc.)</th> 
+                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    {
+                        <th style="text-align:center">Stock</th>
+                    }                  
                     <th style="text-align:center">Acciones</th>
                 </tr>
             </thead>
@@ -170,7 +174,11 @@
                             </div>*@
                         </td>
                         <td style="vertical-align:middle">@pp.PrecioUnitario</td>
-                        <td style="vertical-align:middle">@varPrecioTotal</td>                        
+                        <td style="vertical-align:middle">@varPrecioTotal</td>   
+                        @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        {
+                            <td style="vertical-align:middle">@pp.Articulo.Stock</td>
+                        }                     
                         <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
                     </tr>
                 }
@@ -186,6 +194,10 @@
                     <td style="vertical-align:middle" ><h4 id="celdaTextoPrecioDescuento"></h4></td>
                     <td style="vertical-align:middle" ><h4 id="celdaPrecioDescuento"></h4></td>
                     <td></td>
+                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    {
+                        <td></td>
+                    } 
                 </tr>
                 }
                 <tr>
@@ -198,6 +210,10 @@
                     <td style="vertical-align:middle" >@*<h4>(IVA inc.) </h4>*@</td>
                     <td style="vertical-align:middle" ><h2 id="celdaPrecioTotal"></h2></td>
                     <td></td>
+                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    {
+                        <td></td>
+                    } 
                 </tr>
             </tbody>
         </table>

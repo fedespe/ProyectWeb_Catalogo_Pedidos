@@ -27,6 +27,35 @@ namespace BL
         {
             return articuloDAL.obtenerDestacados();
         }
+        //Todos los articulo con los filtros elegidos
+        public List<Articulo> obtenerConFiltros(List<Filtro> filtros)
+        {
+            return articuloDAL.obtenerConFiltros(filtros);
+        }
+        //todos los articulos de una categoria
+        public List<Articulo> obtenerPorCategoria(int idCategoria)
+        {
+            return articuloDAL.obtenerPorCategoria(idCategoria);
+        }
+        //todos los articulos de una catgegoria con filtros determinados
+        public List<Articulo> obtenerPorCategoriaConFiltros(int idCategoria, List<Filtro> filtros)
+        {
+            return articuloDAL.obtenerPorCategoriaConFiltros(idCategoria, filtros);
+        }
+        //VER QUE ESTOY UTILIZANDO LINQ PARA ORDENAR YA QUE ES COMPLICADO ORDENAR POR PRECIO LA CONSULTA
+        //DE TRAER POR CATEGORIA CON FILTROS (TIENE QUE ORDENARSE POR ID)
+        public List<Articulo> obtenerConFiltrosPorPrecio(List<Filtro> filtros)
+        {
+            List<Articulo> lista = articuloDAL.obtenerConFiltros(filtros);
+            return lista.OrderBy(a=>a.Precio).ToList();
+        }
+        //VER QUE ESTOY UTILIZANDO LINQ PARA ORDENAR YA QUE ES COMPLICADO ORDENAR POR PRECIO LA CONSULTA
+        //DE TRAER POR CATEGORIA CON FILTROS (TIENE QUE ORDENARSE POR ID)
+        public List<Articulo> obtenerPorCategoriaConFiltrosPorPrecio(int idCategoria, List<Filtro> filtros)
+        {
+            List<Articulo> lista = articuloDAL.obtenerPorCategoriaConFiltros(idCategoria, filtros);
+            return lista.OrderBy(a => a.Precio).ToList();
+        }
 
         public bool actualizar(Articulo articulo)
         {
@@ -56,19 +85,7 @@ namespace BL
         {
             return articuloDAL.quitarDestacado(id);
         }
-        //Todos los articulo con los filtros elegidos
-        public List<Articulo> obtenerConFiltros(List<Filtro> filtros) {
-            return articuloDAL.obtenerConFiltros(filtros);
-        }
-        //todos los articulos de una categoria
-        public List<Articulo> obtenerPorCategoria(int idCategoria) {
-            return articuloDAL.obtenerPorCategoria(idCategoria);
-        }
-        //todos los articulos de una catgegoria con filtros determinados
-        public List<Articulo> obtenerPorCategoriaConFiltros(int idCategoria, List<Filtro> filtros)
-        {
-            return articuloDAL.obtenerPorCategoriaConFiltros(idCategoria, filtros);
-        }
+        
 
         private void validar(Articulo articulo)
         {
@@ -87,8 +104,8 @@ namespace BL
                 throw new ProyectoException("Error: la descripción del artículo es requerida y menor a 250 caracteres.");
             if (articulo.Precio <= 0 || Double.IsNaN(articulo.Precio))
                 throw new ProyectoException("Error: el precio del artículo debe ser mayor a cero.");
-            if (articulo.Stock < 0 || Double.IsNaN(articulo.Stock))
-                throw new ProyectoException("Error: el stock del artículo debe ser mayor a cero.");
+            if (Double.IsNaN(articulo.Stock))
+                throw new ProyectoException("Error: el stock del artículo debe ser numérico.");
             //Se puede dejar sin filtros y sin categorias y  luego editar el articulo
             //por lo que no lleva controles
         }

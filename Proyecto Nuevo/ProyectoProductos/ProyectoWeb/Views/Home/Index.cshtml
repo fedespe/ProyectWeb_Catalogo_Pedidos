@@ -162,7 +162,7 @@
                                 <h4>Precio: $ @c.Precio c/u</h4>
                                 <p>
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="Unidades" id="@s1">
+                                        <input type="number" class="form-control" value="1" id="@s1" onchange="verificarCantidad(this)">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
                                         </span>
@@ -176,6 +176,14 @@
                 </div>
             }
         }
+        <script>
+            function verificarCantidad(event) {
+                if (parseInt(event.value) <= 0) {
+                    event.value=1;
+                    //alert("La cantidad no puede ser menor a 1!");
+                }
+            }
+        </script>
         <style>
             .img:hover {
                 -webkit-transform: scale(1.1);

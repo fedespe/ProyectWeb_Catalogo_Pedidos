@@ -47,7 +47,12 @@
                 //************************************************************************            
                 <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
                 <div>
-                    <h3>Filtros</h3>
+                    <h3>Ordenar</h3>
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.ChkPrecio)
+                        Menor Precio
+                    </label>
+                    <h3>Filtros</h3>                   
                     <h4>Material</h4>
                     @foreach (var f in Model.FiltrosTotales)
                     {
@@ -134,7 +139,7 @@
 
                                 <p>                               
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="Unidades" id="@s1">
+                                        <input type="number" class="form-control" value="1" id="@s1" onchange="verificarCantidad(this)">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>
                                         </span>
@@ -149,6 +154,14 @@
             }
         }
         
-    </div>    
+    </div> 
+    <script>
+            function verificarCantidad(event) {
+                if (parseInt(event.value) <= 0) {
+                    event.value=1;
+                    //alert("La cantidad no puede ser menor a 1!");
+                }
+            }
+    </script>   
 </div>
 

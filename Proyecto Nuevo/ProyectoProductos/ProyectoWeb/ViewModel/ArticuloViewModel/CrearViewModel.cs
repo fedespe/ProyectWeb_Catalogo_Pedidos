@@ -42,7 +42,7 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public double Precio { get; set; }
 
         [Display(Name = "Stock")]
-        [Range(0, double.MaxValue)]
+        [Range(double.MinValue, double.MaxValue)]
         public int Stock { get; set; }
 
         [Display(Name = "Destacado")]

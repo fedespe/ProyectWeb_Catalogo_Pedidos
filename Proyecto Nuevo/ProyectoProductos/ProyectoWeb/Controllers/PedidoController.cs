@@ -536,7 +536,10 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
             }
-            else {
+            else {//ver que da error si el modelo no es valido, habria que mandarlo a otra vista con un mensaje
+                //hAY QUE CAMBIAR POR ESTE MENSAJE COMENTADO
+                //ViewBag.Mensaje = "Ocurrio un error inesperado";
+                //return View("~/Views/Shared/_Mensajes.cshtml");
                 return View(editVM);
             }
         }

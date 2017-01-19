@@ -307,27 +307,27 @@ INSERT INTO dbo.ARTICULO VALUES
 ('COD 10','Artículo 10','Descripción Artículo 10',100,90,1,1),
 ('COD 11','Artículo 11','Descripción Artículo 11',10,80,1,1);
 
-INSERT INTO dbo.IMAGEN VALUES
-(1,'ART1_IMG1.jpg'),
-(1,'ART1_IMG2.jpg'),
-(1,'ART1_IMG3.jpg'),
-(2,'ART2_IMG1.jpg'),
-(3,'ART3_IMG1.jpg'),
-(3,'ART3_IMG2.jpg'),
-(4,'ART4_IMG1.jpg'),
-(4,'ART4_IMG2.jpg'),
-(5,'ART5_IMG1.jpg'),
-(6,'ART6_IMG1.jpg'),
-(7,'ART7_IMG1.jpg'),
-(8,'ART8_IMG1.jpg'),
-(9,'ART9_IMG1.jpg'),
-(10,'ART10_IMG1.jpg'),
-(10,'ART10_IMG2.jpg'),
-(1,'ART1_IMG4.jpg'),
-(1,'ART1_IMG5.jpg'),
-(11,'ART11_IMG1.jpg'),
-(11,'ART11_IMG2.jpg'),
-(11,'ART11_IMG3.jpg');
+INSERT INTO IMAGEN VALUES
+(1,'COD1_IMG1.jpg'),
+(1,'COD1_IMG2.jpg'),
+(1,'COD1_IMG3.jpg'),
+(2,'COD2_IMG1.jpg'),
+(3,'COD3_IMG1.jpg'),
+(3,'COD3_IMG2.jpg'),
+(4,'COD4_IMG1.jpg'),
+(4,'COD4_IMG2.jpg'),
+(5,'COD5_IMG1.jpg'),
+(6,'COD6_IMG1.jpg'),
+(7,'COD7_IMG1.jpg'),
+(8,'COD8_IMG1.jpg'),
+(9,'COD9_IMG1.jpg'),
+(10,'COD10_IMG1.jpg'),
+(10,'COD10_IMG2.jpg'),
+(1,'COD1_IMG4.jpg'),
+(1,'COD1_IMG5.jpg'),
+(11,'COD11_IMG1.jpg'),
+(11,'COD11_IMG2.jpg'),
+(11,'COD11_IMG3.jpg');
 
 INSERT INTO dbo.ARTICULO_CATEGORIA VALUES
 (1,1),

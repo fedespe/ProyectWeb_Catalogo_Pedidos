@@ -33,14 +33,35 @@
                 @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
             </div>
 
+            if (!Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+            {
+                @*<div class="form-group">
+                    @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })*@
+                    @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
+                @*</div>*@
+
+                @Html.HiddenFor(x => x.FechaRealizado, new { @id = "fechaRealizado" });
+
+                //Calendario hecho a mano Para Fecha Realizado
+                <div class="form-group">
+                    <label class="control-label">Fecha Realizado</label>
+                    <input type="text" class="datepicker form-control" data-date-weekStart='1' data-date-format="dd/mm/yyyy" id="fechaRealizadoCalendario">
+                    @*data-date-weekStart='1' - Comienza en Lunes*@
+                    @*data-date-format="dd/mm/yyyy" - Muestra ese formato de fecha*@
+                </div>
+            }
+
+
+
             //Calendario 1
-            <div class="form-group" id="dateTimePickerFechaRealizado">
+            @*<div class="form-group" id="dateTimePickerFechaRealizado">
                 @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label"})
-                @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control add-on", @placeholder = "Fecha Realizado", @type = "text" })
+                @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control add-on", @placeholder = "Fecha Realizado", @type = "text" })*@
                 @*<span class="add-on glyphicon glyphicon-calendar">
                 </span>*@
                 @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
-            </div>
+            @*</div>*@
         }
         else
         {
@@ -51,14 +72,30 @@
         }
         <br>
 
-        //Calendario 2
-        <div class="form-group" id="dateTimePickerFechaEntregaSolicitada">
+        @*<div class="form-group">
             @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control add-on", @placeholder = "Fecha Entrega Solicitada", @type = "text" })
+            @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada" })*@
+            @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
+        @*</div>*@
+
+        @Html.HiddenFor(x => x.FechaEntregaSolicitada, new { @id = "fechaEntregaSolicitada" });
+
+        //Calendario hecho a mano Para Fecha Entrega Solicitada
+        <div class="form-group">
+            <label class="control-label">Fecha Entrega Solicitada</label>
+            <input type="text" class="datepicker form-control" data-date-weekStart='1' data-date-format="dd/mm/yyyy" id="fechaEntregaSolicitadaCalendario">
+            @*data-date-weekStart='1' - Comienza en Lunes*@
+            @*data-date-format="dd/mm/yyyy" - Muestra ese formato de fecha*@
+        </div>
+
+        //Calendario 2
+        @*<div class="form-group" id="dateTimePickerFechaEntregaSolicitada">
+            @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control add-on", @placeholder = "Fecha Entrega Solicitada", @type = "text" })*@
             @*<span class="add-on glyphicon glyphicon-calendar">
                 </span>*@
             @*@Html.ValidationMessageFor(x => x.FechaEntregaSolicitada, "", new { @class = "text-danger" })*@
-        </div>
+        @*</div>*@
 
         <table id="tablaPedidos" class="table table-hover" style="text-align:center">
             <thead>

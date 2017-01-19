@@ -120,15 +120,10 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public void completarEditarVM()
         {
             pedidoBL.setearTotal(Pedido);
-            if (Pedido.FechaRealizado == new DateTime(1753, 01, 01))
-                FechaRealizado = DateTime.Today;
-            else
-                FechaRealizado = Pedido.FechaRealizado;
 
-            if (Pedido.FechaEntregaSolicitada == new DateTime(1753, 01, 01))
-                FechaEntregaSolicitada = DateTime.Today;
-            else
-                FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
+            FechaRealizado = Pedido.FechaRealizado;
+            FechaEntregaSolicitada = Pedido.FechaEntregaSolicitada;
+
             Iva = parametroBL.obtenerIVA();
             ComentarioAnterior = Pedido.Comentario;
             EstadoPedido = Pedido.Estado.Nombre;
@@ -156,6 +151,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                 Pedido.FechaRealizado = FechaRealizado;
 
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
+
             cargarProductosPedidos();
             pedidoBL.setearTotal(Pedido);
             cargarFiltros();//en el post
@@ -165,6 +161,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         {
             Pedido.Cliente = clienteBL.obtener(IdCliente);
         }
+
         private void cargarPedido()
         {
             Pedido = pedidoBL.obtener(IdPedido);

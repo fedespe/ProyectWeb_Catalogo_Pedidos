@@ -31,6 +31,11 @@
     }
 
     celdaPrecioTotal.innerHTML = "$" + (montoTotal - montoDescuentoCliente);
+
+    //A todo lo que tiene la clase datepicker le relaciona un calendario
+    $('.datepicker').datepicker();
+
+    cargarCalendarios();
 });
 
 function Eliminar (i) {
@@ -146,19 +151,42 @@ function GenerarStringArticulos() {
 
 function GuardarCambios() {
     GenerarStringArticulos();
+    cargarFechasCalendarios();
 }
 
-//Para los Calendarios
-$(function () {
-    $('#dateTimePickerFechaRealizado').datetimepicker({
-        language: 'en',
-        pickTime: false
-    });
-});
+function cargarFechasCalendarios() {
+    if ($("#fechaRealizadoCalendario") != null) {
+        var fechaRealizado = $("#fechaRealizadoCalendario").val();
 
-$(function () {
-    $('#dateTimePickerFechaEntregaSolicitada').datetimepicker({
-        language: 'en',
-        pickTime: false
-    });
-});
+        if($("#fechaRealizado") != null){
+            $("#fechaRealizado").val(fechaRealizado);
+        }
+    }
+
+    if ($("#fechaEntregaSolicitadaCalendario") != null) {
+        var fechaEntregaSolicitada = $("#fechaEntregaSolicitadaCalendario").val();
+
+        if ($("#fechaEntregaSolicitada") != null) {
+            $("#fechaEntregaSolicitada").val(fechaEntregaSolicitada);
+        }
+    }
+}
+
+function cargarCalendarios() {
+
+    if ($("#fechaRealizado") != null && $("#fechaRealizado").val() != null) {
+        var fechaRealizado = $("#fechaRealizado").val().substring(0, 10);
+
+        if ($("#fechaRealizadoCalendario") != null) {
+            $("#fechaRealizadoCalendario").val(fechaRealizado);
+        }
+    }
+
+    if ($("#fechaEntregaSolicitada") != null && $("#fechaEntregaSolicitada").val() != null) {
+        var fechaEntregaSolicitada = $("#fechaEntregaSolicitada").val().substring(0, 10);
+
+        if ($("#fechaEntregaSolicitadaCalendario") != null) {
+            $("#fechaEntregaSolicitadaCalendario").val(fechaEntregaSolicitada);
+        }
+    }
+}

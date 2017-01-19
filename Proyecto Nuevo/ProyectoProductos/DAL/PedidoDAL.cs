@@ -75,6 +75,8 @@ namespace DAL
                             string nombreContacto = "";
                             string telefonoContacto = "";
                             string emailContacto = "";
+                            DateTime fechaRealizado = new DateTime();
+                            DateTime fechaEntregaSolicitada = new DateTime();
 
                             if (dr["Comentario"] != DBNull.Value)
                             {
@@ -120,12 +122,20 @@ namespace DAL
                             {
                                 enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
                             }
+                            if (dr["FechaRealizado"] != DBNull.Value)
+                            {
+                                fechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]);
+                            }
+                            if (dr["FechaEntregaSolicitada"] != DBNull.Value)
+                            {
+                                fechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]);
+                            }
 
                             Pedido ped = new Pedido
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
-                                FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
-                                FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
+                                FechaRealizado = fechaRealizado,
+                                FechaEntregaSolicitada = fechaEntregaSolicitada,
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
                                 Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),
@@ -269,7 +279,6 @@ namespace DAL
             }
         }
 
-
         //LOGICA 14/01/17
         public Pedido obtener(int id)
         {
@@ -332,7 +341,7 @@ namespace DAL
                         int ultimoIdFiltro = 0;
                         bool primera = true;
                         while (dr.Read())                           
-                        {                            
+                        {
                             if (primera) {
                                 string comentario = "";
                                 int enConstruccion = 0;
@@ -345,6 +354,8 @@ namespace DAL
                                 string nombreContacto = "";
                                 string telefonoContacto = "";
                                 string emailContacto = "";
+                                DateTime fechaRealizado = new DateTime();
+                                DateTime fechaEntregaSolicitada = new DateTime();
 
                                 if (dr["Comentario"] != DBNull.Value)
                                 {
@@ -390,6 +401,14 @@ namespace DAL
                                 {
                                     enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
                                 }
+                                if (dr["FechaRealizado"] != DBNull.Value)
+                                {
+                                    fechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]);
+                                }
+                                if (dr["FechaEntregaSolicitada"] != DBNull.Value)
+                                {
+                                    fechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]);
+                                }
 
                                 List<Imagen> imagenes = new List<Imagen>();
                                 Imagen img = new Imagen
@@ -401,8 +420,8 @@ namespace DAL
                                 pedido = new Pedido
                                 {
                                     Id = Convert.ToInt32(dr["Id"]),
-                                    FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
-                                    FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
+                                    FechaRealizado = fechaRealizado,
+                                    FechaEntregaSolicitada = fechaEntregaSolicitada,
                                     DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
                                     Comentario = comentario,
                                     Iva = Convert.ToDouble(dr["Iva"]),
@@ -576,13 +595,8 @@ namespace DAL
             return lista;
         }
            
-        
-            
-            
-            
-
-    //LOGICA REVISADA 12/01/17
-    public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
+        //LOGICA REVISADA 12/01/17
+        public List<Pedido> obtenerPorClienteSinContarEnConstruccion(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();
 
@@ -645,6 +659,8 @@ namespace DAL
                             string nombreContacto = "";
                             string telefonoContacto = "";
                             string emailContacto = "";
+                            DateTime fechaRealizado = new DateTime();
+                            DateTime fechaEntregaSolicitada = new DateTime();
 
                             if (dr["Comentario"] != DBNull.Value)
                             {
@@ -690,11 +706,20 @@ namespace DAL
                             {
                                 enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
                             }
+                            if (dr["FechaRealizado"] != DBNull.Value)
+                            {
+                                fechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]);
+                            }
+                            if (dr["FechaEntregaSolicitada"] != DBNull.Value)
+                            {
+                                fechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]);
+                            }
+
                             Pedido ped = new Pedido
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
-                                FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
-                                FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
+                                FechaRealizado = fechaRealizado,
+                                FechaEntregaSolicitada = fechaEntregaSolicitada,
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
                                 Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),
@@ -847,15 +872,16 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Id", ped.Id);
                         if(ped.Estado.Nombre.Equals("EN CONSTRUCCION"))
                         {
-                            cmd.Parameters.AddWithValue("@FechaRealizado", "17530101");
+                            cmd.Parameters.AddWithValue("@FechaRealizado", DBNull.Value);
                         }
                         else
                         {
                             cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
                         }
+
                         if (ped.FechaEntregaSolicitada == new DateTime())
                         {
-                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", "17530101");
+                            cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", DBNull.Value);
                         }
                         else
                         {
@@ -920,8 +946,8 @@ namespace DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(cadenaInsertPedido, con))
                     {
-                        cmd.Parameters.AddWithValue("@FechaRealizado", "17530101");
-                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", "17530101");
+                        cmd.Parameters.AddWithValue("@FechaRealizado", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", DBNull.Value);
                         cmd.Parameters.AddWithValue("@DescuentoCliente", ped.Cliente.Descuento);
                         cmd.Parameters.AddWithValue("@Iva", ped.Iva);
                         cmd.Parameters.AddWithValue("@IdCliente", ped.Cliente.Id);
@@ -1047,6 +1073,8 @@ namespace DAL
                             string nombreContacto = "";
                             string telefonoContacto = "";
                             string emailContacto = "";
+                            DateTime fechaRealizado = new DateTime();
+                            DateTime fechaEntregaSolicitada = new DateTime();
 
                             if (dr["Comentario"] != DBNull.Value)
                             {
@@ -1092,12 +1120,20 @@ namespace DAL
                             {
                                 enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
                             }
+                            if (dr["FechaRealizado"] != DBNull.Value)
+                            {
+                                fechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]);
+                            }
+                            if (dr["FechaEntregaSolicitada"] != DBNull.Value)
+                            {
+                                fechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]);
+                            }
 
                             Pedido ped = new Pedido
                             {
                                 Id = Convert.ToInt32(dr["Id"]),
-                                FechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]),
-                                FechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]),
+                                FechaRealizado = fechaRealizado,
+                                FechaEntregaSolicitada = fechaEntregaSolicitada,
                                 DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
                                 Comentario = comentario,
                                 Iva = Convert.ToDouble(dr["Iva"]),

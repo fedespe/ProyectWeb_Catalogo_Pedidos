@@ -355,5 +355,3 @@ C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\Proye
 C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ProyectoWeb\obj\Debug\ProyectoWeb.csprojResolveAssemblyReference.cache
 C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ProyectoWeb\obj\Debug\ProyectoWeb.dll
 C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ProyectoWeb\obj\Debug\ProyectoWeb.pdb
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ProyectoWeb\bin\ProyectoWeb.dll.CodeAnalysisLog.xml
-C:\Users\usuario\Documents\GitHub\Proyecto Catalogo Pedidos\Proyecto Nuevo\ProyectoProductos\ProyectoWeb\bin\ProyectoWeb.dll.lastcodeanalysissucceeded

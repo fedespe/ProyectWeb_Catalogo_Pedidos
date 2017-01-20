@@ -92,5 +92,13 @@ namespace BL
         {
             return clienteDAL.obtenerPrimerNombreFantasiaHabilitado();
         }
+        public bool inhabilitar(int id)
+        {
+            return clienteDAL.inhabilitar(id);
+        }
+        public bool habilitar(int id)
+        {
+            return clienteDAL.habilitar(id);
+        }
     }
 }

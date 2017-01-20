@@ -179,15 +179,48 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    List<Pedido> pedidos = pedidoBL.obtenerTodosSinContarEnConstruccion();
+                    HistoricoViewModel HistoricoVM = new HistoricoViewModel();
 
-                    if (pedidos.Count > 0)
-                        return View(pedidos);
+                    if (HistoricoVM.Pedidos.Count > 0)
+                        return View(HistoricoVM);
                     else
                     {
                         ViewBag.Mensaje = "No existen pedidos.";
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+            else
+            {
+                try
+                {
+                    ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+                catch (ProyectoException ex)
+                {
+                    ViewBag.Mensaje = ex.Message;
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+            }
+        }
+        //POST: Pedido/Historico
+        [HttpPost]
+        public ActionResult Historico(HistoricoViewModel HistoricoVM)
+        {
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                try
+                {
+                    HistoricoVM.cargarHistoricoFiltrado();
+
+                    return View(HistoricoVM);
+                   
                 }
                 catch (ProyectoException ex)
                 {
@@ -228,7 +261,7 @@ namespace ProyectoWeb.Controllers
                         {
                             if (Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && (Session["NombreUsuario"].ToString().Equals(ped.Cliente.NombreUsuario))))
                             {
-                                if (!ped.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                                if (!ped.Estado.Nombre.Equals("EN CONSTRUCCION") || Session["TipoUsuario"].ToString().Equals("Administrador"))
                                 {
                                     return View(ped);
                                 }

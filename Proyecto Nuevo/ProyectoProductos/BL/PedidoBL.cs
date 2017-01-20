@@ -12,6 +12,43 @@ namespace BL
     {
         private PedidoDAL pedidoDAL = new PedidoDAL();
 
+        //OBTIENE TODOS LOS PEDIDOS 
+        //SOLO TRAE LA PRIMERA LINEA DEL PEDIDO
+        public List<Pedido> obtenerTodos()
+        {
+            return pedidoDAL.obtenerTodos();
+        }
+
+        //Todas las consultas realizadas con linq se pueden optimizar yendo directamente a la base
+        //es solo agregar el filtro de estado del pedido a la consulta de obtener todos
+        //NO SE ESTAN UTILIZANDO POR QUE EN LOS VIEW MODEL DE HISTORICO OBTENGO TODOS Y DESPUES
+        //LE APLICO LOS FILTROS ES MAS EFICIENTE
+        public List<Pedido> obtenerConfirmados()
+        {
+            return pedidoDAL.obtenerTodos().Where(p => p.Estado.Nombre.Equals("CONFIRMADO")).OrderByDescending(p => p.FechaRealizado).ToList();
+        }
+        public List<Pedido> obtenerModificadosPorAdmin()
+        {
+            return pedidoDAL.obtenerTodos().Where(p => p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR")).OrderByDescending(p => p.FechaRealizado).ToList();
+        }
+        public List<Pedido> obtenerConfirmadosPorCliente()
+        {
+            return pedidoDAL.obtenerTodos().Where(p => p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")).OrderByDescending(p => p.FechaRealizado).ToList();
+        }
+        public List<Pedido> obtenerRealizados()
+        {
+            return pedidoDAL.obtenerTodos().Where(p => p.Estado.Nombre.Equals("REALIZADO")).OrderByDescending(p => p.FechaRealizado).ToList();
+        }
+        public List<Pedido> obtenerCancelados()
+        {
+            return pedidoDAL.obtenerTodos().Where(p => p.Estado.Nombre.Equals("CANCELADO")).OrderByDescending(p => p.FechaRealizado).ToList();
+        }
+        public List<Pedido> obtenerEnConstruccion()
+        {
+            return pedidoDAL.obtenerTodos().Where(p => p.Estado.Nombre.Equals("EN CONSTRUCCION")).OrderByDescending(p => p.FechaRealizado).ToList();
+        }
+
+
         //OBTIENE TODOS LOS PEDIDOS MENOS LOS QUE SE ENCUENTRAN EN CONSTRUCCION
         //SOLO TRAE LA PRIMERA LINEA DEL PEDIDO
         public List<Pedido> obtenerTodosSinContarEnConstruccion()

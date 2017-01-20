@@ -11,6 +11,223 @@ namespace DAL
 {
     public class PedidoDAL
     {
+        public List<Pedido> obtenerTodos()
+        {
+            List<Pedido> pedidos = new List<Pedido>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand(@"
+                    SELECT
+
+	                    P.Id as Id, P.FechaRealizado, P.FechaEntregaSolicitada,
+	                    P.DescuentoCliente as DescuentoCliente, P.Comentario, P.Iva, P.Comentario,
+
+	                    E.Id as IdEstado, E.Nombre as Estado,
+
+	                    C.Id as IdCliente, C.Usuario, C.NombreFantasia, C.Rut, C.RazonSocial,
+                        C.Descuento as DescuentoClienteActual, C.DiasDePago, C.Direccion, C.Telefono, C.NombreContacto,
+                        C.TelefonoContacto, C.EmailContacto, C.Imagen, C.EnConstruccion,
+
+	                    PA.Id as IdPedidoCantidad, PA.Cantidad, PA.PrecioUnitario,
+
+	                    A.Id as IdArticulo, A.Codigo, A.Nombre as NombreArticulo, A.Descripcion as DescripcionArticulo,
+                        A.Precio as PrecioArticuloActual, A.Stock, A.Disponible, A.Destacado
+
+                    FROM
+	                    PEDIDO P,
+	                    ESTADO E,
+	                    CLIENTE C,
+	                    PEDIDO_ARTICULO PA,
+	                    ARTICULO A
+                    WHERE
+	                    P.IdEstado = E.Id AND
+	                    P.IdCliente = C.Id AND
+	                    PA.IdPedido = P.Id AND
+	                    PA.IdArticulo = A.Id 
+                    ORDER BY
+	                    Id,
+	                    IdArticulo,
+                        FechaRealizado desc,
+                        FechaEntregaSolicitada desc
+                    ;", con);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+
+                            string comentario = "";
+                            int enConstruccion = 0;
+                            string nombreFantasia = "";
+                            string rut = "";
+                            string razonSocial = "";
+                            string diasDePago = "";
+                            string direccion = "";
+                            string telefono = "";
+                            string nombreContacto = "";
+                            string telefonoContacto = "";
+                            string emailContacto = "";
+                            DateTime fechaRealizado = new DateTime();
+                            DateTime fechaEntregaSolicitada = new DateTime();
+
+                            if (dr["Comentario"] != DBNull.Value)
+                            {
+                                comentario = dr["Comentario"].ToString();
+                            }
+                            if (dr["NombreFantasia"] != DBNull.Value)
+                            {
+                                nombreFantasia = dr["NombreFantasia"].ToString();
+                            }
+                            if (dr["Rut"] != DBNull.Value)
+                            {
+                                rut = dr["Rut"].ToString();
+                            }
+                            if (dr["RazonSocial"] != DBNull.Value)
+                            {
+                                razonSocial = dr["RazonSocial"].ToString();
+                            }
+                            if (dr["DiasDePago"] != DBNull.Value)
+                            {
+                                diasDePago = dr["DiasDePago"].ToString();
+                            }
+                            if (dr["Direccion"] != DBNull.Value)
+                            {
+                                direccion = dr["Direccion"].ToString();
+                            }
+                            if (dr["Telefono"] != DBNull.Value)
+                            {
+                                telefono = dr["Telefono"].ToString();
+                            }
+                            if (dr["NombreContacto"] != DBNull.Value)
+                            {
+                                nombreContacto = dr["NombreContacto"].ToString();
+                            }
+                            if (dr["TelefonoContacto"] != DBNull.Value)
+                            {
+                                telefonoContacto = dr["TelefonoContacto"].ToString();
+                            }
+                            if (dr["EmailContacto"] != DBNull.Value)
+                            {
+                                emailContacto = dr["EmailContacto"].ToString();
+                            }
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                            {
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+                            }
+                            if (dr["FechaRealizado"] != DBNull.Value)
+                            {
+                                fechaRealizado = Convert.ToDateTime(dr["FechaRealizado"]);
+                            }
+                            if (dr["FechaEntregaSolicitada"] != DBNull.Value)
+                            {
+                                fechaEntregaSolicitada = Convert.ToDateTime(dr["FechaEntregaSolicitada"]);
+                            }
+
+                            Pedido ped = new Pedido
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                FechaRealizado = fechaRealizado,
+                                FechaEntregaSolicitada = fechaEntregaSolicitada,
+                                DescuentoCliente = Convert.ToDouble(dr["DescuentoCliente"]),
+                                Comentario = comentario,
+                                Iva = Convert.ToDouble(dr["Iva"]),
+
+                                Estado = new EstadoPedido
+                                {
+                                    Id = Convert.ToInt32(dr["IdEstado"]),
+                                    Nombre = dr["Estado"].ToString(),
+                                },
+
+                                Cliente = new Cliente
+                                {
+                                    Id = Convert.ToInt32(dr["IdCliente"]),
+                                    NombreUsuario = dr["Usuario"].ToString(),
+                                    NombreFantasia = nombreFantasia,
+                                    Rut = rut,
+                                    RazonSocial = razonSocial,
+                                    Descuento = Convert.ToDouble(dr["DescuentoClienteActual"]),
+                                    DiasDePago = diasDePago,
+                                    Direccion = direccion,
+                                    Telefono = telefono,
+                                    NombreDeContacto = nombreContacto,
+                                    TelefonoDeContacto = telefonoContacto,
+                                    EmailDeContacto = emailContacto,
+                                    Foto = dr["Imagen"].ToString(),
+                                    IdPedidoEnConstruccion = enConstruccion
+                                },
+                                ProductosPedidos = new List<ArticuloCantidad>()
+                            };
+
+                            ArticuloCantidad ac = new ArticuloCantidad
+                            {
+                                Cantidad = Convert.ToInt32(dr["Cantidad"]),
+                                PrecioUnitario = Convert.ToDouble(dr["PrecioUnitario"]),
+                                Articulo = new Articulo
+                                {
+                                    Id = Convert.ToInt32(dr["IdArticulo"]),
+                                    Codigo = dr["Codigo"].ToString(),
+                                    Nombre = dr["NombreArticulo"].ToString(),
+                                    Descripcion = dr["DescripcionArticulo"].ToString(),
+                                    Precio = Convert.ToDouble(dr["PrecioArticuloActual"]),
+                                    Stock = Convert.ToInt32(dr["Stock"]),
+                                    Disponible = (Convert.ToInt32(dr["Disponible"]) == 0 ? false : true),
+                                    Destacado = (Convert.ToInt32(dr["Destacado"]) == 0 ? false : true)
+                                }
+                            };
+
+                            ped.ProductosPedidos.Add(ac);
+
+                            pedidos.Add(ped);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            if (pedidos.Count() >= 1)
+            {
+                int i = 1;
+                while (i < pedidos.Count())
+                {
+                    if (pedidos[i].Id == pedidos[i - 1].Id)
+                    {
+                        pedidos[i - 1].ProductosPedidos.Add(pedidos[i].ProductosPedidos[0]);
+                        pedidos.RemoveAt(i);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+
+            foreach (Pedido p in pedidos)
+            {
+                double precioTot = 0;
+
+                foreach (ArticuloCantidad acp in p.ProductosPedidos)
+                {
+                    precioTot += acp.Cantidad * acp.PrecioUnitario;
+                }
+
+                precioTot -= precioTot * p.DescuentoCliente / 100;
+
+                p.PrecioTotal = precioTot;
+            }
+
+            return pedidos;
+        }
+
+
         //LOGICA REVISADA 12/01/17
         public List<Pedido> obtenerTodosSinContarEnConstruccion()
         {
@@ -544,9 +761,11 @@ namespace DAL
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
                 {
-                    using (SqlCommand cmd = new SqlCommand(@"Select paf.* from Pedido_Articulo_Filtro paf, PEDIDO_ARTICULO pa where paf.IdPedidoArticulo=pa.Id and pa.idPedido=@idPedido;", con))
+                    //using (SqlCommand cmd = new SqlCommand(@"Select paf.* from Pedido_Articulo_Filtro paf, PEDIDO_ARTICULO pa where paf.IdPedidoArticulo=pa.Id and pa.idPedido=@idPedido;", con))
+                    using (SqlCommand cmd = new SqlCommand(@"Select paf.*, f.Nombre, f.Color from Pedido_Articulo_Filtro paf, PEDIDO_ARTICULO pa, FILTRO f 
+                                                            where f.Id=paf.IdFiltro and paf.IdPedidoArticulo=pa.Id and pa.idPedido=@idPedido;", con))
                     {
-                        
+
                         if (pedido != null)
                         {
                             con.Open();
@@ -560,7 +779,9 @@ namespace DAL
                                     List<Filtro> filtros = new List<Filtro>();
                                     Filtro f = new Filtro
                                     {
-                                        Id = Convert.ToInt32(dr["idFiltro"])
+                                        Id = Convert.ToInt32(dr["idFiltro"]),
+                                        Nombre = Convert.ToString(dr["Nombre"]),
+                                        Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"])),
                                     };
                                     filtros.Add(f);
                                     ArticuloCantidad ac = new ArticuloCantidad
@@ -577,13 +798,15 @@ namespace DAL
                                 else {
                                     Filtro f = new Filtro
                                     {
-                                        Id = Convert.ToInt32(dr["idFiltro"])
+                                        Id = Convert.ToInt32(dr["idFiltro"]),
+                                        Nombre = Convert.ToString(dr["Nombre"]),
+                                        Color = Convert.ToBoolean(Convert.ToInt32(dr["Color"])),
                                     };
                                     lista.ElementAt(lista.Count - 1).Articulo.Filtros.Add(f);
                                 }
                             }
                         }
-                        
+
                     }
                 }
             }

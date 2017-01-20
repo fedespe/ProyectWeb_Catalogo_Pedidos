@@ -31,6 +31,7 @@ namespace ET
         public string EmailDeContacto { get; set; }
 
         public string Foto { get; set; }
+        public bool Habilitado { get; set; }
 
         public List<Pedido> Pedidos { get; set; }
     }

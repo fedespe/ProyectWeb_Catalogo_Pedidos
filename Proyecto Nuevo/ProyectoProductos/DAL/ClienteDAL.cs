@@ -45,7 +45,8 @@ namespace DAL
                                 NombreDeContacto = dr["NombreContacto"].ToString(),
                                 TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
                                 EmailDeContacto = dr["EmailContacto"].ToString(),
-                                Foto = dr["Imagen"].ToString()
+                                Foto = dr["Imagen"].ToString(),
+                                Habilitado=Convert.ToBoolean(Convert.ToInt32(dr["Habilitado"]))
                             };
                             clientes.Add(cli);
                         }
@@ -94,7 +95,7 @@ namespace DAL
                 {
                     con.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente WHERE usuario = @usu AND contrasenia=@pass", con);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente WHERE usuario = @usu AND contrasenia=@pass AND Habilitado=1", con);
                     cmd.Parameters.AddWithValue("@usu", nombre);
                     cmd.Parameters.AddWithValue("@pass", Utilidades.calculateMD5Hash(pass));
 
@@ -342,5 +343,44 @@ namespace DAL
                 throw new ProyectoException(ex.Message);
             }
         }
+        public bool inhabilitar(int id)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("Update Cliente SET Habilitado = 0 WHERE id = @id", con);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    int res = cmd.ExecuteNonQuery();
+                    return cmd.ExecuteNonQuery() >= 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+        }
+        public bool habilitar(int id)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("Update Cliente SET Habilitado = 1 WHERE id = @id", con);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    return cmd.ExecuteNonQuery() == 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+        }
+
+
     }
 }

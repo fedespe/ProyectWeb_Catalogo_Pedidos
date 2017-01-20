@@ -357,11 +357,22 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    pedidoBL.confirmar(id);
+                    Pedido p = pedidoBL.obtener(id);
+                    if (p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                    {
+                        pedidoBL.confirmar(id);
 
-                    Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+                        Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
-                    return RedirectToAction("SinConfirmar");
+                        //return RedirectToAction("SinConfirmar");
+                        ViewBag.Mensaje = "Su gestión ha sido realizada con exito.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                    else {
+                        ViewBag.Mensaje = "No es posible confirmar el pedido seleccionado.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                    
                 }
                 catch (ProyectoException ex)
                 {
@@ -558,9 +569,11 @@ namespace ProyectoWeb.Controllers
                                 clienteBL.registrarPedidoEnConstruccion(editVM.Pedido.Cliente, 0);
                             }
                         }
-                            
-                        editVM.completarEditarVM();
-                        return View(editVM);
+
+                        //editVM.completarEditarVM();
+                        //return View(editVM);
+                        ViewBag.Mensaje = "Su gestión ha sido realizada con exito.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                 }
                 catch (ProyectoException ex)
@@ -634,11 +647,21 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    pedidoBL.marcarRealizado(id);
+                    Pedido p = pedidoBL.obtener(id);
+                    if (p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("EN CONSTRUCCION") || p.Estado.Nombre.Equals("CONFIRMADO"))
+                    {
+                        pedidoBL.marcarRealizado(id);
 
-                    Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+                        Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
-                    return RedirectToAction("SinConfirmar");
+                        //return RedirectToAction("SinConfirmar");
+                        ViewBag.Mensaje = "Su gestión ha sido realizada con exito.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                    else {
+                        ViewBag.Mensaje = "No es posible marcar como realizado el pedido seleccionado.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
                 }
                 catch (ProyectoException ex)
                 {

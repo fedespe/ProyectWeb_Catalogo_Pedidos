@@ -29,8 +29,18 @@
         if (Session["TipoUsuario"].ToString().Equals("Administrador"))
         {
             <div class="form-group">
-                @Html.DropDownListFor(model => model.IdCliente, Model.Clientes, new { @class = "selectpicker form-control", @id = "ddlNombreFantasiaCliente" })
-                @*@Html.ValidationMessageFor(x => x.Cliente.NombreFantasia, "", new { @class = "text-danger" })*@
+                <select data-val="true" data-val-number="El campo idClienteSeleccionado debe ser un número." data-val-required="El campo idClienteSeleccionado es obligatorio." id="idClienteSeleccionado" name="idClienteSeleccionado">
+                    @foreach (ET.Cliente c in Model.Clientes)
+                    {
+                        if (Model.IdCliente == c.Id)
+                        {
+                            <option value="@c.Id" selected="selected">@c.NombreFantasia</option>
+                        }
+                        else {
+                            <option value="@c.Id">@c.NombreFantasia</option>
+                        }
+                    }
+                </select>                
             </div>
 
             if (!Model.EstadoPedido.Equals("EN CONSTRUCCION"))

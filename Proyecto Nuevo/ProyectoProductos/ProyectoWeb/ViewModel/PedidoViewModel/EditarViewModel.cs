@@ -48,9 +48,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         [Display(Name = "Descuento Cliente Preferencial (%)")]
         public double Descuento { get; set; }
 
-        public ET.Pedido Pedido { get; set; }
-
-        public IList<SelectListItem> Clientes { get; set; }
+        public ET.Pedido Pedido { get; set; }        
 
         [Display(Name = "Iva")]
         public double Iva { get; set; }
@@ -59,6 +57,9 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public string EstadoPedido { get; set; }
 
         public bool RealizarPedido { get; set; }
+
+        public List<Cliente> Clientes { get; set; }
+        public int idClienteSeleccionado { get; set; }
         //*********************************************************
         //Filtros
         //*********************************************************
@@ -109,12 +110,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
 
         public EditarViewModel()
         {
-            this.Clientes = clienteBL.obtenerTodos().Select(
-                c => new SelectListItem()
-                {
-                    Text = c.NombreFantasia,
-                    Value = c.Id.ToString()
-                }).ToList();
+            this.Clientes = clienteBL.obtenerTodos();                
         }
 
         public void completarEditarVM()
@@ -158,8 +154,14 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         }
 
         private void cargarCliente()
-        {
-            Pedido.Cliente = clienteBL.obtener(IdCliente);
+        {            
+            if (idClienteSeleccionado != 0)
+            {
+                Pedido.Cliente = clienteBL.obtener(idClienteSeleccionado);
+            }
+            else {
+                Pedido.Cliente = clienteBL.obtener(IdCliente);
+            }
         }
 
         private void cargarPedido()

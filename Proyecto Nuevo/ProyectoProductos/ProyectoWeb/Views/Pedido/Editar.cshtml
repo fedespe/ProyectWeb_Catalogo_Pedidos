@@ -18,6 +18,7 @@
         @Html.HiddenFor(x => x.CadenaArticulos)
         @Html.HiddenFor(x => x.IdCliente)
         @Html.HiddenFor(x => x.idClienteSeleccionado)
+        @Html.HiddenFor(x => x.Iva)
 
         @Html.HiddenFor(x => x.Descuento, new { @id = "descuentoCliente" });
 
@@ -47,7 +48,7 @@
                 //Autocomplete Cliente
                 <div class="form-group">
                     <label for="autocompleteCliente" class="control-label">Cliente</label>
-                    <input id="autocompleteCliente" type="text" class="form-control">
+                    <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();">
                 </div>
             }
 
@@ -189,6 +190,21 @@
                         <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
                     </tr>
                 }
+                <tr>
+                    <td hidden></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="vertical-align:middle"><h4>IVA</h4></td>
+                    <td style="vertical-align:middle"><h4 id="celdaTextoPrecioIVA"></h4></td>
+                    <td style="vertical-align:middle"><h4 id="celdaPrecioIVA"></h4></td>
+                    <td></td>
+                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    {
+                        <td></td>
+                    }
+                </tr>
                 @if (Model.Pedido.DescuentoCliente > 0)
                 {
                 <tr>

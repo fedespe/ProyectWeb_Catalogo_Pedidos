@@ -442,15 +442,15 @@ namespace ProyectoWeb.Controllers
             return Json(model, JsonRequestBehavior.AllowGet); //Para que es el AllowGet?
         }
 
-        public JsonResult ObtenerClientePorId(int id = 0)
+        public JsonResult ObtenerTodos()
         {
-            Cliente model = null;
+            List<Cliente> model = new List<Cliente>();
 
             if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
-                    model = clienteBL.obtener(id);
+                    model = clienteBL.obtenerTodos();
                 }
                 catch (ProyectoException ex)
                 {

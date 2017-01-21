@@ -175,7 +175,7 @@ namespace ProyectoWeb.Controllers
         //GET: Pedido/Historico
         public ActionResult Historico()
         {
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {

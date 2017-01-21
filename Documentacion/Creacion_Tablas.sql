@@ -217,6 +217,7 @@ CREATE TABLE PEDIDO_ARTICULO_FILTRO
 	CONSTRAINT FK_IdFiltro_PEDIDO_ARTICULO_FILTRO FOREIGN KEY (IdFiltro) REFERENCES FILTRO (Id)
 );
 GO
+
 --despues de cambiar el precio de un articulo
 CREATE TRIGGER trg_actualizarPrecioEstadoPedidoEnConstruccion
 ON ARTICULO
@@ -226,15 +227,82 @@ BEGIN
 	DECLARE @idArticulo INT, @precio INT, @estado BIT
 	SELECT @idArticulo = Id, @precio = Precio, @estado = Disponible  FROM inserted
 	
-	UPDATE PEDIDO_ARTICULO SET PrecioUnitario = @precio WHERE IdArticulo=@idArticulo 
-	and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 5)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+	UPDATE
+		PEDIDO_ARTICULO
+	SET
+		PrecioUnitario = @precio
+	WHERE
+		IdArticulo = @idArticulo AND
+		IdPedido in (
+			SELECT Id FROM PEDIDO P WHERE IdEstado = 5
+		) --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
 	
 	
 	IF @estado = 0
-		BEGIN
-			DELETE PEDIDO_ARTICULO WHERE IdArticulo=@idArticulo
-			and IdPedido in (SELECT IdPedido FROM PEDIDO P WHERE IdEstado = 5)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
-		END
+	BEGIN
+	
+		DELETE
+			PEDIDO_ARTICULO_FILTRO
+		WHERE
+			IdPedidoArticulo IN(
+				SELECT
+					Id
+				FROM
+					PEDIDO_ARTICULO
+				WHERE
+					IdArticulo = @idArticulo and
+					IdPedido in (
+						SELECT Id FROM PEDIDO P WHERE IdEstado = 5
+					) --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+			);
+			
+		DELETE
+			PEDIDO_ARTICULO
+		WHERE
+			IdArticulo = @idArticulo and
+			IdPedido in (
+				SELECT Id FROM PEDIDO P WHERE IdEstado = 5
+			); --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+		
+		UPDATE
+			ADMINISTRADOR
+		SET
+			EnConstruccion = NULL
+		WHERE
+			EnConstruccion IN(
+				SELECT
+					P.Id AS IDPedido
+				FROM
+					PEDIDO P LEFT JOIN PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+				WHERE
+					PA.Id IS NULL
+			);
+		UPDATE
+			CLIENTE
+		SET
+			EnConstruccion = NULL
+		WHERE
+			EnConstruccion IN(
+				SELECT
+					P.Id AS IDPedido
+				FROM
+					PEDIDO P LEFT JOIN PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+				WHERE
+					PA.Id IS NULL
+			);
+		
+		DELETE
+			PEDIDO
+		WHERE
+			Id IN(
+				SELECT
+					P.Id AS IDPedido
+				FROM
+					PEDIDO P LEFT JOIN PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+				WHERE
+					PA.Id IS NULL
+			);
+	END
 END
 GO
 

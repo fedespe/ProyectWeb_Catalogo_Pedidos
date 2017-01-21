@@ -246,14 +246,82 @@ BEGIN
 	DECLARE @idArticulo INT, @precio INT, @estado BIT
 	SELECT @idArticulo = Id, @precio = Precio, @estado = Disponible  FROM inserted
 	
-	UPDATE dbo.PEDIDO_ARTICULO SET PrecioUnitario = @precio WHERE IdArticulo=@idArticulo 
-	and IdPedido in (SELECT IdPedido FROM dbo.PEDIDO P WHERE IdEstado = 5)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+	UPDATE
+		dbo.PEDIDO_ARTICULO
+	SET
+		PrecioUnitario = @precio
+	WHERE
+		IdArticulo = @idArticulo AND
+		IdPedido in (
+			SELECT Id FROM dbo.PEDIDO P WHERE IdEstado = 5
+		) --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+	
 	
 	IF @estado = 0
-		BEGIN
-			DELETE dbo.PEDIDO_ARTICULO WHERE IdArticulo=@idArticulo
-			and IdPedido in (SELECT IdPedido FROM dbo.PEDIDO P WHERE IdEstado = 5)  --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
-		END
+	BEGIN
+	
+		DELETE
+			dbo.PEDIDO_ARTICULO_FILTRO
+		WHERE
+			IdPedidoArticulo IN(
+				SELECT
+					Id
+				FROM
+					dbo.PEDIDO_ARTICULO
+				WHERE
+					IdArticulo = @idArticulo and
+					IdPedido in (
+						SELECT Id FROM dbo.PEDIDO P WHERE IdEstado = 5
+					) --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+			);
+			
+		DELETE
+			dbo.PEDIDO_ARTICULO
+		WHERE
+			IdArticulo = @idArticulo and
+			IdPedido in (
+				SELECT Id FROM dbo.PEDIDO P WHERE IdEstado = 5
+			); --OJO SI CAMBIAS LOS ESTADOS CAMBIA EL NUEMRO
+		
+		UPDATE
+			dbo.ADMINISTRADOR
+		SET
+			EnConstruccion = NULL
+		WHERE
+			EnConstruccion IN(
+				SELECT
+					P.Id AS IDPedido
+				FROM
+					dbo.PEDIDO P LEFT JOIN dbo.PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+				WHERE
+					PA.Id IS NULL
+			);
+		UPDATE
+			dbo.CLIENTE
+		SET
+			EnConstruccion = NULL
+		WHERE
+			EnConstruccion IN(
+				SELECT
+					P.Id AS IDPedido
+				FROM
+					dbo.PEDIDO P LEFT JOIN dbo.PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+				WHERE
+					PA.Id IS NULL
+			);
+		
+		DELETE
+			dbo.PEDIDO
+		WHERE
+			Id IN(
+				SELECT
+					P.Id AS IDPedido
+				FROM
+					dbo.PEDIDO P LEFT JOIN dbo.PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+				WHERE
+					PA.Id IS NULL
+			);
+	END
 END
 GO
 

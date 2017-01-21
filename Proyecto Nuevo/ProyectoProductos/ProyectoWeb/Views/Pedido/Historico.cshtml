@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Historial de Pedidos";
 }
+@*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
+<script src="~/Scripts/pedidoHistorico.js"></script>
 
 <div class="row">
     <div class="col-md-2 pull-left">
@@ -18,6 +20,9 @@
             {
                 //Seguridad
                 @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(x => x.IdClienteFiltrado)
+
                 <div>
                     <h3>Filtros</h3> 
                    
@@ -52,7 +57,13 @@
                     </label>
                     <br>
                     <br>
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
+                    <div class="form-group">
+                        <label for="autocompleteCliente" class="control-label">Cliente</label>
+                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();">
+                    </div>
+                    <br>
+                    <br>
+                    <button type="submit" class="btn btn-default" onclick="FiltrarPedidos();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
                 </div>
             }
         </div>

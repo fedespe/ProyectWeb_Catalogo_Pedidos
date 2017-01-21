@@ -5,12 +5,17 @@ $(document).ready(function () {
     var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
     var celdaTextoPrecioDescuento = document.getElementById("celdaTextoPrecioDescuento");
+    var inputValorIVA = document.getElementById("Iva");
+    var celdaTextoPrecioIVA = document.getElementById("celdaTextoPrecioIVA");
+    var celdaPrecioIVA = document.getElementById("celdaPrecioIVA");
     var celdaPrecioDescuento = document.getElementById("celdaPrecioDescuento");
     var celdaPrecioTotal = document.getElementById("celdaPrecioTotal");
 
     var descuentoCliente = 0.0;
     var montoDescuentoCliente = 0.0;
     var montoTotal = 0.0;
+    var valorIva = parseFloat(inputValorIVA.getAttribute("value"));
+    var montoIva = 0.0;
 
     Array.from(filasConDatos).forEach(function (fila) {
         var celdaTotalFila = fila.children[7];
@@ -31,6 +36,8 @@ $(document).ready(function () {
     }
 
     celdaPrecioTotal.innerHTML = "$" + (montoTotal - montoDescuentoCliente);
+    celdaPrecioIVA.innerHTML = "$" + (montoTotal * valorIva / (100 + valorIva));
+    celdaTextoPrecioIVA.innerHTML = valorIva + "%";
 
     //A todo lo que tiene la clase datepicker le relaciona un calendario
     $('.datepicker').datepicker();
@@ -42,19 +49,38 @@ $(document).ready(function () {
     obtenerNombreFantasiaClientesHabilitados();
     var nombreFantasiaClientesObtenidos = obtenerNombreFantasiaClientesObtenidos();
     $("#autocompleteCliente").autocomplete({
-        source: nombreFantasiaClientesObtenidos
+        source: nombreFantasiaClientesObtenidos,
+        autoFocus: true,
+        minLength: 0
     });
 
     var clienteActual = obtenerNombreFantasiaClienteActual();
     $("#autocompleteCliente").val(clienteActual);
 });
 
+function AbrirAutocomplete() {
+    $("#autocompleteCliente").autocomplete("search", $("#autocompleteCliente").val());
+}
+
 function Eliminar (i) {
     if (confirm('¿Esta seguro?')) {
 
         var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
+        var celdaPrecioDescuento = document.getElementById("celdaPrecioDescuento");
+        var celdaPrecioTotal = document.getElementById("celdaPrecioTotal");
+        var celdaPrecioIVA = document.getElementById("celdaPrecioIVA");
 
         var cantidadArticulos = filasConDatos.length;
+
+        if (celdaPrecioDescuento != null) {
+            cantidadArticulos--;
+        }
+        if (celdaPrecioTotal != null) {
+            cantidadArticulos--;
+        }
+        if (celdaPrecioIVA != null) {
+            cantidadArticulos--;
+        }
 
         if (cantidadArticulos > 1) {
             document.getElementById("tablaPedidos").deleteRow(i);
@@ -73,6 +99,8 @@ function actualizarTotalYDescuento() {
     var total = 0
     var celdaPrecioTotal = document.getElementById("celdaPrecioTotal");
     var celdaPrecioDescuento = document.getElementById("celdaPrecioDescuento");
+    var inputValorIVA = document.getElementById("Iva");
+    var valorIva = parseFloat(inputValorIVA.getAttribute("value"));
 
     var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
@@ -100,6 +128,7 @@ function actualizarTotalYDescuento() {
     }
 
     celdaPrecioTotal.innerHTML = "$" + total;
+    celdaPrecioIVA.innerHTML = "$" + (total * valorIva / (100 + valorIva));
 }
 
 function actualizarTotales() {
@@ -272,6 +301,4 @@ function cargarClienteSeleccionado() {
     }
 
     $("#idClienteSeleccionado").val(seleccionado);
-
-    alert("IdClienteSeleccionado: " + $("#idClienteSeleccionado").val());
 }

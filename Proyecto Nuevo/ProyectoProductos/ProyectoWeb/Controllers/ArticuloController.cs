@@ -12,6 +12,7 @@ namespace ProyectoWeb.Controllers
     public class ArticuloController : Controller
     {
         private ArticuloBL articuloBL = new ArticuloBL();
+        private PedidoBL pedidoBL = new PedidoBL();
 
         //GET: Articulo/ListaArticulo
         public ActionResult ListaArticulos()
@@ -212,6 +213,7 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
 
+                    Session["CantidadProductosCarrito"] = Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
                     return RedirectToAction("ListaArticulos");
                 }
                 catch (ProyectoException ex)
@@ -234,6 +236,7 @@ namespace ProyectoWeb.Controllers
                 }
             }
         }
+
         public ActionResult Habilitar(int id)
         {
             if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))

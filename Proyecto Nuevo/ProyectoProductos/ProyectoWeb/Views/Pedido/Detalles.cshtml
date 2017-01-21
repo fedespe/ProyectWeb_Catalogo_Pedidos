@@ -11,17 +11,17 @@
 
     <div>
         <h3>Cliente:</h3>
-        <h4>@Model.Cliente.NombreUsuario | @Model.Cliente.NombreFantasia</h4>
+        <h4>@Model.Cliente.NombreFantasia</h4>
     </div>
     <div>
         <h3>Fechas:</h3>
         <h4>Fecha Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Fecha Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
     </div>
-    @if (Model.DescuentoCliente!=0 || Session["TipoUsuario"].Equals("Administrador"))
+    @if (Model.DescuentoCliente > 0 || Session["TipoUsuario"].Equals("Administrador"))
     {
         <div>
             <h3>Descuento:</h3>
-            <h4>@Model.DescuentoCliente</h4>
+            <h4>@Model.DescuentoCliente%</h4>
         </div>
     }
     
@@ -119,11 +119,20 @@
                     <td style="vertical-align:middle">@pp.PrecioUnitario</td>
                     <td style="vertical-align:middle">@precioTotal</td>
                 </tr>
-            }
+                            }
         </tbody>
     </table>
 
-    <h1>Monto Total (IVA inc.): $@(Model.PrecioTotal*(1-Model.DescuentoCliente/100))</h1>
+    <h3>IVA: $@(Model.PrecioTotal * Model.Iva / (100 + Model.Iva))</h3>
+
+    @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
+
+    @if (Model.DescuentoCliente > 0 || Session["TipoUsuario"].Equals("Administrador"))
+    {
+        <h3>Descuento: $ @montoDescuento</h3>
+    }
+    
+    <h1>Monto Total (IVA inc.): $@(Model.PrecioTotal-montoDescuento)</h1>
 </div>
 
 

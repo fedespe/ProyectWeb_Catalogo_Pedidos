@@ -17,6 +17,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public bool Realizado { get; set; }
         public bool Cancelado { get; set; }
         public bool EnConstruccion { get; set; }
+        public int IdClienteFiltrado { get; set; }
 
         public HistoricoViewModel()
         {
@@ -27,7 +28,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             Pedidos = new List<Pedido>();
             List<Pedido> PedidosTotales = pedidoBL.obtenerTodos();
             
-            if (!Confirmado && !ConfirmadoPorCliente && !ConfirmadoPorAdmin && !Realizado && !Cancelado && !EnConstruccion) {
+            if (!Confirmado && !ConfirmadoPorCliente && !ConfirmadoPorAdmin && !Realizado && !Cancelado && !EnConstruccion && !(IdClienteFiltrado > 0)) {
                 Pedidos = pedidoBL.obtenerTodosSinContarEnConstruccion().OrderByDescending(p => p.FechaRealizado).ToList();
             }
             else {
@@ -54,6 +55,14 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                 if (EnConstruccion)
                 {
                     Pedidos.AddRange(PedidosTotales.Where(p => p.Estado.Nombre.Equals("EN CONSTRUCCION")).OrderByDescending(p => p.FechaRealizado).ToList());
+                }
+                if (IdClienteFiltrado > 0)
+                {
+                    if (!Confirmado && !ConfirmadoPorCliente && !ConfirmadoPorAdmin && !Realizado && !Cancelado && !EnConstruccion)
+                    {
+                        Pedidos = pedidoBL.obtenerTodosSinContarEnConstruccion().OrderByDescending(p => p.FechaRealizado).ToList();
+                    }
+                    Pedidos = Pedidos.Where(p => p.Cliente.Id == IdClienteFiltrado).OrderByDescending(p => p.FechaRealizado).ToList();
                 }
             }
         }

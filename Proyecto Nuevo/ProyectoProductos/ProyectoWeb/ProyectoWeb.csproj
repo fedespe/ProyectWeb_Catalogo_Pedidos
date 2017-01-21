@@ -207,6 +207,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\dropdowns-enhancement.css" />
+    <Content Include="Content\jquery-ui-1.12.1.css" />
     <Content Include="Content\miEstilo.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -217,7 +218,9 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\detalleArticulo.js" />
     <Content Include="Scripts\dropdowns-enhancement.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery.mlens-1.6.min.js" />
     <Content Include="Scripts\pedidoEditar.js" />
     <Content Include="Scripts\articuloEditar.js" />

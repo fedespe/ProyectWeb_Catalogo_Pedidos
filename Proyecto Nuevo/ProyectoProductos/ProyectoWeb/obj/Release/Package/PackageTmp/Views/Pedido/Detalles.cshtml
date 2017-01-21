@@ -17,10 +17,14 @@
         <h3>Fechas:</h3>
         <h4>Fecha Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Fecha Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
     </div>
-    <div>
-        <h3>Descuento:</h3>
-        <h4>@Model.DescuentoCliente</h4>
-    </div>
+    @if (Model.DescuentoCliente!=0 || Session["TipoUsuario"].Equals("Administrador"))
+    {
+        <div>
+            <h3>Descuento:</h3>
+            <h4>@Model.DescuentoCliente</h4>
+        </div>
+    }
+    
     <div>
         @{
             if (Model.Comentario != null && !Model.Comentario.Trim().Equals(""))
@@ -41,40 +45,6 @@
         <p>@Model.Estado.Nombre</p>
     </div>
 
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado", @readonly = "readonly" })
-    </div>*@
-
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.FechaEntregaSolicitada, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.FechaEntregaSolicitada, "{0:dd/MM/yyyy}", new { @id = "fechaEntregaSolicitada", @class = "form-control", @placeholder = "Fecha Entrega Solicitada", @readonly = "readonly" })        
-    </div>*@
-
-    
-
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.DescuentoCliente, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.DescuentoCliente, new { @id = "descuentoCliente", @class = "form-control", @placeholder = "Descuento del Cliente", @readonly = "readonly" })
-        
-    </div>*@
-
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.Comentario, htmlAttributes: new { @class = "control-label" })
-        @Html.TextAreaFor(x => x.Comentario, new { @id = "comentario", @class = "form-control", @placeholder = "Comentario", @readonly = "readonly" })        
-    </div>*@
-
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.Estado.Nombre, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.Estado.Nombre, new { @id = "estadoPedido", @class = "form-control", @placeholder = "Estado", @readonly = "readonly" })        
-    </div>*@
-
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.Cliente.NombreFantasia, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.Cliente.NombreFantasia, new { @id = "nombreFantasiaCliente", @class = "form-control", @placeholder = "Nombre Fantasia Cliente", @readonly = "readonly" })
-        
-    </div>*@
-
     <table class="table table-hover" style="text-align:center">
         <thead>
             <tr>
@@ -82,6 +52,7 @@
                 <th style="text-align:center">Codigo Articulo</th>
                 <th style="text-align:center">Nombre Articulo</th>
                 <th style="text-align:center">Cantidad</th>
+                <th style="text-align:center">Opciones</th>
                 <th style="text-align:center">$ Unitario</th>
                 <th style="text-align:center">$ Total Linea</th>
             </tr>
@@ -91,25 +62,68 @@
             @foreach (var pp in Model.ProductosPedidos)
             {
                 double precioTotal = pp.Cantidad * pp.PrecioUnitario;
+                Model.PrecioTotal += precioTotal;
 
-                <tr>
-                    <td style="text-align:center"> 
-                        <img src=@("/Imagenes/Articulos/" +  pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
+                <tr style="text-align:center">
+                    <td style="vertical-align:middle"> 
+                        <img src=@("/Imagenes/Articulos/" + pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
                     </td>
-                    <td style="text-align:center">@pp.Articulo.Codigo</td>
-                    <td style="text-align:center">@pp.Articulo.Nombre</td>
-                    <td style="text-align:center">@pp.Cantidad</td>
-                    <td style="text-align:center">@pp.PrecioUnitario</td>
-                    <td style="text-align:center">@precioTotal</td>
+                    <td style="vertical-align:middle">@pp.Articulo.Codigo</td>
+                    <td style="vertical-align:middle">@pp.Articulo.Nombre</td>
+                    <td style="vertical-align:middle">@pp.Cantidad</td>
+                    <td style="vertical-align:middle">
+                        @{
+                            List<string> color = new List<string>();
+                            List<string> material = new List<string>();
+                            string strcol = "";
+                            string strMat = "";
+                            //int cont = 0;
+                            foreach (ET.Filtro f in pp.Articulo.Filtros)
+                            {
+                                if (f.Color)
+                                {
+                                    color.Add(f.Nombre);
+                                }
+                                else {
+                                    material.Add(f.Nombre);
+                                }
+                            }
+                            for (int i = 0; i < color.Count; i++)
+                            {
+                                if (i != color.Count - 1)
+                                {
+                                    strcol += color.ElementAt(i) + " | ";
+                                }
+                                else {
+                                    strcol += color.ElementAt(i);
+                                }
+                            }
+                            for (int i = 0; i < material.Count; i++)
+                            {
+                                if (i != material.Count - 1)
+                                {
+                                    strMat += material.ElementAt(i) + " | ";
+                                }
+                                else {
+                                    strMat += material.ElementAt(i);
+                                }
+                            }
+                            if (material.Count == 0) { strMat = "Material: Sin descripción"; }
+                            if (color.Count == 0) { strcol = "Color: Sin descripción"; }
+
+                            <div style="font-size:smaller"><small>@strMat</small></div>
+                            <div style="font-size:smaller"><small>@strcol</small></div>
+
+                        }
+                    </td>
+                    <td style="vertical-align:middle">@pp.PrecioUnitario</td>
+                    <td style="vertical-align:middle">@precioTotal</td>
                 </tr>
             }
         </tbody>
     </table>
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.PrecioTotal, htmlAttributes: new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.PrecioTotal, new { @id = "precioTotal", @class = "form-control", @placeholder = "Precio Total", @readonly = "readonly" })        
-    </div>*@
-    <h1>Monto Total (IVA inc.): $@Model.PrecioTotal</h1>
+
+    <h1>Monto Total (IVA inc.): $@(Model.PrecioTotal*(1-Model.DescuentoCliente/100))</h1>
 </div>
 
 

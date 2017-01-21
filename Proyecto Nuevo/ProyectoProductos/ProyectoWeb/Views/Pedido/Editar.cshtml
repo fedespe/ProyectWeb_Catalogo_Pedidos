@@ -17,10 +17,9 @@
         @Html.HiddenFor(x => x.IdPedido)
         @Html.HiddenFor(x => x.CadenaArticulos)
         @Html.HiddenFor(x => x.IdCliente)
-
+        @Html.HiddenFor(x => x.idClienteSeleccionado)
 
         @Html.HiddenFor(x => x.Descuento, new { @id = "descuentoCliente" });
-
 
         //Lista de errores
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -28,41 +27,39 @@
 
         if (Session["TipoUsuario"].ToString().Equals("Administrador"))
         {
-            <div class="form-group">
-                <select data-val="true" data-val-number="El campo idClienteSeleccionado debe ser un número." data-val-required="El campo idClienteSeleccionado es obligatorio." id="idClienteSeleccionado" name="idClienteSeleccionado">
-                    @foreach (ET.Cliente c in Model.Clientes)
-                    {
-                        if (Model.IdCliente == c.Id)
-                        {
-                            <option value="@c.Id" selected="selected">@c.NombreFantasia</option>
-                        }
-                        else {
-                            <option value="@c.Id">@c.NombreFantasia</option>
-                        }
-                    }
-                </select>                
-            </div>
-
-            if (!Model.EstadoPedido.Equals("EN CONSTRUCCION"))
+            if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
             {
                 @*<div class="form-group">
-                    @Html.LabelFor(x => x.FechaRealizado, htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBoxFor(x => x.FechaRealizado, "{0:dd/MM/yyyy}", new { @id = "fechaRealizado", @class = "form-control", @placeholder = "Fecha Realizado" })*@
-                    @*@Html.ValidationMessageFor(x => x.FechaRealizado, "", new { @class = "text-danger" })*@
-                @*</div>*@
+                    <select data-val="true" data-val-number="El campo idClienteSeleccionado debe ser un número." data-val-required="El campo idClienteSeleccionado es obligatorio." id="idClienteSeleccionado" name="idClienteSeleccionado">
+                        @foreach (ET.Cliente c in Model.Clientes)
+                        {
+                            if (Model.IdCliente == c.Id)
+                            {
+                                <option value="@c.Id" selected="selected">@c.NombreFantasia</option>
+                            }
+                            else {
+                                <option value="@c.Id">@c.NombreFantasia</option>
+                            }
+                        }
+                    </select>
+                </div>*@
 
-                @Html.HiddenFor(x => x.FechaRealizado, new { @id = "fechaRealizado" });
-
-                //Calendario hecho a mano Para Fecha Realizado
+                //Autocomplete Cliente
                 <div class="form-group">
-                    <label class="control-label">Fecha Realizado</label>
-                    <input type="text" class="datepicker form-control" data-date-weekStart='1' data-date-format="dd/mm/yyyy" id="fechaRealizadoCalendario">
-                    @*data-date-weekStart='1' - Comienza en Lunes*@
-                    @*data-date-format="dd/mm/yyyy" - Muestra ese formato de fecha*@
+                    <label for="autocompleteCliente" class="control-label">Cliente</label>
+                    <input id="autocompleteCliente" type="text" class="form-control">
                 </div>
             }
 
+            @Html.HiddenFor(x => x.FechaRealizado, new { @id = "fechaRealizado" });
 
+            //Calendario hecho a mano Para Fecha Realizado
+            <div class="form-group">
+                <label class="control-label">Fecha Realizado</label>
+                <input type="text" class="datepicker form-control" data-date-weekStart='1' data-date-format="dd/mm/yyyy" id="fechaRealizadoCalendario">
+                @*data-date-weekStart='1' - Comienza en Lunes*@
+                @*data-date-format="dd/mm/yyyy" - Muestra ese formato de fecha*@
+            </div>
 
             //Calendario 1
             @*<div class="form-group" id="dateTimePickerFechaRealizado">

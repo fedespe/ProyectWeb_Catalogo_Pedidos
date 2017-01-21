@@ -45,6 +45,11 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
                 <div>
+                    <h3>Ordenar</h3>
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.ChkPrecio)
+                        Menor Precio
+                    </label>
                     <h4>Material</h4>
                     @foreach (var f in Model.FiltrosTotales)
                     {

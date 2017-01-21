@@ -16,6 +16,10 @@ namespace BL
         {
             return clienteDAL.obtenerTodos();
         }
+        public List<Cliente> obtenerTodosHabilitados()
+        {
+            return clienteDAL.obtenerTodosHabilitados();
+        }
         public Cliente login(string nombre, string pass)
         {
             return clienteDAL.login(nombre, pass);

@@ -61,6 +61,56 @@ namespace DAL
             return clientes;
         }
 
+        public List<Cliente> obtenerTodosHabilitados()
+        {
+            List<Cliente> clientes = new List<Cliente>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente WHERE Habilitado = 1 ORDER BY NombreFantasia ASC", con);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            int enConstruccion = 0;
+                            if (dr["EnConstruccion"] != DBNull.Value)
+                                enConstruccion = Convert.ToInt32(dr["EnConstruccion"]);
+
+                            Cliente cli = new Cliente
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                NombreUsuario = dr["Usuario"].ToString(),
+                                IdPedidoEnConstruccion = enConstruccion,
+                                NombreFantasia = dr["NombreFantasia"].ToString(),
+                                Rut = dr["Rut"].ToString(),
+                                RazonSocial = dr["RazonSocial"].ToString(),
+                                Descuento = Convert.ToDouble(dr["Descuento"]),
+                                DiasDePago = dr["DiasDePago"].ToString(),
+                                Direccion = dr["Direccion"].ToString(),
+                                Telefono = dr["Telefono"].ToString(),
+                                NombreDeContacto = dr["NombreContacto"].ToString(),
+                                TelefonoDeContacto = dr["TelefonoContacto"].ToString(),
+                                EmailDeContacto = dr["EmailContacto"].ToString(),
+                                Foto = dr["Imagen"].ToString(),
+                                Habilitado = Convert.ToBoolean(Convert.ToInt32(dr["Habilitado"]))
+                            };
+                            clientes.Add(cli);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProyectoException("Error: " + ex.Message);
+            }
+
+            return clientes;
+        }
+
         public int obtenerPedidoEnContruccion(int id)
         {
             int enContruccion = 0;

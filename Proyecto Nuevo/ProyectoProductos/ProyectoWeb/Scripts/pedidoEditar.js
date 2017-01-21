@@ -1,16 +1,16 @@
-﻿$(document).ready(function () {
+﻿var clientesObtenidos;
+
+$(document).ready(function () {
 
     var filasConDatos = document.getElementById("tablaPedidos").children[1].children;
 
     var celdaTextoPrecioDescuento = document.getElementById("celdaTextoPrecioDescuento");
     var celdaPrecioDescuento = document.getElementById("celdaPrecioDescuento");
     var celdaPrecioTotal = document.getElementById("celdaPrecioTotal");
-    
 
     var descuentoCliente = 0.0;
     var montoDescuentoCliente = 0.0;
     var montoTotal = 0.0;
-    
 
     Array.from(filasConDatos).forEach(function (fila) {
         var celdaTotalFila = fila.children[7];
@@ -36,6 +36,17 @@
     $('.datepicker').datepicker();
 
     cargarCalendarios();
+
+
+    //Autocomplete
+    obtenerNombreFantasiaClientesHabilitados();
+    var nombreFantasiaClientesObtenidos = obtenerNombreFantasiaClientesObtenidos();
+    $("#autocompleteCliente").autocomplete({
+        source: nombreFantasiaClientesObtenidos
+    });
+
+    var clienteActual = obtenerNombreFantasiaClienteActual();
+    $("#autocompleteCliente").val(clienteActual);
 });
 
 function Eliminar (i) {
@@ -56,7 +67,6 @@ function Eliminar (i) {
     }
     
 }
-
 
 function actualizarTotalYDescuento() {
 
@@ -152,6 +162,7 @@ function GenerarStringArticulos() {
 function GuardarCambios() {
     GenerarStringArticulos();
     cargarFechasCalendarios();
+    cargarClienteSeleccionado();
 }
 
 function cargarFechasCalendarios() {
@@ -189,4 +200,78 @@ function cargarCalendarios() {
             $("#fechaEntregaSolicitadaCalendario").val(fechaEntregaSolicitada);
         }
     }
+}
+
+function obtenerNombreFantasiaClientesHabilitados() {
+
+    var clientes = [];
+
+    $.ajax({
+        type: 'GET',
+        url: '../../Cliente/ObtenerTodosHabilitados',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            clientesObtenidos = data;
+        }
+        //,
+        //error: function () {
+        //    alert("Error");
+        //}
+        //,
+        //complete: function () {
+        //    alert("Complete");
+        //}
+    });
+}
+
+function obtenerNombreFantasiaClienteActual() {
+    var idCliente = parseInt($("#IdCliente").val());
+    var clienteNF = "";
+
+    for (var i = 0; i < clientesObtenidos.length ; i++) {
+        if (clientesObtenidos[i].Id == idCliente) {
+            clienteNF = clientesObtenidos[i].NombreFantasia;
+        }
+    }
+
+    return clienteNF;
+}
+
+function buscarClientePorNombreFantasia(buscado) {
+    var id = 0;
+
+    for (var i = 0; i < clientesObtenidos.length ; i++) {
+        if (clientesObtenidos[i].NombreFantasia == buscado) {
+            id = clientesObtenidos[i].Id;
+        }
+    }
+
+    return id;
+}
+
+function obtenerNombreFantasiaClientesObtenidos() {
+    var nombresFantasia = [];
+
+    for (var i = 0; i < clientesObtenidos.length ; i++) {
+        nombresFantasia[i] = clientesObtenidos[i].NombreFantasia;
+    }
+
+    return nombresFantasia;
+}
+
+function cargarClienteSeleccionado() {
+    var elemAutocomplete = $("#autocompleteCliente");
+    var seleccionado = 0;
+
+    if (elemAutocomplete != null) {
+        var nombreF = elemAutocomplete.val();
+        if (nombreF != "") {
+            seleccionado = buscarClientePorNombreFantasia(nombreF);
+        }
+    }
+
+    $("#idClienteSeleccionado").val(seleccionado);
+
+    alert("IdClienteSeleccionado: " + $("#idClienteSeleccionado").val());
 }

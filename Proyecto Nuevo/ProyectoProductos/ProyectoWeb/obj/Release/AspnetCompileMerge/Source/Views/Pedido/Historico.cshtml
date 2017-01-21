@@ -1,4 +1,4 @@
-﻿@model List<ET.Pedido>
+﻿@model ProyectoWeb.ViewModel.PedidoViewModel.HistoricoViewModel
 @{
     ViewBag.Title = "Historial de Pedidos";
 }
@@ -13,6 +13,49 @@
             @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
+        <div>
+            @using (Html.BeginForm("Historico", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                //Seguridad
+                @Html.AntiForgeryToken()
+                <div>
+                    <h3>Filtros</h3> 
+                   
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.Confirmado)
+                        Confirmados
+                    </label>
+                    <br>                 
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.ConfirmadoPorCliente)
+                        Confirmados por Cliente
+                    </label>
+                    <br>
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.ConfirmadoPorAdmin)
+                        Modificados por Administrador
+                    </label>
+                    <br>
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.Realizado)
+                        Realizados
+                    </label>
+                    <br>
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.EnConstruccion)
+                        En construccion
+                    </label>
+                    <br>
+                    <label class="checkbox-inline">
+                        @Html.CheckBoxFor(x => x.Cancelado)
+                        Cancelados
+                    </label>
+                    <br>
+                    <br>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
+                </div>
+            }
+        </div>
     </div>
     <div class="col-md-10 pull-right">
         <h2>@ViewBag.Title</h2>
@@ -21,25 +64,29 @@
             <thead>
                 <tr>
                     <th>Cliente</th>
-                    <th>F. Pedido</th>
-                    <th>Estado</th>
-                    <th>Monto Total</th>
-                    <th>Acciones</th>
+                    <th style="text-align:right">F. Pedido</th>
+                    <th style="text-align:right">Estado</th>
+                    <th style="text-align:right">Total</th>
+                    <th style="text-align:right">Acciones</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach (var p in Model)
+                @foreach (var p in Model.Pedidos)
                 {
                     <tr>
                         <td>@p.Cliente.NombreFantasia</td>
-                        <td>@p.FechaRealizado.ToString("d")</td>
-                        <td>@p.Estado.Nombre</td>
-                        <td>@p.PrecioTotal</td>
-                        <td>
-                            @if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO"))
+                        <td style="text-align:right">@p.FechaRealizado.ToString("d")</td>
+                        <td style="text-align:right">@p.Estado.Nombre</td>
+                        <td style="text-align:right">@p.PrecioTotal</td>
+                        <td style="text-align:right">
+                            @if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("EN CONSTRUCCION"))
                             {
                                 <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                            }
+                            @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("CONFIRMADO"))
+                            {
+                                <a title="MarcarRealizado" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/MarcarRealizado/@p.Id">Marcar Realizado</a>
                             }
                             @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                             {

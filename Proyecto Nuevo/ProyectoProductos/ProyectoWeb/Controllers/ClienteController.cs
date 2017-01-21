@@ -422,5 +422,43 @@ namespace ProyectoWeb.Controllers
             }
         }
 
+        //Prueba para DDL Cliente
+        public JsonResult ObtenerTodosHabilitados()
+        {
+            List<Cliente> model = new List<Cliente>();
+
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                try
+                {
+                    model = clienteBL.obtenerTodosHabilitados();
+                }
+                catch (ProyectoException ex)
+                {
+                    //En caso de que haya excepción no necesitaría hacer nada en un principio, ya que me va a retornar el model vacío
+                }
+            }
+
+            return Json(model, JsonRequestBehavior.AllowGet); //Para que es el AllowGet?
+        }
+
+        public JsonResult ObtenerClientePorId(int id = 0)
+        {
+            Cliente model = null;
+
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                try
+                {
+                    model = clienteBL.obtener(id);
+                }
+                catch (ProyectoException ex)
+                {
+                    //En caso de que haya excepción no necesitaría hacer nada en un principio, ya que me va a retornar el model vacío
+                }
+            }
+
+            return Json(model, JsonRequestBehavior.AllowGet); //Para que es el AllowGet?
+        }
     }
 }

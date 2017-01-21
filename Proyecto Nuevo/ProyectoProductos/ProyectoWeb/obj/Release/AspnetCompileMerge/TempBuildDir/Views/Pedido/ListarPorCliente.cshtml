@@ -26,7 +26,7 @@
                     <td>
                         @if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                         {
-                            if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                            if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("REALIZADO"))
                             {
                                 <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
                             }
@@ -41,9 +41,13 @@
                         }
                         else if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
-                            if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO"))
+                            if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CONFIRMADO"))
                             {
                                 <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                            }
+                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("CONFIRMADO"))
+                            {
+                                <a title="Editar" href="~/Pedido/MarcarRealizado/@p.Id">Marcar Realizado</a>
                             }
                             if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                             {

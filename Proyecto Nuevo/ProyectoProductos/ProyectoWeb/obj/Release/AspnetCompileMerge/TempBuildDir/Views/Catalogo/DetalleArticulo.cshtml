@@ -3,6 +3,7 @@
     ViewBag.Title = "DetalleArticulo";
 }
 <script src="~/Scripts/agregarArticulo.js"></script>
+<script src="~/Scripts/detalleArticulo.js"></script>
 <style type="text/css">
     #contenido {
         position: relative;
@@ -36,80 +37,96 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $("#ImgPrincipal").mlens(
-            {
-                imgSrc: $("#ImgPrincipal").attr("data-big"),   // path of the hi-res version of the image
-                lensShape: "circle",                // shape of the lens (circle/square)
-                lensSize: 180,                  // size of the lens (in px)
-                borderSize: 4,                  // size of the lens border (in px)
-                borderColor: "#fff",                // color of the lens border (#hex)
-                borderRadius: 0,                // border radius (optional, only if the shape is square)
-                imgOverlay: $("#ImgPrincipal").attr("data-overlay"), // path of the overlay image (optional)
-                overlayAdapt: true // true if the overlay image has to adapt to the lens size (true/false)
-            });
-        });
-        $(document).on("click", ".ImgGal", function (event) {
-            $('#contenido').html('<img src="'+event.target.src+'" id="ImgPrincipal" alt="Imagen de Prueba" data-big="'+event.target.src+'">');
-    
-            $("#ImgPrincipal").mlens(
-            {
-                imgSrc: $("#ImgPrincipal").attr("data-big"),   // path of the hi-res version of the image
-                lensShape: "circle",                // shape of the lens (circle/square)
-                lensSize: 180,                  // size of the lens (in px)
-                borderSize: 4,                  // size of the lens border (in px)
-                borderColor: "#fff",                // color of the lens border (#hex)
-                borderRadius: 0,                // border radius (optional, only if the shape is square)
-                imgOverlay: $("#ImgPrincipal").attr("data-overlay"), // path of the overlay image (optional)
-                overlayAdapt: true // true if the overlay image has to adapt to the lens size (true/false)
-            });
-        });
-        $(document).on("change", ".cantidad", function (event) {
-            var total = parseFloat($('#precio').html()) * parseFloat($('.cantidad').val());
-            $('#total').html("$" + total);
-        });
-    </script>
 
     @{
         var s1 = "unidades" + Model.Id;
         <div class="col-sm-6 col-md-6">
             <h2>DetalleArticulo</h2>
+            <br>
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <td><b>Código:</b> <p class="pull-right">@Model.Codigo</p></td>
+                        <td style="vertical-align:middle"><div class="col-xs-6">Código:</div> <div style="font-size:medium; text-align:right" class="col-xs-6">@Model.Codigo</div></td>
                     </tr>
                     <tr>
-                        <td><b>Nombre:</b> <p class="pull-right">@Model.Nombre</p></td>
+                        <td style="vertical-align:middle"><div class="col-xs-6">Nombre:</div> <div style="font-size:large;text-align:right" class="col-xs-6">@Model.Nombre</div></td>
                     </tr>
                     <tr>
-                        <td><b>Descripción:</b> <p class="pull-right">@Model.Descripcion</p></td>
+                        <td style="vertical-align:middle"><div class="col-xs-6">Descripción:</div> <div style="font-size:small;text-align:right" class="col-xs-6">@Model.Descripcion</div></td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:middle">
+                            <div class="col-xs-6">Opciones:</div> 
+                            
+                                @{
+                                    List<string> color = new List<string>();
+                                    List<string> material = new List<string>();
+                                    string strcol = "";
+                                    string strMat = "";
+                                    //int cont = 0;
+                                    foreach (ET.Filtro f in Model.Filtros)
+                                    {
+                                        if (f.Color)
+                                        {
+                                            color.Add(f.Nombre);
+                                        }
+                                        else {
+                                            material.Add(f.Nombre);
+                                        }
+                                    }
+                                    for (int i = 0; i < color.Count; i++)
+                                    {
+                                        if (i != color.Count - 1)
+                                        {
+                                            strcol += color.ElementAt(i) + " | ";
+                                        }
+                                        else {
+                                            strcol += color.ElementAt(i);
+                                        }
+                                    }
+                                    for (int i = 0; i < material.Count; i++)
+                                    {
+                                        if (i != material.Count - 1)
+                                        {
+                                            strMat += material.ElementAt(i) + " | ";
+                                        }
+                                        else {
+                                            strMat += material.ElementAt(i);
+                                        }
+                                    }
+                                    if (material.Count == 0) { strMat = "Material: Sin descripción"; }
+                                    if (color.Count == 0) { strcol = "Color: Sin descripción"; }
+                                    <div style="text-align:right" class="col-xs-6">
+                                        <div style="font-size:smaller"><small>@strMat</small></div>
+                                        <div style="font-size:smaller"><small>@strcol</small></div>
+                                    </div>
+                                }                            
+                        </td>
                     </tr>
                     
                     @if (Session["TipoUsuario"] != null)
                     {
                         <tr>
-                            <td><b>Precio unitario:</b> <p class="pull-right" id="precio">@Model.Precio</p></td>
+                            <td style="vertical-align:middle"><div class="col-xs-6">Precio unitario:</div> <div style="font-size:medium;text-align:right" class="col-xs-6" id="precio">@Model.Precio</div></td>
                         </tr>
                         if (Session["TipoUsuario"].Equals("Administrador"))
                         {
                             <tr>
-                                <td><b>Stock disponible:</b> <p class="pull-right">@Model.Stock</p></td>
+                                <td style="vertical-align:middle"><div class="col-xs-6">Stock disponible:</div> <div style="font-size:small;text-align:right" class="col-xs-6">@Model.Stock</div></td>
                             </tr>
                         }
 
                         <tr>
-                            <td>
-                                <b>Cantidad: </b>
-                                <div class="col-md-3 pull-right">
-                                    <input type="number" class="form-control cantidad" value="1" id="@s1">
+                            <td style="vertical-align:middle">
+                                <div class="col-xs-6">Cantidad: </div>
+                                <div class="col-xs-3 pull-right">
+                                    <input type="number" class="form-control cantidad" value="1" id="@s1" onchange="verificarCantidad(this)">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <b>Total: </b> <p class="pull-right" id="total">$@Model.Precio</p>
+                            <td style="vertical-align:middle">
+                                <div class="col-xs-6">Total: </div> <div style="font-size:large;text-align:right" class="col-xs-6" id="total">$@Model.Precio</div>
                             </td>
                         </tr>
                         <tr>
@@ -126,7 +143,7 @@
         }
 
 </div>
-
+   
 
 
 

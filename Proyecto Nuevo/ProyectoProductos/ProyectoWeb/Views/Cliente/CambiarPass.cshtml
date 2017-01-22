@@ -22,11 +22,14 @@
             </div>*@
         <h3>@Model.NombreUsuario</h3>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PasswordActual, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.PasswordActual, new { @id = "pass", @class = "form-control", @placeholder = "Contraseña Actual", type = "password" })
-            @Html.ValidationMessageFor(model => model.PasswordActual, "", new { @class = "text-danger" })
-        </div>
+        if (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Cliente"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.PasswordActual, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.PasswordActual, new { @id = "pass", @class = "form-control", @placeholder = "Contraseña Actual", type = "password" })
+                @Html.ValidationMessageFor(model => model.PasswordActual, "", new { @class = "text-danger" })
+            </div>
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.PasswordNuevo, htmlAttributes: new { @class = "control-label" })

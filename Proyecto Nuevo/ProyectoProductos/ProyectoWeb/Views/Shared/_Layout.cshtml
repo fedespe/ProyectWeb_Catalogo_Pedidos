@@ -20,7 +20,7 @@
                 </button>
                 @Html.ActionLink("ISAMARINA", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            @if (Session["TipoUsuario"]!=null && Session["TipoUsuario"].ToString() == "Administrador")
+            @if (Session["TipoUsuario"]!=null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav hidden-sm hidden-md">

@@ -6,7 +6,7 @@
 <script src="~/Scripts/clienteCrearEditar.js"></script>
 
 <div class="row">
-    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+    @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
     {
         <div class="col-md-2 pull-left">
             <div>
@@ -76,7 +76,7 @@
                 @Html.ValidationMessageFor(x => x.RazonSocial, "", new { @class = "text-danger" })
             </div>
 
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 <div class="form-group">
                     @Html.LabelFor(x => x.Descuento, htmlAttributes: new { @class = "control-label" })

@@ -7,7 +7,7 @@
             </li>
         </ul>
 
-    if (Session["TipoUsuario"].ToString() == "Administrador")
+    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
     {
     <ul class="nav navbar-nav navbar-right">
         @*<li>

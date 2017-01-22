@@ -97,7 +97,7 @@ namespace ProyectoWeb.Controllers
         //GET: Administrador/Editar
         public ActionResult Editar(int id = 0)
         {
-            if(Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString() == "Administrador")
+            if(Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -170,7 +170,7 @@ namespace ProyectoWeb.Controllers
         //GET: Administrador/Eliminar
         public ActionResult Eliminar(int id)
         {
-            if(Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString() == "Administrador")
+            if(Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -208,8 +208,14 @@ namespace ProyectoWeb.Controllers
         //GET: Administrador/CambiarPass
         public ActionResult CambiarPass(int id = 0)
         {
-            if(Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString() == "Administrador" && id!=0)
+            if(Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
+                if( id <= 0)
+                {
+                    ViewBag.Mensaje = "El administrador seleccionado no es válido.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
+                }
+
                 try
                 {
                     CambiarPassViewModel cambiarPassVM = new CambiarPassViewModel();
@@ -228,7 +234,7 @@ namespace ProyectoWeb.Controllers
             {
                 try
                 {
-                    ViewBag.Mensaje = "El administrador seleccionado no es valido.";
+                    ViewBag.Mensaje = "No tiene permisos para realizar esta acción.";
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
@@ -243,22 +249,41 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult CambiarPass(CambiarPassViewModel cambiarPassVM)
         {
-            if (ModelState.IsValid)
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion))
+                        {
+                            Administrador admin = administradorBL.obtener(cambiarPassVM.Id);
+                            if (admin != null)
+                            {
+                                admin.Password = cambiarPassVM.PasswordNuevo;
+                                administradorBL.actualizarPassword(admin);
+                                return RedirectToAction("ListaAdministradores");
+                            }
+                        }
+                        cambiarPassVM.Mensaje = "Las contraseñas no coinciden. Por favor, inténtelo otra vez.";
+                        return View(cambiarPassVM);
+                    }
+                    catch (ProyectoException ex)
+                    {
+                        ViewBag.Mensaje = ex.Message;
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
+                }
+                else {
+                    return View(cambiarPassVM);
+                }
+            }
+            else
             {
                 try
                 {
-                    if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion))
-                    {
-                        Administrador admin = administradorBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
-                        if (admin != null)
-                        {
-                            admin.Password = cambiarPassVM.PasswordNuevo;
-                            administradorBL.actualizarPassword(admin);
-                            return RedirectToAction("ListaAdministradores");
-                        }
-                    }
-                    cambiarPassVM.Mensaje = "Las contraseñas no coinciden. Por favor, inténtelo otra vez.";
-                    return View(cambiarPassVM);
+                    ViewBag.Mensaje = "No tiene permisos para realizar esta acción.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 catch (ProyectoException ex)
                 {
@@ -266,9 +291,7 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
             }
-            else {
-                return View(cambiarPassVM);
-            }
+
         }
     }
 }

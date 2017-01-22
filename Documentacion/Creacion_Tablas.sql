@@ -34,6 +34,16 @@ CREATE TABLE PARAMETRO
 );
 GO
 
+CREATE TABLE ETIQUETA
+(
+	Id INT NOT NULL IDENTITY(1,1),
+	Nombre NVARCHAR(50) NOT NULL,
+	Etiqueta NVARCHAR(100) NOT NULL,
+	
+	CONSTRAINT PK_ETIQUETA PRIMARY KEY(Id)
+);
+GO
+
 CREATE TABLE ADMINISTRADOR
 (
 	Id INT NOT NULL IDENTITY(1,1),
@@ -95,9 +105,11 @@ CREATE TABLE ARTICULO
 	Stock NUMERIC(6,2) NOT NULL,
 	Disponible BIT NOT NULL, --A fin de que pueda dejarlo como no disponible por si no quiere mostrarlo y no se puede eliminar por estar asociado a algún pedido.
 	Destacado BIT NOT NULL,
+	IdEtiqueta INT,
 
 	CONSTRAINT PK_PRODUCTO PRIMARY KEY(Id),
-	CONSTRAINT UK_Codigo_ARTICULO UNIQUE(Codigo)
+	CONSTRAINT UK_Codigo_ARTICULO UNIQUE(Codigo),
+	CONSTRAINT FK_IdEtiqueta_ARTICULO FOREIGN KEY (IdEtiqueta) REFERENCES ETIQUETA (Id)
 );
 GO
 
@@ -364,17 +376,17 @@ INSERT INTO CATEGORIA VALUES
 ('Otros','CAT5.jpg',1);
 
 INSERT INTO ARTICULO VALUES
-('COD 1','Artículo 1','Descripción Artículo 1',10,0,1,1),
-('COD 2','Artículo 2','Descripción Artículo 2',20,10,1,1),
-('COD 3','Artículo 3','Descripción Artículo 3',30,20,1,1),
-('COD 4','Artículo 4','Descripción Artículo 4',40,30,1,1),
-('COD 5','Artículo 5','Descripción Artículo 5',50,40,1,1),
-('COD 6','Artículo 6','Descripción Artículo 6',60,50,1,1),
-('COD 7','Artículo 7','Descripción Artículo 7',70,60,1,0),
-('COD 8','Artículo 8','Descripción Artículo 8',80,70,1,0),
-('COD 9','Artículo 9','Descripción Artículo 9',90,80,1,0),
-('COD 10','Artículo 10','Descripción Artículo 10',100,90,1,1),
-('COD 11','Artículo 11','Descripción Artículo 11',10,80,1,1);
+('COD 1','Artículo 1','Descripción Artículo 1',10,0,1,1,NULL),
+('COD 2','Artículo 2','Descripción Artículo 2',20,10,1,1,NULL),
+('COD 3','Artículo 3','Descripción Artículo 3',30,20,1,1,NULL),
+('COD 4','Artículo 4','Descripción Artículo 4',40,30,1,1,NULL),
+('COD 5','Artículo 5','Descripción Artículo 5',50,40,1,1,NULL),
+('COD 6','Artículo 6','Descripción Artículo 6',60,50,1,1,NULL),
+('COD 7','Artículo 7','Descripción Artículo 7',70,60,1,0,NULL),
+('COD 8','Artículo 8','Descripción Artículo 8',80,70,1,0,NULL),
+('COD 9','Artículo 9','Descripción Artículo 9',90,80,1,0,NULL),
+('COD 10','Artículo 10','Descripción Artículo 10',100,90,1,1,NULL),
+('COD 11','Artículo 11','Descripción Artículo 11',10,80,1,1,NULL);
 
 INSERT INTO IMAGEN VALUES
 (1,'COD1_IMG1.jpg'),

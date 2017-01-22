@@ -24,7 +24,7 @@
                     <td>@p.Estado.Nombre</td>
                     <td>@p.PrecioTotal</td>
                     <td>
-                        @if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                        @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente"))
                         {
                             if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("REALIZADO"))
                             {
@@ -39,7 +39,7 @@
                                 <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>
                             }
                         }
-                        else if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        else if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
                             if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CONFIRMADO"))
                             {

@@ -167,7 +167,7 @@ namespace ProyectoWeb.Controllers
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                     editVM.guardarArchivo();
-                    if (Session["TipoUsuario"].ToString().Equals("Administrador")) {
+                    if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador")) {
                         return RedirectToAction("ListaClientes");
                     }
                     else {
@@ -281,7 +281,18 @@ namespace ProyectoWeb.Controllers
                     {
                         if (cambiarPassVM.PasswordNuevo.Equals(cambiarPassVM.PasswordConfirmacion))
                         {
-                            Cliente cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
+                            Cliente cli = null;
+
+                            if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                            {
+                                if(cambiarPassVM.NombreUsuario != null && !cambiarPassVM.NombreUsuario.Equals("") && cambiarPassVM.PasswordActual != null && !cambiarPassVM.PasswordActual.Equals(""))
+                                    cli = clienteBL.login(cambiarPassVM.NombreUsuario, cambiarPassVM.PasswordActual);
+                            }
+                            else if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                            {
+                                cli = clienteBL.obtener(cambiarPassVM.Id);
+                            }
+                            
                             if (cli != null)
                             {
                                 cli.Password = cambiarPassVM.PasswordNuevo;
@@ -384,6 +395,7 @@ namespace ProyectoWeb.Controllers
                 }
             }
         }
+
         public ActionResult Habilitar(int id)
         {
             if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))

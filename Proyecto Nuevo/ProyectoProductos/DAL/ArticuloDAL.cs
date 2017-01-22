@@ -763,7 +763,7 @@ namespace DAL
                     con.Open();
                     SqlCommand cmd = new SqlCommand(@"INSERT INTO Articulo VALUES (@codigo, @nombre, 
                                                     @descripcion, @precio, @stock,
-                                                    @disponible, @destacado); SELECT CAST(Scope_Identity() AS INT);
+                                                    @disponible, @destacado, @etiqueta); SELECT CAST(Scope_Identity() AS INT);
                                                     ", con);
 
                     cmd.Parameters.AddWithValue("@codigo", articulo.Codigo);
@@ -773,6 +773,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@stock", articulo.Stock);
                     cmd.Parameters.AddWithValue("@disponible", articulo.Disponible);
                     cmd.Parameters.AddWithValue("@destacado", articulo.Destacado);
+                    cmd.Parameters.AddWithValue("@etiqueta", DBNull.Value);
 
                     trn = con.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
                     cmd.Transaction = trn;

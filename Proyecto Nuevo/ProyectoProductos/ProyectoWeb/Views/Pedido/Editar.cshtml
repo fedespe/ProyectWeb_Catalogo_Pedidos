@@ -26,7 +26,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <input type="hidden" id="CadenaFiltros" name="CadenaFiltros">
 
-        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
         {
             if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
             {
@@ -116,7 +116,7 @@
                     <th style="text-align:center">Opciones</th>
                     <th style="text-align:center">$ Unitario (Iva inc.)</th>
                     <th style="text-align:center">$ Total Linea (Iva inc.)</th> 
-                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                     {
                         <th style="text-align:center">Stock</th>
                     }                  
@@ -183,7 +183,7 @@
                         </td>
                         <td style="vertical-align:middle">@pp.PrecioUnitario</td>
                         <td style="vertical-align:middle">@varPrecioTotal</td>   
-                        @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
                             <td style="vertical-align:middle">@pp.Articulo.Stock</td>
                         }                     
@@ -200,7 +200,7 @@
                     <td style="vertical-align:middle"><h4 id="celdaTextoPrecioIVA"></h4></td>
                     <td style="vertical-align:middle"><h4 id="celdaPrecioIVA"></h4></td>
                     <td></td>
-                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                     {
                         <td></td>
                     }
@@ -217,7 +217,7 @@
                     <td style="vertical-align:middle" ><h4 id="celdaTextoPrecioDescuento"></h4></td>
                     <td style="vertical-align:middle" ><h4 id="celdaPrecioDescuento"></h4></td>
                     <td></td>
-                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                     {
                         <td></td>
                     } 
@@ -233,7 +233,7 @@
                     <td style="vertical-align:middle" >@*<h4>(IVA inc.) </h4>*@</td>
                     <td style="vertical-align:middle" ><h2 id="celdaPrecioTotal"></h2></td>
                     <td></td>
-                    @if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                    @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                     {
                         <td></td>
                     } 
@@ -286,14 +286,14 @@
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
         </button>
 
-        if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+        if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente"))
         {
             if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
             {
                 <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@Model.Pedido.Id">Cancelar</a>
             }
         }
-        else if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        else if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
         {
             if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO"))
             {

@@ -134,7 +134,7 @@ namespace ProyectoWeb.Controllers
         //GET: Pedido/SinConfirmar
         public ActionResult SinConfirmar()
         {
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -213,7 +213,7 @@ namespace ProyectoWeb.Controllers
         [HttpPost]
         public ActionResult Historico(HistoricoViewModel HistoricoVM)
         {
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -314,7 +314,7 @@ namespace ProyectoWeb.Controllers
         //GET: Pedido/ListarPorCliente
         public ActionResult ListarPorCliente(int id)
         {
-            if (Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador") || (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente") && Convert.ToInt32(Session["IdUsuario"]) == id))
             {
                 try
                 {
@@ -353,7 +353,7 @@ namespace ProyectoWeb.Controllers
         //GET: Pedido/Confirmar
         public ActionResult Confirmar(int id)
         {
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {
@@ -643,7 +643,7 @@ namespace ProyectoWeb.Controllers
         //GET: Pedido/MarcarRealizado
         public ActionResult MarcarRealizado(int id)
         {
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
                 try
                 {

@@ -1,20 +1,8 @@
 BRUNO
-*Ver si sería mejor hacer trabajar al Detalle con ViewModel o si le agrego DataAnnotations a la clase Pedido
 *Al guardar una modificación de un Pedido, el estado cambia, y si bien lo actualizo en el ViewModel (en los 2 lugares correspondientes), no se refleja hasta salir de la página y volver a entrar. Ver cómo solucionarlo.
 *Al eliminar un Administrador o un Cliente, si SOLO TIENE UN PEDIDO EN CONSTRUCCIÓN asociado, borrarlo y permitir el borrado que se está realizando (Tal vez un trigger en la base sería la mejor opción).
-*Si edito un Artículo y elimino la primer imagen, las demás se renombran? Yo siempre me quedo con la IMG1 cuando se necesita una sola. Si esto no se está haciendo, ver si cambio la forma en la que los tomo, o si lo hacemos así.
-*Al editar un artículo (su precio), hay que actualizarle el valor de ese producto a algunos pedidos... Ver con el cliente a cuales... Va a ser de acuerdo al estado, seguro que CONFIRMADO y CANCELADO no se van a tocar, ver los demás.
 *El cliente no debe poder modificar alguno de sus datos (Ver cuales).
-*En el HOME, no se están viendo todos los recuadros del mismo tamaño (Visto con Art 10 y Art 11).
-*En el HOME, cuando el usuario no está logueado, no mostrar el botón de AGREGAR el producto al carrito.
-*Ver si no había que ocultar el precio en caso de que el Usuario no esté logueado.
 *Habilitar / Deshabilitar Cliente
-*DDL Clientes con Autocomplete
-*Ver cómo era el tema del Stock, creo que ibamos a mostrar solo texto, y no la cantidad real que queda...
-*En el Edit de Pedido, el botón de Guardar Cambios anda y reconoce la función Javascript, pero el de RealizarPedido no está funcionando... Ver qué puede estar pasando...
-*Si el usuario logueado crea un pedido, no aparece automáticamente "Mi Carrito" - Ver cómo recargar el Layout o algo de eso...
-*Poder cambiar el cliente del pedido siendo Admin
-*En el Create de Pedido, puedo utilizar el Id para mandar el IdArticulo
 
 CATEGORIA
 *Agregar a los requerimientos que si no tiene imagen no es valida la categoria (ver que si no selecciona el programa le asigna una por defecto)

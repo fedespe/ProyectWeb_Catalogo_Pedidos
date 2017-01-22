@@ -17,7 +17,7 @@
         <h3>Fechas:</h3>
         <h4>Fecha Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Fecha Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
     </div>
-    @if (Model.DescuentoCliente > 0 || Session["TipoUsuario"].Equals("Administrador"))
+    @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
     {
         <div>
             <h3>Descuento:</h3>
@@ -127,7 +127,7 @@
 
     @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
 
-    @if (Model.DescuentoCliente > 0 || Session["TipoUsuario"].Equals("Administrador"))
+    @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
     {
         <h3>Descuento: $ @montoDescuento</h3>
     }

@@ -16,14 +16,11 @@ namespace ProyectoWeb.ViewModel.AdministradorViewModel
 
         public Administrador Administrador { get; set; }
 
-        [Display(Name = "Contraseña Actual")]
-        [DataType(DataType.Password)]
-        [Required]
-        public String PasswordActual { get; set; }
         [Display(Name = "Contraseña Nueva")]
         [DataType(DataType.Password)]
         [Required]
         public String PasswordNuevo { get; set; }
+
         [Display(Name = "Confirmar Contraseña")]
         [DataType(DataType.Password)]
         [Required]

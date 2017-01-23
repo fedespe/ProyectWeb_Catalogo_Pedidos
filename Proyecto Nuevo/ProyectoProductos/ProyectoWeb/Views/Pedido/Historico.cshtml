@@ -6,7 +6,7 @@
 <script src="~/Scripts/pedidoHistorico.js"></script>
 
 <div class="row">
-    <div class="col-md-2 pull-left">
+    <div class="col-md-2">
         <div>
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
@@ -25,7 +25,12 @@
 
                 <div>
                     <h3>Filtros</h3> 
-                   
+
+                    <div class="form-group">
+                        <label for="autocompleteCliente" class="control-label">Cliente</label>
+                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();">
+                    </div>
+
                     <label class="checkbox-inline">
                         @Html.CheckBoxFor(x => x.Confirmado)
                         Confirmados
@@ -58,17 +63,46 @@
                     <br>
                     <br>
                     <div class="form-group">
-                        <label for="autocompleteCliente" class="control-label">Cliente</label>
-                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();">
+                        <label for="Fecha1" class="control-label">Fecha Inicial</label>
+                        <input type="date" class="form-control" id="Fecha1" name="Fecha1">
                     </div>
-                    <br>
+                    <div class="form-group">
+                        <label for="Fecha2" class="control-label">Fecha Final</label>
+                        <input type="date" class="form-control" id="Fecha2" name="Fecha2">
+                    </div>
+                    @*Para cargar las fechas ya seleccionadas*@
+                    @if (!Model.Fecha1.Equals(Convert.ToDateTime("01/01/0001"))) {
+                        string dia = Convert.ToString(Model.Fecha1.Day);
+                        if (Model.Fecha1.Day < 10) { dia = "0" + Model.Fecha1.Day; }
+                        string mes = Convert.ToString(Model.Fecha1.Month);
+                        if (Model.Fecha1.Month < 10) { mes = "0" + Model.Fecha1.Month; }
+                        string anio = Convert.ToString(Model.Fecha1.Year);
+                        if (Model.Fecha1.Year < 10) { anio = "0" + Model.Fecha1.Year; }
+                        string s = anio+"-"+mes+"-"+ dia;
+                        <script>
+                            $('#Fecha1').val('@s');                           
+                        </script>
+                    }
+                    @if (!Model.Fecha2.Equals(Convert.ToDateTime("01/01/0001")))
+                    {
+                        string dia = Convert.ToString(Model.Fecha2.Day);
+                        if (Model.Fecha2.Day < 10) { dia = "0" + Model.Fecha2.Day; }
+                        string mes = Convert.ToString(Model.Fecha2.Month);
+                        if (Model.Fecha2.Month < 10) { mes = "0" + Model.Fecha2.Month; }
+                        string anio = Convert.ToString(Model.Fecha2.Year);
+                        if (Model.Fecha2.Year < 10) { anio = "0" + Model.Fecha2.Year; }
+                        string s = anio + "-" + mes + "-" + dia;
+                        <script>
+                            $('#Fecha2').val('@s');
+                        </script>
+                    }
                     <br>
                     <button type="submit" class="btn btn-default" onclick="FiltrarPedidos();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
                 </div>
             }
         </div>
     </div>
-    <div class="col-md-10 pull-right">
+    <div class="col-md-10">
         <h2>@ViewBag.Title</h2>
 
         <table class="table table-striped">

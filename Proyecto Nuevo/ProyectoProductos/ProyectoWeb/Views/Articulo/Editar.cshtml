@@ -7,7 +7,7 @@
 <script src="~/Scripts/articuloEditar.js"></script>
 
 <div class="row">
-    <div class="col-md-2 pull-left">
+    <div class="col-md-2">
         <div>
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
@@ -17,7 +17,7 @@
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
     </div>
-    <div class="col-md-10 pull-right">
+    <div class="col-md-10">
         <h2>Editar Articulo</h2>
 
         @using (Html.BeginForm("Editar", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -51,9 +51,9 @@
                 var s = "Archivo" + contador;
                 var s1 = "ImgArchivo" + contador;
                 var s3 = "EliminarArchivo" + contador;
-                <div class="col-xs-6 col-sm-2 col-md-2">
+                <div class="col-xs-6 col-sm-2 col-md-2" style="padding-bottom:10px;">
                     <div class="thumbnail">
-                        <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" style="width:100%; height:100%;" />
+                        <img src=@("/Imagenes/Articulos/" + i.Img) id="@s1" onclick="$(@s).click()" style="width:80%; height:80%;" />
                         <div class="caption">
                             <label class="checkbox-inline">
                                 <input class="check-box" data-val="true" data-val-required="El campo EliminarArchivo1 es obligatorio." id="@s3" name="@s3" type="checkbox" value="true" />

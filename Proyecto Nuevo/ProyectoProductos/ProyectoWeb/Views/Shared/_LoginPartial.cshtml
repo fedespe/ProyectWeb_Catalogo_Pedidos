@@ -26,7 +26,7 @@ else
                     {
                         <li>@Html.ActionLink("Mi Perfil", "Editar", Session["TipoUsuario"].ToString(), new { Id = Convert.ToInt32(Session["IdUsuario"]) }, null)</li>
                     }                    
-                    <li role="separator" class="divider"></li>
+                    @*<li role="separator" class="divider"></li>*@
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
                 </ul>
             </li>

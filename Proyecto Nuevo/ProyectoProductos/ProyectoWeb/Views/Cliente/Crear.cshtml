@@ -6,7 +6,7 @@
 <script src="~/Scripts/clienteCrearEditar.js"></script>
 
 <div class="row">
-    <div class="col-md-2 pull-left">
+    <div class="col-md-2">
         <div>
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
@@ -16,7 +16,7 @@
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
     </div>
-    <div class="col-md-10 pull-right">
+    <div class="col-md-10">
         <h2>Nuevo Cliente</h2>
         <br>
         @using (Html.BeginForm("Crear", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))

@@ -84,9 +84,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script src="~/Scripts/jquery.mlens-1.6.min.js"></script>
-    @*<link href="~/Content/dropdowns-enhancement.css" rel="stylesheet" />
-    <script src="~/Scripts/dropdowns-enhancement.js"></script>*@
+
+    @*<script src="~/Scripts/jquery.mlens-1.6.min.js"></script>*@
+
     <link href="~/Content/miEstilo.css" rel="stylesheet" />
 
     @*Para los Autocomplete*@
@@ -102,6 +102,11 @@
     @*Para los Calendarios*@
     <link href="~/Content/datepicker.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+    @*Para Galeria de imagen (Lupa). Solo cargo el script si estoy en la vista Detalle*@
+    <div id="galeria">
+        @RenderSection("Galeria", required: false)
+    </div>  
 
 </body>
 </html>

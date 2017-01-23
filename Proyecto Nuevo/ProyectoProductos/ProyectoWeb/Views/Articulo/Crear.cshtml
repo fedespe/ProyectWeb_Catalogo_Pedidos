@@ -6,7 +6,7 @@
 <script src="~/Scripts/articuloCrear.js"></script>
 
 <div class="row">
-    <div class="col-md-2 pull-left">
+    <div class="col-md-2">
         <div>
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
@@ -16,7 +16,7 @@
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
     </div>
-    <div class="col-md-10 pull-right">
+    <div class="col-md-10">
         <h2>Articulo Nuevo</h2>
 
         @using (Html.BeginForm("Crear", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -42,9 +42,9 @@
                 var s = "Archivo" + @i;
                 var s1 = "ImgArchivo" + @i;
                 var s3 = "EliminarArchivo" + @i;
-                <div class="col-xs-6 col-sm-2 col-md-2">
+                <div class="col-xs-6 col-sm-2 col-md-2" style="padding-bottom:10px;">
                     <div class="thumbnail">
-                        <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" style="width:100%; height:100%;" />                
+                        <img src=@("/Imagenes/Articulos/SinImagen.jpg") id="@s1" onclick="$(@s).click()" style="width:80%; height:80%;" />                
                     
                         <div class="caption">
                             <label class="checkbox-inline">

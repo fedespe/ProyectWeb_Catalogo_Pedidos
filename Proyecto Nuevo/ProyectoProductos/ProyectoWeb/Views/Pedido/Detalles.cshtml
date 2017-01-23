@@ -4,136 +4,137 @@
 }
 
 <div class="row">
-    <h2>Detalles del Pedido</h2>
+    <div class="col-xs-12">
+        <h2>Detalles del Pedido</h2>
 
-    @Html.HiddenFor(x => x.Id)
-    @Html.HiddenFor(x => x.Iva)
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.Iva)
 
-    <div>
-        <h3>Cliente:</h3>
-        <h4>@Model.Cliente.NombreFantasia</h4>
-    </div>
-    <div>
-        <h3>Fechas:</h3>
-        <h4>Fecha Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Fecha Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
-    </div>
-    @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
-    {
         <div>
-            <h3>Descuento:</h3>
-            <h4>@Model.DescuentoCliente%</h4>
+            <h3>Cliente:</h3>
+            <h4>@Model.Cliente.NombreFantasia</h4>
         </div>
-    }
-    
-    <div>
-        @{
-            if (Model.Comentario != null && !Model.Comentario.Trim().Equals(""))
-            {
-                <h3>Comentarios:</h3>
-                string[] comentarios = Model.Comentario.Trim().Split('|');
-                foreach (string s in comentarios)
+        <div>
+            <h3>Fechas:</h3>
+            <h4>Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
+        </div>
+        @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
+        {
+            <div>
+                <h3>Descuento:</h3>
+                <h4>@Model.DescuentoCliente%</h4>
+            </div>
+        }
+
+        <div>
+            @{
+                if (Model.Comentario != null && !Model.Comentario.Trim().Equals(""))
                 {
-                    <p>
-                        @s
-                    </p>
+                    <h3>Comentarios:</h3>
+                    string[] comentarios = Model.Comentario.Trim().Split('|');
+                    foreach (string s in comentarios)
+                    {
+                        <p>
+                            @s
+                        </p>
+                    }
                 }
             }
-        }
-    </div>
-    <div>
-        <h3>Estado:</h3>
-        <p>@Model.Estado.Nombre</p>
-    </div>
+        </div>
+        <div>
+            <h3>Estado:</h3>
+            <p>@Model.Estado.Nombre</p>
+        </div>
 
-    <table class="table table-hover" style="text-align:center">
-        <thead>
-            <tr>
-                <th style="text-align:center">Imagen</th>
-                <th style="text-align:center">Codigo Articulo</th>
-                <th style="text-align:center">Nombre Articulo</th>
-                <th style="text-align:center">Cantidad</th>
-                <th style="text-align:center">Opciones</th>
-                <th style="text-align:center">$ Unitario</th>
-                <th style="text-align:center">$ Total Linea</th>
-            </tr>
-        </thead>
+        <table class="table table-hover" style="text-align:center">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Imagen</th>
+                    <th style="text-align:center">Codigo Articulo</th>
+                    <th style="text-align:center">Nombre Articulo</th>
+                    <th style="text-align:center">Cantidad</th>
+                    <th style="text-align:center">Opciones</th>
+                    <th style="text-align:center">$ Unitario</th>
+                    <th style="text-align:center">$ Total Linea</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            @foreach (var pp in Model.ProductosPedidos)
+            <tbody>
+                @foreach (var pp in Model.ProductosPedidos)
             {
                 double precioTotal = pp.Cantidad * pp.PrecioUnitario;
                 Model.PrecioTotal += precioTotal;
 
-                <tr style="text-align:center">
-                    <td style="vertical-align:middle"> 
-                        <img src=@("/Imagenes/Articulos/" + pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
-                    </td>
-                    <td style="vertical-align:middle">@pp.Articulo.Codigo</td>
-                    <td style="vertical-align:middle">@pp.Articulo.Nombre</td>
-                    <td style="vertical-align:middle">@pp.Cantidad</td>
-                    <td style="vertical-align:middle">
-                        @{
-                            List<string> color = new List<string>();
-                            List<string> material = new List<string>();
-                            string strcol = "";
-                            string strMat = "";
-                            //int cont = 0;
-                            foreach (ET.Filtro f in pp.Articulo.Filtros)
-                            {
-                                if (f.Color)
+                    <tr style="text-align:center">
+                        <td style="vertical-align:middle">
+                            <img src=@("/Imagenes/Articulos/" + pp.Articulo.Imagenes[0].Img ) height="100" width="100" />
+                        </td>
+                        <td style="vertical-align:middle">@pp.Articulo.Codigo</td>
+                        <td style="vertical-align:middle">@pp.Articulo.Nombre</td>
+                        <td style="vertical-align:middle">@pp.Cantidad</td>
+                        <td style="vertical-align:middle">
+                            @{
+                                List<string> color = new List<string>();
+                                List<string> material = new List<string>();
+                                string strcol = "";
+                                string strMat = "";
+                                //int cont = 0;
+                                foreach (ET.Filtro f in pp.Articulo.Filtros)
                                 {
-                                    color.Add(f.Nombre);
+                                    if (f.Color)
+                                    {
+                                        color.Add(f.Nombre);
+                                    }
+                                    else {
+                                        material.Add(f.Nombre);
+                                    }
                                 }
-                                else {
-                                    material.Add(f.Nombre);
-                                }
-                            }
-                            for (int i = 0; i < color.Count; i++)
-                            {
-                                if (i != color.Count - 1)
+                                for (int i = 0; i < color.Count; i++)
                                 {
-                                    strcol += color.ElementAt(i) + " | ";
+                                    if (i != color.Count - 1)
+                                    {
+                                        strcol += color.ElementAt(i) + " | ";
+                                    }
+                                    else {
+                                        strcol += color.ElementAt(i);
+                                    }
                                 }
-                                else {
-                                    strcol += color.ElementAt(i);
-                                }
-                            }
-                            for (int i = 0; i < material.Count; i++)
-                            {
-                                if (i != material.Count - 1)
+                                for (int i = 0; i < material.Count; i++)
                                 {
-                                    strMat += material.ElementAt(i) + " | ";
+                                    if (i != material.Count - 1)
+                                    {
+                                        strMat += material.ElementAt(i) + " | ";
+                                    }
+                                    else {
+                                        strMat += material.ElementAt(i);
+                                    }
                                 }
-                                else {
-                                    strMat += material.ElementAt(i);
+                                if (material.Count == 0) { strMat = "Material: Sin descripción"; }
+                                if (color.Count == 0) { strcol = "Color: Sin descripción"; }
+
+                                <div style="font-size:smaller"><small>@strMat</small></div>
+                                <div style="font-size:smaller"><small>@strcol</small></div>
+
+                            }
+                        </td>
+                        <td style="vertical-align:middle">@pp.PrecioUnitario</td>
+                        <td style="vertical-align:middle">@precioTotal</td>
+                    </tr>
                                 }
-                            }
-                            if (material.Count == 0) { strMat = "Material: Sin descripción"; }
-                            if (color.Count == 0) { strcol = "Color: Sin descripción"; }
+            </tbody>
+        </table>
 
-                            <div style="font-size:smaller"><small>@strMat</small></div>
-                            <div style="font-size:smaller"><small>@strcol</small></div>
+        <h3>IVA: $@(Model.PrecioTotal * Model.Iva / (100 + Model.Iva))</h3>
 
-                        }
-                    </td>
-                    <td style="vertical-align:middle">@pp.PrecioUnitario</td>
-                    <td style="vertical-align:middle">@precioTotal</td>
-                </tr>
-                            }
-        </tbody>
-    </table>
+        @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
 
-    <h3>IVA: $@(Model.PrecioTotal * Model.Iva / (100 + Model.Iva))</h3>
+        @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
+        {
+            <h3>Descuento: $ @montoDescuento</h3>
+        }
 
-    @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
-
-    @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
-    {
-        <h3>Descuento: $ @montoDescuento</h3>
-    }
-    
-    <h1>Monto Total (IVA inc.): $@(Model.PrecioTotal-montoDescuento)</h1>
+        <h1>Monto Total (IVA inc.): $@(Model.PrecioTotal - montoDescuento)</h1>
+    </div>
 </div>
-
 
 

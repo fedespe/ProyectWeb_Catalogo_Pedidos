@@ -18,6 +18,8 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
         public bool Cancelado { get; set; }
         public bool EnConstruccion { get; set; }
         public int IdClienteFiltrado { get; set; }
+        public DateTime Fecha1 { get; set; }
+        public DateTime Fecha2 { get; set; }
 
         public HistoricoViewModel()
         {
@@ -65,6 +67,11 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                     Pedidos = Pedidos.Where(p => p.Cliente.Id == IdClienteFiltrado).OrderByDescending(p => p.FechaRealizado).ToList();
                 }
             }
+            //Si no coloca fecha de fin le coloco la fecha del dia
+            if (Fecha2.Equals(Convert.ToDateTime("01/01/0001"))) {
+                Fecha2 = DateTime.Today;
+            }
+            Pedidos= Pedidos.Where(f => f.FechaRealizado>=Fecha1 && f.FechaRealizado<=Fecha2).OrderByDescending(p => p.FechaRealizado).ToList();
         }
 
     }

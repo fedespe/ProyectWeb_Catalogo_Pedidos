@@ -5,7 +5,7 @@
 
 <script src="~/Scripts/catalogoListarArticulo.js"></script>
 <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-2 pull-left">
+    <div class="col-md-2">
         <div>
             <h3>Categorías</h3>
             @foreach (var c in Model.Categorias)
@@ -22,7 +22,7 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <div class="input-group">
+                    <div class="input-group" style="width:130px">
                         <input type="text" class="form-control" placeholder="Código" name="codigo" id="codigo">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">
@@ -102,7 +102,7 @@
         </div>      
     </div>
     
-    <div class="col-sm-12 col-md-10 pull-right">
+    <div class="col-sm-12 col-md-10">
         <h2 style="text-align:center">@Model.NombreCat</h2>
         <hr>
         @foreach (var c in Model.Articulos)
@@ -110,7 +110,7 @@
             if (@c.Disponible)
             {
                 var s1 = "unidades" + c.Id;
-                <div class="col-xs-12 col-sm-6 col-md-3" style="padding-bottom:20px;">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="padding-bottom:20px;">
                     <div class="thumbnail sombra">
                         <a href="~/Catalogo/DetalleArticulo/@c.Id">
                             <div align="center" style="width:100%; height:100%;">
@@ -179,7 +179,7 @@
                                 <div style="font-size:large">Precio: $ @c.Precio c/u</div>
 
                                 <p>                               
-                                    <div class="input-group">
+                                    <div class="input-group" style="width:180px">
                                         <input type="number" class="form-control" value="1" id="@s1" onchange="verificarCantidad(this)">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>

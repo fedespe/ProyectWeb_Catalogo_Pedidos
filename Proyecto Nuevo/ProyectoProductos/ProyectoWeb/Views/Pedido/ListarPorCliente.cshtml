@@ -2,69 +2,72 @@
 @{
     ViewBag.Title = "PedidosPorCliente";
 }
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Pedidos de @Model[0].Cliente.NombreFantasia</h2>
 
-<h2>Pedidos de @Model[0].Cliente.NombreFantasia</h2>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>F. Pedido</th>
-            <th>Estado</th>
-            <th>Monto Total</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var p in Model)
-        {
-            if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@p.FechaRealizado.ToString("d")</td>
-                    <td>@p.Estado.Nombre</td>
-                    <td>@p.PrecioTotal</td>
-                    <td>
-                        @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente"))
-                        {
-                            if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("REALIZADO"))
-                            {
-                                <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
-                            }
-                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR"))
-                            {
-                                <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
-                            }
-                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
-                            {
-                                <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>
-                            }
-                        }
-                        else if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
-                        {
-                            if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CONFIRMADO"))
-                            {
-                                <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
-                            }
-                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("CONFIRMADO"))
-                            {
-                                <a title="Editar" href="~/Pedido/MarcarRealizado/@p.Id">Marcar Realizado</a>
-                            }
-                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
-                            {
-                                <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
-                            }
-                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
-                            {
-                                <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
-                            }
-                            if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
-                            {
-                                <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>
-                            }
-                        }
-                    </td>
+                    <th>F. Pedido</th>
+                    <th>Estado</th>
+                    <th>Monto Total</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+            </thead>
+
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                    {
+                        <tr>
+                            <td>@p.FechaRealizado.ToString("d")</td>
+                            <td>@p.Estado.Nombre</td>
+                            <td>@p.PrecioTotal</td>
+                            <td>
+                                @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente"))
+                                {
+                                    if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("REALIZADO"))
+                                    {
+                                        <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                                    }
+                                    if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR"))
+                                    {
+                                        <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
+                                    }
+                                    if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                                    {
+                                        <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>
+                                    }
+                                }
+                                else if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
+                                {
+                                    if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("REALIZADO") || p.Estado.Nombre.Equals("CONFIRMADO"))
+                                    {
+                                        <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
+                                    }
+                                    if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("CONFIRMADO"))
+                                    {
+                                        <a title="Editar" href="~/Pedido/MarcarRealizado/@p.Id">Marcar Realizado</a>
+                                    }
+                                    if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                                    {
+                                        <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
+                                    }
+                                    if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                                    {
+                                        <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
+                                    }
+                                    if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                                    {
+                                        <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

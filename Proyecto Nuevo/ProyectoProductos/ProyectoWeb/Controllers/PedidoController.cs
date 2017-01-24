@@ -365,7 +365,7 @@ namespace ProyectoWeb.Controllers
                         Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
                         //return RedirectToAction("SinConfirmar");
-                        ViewBag.Mensaje = "Su gestión ha sido realizada con exito.";
+                        ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                     else {
@@ -572,7 +572,7 @@ namespace ProyectoWeb.Controllers
 
                         //editVM.completarEditarVM();
                         //return View(editVM);
-                        ViewBag.Mensaje = "Su gestión ha sido realizada con exito.";
+                        ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                 }
@@ -582,10 +582,18 @@ namespace ProyectoWeb.Controllers
                     return View("~/Views/Shared/_Mensajes.cshtml");
                 }
             }
-            else {//ver que da error si el modelo no es valido, habria que mandarlo a otra vista con un mensaje
-                //hAY QUE CAMBIAR POR ESTE MENSAJE COMENTADO
-                //ViewBag.Mensaje = "Ocurrio un error inesperado";
-                //return View("~/Views/Shared/_Mensajes.cshtml");
+            else {
+                editVM.mensajeError = "Ocurrio un error al procesar su solicitud. Verifique los datos ingresados.";
+                if (editVM.FechaEntregaSolicitada.Equals("") || editVM.FechaEntregaSolicitada.Equals(new DateTime()))
+                {
+                    editVM.mensajeError = "Debe ingresar la fecha de entrega del pedido.";
+                }
+                if (Session["TipoUsuario"].ToString().Equals("Administrador") && (editVM.FechaRealizado.Equals("") || editVM.FechaRealizado.Equals(new DateTime())))
+                {
+                    editVM.mensajeError = "Debe ingresar la fecha de realización del pedido.";
+                }
+                editVM.Pedido= pedidoBL.obtener(editVM.IdPedido);
+                editVM.completarEditarVM();
                 return View(editVM);
             }
         }
@@ -655,7 +663,7 @@ namespace ProyectoWeb.Controllers
                         Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
                         //return RedirectToAction("SinConfirmar");
-                        ViewBag.Mensaje = "Su gestión ha sido realizada con exito.";
+                        ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
                         return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                     else {

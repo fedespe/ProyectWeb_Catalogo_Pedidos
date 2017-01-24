@@ -13,6 +13,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
 {
     public class EditarViewModel
     {
+        public string mensajeError { get; set; }
         private ParametroBL parametroBL = new ParametroBL();
         private ClienteBL clienteBL = new ClienteBL();
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();
@@ -143,8 +144,11 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
                     Pedido.Comentario = comentario;
             }
 
-            if(tipoUsuario.Equals("Administrador"))
+            if (tipoUsuario.Equals("Administrador"))
+            {
                 Pedido.FechaRealizado = FechaRealizado;
+            }
+                
 
             Pedido.FechaEntregaSolicitada = FechaEntregaSolicitada;
 

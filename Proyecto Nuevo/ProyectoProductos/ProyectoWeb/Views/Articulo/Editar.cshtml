@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-md-10">
-        <h2>Editar Articulo</h2>
+        <h2>Editar Artículo</h2>
 
         @using (Html.BeginForm("Editar", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -45,7 +45,7 @@
             @Html.HiddenFor(x => x.Img4Anterior)
             @Html.HiddenFor(x => x.Img5Anterior)
             var contador = 1;
-            <h3>Selección de imagenes</h3>
+            <h3>Selección de imágenes</h3>
             foreach (var i in Model.Articulo.Imagenes)
             {
                 var s = "Archivo" + contador;

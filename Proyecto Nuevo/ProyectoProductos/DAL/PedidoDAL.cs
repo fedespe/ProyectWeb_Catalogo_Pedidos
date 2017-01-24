@@ -1093,15 +1093,22 @@ namespace DAL
                         cmd.Parameters.Clear();
                         cmd.CommandText = cadenaUpdatePedido;
                         cmd.Parameters.AddWithValue("@Id", ped.Id);
-                        if(ped.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        //if(ped.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        //{
+                        //    cmd.Parameters.AddWithValue("@FechaRealizado", DBNull.Value);
+                        //}
+                        //else
+                        //{
+                        //cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
+                        //}
+                        if (ped.FechaRealizado.Equals(new DateTime()))
                         {
                             cmd.Parameters.AddWithValue("@FechaRealizado", DBNull.Value);
                         }
-                        else
-                        {
+                        else {
                             cmd.Parameters.AddWithValue("@FechaRealizado", ped.FechaRealizado);
-                        }
-
+                        }        
+                                        
                         if (ped.FechaEntregaSolicitada == new DateTime())
                         {
                             cmd.Parameters.AddWithValue("@FechaEntregaSolicitada", DBNull.Value);

@@ -40,9 +40,9 @@ $(document).ready(function () {
     celdaTextoPrecioIVA.innerHTML = valorIva + "%";
 
     //A todo lo que tiene la clase datepicker le relaciona un calendario
-    $('.datepicker').datepicker();
+    //$('.datepicker').datepicker();
 
-    cargarCalendarios();
+    //cargarCalendarios();
 
 
     //Autocomplete
@@ -194,42 +194,42 @@ function GuardarCambios() {
     cargarClienteSeleccionado();
 }
 
-function cargarFechasCalendarios() {
-    if ($("#fechaRealizadoCalendario") != null) {
-        var fechaRealizado = $("#fechaRealizadoCalendario").val();
+//function cargarFechasCalendarios() {
+//    if ($("#fechaRealizadoCalendario") != null) {
+//        var fechaRealizado = $("#fechaRealizadoCalendario").val();
 
-        if($("#fechaRealizado") != null){
-            $("#fechaRealizado").val(fechaRealizado);
-        }
-    }
+//        if($("#FechaRealizado") != null){
+//            $("#FechaRealizado").val(fechaRealizado);
+//        }
+//    }
 
-    if ($("#fechaEntregaSolicitadaCalendario") != null) {
-        var fechaEntregaSolicitada = $("#fechaEntregaSolicitadaCalendario").val();
+//    if ($("#fechaEntregaSolicitadaCalendario") != null) {
+//        var fechaEntregaSolicitada = $("#fechaEntregaSolicitadaCalendario").val();
 
-        if ($("#fechaEntregaSolicitada") != null) {
-            $("#fechaEntregaSolicitada").val(fechaEntregaSolicitada);
-        }
-    }
-}
+//        if ($("#FechaEntregaSolicitada") != null) {
+//            $("#FechaEntregaSolicitada").val(fechaEntregaSolicitada);
+//        }
+//    }
+//}
 
-function cargarCalendarios() {
+//function cargarCalendarios() {
 
-    if ($("#fechaRealizado") != null && $("#fechaRealizado").val() != null) {
-        var fechaRealizado = $("#fechaRealizado").val().substring(0, 10);
+//    if ($("#FechaRealizado") != null && $("#FechaRealizado").val() != null && $("#FechaRealizado").val()!="1/1/0001 0:00:00") {
+//        var fechaRealizado = $("#FechaRealizado").val().substring(0, 10);
 
-        if ($("#fechaRealizadoCalendario") != null) {
-            $("#fechaRealizadoCalendario").val(fechaRealizado);
-        }
-    }
+//        if ($("#fechaRealizadoCalendario") != null) {
+//            $("#fechaRealizadoCalendario").val(fechaRealizado);
+//        }
+//    }
 
-    if ($("#fechaEntregaSolicitada") != null && $("#fechaEntregaSolicitada").val() != null) {
-        var fechaEntregaSolicitada = $("#fechaEntregaSolicitada").val().substring(0, 10);
+//    if ($("#FechaEntregaSolicitada") != null && $("#FechaEntregaSolicitada").val() != null && $("#FechaEntregaSolicitada").val() != "1/1/0001 0:00:00") {
+//        var fechaEntregaSolicitada = $("#FechaEntregaSolicitada").val().substring(0, 10);
 
-        if ($("#fechaEntregaSolicitadaCalendario") != null) {
-            $("#fechaEntregaSolicitadaCalendario").val(fechaEntregaSolicitada);
-        }
-    }
-}
+//        if ($("#fechaEntregaSolicitadaCalendario") != null) {
+//            $("#fechaEntregaSolicitadaCalendario").val(fechaEntregaSolicitada);
+//        }
+//    }
+//}
 
 function obtenerNombreFantasiaClientesHabilitados() {
 

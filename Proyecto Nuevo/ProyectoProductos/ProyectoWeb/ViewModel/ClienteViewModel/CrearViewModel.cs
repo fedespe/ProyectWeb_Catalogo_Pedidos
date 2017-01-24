@@ -22,7 +22,7 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         public string NombreUsuario { get; set; }
 
         [Required]
-        [Display(Name = "Password")]
+        [Display(Name = "Contraseña")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

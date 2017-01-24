@@ -25,7 +25,7 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         public string Codigo { get; set; }
 
         [Required]
-        [Display(Name = "Nombre Articulo")]
+        [Display(Name = "Nombre Artículo")]
         [StringLength(50)]
         public string Nombre { get; set; }
 

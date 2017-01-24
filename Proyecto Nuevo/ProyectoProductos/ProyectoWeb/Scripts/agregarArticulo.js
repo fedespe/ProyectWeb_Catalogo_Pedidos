@@ -13,21 +13,22 @@ function agregarCarrito(event) {
     var s1 = "#unidades" + event.id;
     var s2 = $(s1).val();
     if (s2 != "" && !isNaN(s2) && s2 > 0) {
-        var s3 = "../../Pedido/Create2/" + event.id + "?cantidad=" + s2;
+        var s3 = "../../Pedido/CreateAsincronico/" + event.id + "?cantidad=" + s2;
         $.ajax({
             type: 'GET',
             url: s3,
             dataType: 'json',
             async: false,
             success: function (data) {
-                if (isNaN(data)) {
+                if (isNaN(data[0])) {
                     alert(data);
                 } else {
-                    $('#miCarrito').html("Mi Carrito (" + data + ")");
+                    var s="/Pedido/Editar/"+data[0];
+                    $('#miCarrito').attr("href",s);
+                    $('#miCarrito').html("Mi Carrito (" + data[1] + ")");
                 }
             }
         });
-        //window.location = s3;
     }
     else {
         alert("Debe indicar una cantidad mayor a Cero.");

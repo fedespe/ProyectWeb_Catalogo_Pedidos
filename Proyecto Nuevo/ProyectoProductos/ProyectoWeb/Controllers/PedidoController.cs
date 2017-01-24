@@ -700,7 +700,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        public JsonResult Create2(int id = 0, int cantidad = 0)
+        public JsonResult CreateAsincronico(int id = 0, int cantidad = 0)
         {
             //Si no está logueado, le doy aviso de que no tiene permisos
             if (Session["TipoUsuario"] == null)
@@ -802,10 +802,12 @@ namespace ProyectoWeb.Controllers
 
             Session["IdPedidoEnConstruccion"] = pedidoEnConstruccion.Id;
             Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(pedidoEnConstruccion.Id);
-            
-            return Json(Session["CantidadProductosCarrito"], JsonRequestBehavior.AllowGet); //Para que es el AllowGet?
-        }
+            List<int> datos = new List<int>();
+            datos.Add(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
+            datos.Add(Convert.ToInt32(Session["CantidadProductosCarrito"]));
 
+            return Json(datos, JsonRequestBehavior.AllowGet); //Para que es el AllowGet?
+        }
 
 
 

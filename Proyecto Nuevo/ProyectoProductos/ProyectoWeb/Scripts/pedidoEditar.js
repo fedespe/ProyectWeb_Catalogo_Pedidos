@@ -192,6 +192,7 @@ function GuardarCambios() {
     GenerarStringArticulos();
     cargarFechasCalendarios();
     cargarClienteSeleccionado();
+    $('#mensajeCambio').html("");
 }
 
 //Esta funcion es solo para permitir que no ingrese datos y 
@@ -312,3 +313,16 @@ function cargarClienteSeleccionado() {
 
     $("#idClienteSeleccionado").val(seleccionado);
 }
+
+//window.onunload = window.onbeforeunload = function () {
+//    return "Ud esta abandonando esta página, no olvide guardar sus cambios";
+//};
+window.onunload = window.onbeforeunload = function () {
+    if ($('#mensajeCambio').html()!="") {
+        return confirmExit();
+    }
+};
+function confirmExit() {
+    return "Ud esta abandonando esta página, no olvide guardar sus cambios";
+}
+

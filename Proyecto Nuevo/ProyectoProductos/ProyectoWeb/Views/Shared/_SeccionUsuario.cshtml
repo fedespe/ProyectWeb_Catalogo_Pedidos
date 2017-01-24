@@ -2,7 +2,7 @@
 {
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Mi Carrito (" + Convert.ToInt32(Session["CantidadProductosCarrito"]) + ")", "Editar", "Pedido", new { Id = Convert.ToInt32(Session["IdPedidoEnConstruccion"]) }, null)
+                @Html.ActionLink("Mi Carrito (" + Convert.ToInt32(Session["CantidadProductosCarrito"]) + ")", "Editar", "Pedido", new { Id = Convert.ToInt32(Session["IdPedidoEnConstruccion"]) }, new { @id = "miCarrito" })
                 @*<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>*@
             </li>
         </ul>

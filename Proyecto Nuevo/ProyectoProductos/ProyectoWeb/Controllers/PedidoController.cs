@@ -570,10 +570,16 @@ namespace ProyectoWeb.Controllers
                             }
                         }
 
-                        editVM.mensajeSuccess = "Pedido modificado con éxito.";
-                        editVM.Pedido = pedidoBL.obtener(editVM.IdPedido);
-                        editVM.completarEditarVM();
-                        return View(editVM);
+                        if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION") || Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        {
+                            editVM.mensajeSuccess = "Pedido modificado con éxito.";
+                            editVM.Pedido = pedidoBL.obtener(editVM.IdPedido);
+                            editVM.completarEditarVM();
+                            return View(editVM);
+                        }
+                        else {
+                            return RedirectToAction("Detalles", new { id = editVM.IdPedido });                       
+                        }                        
                         //ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
                         //return View("~/Views/Shared/_Mensajes.cshtml");
                     }
@@ -693,5 +699,115 @@ namespace ProyectoWeb.Controllers
                 }
             }
         }
+
+        public JsonResult Create2(int id = 0, int cantidad = 0)
+        {
+            //Si no está logueado, le doy aviso de que no tiene permisos
+            if (Session["TipoUsuario"] == null)
+            {
+                Json("No tiene permisos para realizar esta acción.", JsonRequestBehavior.AllowGet);
+            }
+
+            //Si no hace llegar un artículo o una cantidad, le doy aviso de que debe indicarlos
+            if (id <= 0 || cantidad <= 0)
+            {
+                Json("Debe indicar el artículo y una cantidad mayor a 0.", JsonRequestBehavior.AllowGet);
+            }
+
+            //Si no existe un artículo con el ID que llega, doy aviso, si existe, ya me queda guardado
+            Articulo a = articuloBL.obtener(id);
+            if (a == null)
+            {
+                Json("No se encontró un Artículo con el identificador especificado.", JsonRequestBehavior.AllowGet);
+            }
+
+            //Si el Usuario logueado tiene un pedido en construcción, me quedo con el ID del mismo, sino me queda en 0
+            int idUsuario = Convert.ToInt32(Session["IdUsuario"]);
+            int idEnConstruccion = 0;
+            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                idEnConstruccion = administradorBL.obtenerPedidoEnContruccion(idUsuario);
+            }
+            else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+            {
+                idEnConstruccion = clienteBL.obtenerPedidoEnContruccion(idUsuario);
+            }
+
+            Pedido pedidoEnConstruccion = null;
+            //ACA LE SETEO LOS FILTROS QUE QUIERO TENGA SELECCIONADO POR DEFECTO
+            //LOS DEJO TODOS DESELECCIONADOS, PODRIAMOS PENSAR UNA LOGICA PARA VER CUAL SELECCIONAMOS
+            a.Filtros = new List<Filtro>();
+
+            ArticuloCantidad ac = new ArticuloCantidad
+            {
+                Articulo = a,
+                Cantidad = cantidad,
+                PrecioUnitario = a.Precio
+            };
+
+            if (idEnConstruccion > 0)
+            {
+                //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
+
+                //CAMBIO IMPORTANTE  OBTENGO EL PEDIDO PERO SOLO CON LOS FILTROS SELECCIONADOS
+                //YA QUE LUEGO VOY A ACTUALIZAR EL PEDIDO CON SUS FILTROS SELECCIONADOS
+                //pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
+                pedidoEnConstruccion = pedidoBL.obtenerPedidoConFiltrosSeleccionados(idEnConstruccion);
+
+                if (pedidoEnConstruccion.ProductosPedidos == null)
+                {
+                    pedidoEnConstruccion.ProductosPedidos = new List<ArticuloCantidad>();
+                }
+
+                pedidoEnConstruccion.ProductosPedidos.Add(ac);
+
+                pedidoBL.actualizar(pedidoEnConstruccion);
+            }
+            else
+            {
+                Cliente c = null;
+                EstadoPedido ep = estadoPedidoBL.obtener("EN CONSTRUCCION");
+                double iva = parametroBL.obtenerIVA();
+
+                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                {
+                    int idPrimerCliente = clienteBL.obtenerPrimerNombreFantasiaHabilitado();
+                    if (idPrimerCliente == 0)
+                    {
+                        Json("Debe existir al menos un cliente registrado y habilitado para poder construir un pedido.", JsonRequestBehavior.AllowGet);
+                    }
+
+                    c = clienteBL.obtener(idPrimerCliente);
+                }
+                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                {
+                    c = clienteBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
+                }
+
+                pedidoEnConstruccion = new Pedido
+                {
+                    FechaRealizado = new DateTime(),
+                    FechaEntregaSolicitada = new DateTime(),
+                    ProductosPedidos = new List<ArticuloCantidad>(),
+                    Comentario = "",
+                    Estado = ep,
+                    Iva = iva,
+                    Cliente = c
+                };
+
+                pedidoEnConstruccion.ProductosPedidos.Add(ac);
+
+                pedidoEnConstruccion.Id = pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
+            }
+
+            Session["IdPedidoEnConstruccion"] = pedidoEnConstruccion.Id;
+            Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(pedidoEnConstruccion.Id);
+            
+            return Json(Session["CantidadProductosCarrito"], JsonRequestBehavior.AllowGet); //Para que es el AllowGet?
+        }
+
+
+
+
     }
 }

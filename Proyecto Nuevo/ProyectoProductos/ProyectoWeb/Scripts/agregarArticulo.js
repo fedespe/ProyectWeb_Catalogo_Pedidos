@@ -13,7 +13,7 @@ function agregarCarrito(event) {
     var s1 = "#unidades" + event.id;
     var s2 = $(s1).val();
     if (s2 != "" && !isNaN(s2) && s2 > 0) {
-        var s3 = "../../Pedido/CreateAsincronico/" + event.id + "?cantidad=" + s2;
+        var s3 = "../../Pedido/Create/" + event.id + "?cantidad=" + s2;
         $.ajax({
             type: 'GET',
             url: s3,
@@ -26,6 +26,7 @@ function agregarCarrito(event) {
                     var s="/Pedido/Editar/"+data[0];
                     $('#miCarrito').attr("href",s);
                     $('#miCarrito').html("Mi Carrito (" + data[1] + ")");
+                    alert("El producto ha sido agregado.");
                 }
             }
         });

@@ -124,16 +124,16 @@
             </tbody>
         </table>
 
-        <h3>IVA: $@(Model.PrecioTotal * Model.Iva / (100 + Model.Iva))</h3>
+        <h3>IVA: $@(Math.Round((Model.PrecioTotal * Model.Iva / (100 + Model.Iva)),3))</h3>
 
         @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
 
         @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
         {
-            <h3>Descuento: $ @montoDescuento</h3>
+            <h3>Descuento: $ @Math.Round(@montoDescuento,3) </h3>
         }
 
-        <h1>Monto Total (IVA inc.): $@(Model.PrecioTotal - montoDescuento)</h1>
+        <h1>Monto Total (IVA inc.): $@(Math.Round((Model.PrecioTotal - montoDescuento), 3) )</h1>
     </div>
 </div>
 

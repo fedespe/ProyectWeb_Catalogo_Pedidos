@@ -459,7 +459,14 @@ namespace DAL
 
                     cmd.Parameters.AddWithValue("@Id", id);
 
-                    return (int)cmd.ExecuteScalar();
+                    if(cmd.ExecuteScalar() != DBNull.Value)
+                    {
+                        return (int)cmd.ExecuteScalar();
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
             }
             catch (Exception ex)
@@ -1079,17 +1086,22 @@ namespace DAL
                         cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
 
-                        cmd.CommandText = cadenaInsertPedidoArticulo;
-                        foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                        
+                        if(ped.ProductosPedidos != null)
                         {
-                            cmd.Parameters.AddWithValue("@IdPedido", ped.Id);
-                            cmd.Parameters.AddWithValue("@IdArticulo", ac.Articulo.Id);
-                            cmd.Parameters.AddWithValue("@Cantidad", ac.Cantidad);
-                            cmd.Parameters.AddWithValue("@PrecioUnitario", ac.Articulo.Precio);
-                            ac.Id = (int)cmd.ExecuteScalar();
-                            cmd.Parameters.Clear();
-                        }
+                            cmd.CommandText = cadenaInsertPedidoArticulo;
 
+                            foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                            {
+                                cmd.Parameters.AddWithValue("@IdPedido", ped.Id);
+                                cmd.Parameters.AddWithValue("@IdArticulo", ac.Articulo.Id);
+                                cmd.Parameters.AddWithValue("@Cantidad", ac.Cantidad);
+                                cmd.Parameters.AddWithValue("@PrecioUnitario", ac.Articulo.Precio);
+                                ac.Id = (int)cmd.ExecuteScalar();
+                                cmd.Parameters.Clear();
+                            }
+                        }
+                        
                         cmd.Parameters.Clear();
                         cmd.CommandText = cadenaUpdatePedido;
                         cmd.Parameters.AddWithValue("@Id", ped.Id);
@@ -1131,19 +1143,20 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@IdEstado", ped.Estado.Id);
                         cmd.ExecuteNonQuery();
 
-
-                        
-
-                        cmd.CommandText = cadenaInsertPedidoArticuloFiltro;
-                        cmd.Parameters.Clear();
-                        foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                        if(ped.ProductosPedidos != null)
                         {
-                            foreach (Filtro f in ac.Articulo.Filtros) {
-                                cmd.Parameters.AddWithValue("@IdPedidoArticulo", ac.Id);
-                                cmd.Parameters.AddWithValue("@IdFiltro", f.Id);
-                                cmd.ExecuteNonQuery();
-                                cmd.Parameters.Clear();
-                            }                                                      
+                            cmd.CommandText = cadenaInsertPedidoArticuloFiltro;
+                            cmd.Parameters.Clear();
+                            foreach (ArticuloCantidad ac in ped.ProductosPedidos)
+                            {
+                                foreach (Filtro f in ac.Articulo.Filtros)
+                                {
+                                    cmd.Parameters.AddWithValue("@IdPedidoArticulo", ac.Id);
+                                    cmd.Parameters.AddWithValue("@IdFiltro", f.Id);
+                                    cmd.ExecuteNonQuery();
+                                    cmd.Parameters.Clear();
+                                }
+                            }
                         }
 
                         trn.Commit();

@@ -58,6 +58,7 @@ GO
 CREATE TABLE dbo.ETIQUETA
 (
 	Id INT NOT NULL IDENTITY(1,1),
+	Nombre NVARCHAR(50) NOT NULL,
 	Etiqueta NVARCHAR(100) NOT NULL,
 	
 	CONSTRAINT PK_ETIQUETA PRIMARY KEY(Id)
@@ -249,6 +250,7 @@ CREATE TABLE dbo.PEDIDO_ARTICULO_FILTRO
 	CONSTRAINT FK_IdFiltro_PEDIDO_ARTICULO_FILTRO FOREIGN KEY (IdFiltro) REFERENCES dbo.FILTRO (Id)
 );
 GO
+
 --despues de cambiar el precio de un articulo
 CREATE TRIGGER trg_actualizarPrecioEstadoPedidoEnConstruccion
 ON dbo.ARTICULO
@@ -366,6 +368,54 @@ BEGIN
 END
 GO
 
+CREATE TRIGGER trg_actualizarPedido
+ON dbo.PEDIDO
+AFTER UPDATE
+AS
+BEGIN
+
+	UPDATE
+		dbo.ADMINISTRADOR
+	SET
+		EnConstruccion = NULL
+	WHERE
+		EnConstruccion IN(
+			SELECT
+				P.Id AS IDPedido
+			FROM
+				dbo.PEDIDO P LEFT JOIN dbo.PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+			WHERE
+				PA.Id IS NULL
+		);
+		
+	UPDATE
+		dbo.CLIENTE
+	SET
+		EnConstruccion = NULL
+	WHERE
+		EnConstruccion IN(
+			SELECT
+				P.Id AS IDPedido
+			FROM
+				dbo.PEDIDO P LEFT JOIN dbo.PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+			WHERE
+				PA.Id IS NULL
+		);
+	
+	DELETE
+		dbo.PEDIDO
+	WHERE
+		Id IN(
+			SELECT
+				P.Id AS IDPedido
+			FROM
+				dbo.PEDIDO P LEFT JOIN dbo.PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+			WHERE
+				PA.Id IS NULL
+		);
+END
+GO
+
 
 /*
 	DATOS DE PRUEBA !!!
@@ -407,7 +457,7 @@ INSERT INTO dbo.ARTICULO VALUES
 ('COD 10','Artículo 10','Descripción Artículo 10',100,90,1,1,NULL),
 ('COD 11','Artículo 11','Descripción Artículo 11',10,80,1,1,NULL);
 
-INSERT INTO IMAGEN VALUES
+INSERT INTO dbo.IMAGEN VALUES
 (1,'COD1_IMG1.jpg'),
 (1,'COD1_IMG2.jpg'),
 (1,'COD1_IMG3.jpg'),

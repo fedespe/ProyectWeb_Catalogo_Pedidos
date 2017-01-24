@@ -31,12 +31,15 @@ $(document).ready(function () {
         descuentoCliente = parseFloat(document.getElementById("descuentoCliente").getAttribute("value"));
 
         celdaTextoPrecioDescuento.innerHTML = descuentoCliente + "%";
-        montoDescuentoCliente = montoTotal * descuentoCliente / 100;
-        celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente;
+        montoDescuentoCliente = montoTotal.toFixed(3) * descuentoCliente / 100;
+        celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente.toFixed(3);
     }
+    var precioTotal = (montoTotal - montoDescuentoCliente).toFixed(3);
 
-    celdaPrecioTotal.innerHTML = "$" + (montoTotal - montoDescuentoCliente);
-    celdaPrecioIVA.innerHTML = "$" + (montoTotal * valorIva / (100 + valorIva));
+    var precioIVA = (montoTotal * valorIva / (100 + valorIva)).toFixed(3);
+
+    celdaPrecioTotal.innerHTML = "$" + precioTotal;
+    celdaPrecioIVA.innerHTML = "$" + precioIVA;
     celdaTextoPrecioIVA.innerHTML = valorIva + "%";
 
     //A todo lo que tiene la clase datepicker le relaciona un calendario
@@ -84,11 +87,13 @@ function Eliminar (i) {
 
         if (cantidadArticulos > 1) {
             document.getElementById("tablaPedidos").deleteRow(i);
-
+            $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');
             actualizarTotalYDescuento();
         }
         else {
-            alert("El pedido debe contener al menos un artículo.");
+            document.getElementById("tablaPedidos").deleteRow(i);
+            document.getElementById("btnGuardarCambios").click();
+            //alert("El pedido debe contener al menos un artículo.");
         }
     }
     
@@ -122,13 +127,13 @@ function actualizarTotalYDescuento() {
      
 
     if (descuento > 0) {
-        celdaPrecioDescuento.innerHTML = "$" + (total * descuento / 100);
+        celdaPrecioDescuento.innerHTML = "$" + (total * descuento / 100).toFixed(3);
 
         total -= total * descuento / 100;
     }
 
-    celdaPrecioTotal.innerHTML = "$" + total;
-    celdaPrecioIVA.innerHTML = "$" + (total * valorIva / (100 + valorIva));
+    celdaPrecioTotal.innerHTML = "$" + total.toFixed(3);
+    celdaPrecioIVA.innerHTML = "$" + (total * valorIva / (100 + valorIva)).toFixed(3);
 }
 
 function actualizarTotales() {
@@ -146,7 +151,7 @@ function actualizarTotales() {
             var cantidad = parseInt(inputCantidad.value);
 
             if (cantidad > 0) {
-                totalFila = precioUnitario * cantidad;
+                totalFila = (precioUnitario * cantidad);
                 inputCantidad.value = cantidad;
                 inputCantidad.setAttribute("value", cantidad);
             }
@@ -158,7 +163,7 @@ function actualizarTotales() {
                 inputCantidad.setAttribute("value", 1);
             }
 
-            celdaTotalFila.innerHTML = totalFila;
+            celdaTotalFila.innerHTML = totalFila.toFixed(3);
         }
     });
 
@@ -205,6 +210,7 @@ function cargarFechasCalendarios() {
         $('#FechaEntregaSolicitada').val("0001-01-01");
     }
 }
+
 //function cargarFechasCalendarios() {
 //    if ($("#fechaRealizadoCalendario") != null) {
 //        var fechaRealizado = $("#fechaRealizadoCalendario").val();

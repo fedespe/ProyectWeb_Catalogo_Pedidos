@@ -173,7 +173,7 @@
                             {
                                 <td style="vertical-align:middle">@pp.Articulo.Stock</td>
                             }                     
-                            <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">Eliminar</a></td>
+                            <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
                         </tr>
                     }
                     <tr>
@@ -268,7 +268,7 @@
                 <br>
             }
             <br>
-            <button type="submit" class="btn btn-primary" onclick="GuardarCambios();">
+            <button id="btnGuardarCambios" type="submit" class="btn btn-primary" onclick="GuardarCambios();">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
             </button>
 

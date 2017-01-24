@@ -69,9 +69,14 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
             }
             //Si no coloca fecha de fin le coloco la fecha del dia
             if (Fecha2.Equals(Convert.ToDateTime("01/01/0001"))) {
-                Fecha2 = DateTime.Today;
+                Fecha2 = Convert.ToDateTime("12/12/9999");
             }
             Pedidos= Pedidos.Where(f => f.FechaRealizado>=Fecha1 && f.FechaRealizado<=Fecha2).OrderByDescending(p => p.FechaRealizado).ToList();
+
+            if (Fecha2.Equals(Convert.ToDateTime("12/12/9999")))
+            {
+                Fecha2 = new DateTime();
+            }
         }
 
     }

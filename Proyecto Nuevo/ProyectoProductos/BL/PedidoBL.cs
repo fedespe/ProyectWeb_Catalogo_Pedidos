@@ -160,14 +160,17 @@ namespace BL
         {
             double total = 0;
 
-            foreach (ArticuloCantidad ac in p.ProductosPedidos)
+            if(p.ProductosPedidos != null)
             {
-                total += ac.Cantidad * ac.PrecioUnitario;
-            }
+                foreach (ArticuloCantidad ac in p.ProductosPedidos)
+                {
+                    total += ac.Cantidad * ac.PrecioUnitario;
+                }
 
-            if (p.DescuentoCliente > 0 && total > 0)
-            {
-                total -= total * p.DescuentoCliente / 100;
+                if (p.DescuentoCliente > 0 && total > 0)
+                {
+                    total -= total * p.DescuentoCliente / 100;
+                }
             }
 
             p.PrecioTotal = total;

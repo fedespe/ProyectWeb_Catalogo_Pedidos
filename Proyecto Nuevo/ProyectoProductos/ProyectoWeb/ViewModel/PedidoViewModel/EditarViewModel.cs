@@ -69,36 +69,42 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
 
         private void cargarFiltros()
         {
-            foreach (ArticuloCantidad a in Pedido.ProductosPedidos) {
-                a.Articulo.Filtros = new List<Filtro>();
-            }
-            if (CadenaFiltros != null)
+            if(Pedido.ProductosPedidos != null)
             {
-                CadenaFiltros = CadenaFiltros.Trim();
-                Char c1 = ' ';
-                Char c2 = ';';
-                String[] substrings = CadenaFiltros.Split(c1);
-                for (int i = 0; i < substrings.Length; i++)
+                foreach (ArticuloCantidad a in Pedido.ProductosPedidos)
                 {
-                    String[] substrings2 = substrings[i].Split(c2);
-                    Filtro f = new Filtro { Id = Convert.ToInt32(substrings2[0]) };
-                    if (substrings2[2] == "true")
+                    a.Articulo.Filtros = new List<Filtro>();
+                }
+                if (CadenaFiltros != null && !CadenaFiltros.Trim().Equals(""))
+                {
+                    CadenaFiltros = CadenaFiltros.Trim();
+                    Char c1 = ' ';
+                    Char c2 = ';';
+                    String[] substrings = CadenaFiltros.Split(c1);
+                    for (int i = 0; i < substrings.Length; i++)
                     {
-                        for (int j = 0; j < Pedido.ProductosPedidos.Count; j++) {
-                            if (Pedido.ProductosPedidos.ElementAt(j).Id == Convert.ToInt32(substrings2[1])) {
-                                Pedido.ProductosPedidos.ElementAt(j).Articulo.Filtros.Remove(f);
-                                Pedido.ProductosPedidos.ElementAt(j).Articulo.Filtros.Add(f);
-                                j = Pedido.ProductosPedidos.Count;
+                        String[] substrings2 = substrings[i].Split(c2);
+                        Filtro f = new Filtro { Id = Convert.ToInt32(substrings2[0]) };
+                        if (substrings2[2] == "true")
+                        {
+                            for (int j = 0; j < Pedido.ProductosPedidos.Count; j++)
+                            {
+                                if (Pedido.ProductosPedidos.ElementAt(j).Id == Convert.ToInt32(substrings2[1]))
+                                {
+                                    Pedido.ProductosPedidos.ElementAt(j).Articulo.Filtros.Remove(f);
+                                    Pedido.ProductosPedidos.ElementAt(j).Articulo.Filtros.Add(f);
+                                    j = Pedido.ProductosPedidos.Count;
+                                }
                             }
                         }
-                    }
-                    else {
-                        for (int h = 0; h < Pedido.ProductosPedidos.Count; h++)
-                        {
-                            if (Pedido.ProductosPedidos.ElementAt(h).Id == Convert.ToInt32(substrings2[1]))
+                        else {
+                            for (int h = 0; h < Pedido.ProductosPedidos.Count; h++)
                             {
-                                Pedido.ProductosPedidos.ElementAt(h).Articulo.Filtros.Remove(f);
-                                h = Pedido.ProductosPedidos.Count;
+                                if (Pedido.ProductosPedidos.ElementAt(h).Id == Convert.ToInt32(substrings2[1]))
+                                {
+                                    Pedido.ProductosPedidos.ElementAt(h).Articulo.Filtros.Remove(f);
+                                    h = Pedido.ProductosPedidos.Count;
+                                }
                             }
                         }
                     }
@@ -176,7 +182,9 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
 
         private void cargarProductosPedidos()
         {
-            if (CadenaArticulos != null)
+            Pedido.ProductosPedidos = null;
+
+            if (CadenaArticulos != null && !CadenaArticulos.Trim().Equals(""))
             {
                 Pedido.ProductosPedidos = new List<ET.ArticuloCantidad>();
 

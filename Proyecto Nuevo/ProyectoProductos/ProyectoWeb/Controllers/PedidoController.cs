@@ -20,115 +20,115 @@ namespace ProyectoWeb.Controllers
 
         //LOGICA REVISADA 12/01/17
         //GET Pedido/Create
-        public ActionResult Create(int id = 0, int cantidad = 0)
-        {
-            //Si no está logueado, le doy aviso de que no tiene permisos
-            if(Session["TipoUsuario"] == null)
-            {
-                ViewBag.Mensaje = "No tiene permisos para realizar esta acción.";
-                return View("~/Views/Shared/_Mensajes.cshtml");
-            }
+        //public ActionResult Create(int id = 0, int cantidad = 0)
+        //{
+        //    //Si no está logueado, le doy aviso de que no tiene permisos
+        //    if(Session["TipoUsuario"] == null)
+        //    {
+        //        ViewBag.Mensaje = "No tiene permisos para realizar esta acción.";
+        //        return View("~/Views/Shared/_Mensajes.cshtml");
+        //    }
 
-            //Si no hace llegar un artículo o una cantidad, le doy aviso de que debe indicarlos
-            if (id <= 0 || cantidad <= 0)
-            {
-                ViewBag.Mensaje = "Debe indicar el artículo y una cantidad mayor a 0.";
-                return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
-            }
+        //    //Si no hace llegar un artículo o una cantidad, le doy aviso de que debe indicarlos
+        //    if (id <= 0 || cantidad <= 0)
+        //    {
+        //        ViewBag.Mensaje = "Debe indicar el artículo y una cantidad mayor a 0.";
+        //        return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+        //    }
 
-            //Si no existe un artículo con el ID que llega, doy aviso, si existe, ya me queda guardado
-            Articulo a = articuloBL.obtener(id);
-            if (a == null)
-            {
-                ViewBag.Mensaje = "No se encontró un Artículo con el identificador especificado.";
-                return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
-            }
+        //    //Si no existe un artículo con el ID que llega, doy aviso, si existe, ya me queda guardado
+        //    Articulo a = articuloBL.obtener(id);
+        //    if (a == null)
+        //    {
+        //        ViewBag.Mensaje = "No se encontró un Artículo con el identificador especificado.";
+        //        return View("~/Views/Shared/_Mensajes.cshtml"); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+        //    }
 
-            //Si el Usuario logueado tiene un pedido en construcción, me quedo con el ID del mismo, sino me queda en 0
-            int idUsuario = Convert.ToInt32(Session["IdUsuario"]);
-            int idEnConstruccion = 0;
-            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-            {
-                idEnConstruccion = administradorBL.obtenerPedidoEnContruccion(idUsuario);
-            }
-            else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-            {
-                idEnConstruccion = clienteBL.obtenerPedidoEnContruccion(idUsuario);
-            }
+        //    //Si el Usuario logueado tiene un pedido en construcción, me quedo con el ID del mismo, sino me queda en 0
+        //    int idUsuario = Convert.ToInt32(Session["IdUsuario"]);
+        //    int idEnConstruccion = 0;
+        //    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        //    {
+        //        idEnConstruccion = administradorBL.obtenerPedidoEnContruccion(idUsuario);
+        //    }
+        //    else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+        //    {
+        //        idEnConstruccion = clienteBL.obtenerPedidoEnContruccion(idUsuario);
+        //    }
 
-            Pedido pedidoEnConstruccion = null;
-            //ACA LE SETEO LOS FILTROS QUE QUIERO TENGA SELECCIONADO POR DEFECTO
-            //LOS DEJO TODOS DESELECCIONADOS, PODRIAMOS PENSAR UNA LOGICA PARA VER CUAL SELECCIONAMOS
-            a.Filtros = new List<Filtro>();
+        //    Pedido pedidoEnConstruccion = null;
+        //    //ACA LE SETEO LOS FILTROS QUE QUIERO TENGA SELECCIONADO POR DEFECTO
+        //    //LOS DEJO TODOS DESELECCIONADOS, PODRIAMOS PENSAR UNA LOGICA PARA VER CUAL SELECCIONAMOS
+        //    a.Filtros = new List<Filtro>();
 
-            ArticuloCantidad ac = new ArticuloCantidad
-            {
-                Articulo = a,
-                Cantidad = cantidad,
-                PrecioUnitario = a.Precio
-            };
+        //    ArticuloCantidad ac = new ArticuloCantidad
+        //    {
+        //        Articulo = a,
+        //        Cantidad = cantidad,
+        //        PrecioUnitario = a.Precio
+        //    };
 
-            if (idEnConstruccion > 0)
-            {
-                //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
+        //    if (idEnConstruccion > 0)
+        //    {
+        //        //Si el ID del pedido en construcción es distinto de 0, me lo guardo.
 
-                //CAMBIO IMPORTANTE  OBTENGO EL PEDIDO PERO SOLO CON LOS FILTROS SELECCIONADOS
-                //YA QUE LUEGO VOY A ACTUALIZAR EL PEDIDO CON SUS FILTROS SELECCIONADOS
-                //pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
-                pedidoEnConstruccion = pedidoBL.obtenerPedidoConFiltrosSeleccionados(idEnConstruccion);
+        //        //CAMBIO IMPORTANTE  OBTENGO EL PEDIDO PERO SOLO CON LOS FILTROS SELECCIONADOS
+        //        //YA QUE LUEGO VOY A ACTUALIZAR EL PEDIDO CON SUS FILTROS SELECCIONADOS
+        //        //pedidoEnConstruccion = pedidoBL.obtener(idEnConstruccion);
+        //        pedidoEnConstruccion = pedidoBL.obtenerPedidoConFiltrosSeleccionados(idEnConstruccion);
 
-                if (pedidoEnConstruccion.ProductosPedidos == null)
-                {
-                    pedidoEnConstruccion.ProductosPedidos = new List<ArticuloCantidad>();
-                }
+        //        if (pedidoEnConstruccion.ProductosPedidos == null)
+        //        {
+        //            pedidoEnConstruccion.ProductosPedidos = new List<ArticuloCantidad>();
+        //        }
 
-                pedidoEnConstruccion.ProductosPedidos.Add(ac);
+        //        pedidoEnConstruccion.ProductosPedidos.Add(ac);
 
-                pedidoBL.actualizar(pedidoEnConstruccion);
-            }
-            else
-            {
-                Cliente c = null;
-                EstadoPedido ep = estadoPedidoBL.obtener("EN CONSTRUCCION");
-                double iva = parametroBL.obtenerIVA();
+        //        pedidoBL.actualizar(pedidoEnConstruccion);
+        //    }
+        //    else
+        //    {
+        //        Cliente c = null;
+        //        EstadoPedido ep = estadoPedidoBL.obtener("EN CONSTRUCCION");
+        //        double iva = parametroBL.obtenerIVA();
 
-                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-                {
-                    int idPrimerCliente = clienteBL.obtenerPrimerNombreFantasiaHabilitado();
-                    if(idPrimerCliente == 0)
-                    {
-                        ViewBag.Mensaje = "Debe existir al menos un cliente registrado y habilitado para poder construir un pedido.";
-                        return View("~/Views/Shared/_Mensajes.cshtml");
-                    }
+        //        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+        //        {
+        //            int idPrimerCliente = clienteBL.obtenerPrimerNombreFantasiaHabilitado();
+        //            if(idPrimerCliente == 0)
+        //            {
+        //                ViewBag.Mensaje = "Debe existir al menos un cliente registrado y habilitado para poder construir un pedido.";
+        //                return View("~/Views/Shared/_Mensajes.cshtml");
+        //            }
 
-                    c = clienteBL.obtener(idPrimerCliente);
-                }
-                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-                {
-                    c = clienteBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
-                }
+        //            c = clienteBL.obtener(idPrimerCliente);
+        //        }
+        //        else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+        //        {
+        //            c = clienteBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
+        //        }
 
-                pedidoEnConstruccion = new Pedido
-                {
-                    FechaRealizado = new DateTime(),
-                    FechaEntregaSolicitada = new DateTime(),
-                    ProductosPedidos = new List<ArticuloCantidad>(),
-                    Comentario = "",
-                    Estado = ep,
-                    Iva = iva,
-                    Cliente = c
-                };
+        //        pedidoEnConstruccion = new Pedido
+        //        {
+        //            FechaRealizado = new DateTime(),
+        //            FechaEntregaSolicitada = new DateTime(),
+        //            ProductosPedidos = new List<ArticuloCantidad>(),
+        //            Comentario = "",
+        //            Estado = ep,
+        //            Iva = iva,
+        //            Cliente = c
+        //        };
 
-                pedidoEnConstruccion.ProductosPedidos.Add(ac);
+        //        pedidoEnConstruccion.ProductosPedidos.Add(ac);
 
-                pedidoEnConstruccion.Id = pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
-            }
+        //        pedidoEnConstruccion.Id = pedidoBL.registrar(pedidoEnConstruccion, idUsuario, Session["TipoUsuario"].ToString());
+        //    }
 
-            Session["IdPedidoEnConstruccion"] = pedidoEnConstruccion.Id;
-            Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(pedidoEnConstruccion.Id);
+        //    Session["IdPedidoEnConstruccion"] = pedidoEnConstruccion.Id;
+        //    Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(pedidoEnConstruccion.Id);
 
-            return RedirectToAction("Editar", new { id = pedidoEnConstruccion.Id }); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
-        }
+        //    return RedirectToAction("Editar", new { id = pedidoEnConstruccion.Id }); //Hay que ver cómo hacer para quedarse en el mismo lugar en el que está, no moverlo de página...
+        //}
 
         //LOGICA REVISADA 12/01/17
         //GET: Pedido/SinConfirmar
@@ -489,99 +489,127 @@ namespace ProyectoWeb.Controllers
                 {
                     //COMPLETO EL PEDIDO CON LOS NUEVOS DATOS
                     //INCLUYE LA ACTUALIZACION DE LOS FILTROS SELECCIONADOS
-                    editVM.completarPedido(Session["TipoUsuario"].ToString());
-
-                    if (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
+                    if(Session["TipoUsuario"] != null)
                     {
-                        ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
-                        return View("~/Views/Shared/_Mensajes.cshtml");
-                    }
+                        editVM.completarPedido(Session["TipoUsuario"].ToString());
 
-                    if (editVM.Pedido.Estado.Nombre.Equals("REALIZADO") || editVM.Pedido.Estado.Nombre.Equals("CANCELADO") || editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO") || (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")))
-                    {
-                        ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
-                        return View("~/Views/Shared/_Mensajes.cshtml");
-                    }
-
-                    if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
-                    {
-                        if (editVM.Pedido.Id == Convert.ToInt32(Session["IdPedidoEnConstruccion"]))
-                        {
-                            if (editVM.RealizarPedido)
-                            {
-                                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-                                {
-                                    editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
-                                }
-                                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-                                {
-                                    editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
-                                }
-                                editVM.Pedido.FechaRealizado = DateTime.Today;
-                                Session["IdPedidoEnConstruccion"] = 0;
-                            }
-                        }
-                        else
+                        if (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Cliente.Id != Convert.ToInt32(Session["IdUsuario"]))
                         {
                             ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
                             return View("~/Views/Shared/_Mensajes.cshtml");
                         }
-                    }
-                    else
-                    {
-                        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-                        {
-                            editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
-                        }
-                        else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-                        {
-                            editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
-                        }
-                    }
-                    
-                    //ACTUALIZO EL PEDIDO
-                    bool r = pedidoBL.actualizar(editVM.Pedido);
 
-                    if (!r)
-                    {
-                        // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
-                        ViewBag.Mensaje = "Ocurrio un error inesperado";
-                        return View("~/Views/Shared/_Mensajes.cshtml");
-                    }
-                    else
-                    {
-                        Session["CantidadProductosCarrito"] = Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
-
-                        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        if (editVM.Pedido.Estado.Nombre.Equals("REALIZADO") || editVM.Pedido.Estado.Nombre.Equals("CANCELADO") || editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO") || (Session["TipoUsuario"].ToString().Equals("Cliente") && editVM.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")))
                         {
-                            Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+                            ViewBag.Mensaje = "El pedido no se encuentra en un estado que permita modificarlo.";
+                            return View("~/Views/Shared/_Mensajes.cshtml");
                         }
 
-                        if (editVM.RealizarPedido)
+                        if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION"))
+                        {
+                            if (editVM.Pedido.Id == Convert.ToInt32(Session["IdPedidoEnConstruccion"]))
+                            {
+                                if (editVM.RealizarPedido)
+                                {
+                                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                                    {
+                                        editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
+                                    }
+                                    else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                                    {
+                                        editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
+                                    }
+                                    editVM.Pedido.FechaRealizado = DateTime.Today;
+                                    Session["IdPedidoEnConstruccion"] = 0;
+                                }
+                            }
+                            else
+                            {
+                                ViewBag.Mensaje = "No tiene permisos para relalizar esta acción.";
+                                return View("~/Views/Shared/_Mensajes.cshtml");
+                            }
+                        }
+                        else
                         {
                             if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                             {
-                                Administrador a = administradorBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
-                                administradorBL.registrarPedidoEnConstruccion(a, 0);
+                                editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
                             }
                             else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                             {
-                                clienteBL.registrarPedidoEnConstruccion(editVM.Pedido.Cliente, 0);
+                                editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
                             }
                         }
 
-                        if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION") || Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        //ACTUALIZO EL PEDIDO
+                        bool r = pedidoBL.actualizar(editVM.Pedido);
+
+                        if (!r)
                         {
-                            editVM.mensajeSuccess = "Pedido modificado con éxito.";
-                            editVM.Pedido = pedidoBL.obtener(editVM.IdPedido);
-                            editVM.completarEditarVM();
-                            return View(editVM);
+                            // Podemos validar para mostrar un mensaje personalizado, por ahora el aplicativo se caera por el throw que hay en nuestra capa DAL
+                            ViewBag.Mensaje = "Ocurrio un error inesperado";
+                            return View("~/Views/Shared/_Mensajes.cshtml");
                         }
-                        else {
-                            return RedirectToAction("Detalles", new { id = editVM.IdPedido });                       
-                        }                        
-                        //ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
-                        //return View("~/Views/Shared/_Mensajes.cshtml");
+                        else
+                        {
+                            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                            {
+                                Session["IdPedidoEnConstruccion"] = administradorBL.obtenerPedidoEnContruccion(Convert.ToInt32(Session["IdUsuario"]));
+                            }
+                            else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                            {
+                                Session["IdPedidoEnConstruccion"] = clienteBL.obtenerPedidoEnContruccion(Convert.ToInt32(Session["IdUsuario"]));
+                            }
+
+                            if (Convert.ToInt32(Session["IdPedidoEnConstruccion"]) != 0)
+                            {
+                                if (editVM.RealizarPedido)
+                                {
+                                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                                    {
+                                        Administrador a = administradorBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
+                                        administradorBL.registrarPedidoEnConstruccion(a, 0);
+                                    }
+                                    else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                                    {
+                                        clienteBL.registrarPedidoEnConstruccion(editVM.Pedido.Cliente, 0);
+                                    }
+                                }
+
+                                Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
+                            }
+                            else
+                            {
+                                Session["CantidadProductosCarrito"] = 0;
+                            }
+
+                            if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                            {
+                                Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
+                            }
+
+
+                            if (editVM.Pedido.ProductosPedidos == null)
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else if (editVM.Pedido.Estado.Nombre.Equals("EN CONSTRUCCION") || Session["TipoUsuario"].ToString().Equals("Administrador"))
+                            {
+                                editVM.mensajeSuccess = "Pedido modificado con éxito.";
+                                editVM.Pedido = pedidoBL.obtener(editVM.IdPedido);
+                                editVM.completarEditarVM();
+                                return View(editVM);
+                            }
+                            else {
+                                return RedirectToAction("Detalles", new { id = editVM.IdPedido });
+                            }
+                            //ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
+                            //return View("~/Views/Shared/_Mensajes.cshtml");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 catch (ProyectoException ex)
@@ -640,7 +668,8 @@ namespace ProyectoWeb.Controllers
                     pedidoBL.cancelar(p.Id);
                     Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
 
-                    return RedirectToAction("Detalles", new { id = p.Id});
+                    ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
+                    return View("~/Views/Shared/_Mensajes.cshtml");
                 }
                 else
                 {
@@ -700,7 +729,7 @@ namespace ProyectoWeb.Controllers
             }
         }
 
-        public JsonResult CreateAsincronico(int id = 0, int cantidad = 0)
+        public JsonResult Create(int id = 0, int cantidad = 0)
         {
             //Si no está logueado, le doy aviso de que no tiene permisos
             if (Session["TipoUsuario"] == null)

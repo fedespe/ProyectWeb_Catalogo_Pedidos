@@ -347,6 +347,54 @@ BEGIN
 END
 GO
 
+CREATE TRIGGER trg_actualizarPedido
+ON PEDIDO
+AFTER UPDATE
+AS
+BEGIN
+
+	UPDATE
+		ADMINISTRADOR
+	SET
+		EnConstruccion = NULL
+	WHERE
+		EnConstruccion IN(
+			SELECT
+				P.Id AS IDPedido
+			FROM
+				PEDIDO P LEFT JOIN PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+			WHERE
+				PA.Id IS NULL
+		);
+		
+	UPDATE
+		CLIENTE
+	SET
+		EnConstruccion = NULL
+	WHERE
+		EnConstruccion IN(
+			SELECT
+				P.Id AS IDPedido
+			FROM
+				PEDIDO P LEFT JOIN PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+			WHERE
+				PA.Id IS NULL
+		);
+	
+	DELETE
+		PEDIDO
+	WHERE
+		Id IN(
+			SELECT
+				P.Id AS IDPedido
+			FROM
+				PEDIDO P LEFT JOIN PEDIDO_ARTICULO PA ON P.Id = PA.IdPedido
+			WHERE
+				PA.Id IS NULL
+		);
+END
+GO
+
 
 /*
 	DATOS DE PRUEBA !!!

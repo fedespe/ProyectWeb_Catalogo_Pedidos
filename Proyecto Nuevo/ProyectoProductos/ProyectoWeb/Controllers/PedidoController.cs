@@ -570,10 +570,12 @@ namespace ProyectoWeb.Controllers
                             }
                         }
 
-                        //editVM.completarEditarVM();
-                        //return View(editVM);
-                        ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
-                        return View("~/Views/Shared/_Mensajes.cshtml");
+                        editVM.mensajeSuccess = "Pedido modificado con éxito.";
+                        editVM.Pedido = pedidoBL.obtener(editVM.IdPedido);
+                        editVM.completarEditarVM();
+                        return View(editVM);
+                        //ViewBag.Mensaje = "Su gestión ha sido realizada con éxito.";
+                        //return View("~/Views/Shared/_Mensajes.cshtml");
                     }
                 }
                 catch (ProyectoException ex)

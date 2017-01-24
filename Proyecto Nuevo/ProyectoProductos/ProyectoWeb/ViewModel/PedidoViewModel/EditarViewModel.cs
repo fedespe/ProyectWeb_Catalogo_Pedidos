@@ -14,6 +14,7 @@ namespace ProyectoWeb.ViewModel.PedidoViewModel
     public class EditarViewModel
     {
         public string mensajeError { get; set; }
+        public string mensajeSuccess { get; set; }
         private ParametroBL parametroBL = new ParametroBL();
         private ClienteBL clienteBL = new ClienteBL();
         private EstadoPedidoBL estadoPedidoBL = new EstadoPedidoBL();

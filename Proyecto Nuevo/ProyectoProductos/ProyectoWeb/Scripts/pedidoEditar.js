@@ -194,6 +194,16 @@ function GuardarCambios() {
     cargarClienteSeleccionado();
 }
 
+//Esta funcion es solo para permitir que no ingrese datos y 
+//el modelo me de valido
+function cargarFechasCalendarios() {
+    if ($('#FechaRealizado').val() == "") {
+        $('#FechaRealizado').val("0001-01-01");
+    }
+    if ($('#FechaEntregaSolicitada').val() == "") {
+        $('#FechaEntregaSolicitada').val("0001-01-01");
+    }
+}
 //function cargarFechasCalendarios() {
 //    if ($("#fechaRealizadoCalendario") != null) {
 //        var fechaRealizado = $("#fechaRealizadoCalendario").val();

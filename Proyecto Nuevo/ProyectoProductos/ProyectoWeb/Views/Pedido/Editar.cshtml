@@ -14,6 +14,10 @@
         {
             <span class="label label-danger">@Model.mensajeError</span>
         }
+        @if (Model.mensajeSuccess != null && !Model.mensajeSuccess.Equals(""))
+        {
+            <span class="label label-success">@Model.mensajeSuccess</span>
+        }
 
         @using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -39,13 +43,13 @@
                     //Autocomplete Cliente
                     <div class="form-group">
                         <label for="autocompleteCliente" class="control-label">Cliente</label>
-                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();">
+                        <input id="autocompleteCliente" type="text" class="form-control cambio" onclick="AbrirAutocomplete();">
                     </div>
                 }
 
                 <div class="form-group">
                     <label for="FechaRealizado" class="control-label">Fecha de Realización</label>
-                    <input type="date" class="form-control" id="FechaRealizado" name="FechaRealizado">
+                    <input type="date" class="form-control cambio" id="FechaRealizado" name="FechaRealizado">
                 </div>
                 if (!Model.FechaRealizado.Equals(Convert.ToDateTime("01/01/0001")))
                 {
@@ -69,7 +73,7 @@
             }
             <div class="form-group">
                 <label for="FechaEntregaSolicitada" class="control-label">Fecha de Entrega</label>
-                <input type="date" class="form-control" id="FechaEntregaSolicitada" name="FechaEntregaSolicitada">
+                <input type="date" class="form-control cambio" id="FechaEntregaSolicitada" name="FechaEntregaSolicitada">
             </div>
             if (!Model.FechaEntregaSolicitada.Equals(Convert.ToDateTime("01/01/0001")))
             {
@@ -83,7 +87,10 @@
                 <script>
                     $('#FechaEntregaSolicitada').val('@s');
                 </script>
-            }
+                }
+
+            //Mensaje
+            <span class="label label-warning" id="mensajeCambio"></span>
 
             <table id="tablaPedidos" class="table table-hover" style="text-align:center">
                 <thead>
@@ -117,7 +124,7 @@
                             </td>
                             <td style="vertical-align:middle"><a title="Ver" href="~/Catalogo/DetalleArticulo/@pp.Articulo.Id"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> @pp.Articulo.Codigo</a></td>
                             <td style="vertical-align:middle">@pp.Articulo.Nombre</td>
-                            <td style="vertical-align:middle"><input type="number" class="form-control" value="@pp.Cantidad" style="text-align:center;" onchange="actualizarTotales();" /></td>
+                            <td style="vertical-align:middle"><input type="number" class="form-control cambio" value="@pp.Cantidad" style="text-align:center;" onchange="actualizarTotales();" /></td>
                             <td style="vertical-align:middle; text-align:left">
                                 @*<div class="btn-group">
                                 <button data-toggle="dropdown" class="btn dropdown-toggle" data-placeholder="Please select">Checked option <span class="caret"></span></button>
@@ -127,7 +134,7 @@
                                     var s1 = f.Id + ";" + pp.Id;
                                     var sId = f.Id + "" + pp.Id;
                                     <label class="checkbox-inline">
-                                        <input class="filtros" type="checkbox" id="ChkFil_@sId" name="@pp.Id" value="@s1">
+                                        <input class="filtros cambio" type="checkbox" id="ChkFil_@sId" name="@pp.Id" value="@s1">
                                         @f.Nombre
                                     </label>
                                     <br>
@@ -167,7 +174,7 @@
                             {
                                 <td style="vertical-align:middle">@pp.Articulo.Stock</td>
                             }                     
-                            <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
+                            <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">Eliminar</a></td>
                         </tr>
                     }
                     <tr>
@@ -294,7 +301,10 @@
                 var anterior = $('#CadenaFiltros').val();
                 $('#CadenaFiltros').val(anterior + event.target.value + ";" + event.target.checked + " ");
                 //alert($('#CadenaFiltros').val());
-            });       
+            });
+            $(document).on("change", ".cambio", function (event) {
+                $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');
+            });
         </script>
     </div>
 </div>

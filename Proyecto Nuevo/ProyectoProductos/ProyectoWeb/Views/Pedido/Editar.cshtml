@@ -34,7 +34,7 @@
                     //Autocomplete Cliente
                     <div class="form-group">
                         <label for="autocompleteCliente" class="control-label">Cliente</label>
-                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete(); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">
+                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();$('#mensajeModelo').html(''); $('#mensajeCambio').attr('class', 'alert alert-warning'); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">
                     </div>
                 }
                 else
@@ -84,16 +84,19 @@
                 </script>
             }
 
-            if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
-            {
-                <span class="label label-danger">@Model.mensajeError</span>
-            }
-            if (Model.mensajeSuccess != null && !Model.mensajeSuccess.Equals(""))
-            {
-                <span class="label label-success">@Model.mensajeSuccess</span>
-            }
+            <div id="mensajeModelo">
+                @if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+                {
+                    <div class="alert alert-danger" role="alert">@Model.mensajeError</div>
+                }
+                @if (Model.mensajeSuccess != null && !Model.mensajeSuccess.Equals(""))
+                {
+                    <div class="alert alert-success" role="alert">@Model.mensajeSuccess</div>
+                }
+            </div>
             //Mensaje
-            <span class="label label-warning" id="mensajeCambio"></span>
+            <div class="" role="alert" id="mensajeCambio"></div>
+            
 
             <table id="tablaPedidos" class="table table-hover" style="text-align:center">
                 <thead>
@@ -306,6 +309,8 @@
                 //alert($('#CadenaFiltros').val());
             });
             $(document).on("change", ".cambio", function (event) {
+                $('#mensajeModelo').html("");
+                $('#mensajeCambio').attr("class", "alert alert-warning");
                 $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');
             });
         </script>

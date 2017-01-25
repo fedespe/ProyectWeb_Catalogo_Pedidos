@@ -87,6 +87,8 @@ function Eliminar (i) {
 
         if (cantidadArticulos > 1) {
             document.getElementById("tablaPedidos").deleteRow(i);
+            $('#mensajeModelo').html("");
+            $('#mensajeCambio').addClass("alert alert-warning");
             $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');
             actualizarTotalYDescuento();
         }
@@ -329,6 +331,6 @@ window.onunload = window.onbeforeunload = function () {
     }
 };
 function confirmExit() {
-    return "Ud esta abandonando esta página, no olvide guardar sus cambios";
+    return "Existen cambios sin guardar, desea salir?";
 }
 

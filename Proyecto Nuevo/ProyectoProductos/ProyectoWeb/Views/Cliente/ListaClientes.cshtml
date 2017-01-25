@@ -9,7 +9,7 @@
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
             @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
-            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Artículos", "ListaArticulos", "Articulo")<br />
             @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
@@ -58,9 +58,9 @@
                         }
                         <td>
                             <a title="Ver" href="~/Cliente/Ver/@c.Id">Ver</a>
-                            |
+                            
                             <a title="Editar" href="~/Cliente/Editar/@c.Id">Editar</a>
-                            |
+                            
                             @if (c.Habilitado)
                             {
                                 <a title="Inhabilitar" onclick="return confirm('¿Esta seguro?');" href="~/Cliente/Inhabilitar/@c.Id">Inhabilitar</a>  
@@ -68,7 +68,7 @@
                             else {
                                 <a title="Habilitar" onclick="return confirm('¿Esta seguro?');" href="~/Cliente/Habilitar/@c.Id">Habilitar</a>
                             }
-                            |
+                            
                             
                             
                             <a title="Eliminar" onclick="return confirm('¿Esta seguro?');" href="~/Cliente/Eliminar/@c.Id">Eliminar</a>

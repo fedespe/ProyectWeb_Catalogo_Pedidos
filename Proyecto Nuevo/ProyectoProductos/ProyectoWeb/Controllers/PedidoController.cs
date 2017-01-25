@@ -578,7 +578,7 @@ namespace ProyectoWeb.Controllers
                             }
 
                             Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
-                            Session["CantidadProductosCarrito"] = 0;
+                            //Session["CantidadProductosCarrito"] = 0;
       
 
                             if (Session["TipoUsuario"].ToString().Equals("Administrador"))

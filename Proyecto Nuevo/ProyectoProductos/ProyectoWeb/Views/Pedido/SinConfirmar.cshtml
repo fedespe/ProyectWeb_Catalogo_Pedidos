@@ -8,7 +8,7 @@
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
             @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
-            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Artículos", "ListaArticulos", "Articulo")<br />
             @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
@@ -37,7 +37,7 @@
                         <td>@p.Cliente.NombreUsuario</td>
                         <td>@p.Cliente.NombreFantasia</td>
                         <td>@p.FechaRealizado.ToString("d")</td>
-                        <td>@p.FechaEntregaSolicitada.ToString("d")</td>
+                        <td>@if (@p.FechaEntregaSolicitada.Equals(new DateTime())){<div>Sin fecha</div>}else {@p.FechaEntregaSolicitada.ToString("d")}</td>
                         <td>@p.Estado.Nombre</td>
                         <td>$ @p.PrecioTotal</td>
                         <td>

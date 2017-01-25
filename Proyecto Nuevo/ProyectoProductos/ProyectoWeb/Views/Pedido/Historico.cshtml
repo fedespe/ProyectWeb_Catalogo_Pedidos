@@ -11,7 +11,7 @@
             <h3>Gestión</h3>
             @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
             @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
-            @Html.ActionLink("Gestión Articulos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Artículos", "ListaArticulos", "Articulo")<br />
             @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
             @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
         </div>
@@ -97,7 +97,7 @@
                         </script>
                     }
                     <br>
-                    <button type="submit" class="btn btn-default" onclick="FiltrarPedidos();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Filtrar</button>
+                    <button type="submit" class="btn btn-default" onclick="FiltrarPedidos();"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Aplicar</button>
                 </div>
             }
         </div>
@@ -110,6 +110,7 @@
                 <tr>
                     <th>Cliente</th>
                     <th style="text-align:right">F. Pedido</th>
+                    <th style="text-align:right">F. Entrega</th>
                     <th style="text-align:right">Estado</th>
                     <th style="text-align:right">Total</th>
                     <th style="text-align:right">Acciones</th>
@@ -122,6 +123,7 @@
                     <tr>
                         <td>@p.Cliente.NombreFantasia</td>
                         <td style="text-align:right">@p.FechaRealizado.ToString("d")</td>
+                        <td style="text-align:right">@if(@p.FechaEntregaSolicitada.Equals(new DateTime())) {<div>Sin fecha</div>}else{@p.FechaEntregaSolicitada.ToString("d")}</td>
                         <td style="text-align:right">@p.Estado.Nombre</td>
                         <td style="text-align:right">@p.PrecioTotal</td>
                         <td style="text-align:right">

@@ -26,8 +26,8 @@
             <thead>
                 <tr>
                     <th>Imagen</th>
-                    <th>Nombre Usuario</th>
-                    <th class="hidden-sm hidden-xs">Nombre Fantasía</th>
+                    <th class="hidden-sm hidden-xs">Nombre Usuario</th>
+                    <th>Nombre Fantasía</th>
                     <th class="hidden-sm hidden-xs">Razón Social</th>
                     <th class="hidden-sm hidden-xs">% Descuento</th>
                     <th>Nombre de Contacto</th>
@@ -44,8 +44,8 @@
                             @*<img src=@("data:image/gif;base64," + c.Foto) height="150" width="150" />*@
                             <img src=@("/Imagenes/Clientes/" + c.Foto) height="50" width="50" />
                         </td>
-                        <td>@c.NombreUsuario</td>
-                        <td class="hidden-sm hidden-xs">@c.NombreFantasia</td>
+                        <td class="hidden-sm hidden-xs">@c.NombreUsuario</td>
+                        <td>@c.NombreFantasia</td>
                         <td class="hidden-sm hidden-xs">@c.RazonSocial</td>
                         <td class="hidden-sm hidden-xs">@c.Descuento</td>
                         <td>@c.NombreDeContacto</td>

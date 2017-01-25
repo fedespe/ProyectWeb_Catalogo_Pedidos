@@ -76,7 +76,15 @@ namespace ProyectoWeb.Controllers
                 if (Id != 0)
                 {
                     Articulo a = articuloBL.obtener(Id);
-                    return View(a);
+                    if(a != null)
+                    {
+                        return View(a);
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = "No existe el artículo especificado.";
+                        return View("~/Views/Shared/_Mensajes.cshtml");
+                    }
                 }
                 else {
                     return RedirectToAction("ListaCategorias");

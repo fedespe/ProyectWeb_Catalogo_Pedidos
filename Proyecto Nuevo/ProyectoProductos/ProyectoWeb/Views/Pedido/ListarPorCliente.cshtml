@@ -10,6 +10,7 @@
             <thead>
                 <tr>
                     <th>F. Pedido</th>
+                    <th>F. Entrega Solicitada</th>
                     <th>Estado</th>
                     <th>Monto Total</th>
                 </tr>
@@ -22,6 +23,7 @@
                     {
                         <tr>
                             <td>@p.FechaRealizado.ToString("d")</td>
+                            <td>@p.FechaEntregaSolicitada.ToString("d")</td>
                             <td>@p.Estado.Nombre</td>
                             <td>@p.PrecioTotal</td>
                             <td>

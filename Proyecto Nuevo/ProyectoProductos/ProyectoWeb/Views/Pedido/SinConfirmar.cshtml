@@ -23,6 +23,7 @@
                     <th>N. Usuario</th>
                     <th>N. Fantasía</th>
                     <th>F. Pedido</th>
+                    <th>F. Entrega Solicitada</th>
                     <th>Estado</th>
                     <th>Monto Total</th>
                     <th>Acciones</th>
@@ -36,6 +37,7 @@
                         <td>@p.Cliente.NombreUsuario</td>
                         <td>@p.Cliente.NombreFantasia</td>
                         <td>@p.FechaRealizado.ToString("d")</td>
+                        <td>@p.FechaEntregaSolicitada.ToString("d")</td>
                         <td>@p.Estado.Nombre</td>
                         <td>$ @p.PrecioTotal</td>
                         <td>

@@ -142,6 +142,7 @@ namespace ProyectoWeb.Controllers
 
                     if (pedidos.Count > 0)
                     {
+                        pedidos = pedidos.OrderByDescending(p => p.FechaRealizado).ToList();
                         return View(pedidos);
                     }
                     else
@@ -319,8 +320,10 @@ namespace ProyectoWeb.Controllers
                 try
                 {
                     List<Pedido> lista = pedidoBL.obtenerPorClienteSinContarEnConstruccion(id);
+
                     if (lista.Count!=0)
                     {
+                        lista = lista.OrderByDescending(p => p.FechaRealizado).ToList();
                         return View(lista);
                     }
                     else {
@@ -520,7 +523,6 @@ namespace ProyectoWeb.Controllers
                                         editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
                                     }
                                     editVM.Pedido.FechaRealizado = DateTime.Today;
-                                    Session["IdPedidoEnConstruccion"] = 0;
                                 }
                             }
                             else
@@ -561,33 +563,28 @@ namespace ProyectoWeb.Controllers
                                 Session["IdPedidoEnConstruccion"] = clienteBL.obtenerPedidoEnContruccion(Convert.ToInt32(Session["IdUsuario"]));
                             }
 
-                            if (Convert.ToInt32(Session["IdPedidoEnConstruccion"]) != 0)
+                            if (editVM.RealizarPedido)
                             {
-                                if (editVM.RealizarPedido)
+                                if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                                 {
-                                    if (Session["TipoUsuario"].ToString().Equals("Administrador"))
-                                    {
-                                        Administrador a = administradorBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
-                                        administradorBL.registrarPedidoEnConstruccion(a, 0);
-                                    }
-                                    else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
-                                    {
-                                        clienteBL.registrarPedidoEnConstruccion(editVM.Pedido.Cliente, 0);
-                                    }
+                                    Administrador a = administradorBL.obtener(Convert.ToInt32(Session["IdUsuario"]));
+                                    administradorBL.registrarPedidoEnConstruccion(a, 0);
                                 }
+                                else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
+                                {
+                                    clienteBL.registrarPedidoEnConstruccion(editVM.Pedido.Cliente, 0);
+                                }
+                                Session["IdPedidoEnConstruccion"] = 0;
+                            }
 
-                                Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
-                            }
-                            else
-                            {
-                                Session["CantidadProductosCarrito"] = 0;
-                            }
+                            Session["CantidadProductosCarrito"] = pedidoBL.obtenerCantidadProductos(Convert.ToInt32(Session["IdPedidoEnConstruccion"]));
+                            Session["CantidadProductosCarrito"] = 0;
+      
 
                             if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                             {
                                 Session["PedidosSinConfirmar"] = pedidoBL.obtenerCantidadSinConfirmar();
                             }
-
 
                             if (editVM.Pedido.ProductosPedidos == null)
                             {

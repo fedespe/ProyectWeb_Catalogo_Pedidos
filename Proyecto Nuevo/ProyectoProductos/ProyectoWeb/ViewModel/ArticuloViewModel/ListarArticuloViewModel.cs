@@ -15,6 +15,7 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
     {
         private FiltroBL filtroBL = new FiltroBL();
         private ArticuloBL articuloBL = new ArticuloBL();
+        public string Codigo { get; set; }
 
         public List<Articulo> Articulos { get; set; }
 
@@ -61,13 +62,23 @@ namespace ProyectoWeb.ViewModel.ArticuloViewModel
         }
 
         public void cargarArticulosFiltrados() {
-            cargarFiltros();
-            if (ChkPrecio)
+            if (Codigo == null || Codigo.Equals(""))
             {
-                Articulos = articuloBL.obtenerConFiltrosPorPrecio(FiltrosAplicados);
+                cargarFiltros();
+                if (ChkPrecio)
+                {
+                    Articulos = articuloBL.obtenerConFiltrosPorPrecio(FiltrosAplicados);
+                }
+                else {
+                    Articulos = articuloBL.obtenerConFiltros(FiltrosAplicados);
+                }
             }
             else {
-                Articulos = articuloBL.obtenerConFiltros(FiltrosAplicados);
+                Articulos = new List<Articulo>();
+                Articulo a = articuloBL.obtenerPorCodigo(Codigo);
+                if (a != null) {
+                    Articulos.Add(a);
+                }               
             }
             
         }

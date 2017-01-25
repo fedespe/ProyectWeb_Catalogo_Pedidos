@@ -37,7 +37,7 @@ namespace ProyectoWeb.ViewModel.ClienteViewModel
         public string RazonSocial { get; set; }
 
         [Required]
-        [Display(Name = "Descuento")]
+        [Display(Name = "Descuento %")]
         [Range(0, double.MaxValue)]
         public double Descuento { get; set; }
 

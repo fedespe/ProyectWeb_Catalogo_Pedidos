@@ -131,7 +131,7 @@
                             {
                                 <a title="Detalles" href="~/Pedido/Detalles/@p.Id">Detalles</a>
                             }
-                            @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("CONFIRMADO"))
+                            @if (@*p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") ||*@ p.Estado.Nombre.Equals("CONFIRMADO"))
                             {
                                 <a title="MarcarRealizado" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/MarcarRealizado/@p.Id">Marcar Realizado</a>
                             }
@@ -139,10 +139,10 @@
                             {
                                 <a title="Editar" href="~/Pedido/Editar/@p.Id">Editar</a>
                             }
-                            @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
+                            @*@if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                             {
                                 <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@p.Id">Confirmar</a>
-                            }
+                            }*@
                             @if (p.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                             {
                                 <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@p.Id">Cancelar</a>

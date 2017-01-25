@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <h2>Editar Pedido</h2>       
+        <h2>Editar Pedido</h2>               
 
         @using (Html.BeginForm("Editar", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -34,7 +34,7 @@
                     //Autocomplete Cliente
                     <div class="form-group">
                         <label for="autocompleteCliente" class="control-label">Cliente</label>
-                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete();$('#mensajeModelo').html(''); $('#mensajeCambio').attr('class', 'alert alert-warning'); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">
+                        <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete(); $('#mensajeModelo').html(''); $('#confirmarPedido').html(''); $('#mensajeCambio').attr('class', 'alert alert-warning'); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">
                     </div>
                 }
                 else
@@ -95,8 +95,7 @@
                 }
             </div>
             //Mensaje
-            <div class="" role="alert" id="mensajeCambio"></div>
-            
+            <div class="" role="alert" id="mensajeCambio"></div>            
 
             <table id="tablaPedidos" class="table table-hover" style="text-align:center">
                 <thead>
@@ -180,7 +179,7 @@
                             {
                                 <td style="vertical-align:middle">@pp.Articulo.Stock</td>
                             }                     
-                            <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);">Eliminar</a></td>
+                            <td style="vertical-align:middle"><a title="Eliminar" onclick="Eliminar(this.parentNode.parentNode.rowIndex);$('#confirmarPedido').html('');">Eliminar</a></td>
                         </tr>
                     }
                     <tr>
@@ -272,35 +271,57 @@
                     @Html.CheckBoxFor(x => x.RealizarPedido)
                     Realizar Pedido
                 </label>
-                <br>
+                <br>               
+            }            
+            if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
+            {
+                if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR"))
+                {                   
+                    <div id="confirmarPedido">
+                        <button id="btnConfirmar" type="button" class="btn btn-success" onclick="ConfirmarPedido(@Model.Pedido.Id)">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Confirmar Pedido
+                        </button>
+                        @*<a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@Model.Pedido.Id">Confirmar</a>*@
+                    </div>                   
+                }
             }
-            <br>
-            <button id="btnGuardarCambios" type="submit" class="btn btn-primary" onclick="GuardarCambios();">
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
-            </button>
 
             if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente"))
             {
                 if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                 {
+                    <br>
+                    <button id="btnGuardarCambios" type="submit" class="btn btn-primary" onclick="GuardarCambios();">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Confirmar Pedido
+                    </button>
                     <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@Model.Pedido.Id">Cancelar</a>
+                }else{
+                    <br>
+                    <button id="btnGuardarCambios" type="submit" class="btn btn-primary" onclick="GuardarCambios();">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
+                    </button>
                 }
             }
             else if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
             {
+                <br>
+                <button id="btnGuardarCambios" type="submit" class="btn btn-primary" onclick="GuardarCambios();">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Cambios
+                </button>
+                @*if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") /*|| Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE")*/)
+                {
+                    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@Model.Pedido.Id">Confirmar</a>
+                }*@
+                if (/*Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || */Model.Pedido.Estado.Nombre.Equals("CONFIRMADO"))
+                {
+                    <a title="MarcarRealiado" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/MarcarRealizado/@Model.Pedido.Id">Marcar Realizado</a>
+                }
                 if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
                 {
-                    <a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@Model.Pedido.Id">Confirmar</a><span>|</span>
-                }
-                if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO"))
-                {
-                    <a title="MarcarRealiado" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/MarcarRealizado/@Model.Pedido.Id">Marcar Realizado</a><span>|</span>
-                        }
-                        if (Model.Pedido.Estado.Nombre.Equals("MODIFICADO POR ADMINISTRADOR") || Model.Pedido.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE"))
-                        {
                     <a title="Cancelar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Cancelar/@Model.Pedido.Id">Cancelar</a>
                 }
-            }
+            }            
+
         }   
         <script>
             $(document).on("click", ".filtros", function (event) {
@@ -310,9 +331,19 @@
             });
             $(document).on("change", ".cambio", function (event) {
                 $('#mensajeModelo').html("");
+                $('#confirmarPedido').html("");
                 $('#mensajeCambio').attr("class", "alert alert-warning");
                 $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');
             });
+            function ConfirmarPedido(data) {
+                if (!isNaN(data) && data > 0) {
+                    var s3 = "/Pedido/Confirmar/" + data;
+                    window.location = s3;
+                }
+                else {
+                    alert("Error.");
+                }
+            }
         </script>
     </div>
 </div>

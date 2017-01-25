@@ -37,6 +37,10 @@
                         <input id="autocompleteCliente" type="text" class="form-control" onclick="AbrirAutocomplete(); $('#mensajeCambio').html('IMPORTANTE: Se han realizado cambios en el pedido. Guarde los cambios para evitar pérdida de información.');">
                     </div>
                 }
+                else
+                {
+                    <h3>@Model.Pedido.Cliente.NombreFantasia</h3>
+                }
 
                 <div class="form-group">
                     <label for="FechaRealizado" class="control-label">Fecha de Realización</label>

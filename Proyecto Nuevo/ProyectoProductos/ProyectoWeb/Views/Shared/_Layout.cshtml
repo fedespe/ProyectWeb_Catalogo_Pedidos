@@ -93,20 +93,17 @@
     @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
-    <link href="~/Content/jquery-ui-1.12.1.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.12.4.js"></script>
-    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    
 
-
-
-    @*Para los Calendarios*@
-    @*<link href="~/Content/datepicker.css" rel="stylesheet" />
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>*@
+    <div id="autoComplete">
+        @RenderSection("AutoComplete", required: false)
+    </div>
 
     @*Para Galeria de imagen (Lupa). Solo cargo el script si estoy en la vista Detalle*@
     <div id="galeria">
         @RenderSection("Galeria", required: false)
-    </div>  
+    </div> 
 
+    
 </body>
 </html>

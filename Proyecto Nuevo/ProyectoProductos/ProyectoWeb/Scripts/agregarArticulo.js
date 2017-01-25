@@ -26,7 +26,7 @@ function agregarCarrito(event) {
                     var s="/Pedido/Editar/"+data[0];
                     $('#miCarrito').attr("href",s);
                     $('#miCarrito').html("Mi Carrito (" + data[1] + ")");
-                    alert("El producto ha sido agregado.");
+                    //alert("El producto ha sido agregado.");
                 }
             }
         });
@@ -35,4 +35,7 @@ function agregarCarrito(event) {
         alert("Debe indicar una cantidad mayor a Cero.");
     }
 }
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
 

@@ -276,7 +276,7 @@
                         @*<a title="Confirmar" onclick="return confirm('¿Esta seguro?');" href="~/Pedido/Confirmar/@Model.Pedido.Id">Confirmar</a>*@
                     </div>                   
                 }else if(!Model.EstadoPedido.Equals("EN CONSTRUCCION")){
-                    <div class="alert alert-danger" role="alert">Debe guardar los cambios para poder confirmar el pedido.</div>
+                    <div class="alert alert-warning" role="alert">Debe guardar los cambios para poder confirmar el pedido.</div>
                 }
             }
                     

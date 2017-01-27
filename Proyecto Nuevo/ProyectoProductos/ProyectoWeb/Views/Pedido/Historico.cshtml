@@ -122,8 +122,8 @@
                 {
                     <tr>
                         <td>@p.Cliente.NombreFantasia</td>
-                        <td style="text-align:right">@p.FechaRealizado.ToString("d")</td>
-                        <td style="text-align:right">@if(@p.FechaEntregaSolicitada.Equals(new DateTime())) {<div>Sin fecha</div>}else{@p.FechaEntregaSolicitada.ToString("d")}</td>
+                        <td style="text-align:right">@p.FechaRealizado.ToString("dd/MM/yyyy")</td>
+                        <td style="text-align:right">@if(@p.FechaEntregaSolicitada.Equals(new DateTime())) {<div>Sin fecha</div>}else{@p.FechaEntregaSolicitada.ToString("dd/MM/yyyy")}</td>
                         <td style="text-align:right">@p.Estado.Nombre</td>
                         <td style="text-align:right">@p.PrecioTotal</td>
                         <td style="text-align:right">

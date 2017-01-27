@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Password, new { @id = "pass", @class = "form-control", @placeholder = "Password", type = "password" })
+                @Html.TextBoxFor(model => model.Password, new { @id = "pass", @class = "form-control", @placeholder = "Contraseña", type = "password" })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 <label class="text-danger">@Model.Mensaje</label>
             </div>

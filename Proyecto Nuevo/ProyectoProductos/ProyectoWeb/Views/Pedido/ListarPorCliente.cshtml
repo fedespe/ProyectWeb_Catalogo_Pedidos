@@ -9,10 +9,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>F. Pedido</th>
-                    <th>F. Entrega Solicitada</th>
-                    <th>Estado</th>
-                    <th>Monto Total</th>
+                    <th style="text-align:right">F. Pedido</th>
+                    <th style="text-align:right">F. Entrega Solicitada</th>
+                    <th style="text-align:right">Estado</th>
+                    <th style="text-align:right">Monto Total</th>
                 </tr>
             </thead>
 
@@ -22,11 +22,11 @@
                     if (!p.Estado.Nombre.Equals("EN CONSTRUCCION"))
                     {
                         <tr>
-                            <td>@p.FechaRealizado.ToString("d")</td>
-                            <td>@if(@p.FechaEntregaSolicitada.Equals(new DateTime())) {<div>Sin fecha</div>}else{@p.FechaEntregaSolicitada.ToString("d")}</td>
-                            <td>@p.Estado.Nombre</td>
-                            <td>@p.PrecioTotal</td>
-                            <td>
+                            <td style="text-align:right">@p.FechaRealizado.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:right">@if(@p.FechaEntregaSolicitada.Equals(new DateTime())) {<div>Sin fecha</div>}else{@p.FechaEntregaSolicitada.ToString("dd/MM/yyyy")}</td>
+                            <td style="text-align:right">@p.Estado.Nombre</td>
+                            <td style="text-align:right">@p.PrecioTotal</td>
+                            <td style="text-align:right">
                                 @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Cliente"))
                                 {
                                     if (p.Estado.Nombre.Equals("CANCELADO") || p.Estado.Nombre.Equals("CONFIRMADO") || p.Estado.Nombre.Equals("CONFIRMADO POR CLIENTE") || p.Estado.Nombre.Equals("REALIZADO"))

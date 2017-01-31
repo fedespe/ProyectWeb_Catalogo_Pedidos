@@ -34,6 +34,7 @@
             @Html.HiddenFor(x => x.cliente.Id)
             @*@Html.HiddenFor(x => x.cliente.Password)*@
             @Html.HiddenFor(x => x.ImgAnterior)
+            @Html.HiddenFor(x => x.cliente.IdPedidoEnConstruccion)
 
             //Lista de errores
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

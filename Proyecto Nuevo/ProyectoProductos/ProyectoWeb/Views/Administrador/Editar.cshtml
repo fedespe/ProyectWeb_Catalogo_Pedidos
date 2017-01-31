@@ -27,6 +27,7 @@
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(x => x.administrador.Id)
+            @Html.HiddenFor(x => x.administrador.IdPedidoEnConstruccion)
 
             //Lista de errores
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

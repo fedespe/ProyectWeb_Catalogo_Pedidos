@@ -32,7 +32,7 @@ $(document).ready(function () {
 
         celdaTextoPrecioDescuento.innerHTML = descuentoCliente + "%";
         montoDescuentoCliente = montoTotal.toFixed(2) * descuentoCliente / 100;
-        celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente.toFixed(2);
+        celdaPrecioDescuento.innerHTML = "$" + montoDescuentoCliente.toFixed(2);
     }
     var precioTotal = (montoTotal - montoDescuentoCliente).toFixed(2);
 

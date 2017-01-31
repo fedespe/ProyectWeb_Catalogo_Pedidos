@@ -12,10 +12,23 @@
 }
 /*Estilo defs fuente defs label pagina*/
 * {
-   font-family: 'Comfortaa', cursive;
+   font-family: Comfortaa-Regular;
+   font-size:14px;
 }
 h1,h2,h3,h4,h5,h6 {
-    font-family: 'Poiret One', cursive;
+    font-family: PoiretOne-Regular;
+}
+
+h1 {
+    font-size:50px;
+}
+@font-face {
+    font-family: 'PoiretOne-Regular';
+    src: url('../fonts/PoiretOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Comfortaa-Regular';
+    src: url('../fonts/Comfortaa-Regular.ttf') format('truetype');
 }
 
 

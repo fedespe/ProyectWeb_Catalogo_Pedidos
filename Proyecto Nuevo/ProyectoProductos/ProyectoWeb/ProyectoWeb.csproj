@@ -230,6 +230,8 @@
     <Content Include="Scripts\articuloListar.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\PoiretOne-Regular.ttf" />
+    <Content Include="fonts\Comfortaa-Regular.ttf" />
     <None Include="Properties\PublishProfiles\brunoediaz.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\catalogoListarArticulo.js" />

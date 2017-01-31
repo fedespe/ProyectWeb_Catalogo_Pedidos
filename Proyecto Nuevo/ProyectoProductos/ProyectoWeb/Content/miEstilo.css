@@ -10,4 +10,14 @@
     border-radius:0px; 
     border-color:whitesmoke;
 }
+/*Estilo defs fuente defs label pagina*/
+* {
+   font-family: 'Comfortaa', cursive;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Poiret One', cursive;
+}
+
+
+
 

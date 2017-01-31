@@ -11,40 +11,43 @@
         @Html.HiddenFor(x => x.Iva)
 
         <div>
-            <h3>Cliente:</h3>
-            <h4>@Model.Cliente.NombreFantasia</h4>
+            <div style="font-size:large">Cliente:</div>
+            <div style="font-size:medium">@Model.Cliente.NombreFantasia</div>
         </div>
+        <br>
         <div>
-            <h3>Fechas:</h3>
+            <div style="font-size:large">Fechas:</div>
             <div>
                  
                 @if (!Model.FechaRealizado.Equals(new DateTime())) {
-                    <h4>Realizado: @Model.FechaRealizado.ToString("dd/MM/yyyy")</h4>
+                    <div style="font-size:medium">Realizado: @Model.FechaRealizado.ToString("dd/MM/yyyy")</div>
                 }else {
-                    <h4>Realizado: Sin fecha</h4>
+                    <div style="font-size:medium">Realizado: Sin fecha</div>
                 }
                 @if (!Model.FechaEntregaSolicitada.Equals(new DateTime()))
                 {
-                    <h4>Entrega Solicitada: @Model.FechaEntregaSolicitada.ToString("dd/MM/yyyy")</h4>
+                    <div style="font-size:medium">Entrega Solicitada: @Model.FechaEntregaSolicitada.ToString("dd/MM/yyyy")</div>
                 }
                 else {
-                    <h4>Entrega Solicitada: Sin fecha</h4>
+                    <div style="font-size:medium">Entrega Solicitada: Sin fecha</div>
                 }     
             </div>
         </div>
+        <br>
         @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
         {
             <div>
-                <h3>Descuento:</h3>
-                <h4>@Model.DescuentoCliente%</h4>
+                <div style="font-size:large">Descuento:</div>
+                <div style="font-size:medium">@Model.DescuentoCliente%</div>
             </div>
+            <br>
         }
-
+        
         <div>
             @{
                 if (Model.Comentario != null && !Model.Comentario.Trim().Equals(""))
                 {
-                    <h3>Comentarios:</h3>
+                    <div style="font-size:large">Comentarios:</div>
                     string[] comentarios = Model.Comentario.Trim().Split('|');
                     foreach (string s in comentarios)
                     {
@@ -52,14 +55,15 @@
                             @s
                         </p>
                     }
+                    <br>
                 }
             }
         </div>
         <div>
-            <h3>Estado:</h3>
-            <p>@Model.Estado.Nombre</p>
+            <div style="font-size:large">Estado:</div>
+            <div style="font-size:medium">@Model.Estado.Nombre</div>
         </div>
-
+        <br>
         <table class="table table-hover" style="text-align:center">
             <thead>
                 <tr>
@@ -137,17 +141,17 @@
                                 }
             </tbody>
         </table>
-
-        <h3>IVA: $ @((Model.PrecioTotal * Model.Iva / (100 + Model.Iva)).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</h3>
-
+        <br>
+        <div style="font-size:large">IVA: $ @((Model.PrecioTotal * Model.Iva / (100 + Model.Iva)).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</div>
+        <br>
         @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
 
         @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
         {
-            <h3>Descuento: $ @montoDescuento.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) </h3>
+            <div style="font-size:large">Descuento: $ @montoDescuento.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) </div>
         }
-
-        <h1>Monto Total (IVA inc.): $ @((Model.PrecioTotal - montoDescuento).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</h1>
+        <br>
+        <div style="font-size:xx-large">Monto Total (IVA inc.): $ @((Model.PrecioTotal - montoDescuento).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</div>
     </div>
 </div>
 

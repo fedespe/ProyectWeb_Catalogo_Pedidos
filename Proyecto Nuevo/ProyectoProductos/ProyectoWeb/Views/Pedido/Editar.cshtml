@@ -189,9 +189,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td style="vertical-align:middle"><h4>IVA</h4></td>
-                        <td style="vertical-align:middle"><h4 id="celdaTextoPrecioIVA"></h4></td>
-                        <td style="vertical-align:middle"><h4 id="celdaPrecioIVA"></h4></td>
+                        <td style="vertical-align:middle"><div style="font-size:large">IVA</div></td>
+                        <td style="vertical-align:middle"><div style="font-size:large" id="celdaTextoPrecioIVA"></div></td>
+                        <td style="vertical-align:middle"><div style="font-size:large" id="celdaPrecioIVA"></div></td>
                         <td></td>
                         @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
@@ -206,9 +206,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td style="vertical-align:middle"><h4>Descuento cliente preferencial</h4></td>
-                        <td style="vertical-align:middle" ><h4 id="celdaTextoPrecioDescuento"></h4></td>
-                        <td style="vertical-align:middle" ><h4 id="celdaPrecioDescuento"></h4></td>
+                        <td style="vertical-align:middle"><div style="font-size:large">Descuento cliente preferencial</div></td>
+                        <td style="vertical-align:middle" ><div style="font-size:large" id="celdaTextoPrecioDescuento"></div></td>
+                        <td style="vertical-align:middle" ><div style="font-size:large" id="celdaPrecioDescuento"></div></td>
                         <td></td>
                         @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
@@ -222,9 +222,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td style="vertical-align:middle"><h2>Monto Total</h2></td>
+                        <td style="vertical-align:middle"><div style="font-size:xx-large">Monto Total</div></td>
                         <td style="vertical-align:middle" >@*<h4>(IVA inc.) </h4>*@</td>
-                        <td style="vertical-align:middle" ><h2 id="celdaPrecioTotal"></h2></td>
+                        <td style="vertical-align:middle" ><div style="font-size:xx-large" id="celdaPrecioTotal"></div></td>
                         <td></td>
                         @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                         {
@@ -258,10 +258,10 @@
             @Html.HiddenFor(x => x.EstadoPedido)
             if (Model.EstadoPedido.Equals("EN CONSTRUCCION"))
             {
-                <h3>Estado: EN CONSTRUCCIÓN</h3>
+                <div style="font-size:x-large">Estado: EN CONSTRUCCIÓN</div>
             }
             else {
-                <h3>Estado: @Model.EstadoPedido</h3>
+                <div style="font-size:x-large">Estado: @Model.EstadoPedido</div>
             }
 
             <br>

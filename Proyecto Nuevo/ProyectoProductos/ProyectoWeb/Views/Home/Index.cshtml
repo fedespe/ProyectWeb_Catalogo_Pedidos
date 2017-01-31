@@ -64,7 +64,7 @@
 <script src="~/Scripts/agregarArticulo.js"></script>
 
 <div class="row"> 
-    <div class="hidden-xs hidden-sm hidden-md hidden-lg">
+    @*<div class="hidden-xs hidden-sm hidden-md hidden-lg">
         @{//IMPORTANTE VER QUE ESTO SE PODRIA HACER AGREGANDO UN ATRIBUTO DESTACADO A LA CATEGORIA
             var guia = 0;
             var contador = 0;
@@ -120,12 +120,14 @@
         }
         <div class="clearfix"></div>
         <a href="~/Catalogo/ListaCategorias" class="pull-right"><span class="glyphicon glyphicon-eye-open"></span> Ver más</a>
-    </div>
-
-    <br>
     
+    </div>*@
+
+   
     <div>
-        <h2 class="text-center">Artículos Destacados</h2>
+        <div class="page-header" style="text-align:center;">
+            <h1>Artículos Destacados</h1>
+        </div>     
         <br>
         <br>
         @foreach (var c in Model.ArticulosDestacados)
@@ -141,7 +143,7 @@
                                 <img src=@("/Imagenes/Articulos/" + c.Imagenes.ElementAt(0).Img) class="img" alt="Imagen de Prueba" style="width:70%; height:70%;">
                             </div>
                         </a>     
-                        <div class="caption">
+                        <div class="caption" style="text-align:center;">
                             @{
                                 List<string> color = new List<string>();
                                 List<string> material = new List<string>();
@@ -201,7 +203,7 @@
 
                                 <div style="font-size:large">Precio: $ @c.Precio c/u</div>
                                 <p>                                   
-                                    <div class="input-group" style="width:180px">
+                                    <div class="input-group" style="width:180px;margin:0 auto">
                                         <input type="number" class="form-control" value="1" id="@s1" onchange="verificarCantidad(this)">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" OnClick="agregarCarrito(this)" id="@c.Id"  data-toggle="popover" data-trigger="focus" data-content="Agregado a Mi Carrito" data-placement="bottom" data-container="body">Agregar <span class="glyphicon glyphicon-shopping-cart"></span></button>

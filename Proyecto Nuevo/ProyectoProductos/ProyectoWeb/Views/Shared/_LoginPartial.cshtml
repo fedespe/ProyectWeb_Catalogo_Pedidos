@@ -16,7 +16,21 @@ else
                 @Html.ActionLink("Bienvenido " + Session["NombreUsuario"], "Editar", Session["TipoUsuario"].ToString(), new {Id = Convert.ToInt32(Session["IdUsuario"])}, null)
             </li>*@
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @Session["NombreUsuario"].ToString() <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+                    @if (@Session["NombreUsuario"].ToString().Length >= 15)
+                    {
+                        if (Session["TipoUsuario"].ToString().Equals("Administrador"))
+                        {
+                            <div>Administrador<span class="caret"></span></div>
+                        }
+                        else {
+                            <div>Cliente<span class="caret"></span></div>
+                        }
+                    }
+                    else {
+                        @Session["NombreUsuario"].ToString() <span class="caret"></span>
+                    }                    
+                </a>
                 <ul class="dropdown-menu">
                     @if (Session["TipoUsuario"].ToString() == "Cliente")
                     {

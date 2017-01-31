@@ -16,7 +16,21 @@
         </div>
         <div>
             <h3>Fechas:</h3>
-            <h4>Realizado: @Model.FechaRealizado.Day/@Model.FechaRealizado.Month/@Model.FechaRealizado.Year | Entrega Solicitada: @Model.FechaEntregaSolicitada.Day/@Model.FechaEntregaSolicitada.Month/@Model.FechaEntregaSolicitada.Year</h4>
+            <div>
+                 
+                @if (!Model.FechaRealizado.Equals(new DateTime())) {
+                    <h4>Realizado: @Model.FechaRealizado.ToString("dd/MM/yyyy")</h4>
+                }else {
+                    <h4>Realizado: Sin fecha</h4>
+                }
+                @if (!Model.FechaEntregaSolicitada.Equals(new DateTime()))
+                {
+                    <h4>Entrega Solicitada: @Model.FechaEntregaSolicitada.ToString("dd/MM/yyyy")</h4>
+                }
+                else {
+                    <h4>Entrega Solicitada: Sin fecha</h4>
+                }     
+            </div>
         </div>
         @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
         {
@@ -117,23 +131,23 @@
 
                             }
                         </td>
-                        <td style="vertical-align:middle">@pp.PrecioUnitario</td>
-                        <td style="vertical-align:middle">@precioTotal</td>
+                        <td style="vertical-align:middle">@pp.PrecioUnitario.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</td>
+                        <td style="vertical-align:middle">@precioTotal.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</td>
                     </tr>
                                 }
             </tbody>
         </table>
 
-        <h3>IVA: $@(Math.Round((Model.PrecioTotal * Model.Iva / (100 + Model.Iva)),3))</h3>
+        <h3>IVA: $ @((Model.PrecioTotal * Model.Iva / (100 + Model.Iva)).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</h3>
 
         @{double montoDescuento = Model.PrecioTotal * Model.DescuentoCliente / 100; }
 
         @if (Model.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].Equals("Administrador")))
         {
-            <h3>Descuento: $ @Math.Round(@montoDescuento,3) </h3>
+            <h3>Descuento: $ @montoDescuento.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) </h3>
         }
 
-        <h1>Monto Total (IVA inc.): $@(Math.Round((Model.PrecioTotal - montoDescuento), 3) )</h1>
+        <h1>Monto Total (IVA inc.): $ @((Model.PrecioTotal - montoDescuento).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</h1>
     </div>
 </div>
 

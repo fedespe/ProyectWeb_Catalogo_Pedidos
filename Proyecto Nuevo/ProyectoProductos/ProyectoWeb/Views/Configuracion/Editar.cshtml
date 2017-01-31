@@ -1,0 +1,81 @@
+﻿@model ProyectoWeb.ViewModel.ConfiguracionViewModel.EditarViewModel
+@{
+    ViewBag.Title = "Configuración";
+}
+
+
+@*CARGA DE SCRIPT PARA FUNCIONALIDADES*@
+<script src="~/Scripts/articuloEditar.js"></script>
+
+<div class="row">
+    <div class="col-md-2">
+        <div>
+            <h3>Gestión</h3>
+            @Html.ActionLink("Gestión Administradores", "ListaAdministradores", "Administrador")<br />
+            @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
+            @Html.ActionLink("Gestión Artículos", "ListaArticulos", "Articulo")<br />
+            @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
+            @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")<br />
+            @Html.ActionLink("Configuración", "Editar", "Configuracion")
+        </div>
+    </div>
+    <div class="col-md-10">
+        <h2>Configuración</h2>
+
+        @using (Html.BeginForm("Editar", "Configuracion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            //Seguridad
+            @Html.AntiForgeryToken()
+
+            //Lista de errores
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            //Mensajes
+            if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
+            {
+                <div class="alert alert-danger" role="alert">@Model.mensajeError</div>
+            }
+            if (Model.mensajeSuccess != null && !Model.mensajeSuccess.Equals(""))
+            {
+                <div class="alert alert-success" role="alert">@Model.mensajeSuccess</div>
+            }
+            //************************************************************************
+            //MANEJO DE IMAGENES
+            //************************************************************************
+            <h3>Imagenes Slider</h3>
+            for(var i=1; i<=4; i++)
+            {
+                var s = "Archivo" + i;
+                var s1 = "ImgArchivo" + i;
+                <div class="col-xs-6 col-md-2" style="padding-bottom:10px;">
+                    <div class="thumbnail">
+                        <img src=@("/Imagenes/Slider/Carousel_IMG" + i +".jpg") id="@s1" onclick="$(@s).click()" style="width:90%; height:90%;" />
+                        <div class="caption">
+                            Imagen @i
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <input type="file" style="display:none;" name="Archivo1" id="Archivo1" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo2" id="Archivo2" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo3" id="Archivo3" onchange="$(mostrarImagen(this));">
+            <input type="file" style="display:none;" name="Archivo4" id="Archivo4" onchange="$(mostrarImagen(this));">            
+
+            <div class="clearfix"></div>
+            //************************************************************************
+            //FIN MANEJO DE IMAGENES
+            //************************************************************************
+            
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar
+            </button>
+        }
+    </div>
+</div>
+
+
+

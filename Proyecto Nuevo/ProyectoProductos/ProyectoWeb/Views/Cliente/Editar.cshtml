@@ -15,7 +15,8 @@
                 @Html.ActionLink("Gestión Clientes", "ListaClientes", "Cliente")<br />
                 @Html.ActionLink("Gestión Artículos", "ListaArticulos", "Articulo")<br />
                 @Html.ActionLink("Gestión Categorías", "ListaCategorias", "Categoria")<br />
-                @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")
+                @Html.ActionLink("Gestión Pedidos", "Historico", "Pedido")<br />
+                @Html.ActionLink("Configuración", "Editar", "Configuracion")
             </div>
         </div>
     }
@@ -40,7 +41,7 @@
             //Mensajes
             if (Model.mensajeError != null && !Model.mensajeError.Equals(""))
             {
-                <span class="label label-danger">@Model.mensajeError</span>
+                <div class="alert alert-danger" role="alert">@Model.mensajeError</div>
             }
 
             <div class="col-xs-8 col-sm-5 col-md-2">

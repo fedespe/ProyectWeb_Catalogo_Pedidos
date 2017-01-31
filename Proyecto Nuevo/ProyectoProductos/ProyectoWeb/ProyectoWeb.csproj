@@ -173,6 +173,7 @@
     <Compile Include="Controllers\CatalogoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ConfiguracionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
@@ -181,6 +182,7 @@
     </Compile>
     <Compile Include="ViewModel\ArticuloViewModel\ListarArticuloViewModel.cs" />
     <Compile Include="ViewModel\CatalogoViewModel\ListarArticuloViewModel.cs" />
+    <Compile Include="ViewModel\ConfiguracionViewModel\EditarViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel\IndexViewModel.cs" />
     <Compile Include="ViewModel\Models\AccountViewModels.cs" />
     <Compile Include="ViewModel\Models\IdentityModels.cs" />
@@ -304,6 +306,7 @@
     <Content Include="Views\Catalogo\DetalleArticulo.cshtml" />
     <Content Include="Views\Pedido\Historico.cshtml" />
     <Content Include="Views\Cliente\Ver.cshtml" />
+    <Content Include="Views\Configuracion\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

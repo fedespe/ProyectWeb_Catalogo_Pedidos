@@ -31,12 +31,12 @@ $(document).ready(function () {
         descuentoCliente = parseFloat(document.getElementById("descuentoCliente").getAttribute("value"));
 
         celdaTextoPrecioDescuento.innerHTML = descuentoCliente + "%";
-        montoDescuentoCliente = montoTotal.toFixed(3) * descuentoCliente / 100;
-        celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente.toFixed(3);
+        montoDescuentoCliente = montoTotal.toFixed(2) * descuentoCliente / 100;
+        celdaPrecioDescuento.innerHTML = "$ " + montoDescuentoCliente.toFixed(2);
     }
-    var precioTotal = (montoTotal - montoDescuentoCliente).toFixed(3);
+    var precioTotal = (montoTotal - montoDescuentoCliente).toFixed(2);
 
-    var precioIVA = (montoTotal * valorIva / (100 + valorIva)).toFixed(3);
+    var precioIVA = (montoTotal * valorIva / (100 + valorIva)).toFixed(2);
 
     celdaPrecioTotal.innerHTML = "$" + precioTotal;
     celdaPrecioIVA.innerHTML = "$" + precioIVA;
@@ -129,13 +129,13 @@ function actualizarTotalYDescuento() {
      
 
     if (descuento > 0) {
-        celdaPrecioDescuento.innerHTML = "$" + (total * descuento / 100).toFixed(3);
+        celdaPrecioDescuento.innerHTML = "$" + (total * descuento / 100).toFixed(2);
 
         total -= total * descuento / 100;
     }
 
-    celdaPrecioTotal.innerHTML = "$" + total.toFixed(3);
-    celdaPrecioIVA.innerHTML = "$" + (total * valorIva / (100 + valorIva)).toFixed(3);
+    celdaPrecioTotal.innerHTML = "$" + total.toFixed(2);
+    celdaPrecioIVA.innerHTML = "$" + (total * valorIva / (100 + valorIva)).toFixed(2);
 }
 
 function actualizarTotales() {
@@ -165,7 +165,7 @@ function actualizarTotales() {
                 inputCantidad.setAttribute("value", 1);
             }
 
-            celdaTotalFila.innerHTML = totalFila.toFixed(3);
+            celdaTotalFila.innerHTML = totalFila.toFixed(2);
         }
     });
 

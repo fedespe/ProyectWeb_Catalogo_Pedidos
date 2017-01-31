@@ -517,12 +517,15 @@ namespace ProyectoWeb.Controllers
                                     if (Session["TipoUsuario"].ToString().Equals("Administrador"))
                                     {
                                         editVM.Pedido.Estado = estadoPedidoBL.obtener("MODIFICADO POR ADMINISTRADOR");
+                                        if (editVM.Pedido.FechaRealizado.Equals(new DateTime())) {
+                                            editVM.Pedido.FechaRealizado = DateTime.Today;
+                                        }
                                     }
                                     else if (Session["TipoUsuario"].ToString().Equals("Cliente"))
                                     {
                                         editVM.Pedido.Estado = estadoPedidoBL.obtener("CONFIRMADO POR CLIENTE");
-                                    }
-                                    editVM.Pedido.FechaRealizado = DateTime.Today;
+                                        editVM.Pedido.FechaRealizado = DateTime.Today;
+                                    }                                    
                                 }
                             }
                             else

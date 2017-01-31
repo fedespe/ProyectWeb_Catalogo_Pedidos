@@ -17,7 +17,8 @@
 
             @Html.HiddenFor(x => x.IdPedido)
             @Html.HiddenFor(x => x.CadenaArticulos)
-            @Html.HiddenFor(x => x.IdCliente)
+            @*@Html.HiddenFor(x => x.IdCliente)*@
+            <input type="hidden" id="IdCliente" name="IdCliente" value="@Model.IdCliente">
             @Html.HiddenFor(x => x.idClienteSeleccionado)
             @Html.HiddenFor(x => x.Iva)
 
@@ -173,8 +174,8 @@
                                 @*</ul>
                                 </div>*@
                             </td>
-                            <td style="vertical-align:middle">@pp.PrecioUnitario</td>
-                            <td style="vertical-align:middle">@varPrecioTotal</td>   
+                            <td style="vertical-align:middle">@pp.PrecioUnitario.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            <td style="vertical-align:middle">@varPrecioTotal.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</td>   
                             @if (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador"))
                             {
                                 <td style="vertical-align:middle">@pp.Articulo.Stock</td>
@@ -197,7 +198,7 @@
                             <td></td>
                         }
                     </tr>
-                    @if (Model.Pedido.DescuentoCliente > 0)
+                    @if (Model.Pedido.DescuentoCliente > 0 || (Session["TipoUsuario"] != null && Session["TipoUsuario"].ToString().Equals("Administrador")))
                     {
                     <tr>
                         <td hidden></td>

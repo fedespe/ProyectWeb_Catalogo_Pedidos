@@ -311,8 +311,12 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  /*Cambio de fuente*/
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;*/
+  font-family: Comfortaa-Regular;
+  font-size:13px;
+  
   line-height: 1.428571429;
   color: #333333;
   background-color: #ffffff;
@@ -473,7 +477,10 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  /*Cambio de fuente*/
+  font-family: PoiretOne-Regular;
+
   font-weight: 500;
   line-height: 1.1;
 }
@@ -6813,4 +6820,14 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
+}
+
+/*Agrego Fuente*/
+@font-face {
+    font-family: 'PoiretOne-Regular';
+    src: url('../fonts/PoiretOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Comfortaa-Regular';
+    src: url('../fonts/Comfortaa-Regular.ttf') format('truetype');
 }

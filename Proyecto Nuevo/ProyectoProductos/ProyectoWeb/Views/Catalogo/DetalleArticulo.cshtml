@@ -3,9 +3,9 @@
     ViewBag.Title = "DetalleArticulo";
 }
 
-@section Galeria {
+@*@section Galeria {
     <script src="~/Scripts/jquery.mlens-1.6.min.js"></script>
-}
+}*@
 <script src="~/Scripts/agregarArticulo.js"></script>
 <script src="~/Scripts/detalleArticulo.js"></script>
 <style type="text/css">
@@ -25,7 +25,9 @@
         <br>
         <div class="thumbnail" style="border-radius:0px; border-color:whitesmoke">
             <div id="contenido">
-                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" style="width:100%; height:100%;">
+                @*Para la lupa*@
+                @*<img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" style="width:100%; height:100%;">*@
+                <img src="/Imagenes/Articulos/@Model.Imagenes.ElementAt(0).Img" id="ImgPrincipal" alt="Imagen de Prueba" style="width:100%; height:100%;">
                 @*<img src="/Imagenes/Articulos/pruebazoom.jpg" id="ImgPrincipal" alt="Imagen de Prueba" data-big="/Imagenes/Articulos/pruebazoom.jpg">*@
             </div>
             <div class="caption">
